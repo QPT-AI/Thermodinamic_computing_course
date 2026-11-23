@@ -1,0 +1,85 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,columns=fullflexible,keepspaces=true,frame=single,rulecolor=\color{navy!40},
+  backgroundcolor=\color{sky},literate={á}{{\'a}}1{é}{{\'e}}1{í}{{\'i}}1{ó}{{\'o}}1{ú}{{\'u}}1{ñ}{{\~n}}1}
+\begin{document}
+\portada{Lección}{0.7}{Lo esencial de JAX}
+
+\noindent\textbf{Unidad 0.}\quad\textbf{Objetivos:} funciones puras y claves PRNG; \texttt{vmap}, \texttt{jit},
+\texttt{scan}; \texttt{jvp}/\texttt{vjp} y gradiente. \textbf{Prerrequisitos:} Python/NumPy; regla de la cadena.
+
+\section{¿Por qué JAX?}
+Todos los laboratorios del curso usan JAX (pensum, §5.4), y THRML y Torx (Unidad 11) están escritos en JAX
+\cite{torx}. JAX ofrece la API de NumPy más transformaciones composables de funciones: vectorizar
+(\texttt{vmap}), compilar (\texttt{jit}) y derivar (\texttt{grad}, \texttt{jvp}, \texttt{vjp}). El estilo funcional
+(estado de entrada $\to$ estado de salida) coincide con la forma de un paso de simulación física.
+
+\section{Funciones puras}
+Una función es pura si su salida depende solo de sus argumentos y no tiene efectos secundarios (no lee estado
+global mutable, no imprime, no escribe). JAX rastrea (\emph{traces}) la función con valores abstractos para
+construir un grafo; cualquier efecto secundario ocurre solo durante el rastreo y se pierde en llamadas posteriores.
+
+\section{Aleatoriedad explícita}
+\begin{lstlisting}[language=Python]
+key = jax.random.PRNGKey(0)
+x = jax.random.normal(key, (3,))      # siempre los mismos 3 números
+k1, k2 = jax.random.split(key)        # dos claves hijas independientes
+y = jax.random.bernoulli(k1, 0.7, (10**6,))
+\end{lstlisting}
+Regla: \textbf{nunca reutilizar una clave}. Para $T$ pasos se generan $T$ claves con
+\texttt{jax.random.split(key, T)}. La reproducibilidad (semillas fijas) es una regla de práctica del curso (§5.3).
+
+\section{vmap, jit y scan}
+\begin{itemize}[nosep]
+\item \texttt{jax.vmap(f)}: aplica \texttt{f} a lo largo de un eje de lote; \texttt{in\_axes} indica qué argumentos se vectorizan. Se anida: \texttt{vmap(vmap(f))}.
+\item \texttt{jax.jit(f)}: rastrea con formas y tipos, entrega el grafo a XLA, que fusiona y compila; se recompila si cambian formas o argumentos estáticos.
+\item \texttt{jax.lax.scan(paso, carry0, xs)}: bucle compilable, \texttt{paso(carry, x) -> (carry, y)}; devuelve el acarreo final y las salidas apiladas.
+\end{itemize}
+\begin{lstlisting}[language=Python]
+def paso(x, clave):                     # Euler-Maruyama del OU dx = -x dt + sqrt(2) dW
+    x = x - x*dt + jnp.sqrt(2*dt)*jax.random.normal(clave)
+    return x, x
+claves = jax.random.split(jax.random.PRNGKey(1), 600)
+_, tray = jax.lax.scan(paso, 3.0, claves)   # trayectoria de 600 pasos
+\end{lstlisting}
+
+\section{Diferenciación automática}
+Para $f:\R^n\to\R^m$ con jacobiano $J\in\R^{m\times n}$:
+\begin{definicion}[ (jvp y vjp)]
+\texttt{jvp}: $(x,v)\mapsto(f(x),Jv)$ (modo directo, propaga tangentes). \texttt{vjp}: $(x,u)\mapsto(f(x),u^\top J)$
+(modo inverso, propaga cotangentes; es la retropropagación).
+\end{definicion}
+Costo: cada \texttt{jvp} o \texttt{vjp} cuesta un múltiplo pequeño de evaluar $f$. Formar $J$ requiere $n$ jvp o $m$ vjp.
+Para una pérdida escalar ($m=1$), $\nabla\ell=\text{vjp}(1)$: \emph{un} pase hacia atrás. Un \textbf{gradiente} es un
+vector de $\R^n$ (fila del jacobiano de una función escalar); un \textbf{producto jacobiano--vector} es la derivada
+direccional $Jv\in\R^m$ de una función vectorial: son objetos distintos (pensum, Ap. A.8). Los productos
+Gauss--Newton--vector $J^\top HJv$ se obtienen con un \texttt{jvp} seguido de un \texttt{vjp} (Unidad 8).
+
+\begin{ejemplo}
+$f(x)=x^2\sin x$, $f'(x)=x^2\cos x+2x\sin x$, $f'(1)=\cos1+2\sin1=0{,}5403+1{,}6829=2{,}2232$;
+\texttt{jax.grad} devuelve \texttt{2.2232442} (precisión simple).
+\end{ejemplo}
+
+\begin{aplicacion}
+L1: $10^6$ Bernoulli con \texttt{jax.random}/\texttt{vmap}, entropía, tiempo del muestreador y (reto) J/muestra
+con NVML. L3--L5: Euler--Maruyama, Gibbs cromático. L10--L11: productos GGN--vector y K-FAC.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Reutilizar claves; mezclar \texttt{numpy.random} con JAX.
+\item \texttt{print} o mutaciones dentro de \texttt{jit} (use \texttt{jax.debug.print}).
+\item \texttt{if}/\texttt{while} de Python sobre valores trazados (use \texttt{lax.cond}, \texttt{lax.while\_loop}, \texttt{scan}).
+\item Medir tiempos sin \texttt{block\_until\_ready()} (ejecución asíncrona) o incluyendo la compilación.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Pureza + claves explícitas; \texttt{vmap}/\texttt{jit}/\texttt{scan}; \texttt{jvp}$=Jv$, \texttt{vjp}$=u^\top J$; gradiente escalar $=$ un vjp.
+
+\begin{thebibliography}{9}\small
+\bibitem[54]{torx} G. Verdon et al., A framework for stochastic differentiable programming (Torx), 2026. \url{https://arxiv.org/abs/2608.01612}
+\bibitem[c]{jaxdoc} (Complementaria) Documentación oficial de JAX, \url{https://jax.readthedocs.io}.
+\end{thebibliography}
+\end{document}

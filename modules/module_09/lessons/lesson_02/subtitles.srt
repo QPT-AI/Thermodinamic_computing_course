@@ -1,0 +1,293 @@
+1
+00:00:00,350 --> 00:00:01,932
+Lección 9.2.
+
+2
+00:00:02,312 --> 00:00:03,599
+Difusión discreta.
+
+3
+00:00:04,717 --> 00:00:08,234
+El texto está hecho de símbolos,
+no de números reales, así
+
+4
+00:00:08,234 --> 00:00:11,206
+que la difusión gaussiana
+no encaja directamente.
+
+5
+00:00:11,586 --> 00:00:15,930
+La difusión discreta reemplaza el ruido
+gaussiano por corrupción de símbolos.
+
+6
+00:00:16,310 --> 00:00:20,138
+La versión más exitosa es la
+difusión enmascarada: los tokens
+
+7
+00:00:20,138 --> 00:00:23,339
+se van ocultando, y el
+modelo aprende a revelarlos.
+
+8
+00:00:23,719 --> 00:00:27,037
+Es la base de los modelos de
+lenguaje por difusión y, como
+
+9
+00:00:27,037 --> 00:00:30,584
+veremos, encaja con hardware que
+muestrea variables discretas.
+
+10
+00:00:31,717 --> 00:00:35,429
+En el tiempo t entre cero y uno,
+cada token se reemplaza por un
+
+11
+00:00:35,429 --> 00:00:39,083
+símbolo de máscara con probabilidad
+t, de forma independiente.
+
+12
+00:00:39,463 --> 00:00:44,367
+La máscara es un estado absorbente:
+una vez oculto, el token sigue oculto.
+
+13
+00:00:44,747 --> 00:00:48,138
+En t = 1 la secuencia está
+totalmente enmascarada.
+
+14
+00:00:48,518 --> 00:00:52,220
+El proceso inverso parte de todo
+enmascarado y revela tokens,
+
+15
+00:00:52,220 --> 00:00:56,044
+usando un modelo que predice cada
+token oculto dado lo visible.
+
+16
+00:00:57,150 --> 00:01:01,823
+El modelo de lenguaje por difusión
+enmascarada, MDLM, entrena con una
+
+17
+00:01:01,823 --> 00:01:06,360
+cota inferior de la verosimilitud
+que resulta ser sorprendentemente
+
+18
+00:01:06,740 --> 00:01:11,680
+simple: una entropía cruzada sobre las
+posiciones enmascaradas, ponderada por un
+
+19
+00:01:11,680 --> 00:01:16,373
+factor que depende del tiempo, que para
+un calendario lineal es uno sobre t.
+
+20
+00:01:16,753 --> 00:01:20,825
+Es como el entrenamiento de BERT, pero
+con todas las tasas de enmascarado y
+
+21
+00:01:20,825 --> 00:01:24,408
+con un peso que convierte la suma
+en una cota de la verosimilitud.
+
+22
+00:01:25,517 --> 00:01:30,367
+Al muestrear, revelar un token por paso
+es exacto si el modelo es perfecto.
+
+23
+00:01:30,747 --> 00:01:33,366
+Pero eso cuesta tantos pasos como tokens.
+
+24
+00:01:33,746 --> 00:01:37,098
+Revelar varios a la vez es
+más rápido, pero los muestrea
+
+25
+00:01:37,098 --> 00:01:40,211
+de forma independiente,
+ignorando sus correlaciones.
+
+26
+00:01:40,591 --> 00:01:43,634
+Lo medimos con cadenas
+binarias de ocho símbolos muy
+
+27
+00:01:43,634 --> 00:01:47,028
+correlacionadas, donde casi
+la mitad de las secuencias son
+
+28
+00:01:47,028 --> 00:01:50,598
+constantes, y un modelo que
+conoce las condicionales exactas.
+
+29
+00:01:51,717 --> 00:01:55,891
+Con ocho pasos, uno por token, la
+distancia de variación total a la
+
+30
+00:01:55,891 --> 00:02:00,750
+distribución verdadera es de apenas cero
+coma cero tres, el ruido de muestreo.
+
+31
+00:02:01,130 --> 00:02:03,193
+Con cuatro pasos sube a cero coma dos.
+
+32
+00:02:03,573 --> 00:02:05,667
+Con dos, a cero coma cuatro seis.
+
+33
+00:02:06,047 --> 00:02:09,998
+Y con un solo paso, revelando todo
+a la vez, a cero coma siete nueve:
+
+34
+00:02:09,998 --> 00:02:14,007
+las secuencias constantes, que en
+los datos son el cuarenta y ocho por
+
+35
+00:02:14,007 --> 00:02:17,157
+ciento, aparecen menos del
+uno por ciento de las veces.
+
+36
+00:02:17,537 --> 00:02:20,948
+El error no viene del modelo,
+sino del muestreo en paralelo.
+
+37
+00:02:22,050 --> 00:02:27,018
+Por eso los muestreadores de pocos pasos
+requieren trucos: elegir qué tokens revelar
+
+38
+00:02:27,018 --> 00:02:31,336
+según la confianza, o destilar un
+modelo de muchos pasos en uno de pocos.
+
+39
+00:02:31,716 --> 00:02:35,870
+El hardware probabilístico ofrece
+otra salida: en lugar de muestrear los
+
+40
+00:02:35,870 --> 00:02:40,082
+tokens de un paso de forma independiente,
+puede muestrear su distribución
+
+41
+00:02:40,082 --> 00:02:44,178
+conjunta con un modelo basado en
+energía que capture sus correlaciones.
+
+42
+00:02:44,558 --> 00:02:48,303
+Esa es la idea de los modelos
+termodinámicos de eliminación de ruido.
+
+43
+00:02:49,417 --> 00:02:53,777
+La difusión discreta se usa en modelos
+de lenguaje no autorregresivos, que
+
+44
+00:02:53,777 --> 00:02:58,197
+generan en paralelo y permiten rellenar
+o editar cualquier parte del texto.
+
+45
+00:02:58,577 --> 00:03:02,046
+En el laboratorio trece
+entrenarás un MDLM pequeño y
+
+46
+00:03:02,046 --> 00:03:05,049
+medirás la calidad frente
+al número de pasos.
+
+47
+00:03:06,150 --> 00:03:09,655
+Errores comunes: olvidar que
+la máscara es absorbente.
+
+48
+00:03:10,035 --> 00:03:13,773
+Quitar el peso temporal, con lo que
+la pérdida deja de ser una cota.
+
+49
+00:03:14,153 --> 00:03:18,029
+Revelar muchos tokens correlacionados
+a la vez y culpar al modelo.
+
+50
+00:03:18,409 --> 00:03:22,006
+Y comparar números de pasos sin
+igualar las evaluaciones del modelo.
+
+51
+00:03:23,117 --> 00:03:27,402
+En resumen: la difusión enmascarada
+oculta tokens hacia adelante y los
+
+52
+00:03:27,402 --> 00:03:31,443
+revela hacia atrás, con una pérdida
+de entropía cruzada ponderada.
+
+53
+00:03:31,823 --> 00:03:35,858
+Revelar un token por paso es
+exacto; revelar muchos a la vez los
+
+54
+00:03:35,858 --> 00:03:39,893
+muestrea independientemente y
+destruye correlaciones, en nuestro
+
+55
+00:03:39,893 --> 00:03:44,181
+ejemplo de cero coma cero tres a
+cero coma siete nueve de distancia.
+
+56
+00:03:44,561 --> 00:03:48,681
+Muestrear la conjunta es justo lo que
+puede aportar el hardware termodinámico.
+
+57
+00:03:49,783 --> 00:03:53,518
+Para practicar: di la probabilidad
+de enmascarar en el tiempo t.
+
+58
+00:03:53,898 --> 00:03:57,043
+Explica por qué revelar
+uno por paso es exacto.
+
+59
+00:03:57,423 --> 00:04:01,739
+Analiza dos bits perfectamente
+correlacionados con un muestreador de un paso.
+
+60
+00:04:02,119 --> 00:04:04,515
+Y nombra dos formas de reducir los pasos.

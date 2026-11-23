@@ -1,0 +1,35 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.8}{Longitud termodinámica y compromisos energía--tiempo}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Derive $\zeta(\kappa)=\kB T/(4\mu\kappa^3)$ para una trampa armónica sobreamortiguada.
+\item (B) Calcule $\mathcal L$ para $\kappa:1\to9$ y el exceso mínimo con $\tau=10$ ($\mu=\kB T=1$).
+\item (B) Escriba el protocolo óptimo $\kappa^*(t)$ para $\kappa:\kappa_i\to\kappa_f$.
+\item (B) ¿Por qué el recocido debe ir despacio cerca de la temperatura crítica?
+\item (I) Para trasladar la trampa ($\lambda$ = centro, $V=\kappa(x-\lambda)^2/2$), muestre que $\zeta=\gamma=1/\mu$ es constante y que el óptimo es la
+rampa lineal. Compare con la lección 3.4.
+\item (I) Con la rampa lineal $\kappa:1\to4$, calcule en respuesta lineal $\langle W_{\text{ex}}\rangle=(\Delta\kappa)^2\tau^{-1}\int_0^1\zeta(\kappa(s))\,ds$.
+\item (A) Integre numéricamente la EDO de la varianza para la rampa lineal y para $\kappa^*$ con $\tau\in\{2,4,8\}$ y reproduzca la tabla de los apuntes.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $X=-x^2/2$; con $\sigma^2=\kB T/\kappa$, $\mathrm{Var}(x^2/2)=\sigma^4/2$; la autocorrelación de $x^2$ decae como $e^{-2\mu\kappa t}$:
+$\zeta=\beta\,\frac{\sigma^4}{2}\,\frac{1}{2\mu\kappa}=\frac{\kB T}{4\mu\kappa^3}$.
+
+\textbf{E2.} $\mathcal L=1-\tfrac13=\tfrac23$; $\mathcal L^2/\tau=0{,}044\,\kB T$.
+
+\textbf{E3.} $\kappa^{-1/2}$ lineal en $t$: $\kappa^*(t)=\big[\kappa_i^{-1/2}-(\kappa_i^{-1/2}-\kappa_f^{-1/2})\,t/\tau\big]^{-2}$.
+
+\textbf{E4.} Cerca de $T_c$ el tiempo de correlación diverge y $\zeta$ crece; a velocidad termodinámica constante hay que ir más despacio allí.
+
+\textbf{E5.} $X=\kappa(x-\lambda)$, varianza $\kappa\kB T$, correlación $e^{-\mu\kappa t}$: $\zeta=\beta\kappa\kB T/(\mu\kappa)=1/\mu$. Constante, así que la
+rampa lineal es óptima y $\langle W_{\text{ex}}\rangle=(\Delta\lambda)^2/(\mu\tau)$, igual que $W_2^2/(\mu\tau)$ de la lección 3.4.
+
+\textbf{E6.} $\int_0^1\frac{ds}{4(1+3s)^3}=\frac{1}{24}\big(1-\tfrac1{16}\big)=0{,}0391$; $\langle W_{\text{ex}}\rangle\approx9\cdot0{,}0391/\tau=0{,}352/\tau$
+($0{,}088$ a $\tau=4$; el valor exacto es $0{,}076$, pues la respuesta lineal sobreestima para $\tau$ moderado).
+
+\textbf{E7.} Ver tabla de los apuntes.
+\end{solucion}
+\end{document}

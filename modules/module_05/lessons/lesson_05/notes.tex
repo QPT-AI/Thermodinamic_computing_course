@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.5}{Otros sustratos físicos}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} circuitos brownianos de tokens; dispositivos superconductores y mecánicos; redes RC de difusión y
+redes de reacciones químicas; comparación de sustratos.
+\textbf{Prerrequisitos:} 2.8, 3.6, 3.9.
+
+\section{Circuitos brownianos de tokens}
+Un token (electrón aislado, skyrmion) se difunde al azar por cables. Tres piezas bastan para la lógica: \textbf{Hub} (salida por cualquiera de 3 cables),
+\textbf{CJoin} (deja pasar solo cuando llegan dos tokens, uno por entrada) y \textbf{Ratchet} (impide retroceder). El cómputo avanza sin reloj,
+impulsado por el ruido térmico \cite{utsumi}. El tiempo de cómputo es un tiempo de primer paso (lección 2.8).
+\begin{ejemplo}
+$n=20$ sitios, inicio reflectante, 3000 corridas de Gillespie \evS: libre ($k_\pm=1$) $\langle T\rangle=211\approx n(n+1)/2$, $\sigma/\langle T\rangle=0{,}84$;
+con $k_+=2k_-$: $\langle T\rangle=19$, $\sigma/\langle T\rangle=0{,}38$, a un costo de $\ln2$ (en $\kB$) por paso neto: el compromiso de la TUR (lección 3.6).
+\end{ejemplo}
+
+\section{Superconductores y Langevin mecánico}
+Un rf-SQUID tiene un pozo doble en el flujo $\Phi$ con barrera e inclinación ajustables por líneas de polarización. A temperaturas de mK salta entre pozos
+por ruido térmico (Arrhenius--Kramers): una \emph{neurona termodinámica}, rápida y de baja disipación, pero criogénica. Por debajo de una temperatura de
+cruce, el salto se vuelve túnel cuántico. También se proponen osciladores mecánicos como dispositivos de Langevin.
+
+\section{Redes RC de difusión y química}
+Una red de resistencias y capacitores cumple $C\dot V=-LV$ con $L$ el laplaciano del grafo: el voltaje se difunde como el calor. En el grafo de Cayley de
+$\mathbb Z/r\mathbb Z$ calcula la probabilidad de regreso de una caminata, base del algoritmo de factorización por difusión (Unidad 7) \cite{cadavid}.
+Las redes de reacciones químicas computan con concentraciones y se analizan con la teoría de circuitos de la lección 3.9.
+
+\begin{center}\small\begin{tabular}{llll}\toprule
+Sustrato & Primitiva & $T$ & Límite\\\midrule
+pbits CMOS / MTJ & muestreo binario & 300 K & calibración\\
+osciladores acoplados & gaussiano / lineal & 300 K & precisión analógica\\
+tokens brownianos & lógica sin reloj & 300 K & lentitud\\
+rf-SQUID & neurona térmica & mK & criogenia\\
+redes RC & difusión & 300 K & sin ruido útil\\
+químico & concentraciones & 300 K & lento, muy paralelo\\\bottomrule\end{tabular}\end{center}
+
+\begin{aplicacion}
+Proyecto P6 / reto L7: sumadores brownianos con Gillespie, primer paso y TUR. Unidad 7.6: hardware RC para búsqueda de orden.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Creer que el cómputo browniano sin reloj es gratis. \quad Ignorar la refrigeración en la contabilidad criogénica.
+\item Confundir difusión RC determinista con muestreo. \quad Comparar sustratos sin fijar tarea y precisión.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[26]{utsumi} Y. Utsumi et al., Computation time and thermodynamic uncertainty relation of Brownian circuits, 2022.
+\bibitem[27]{raux} P. Raux, C. Goupil y G. Verley, Thermodynamic circuits for chemical reaction networks, 2025.
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\end{thebibliography}
+\end{document}

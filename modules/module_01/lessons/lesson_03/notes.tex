@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.3}{Entropía de Shannon y entropía de Gibbs}
+
+\noindent\textbf{Unidad 1.}\quad\textbf{Objetivos:} interpretar $H$ como preguntas binarias óptimas; relacionar
+$S=\kB\ln2\cdot H$; descomponer la entropía física en lógica e interna. \textbf{Prerrequisitos:} 0.3, 1.1, 1.2.
+
+\section{Dos fórmulas, una idea}
+Shannon (1948) definió $H=-\sum p_i\log_2p_i$ para mensajes; Gibbs (1878) $S=-\kB\sum p_i\ln p_i$ para microestados.
+Ambas miden la incertidumbre sobre un estado; difieren en la base del logaritmo y en una constante con unidades.
+
+\section{Entropía de Shannon como preguntas}
+Para 8 objetos equiprobables bastan $\log_28=3$ preguntas sí/no. Para $p=(\frac12,\frac14,\frac18,\frac18)$ el árbol
+óptimo (código de Huffman: $0$, $10$, $110$, $111$) tiene longitud media $\bar L=1{,}75=H(p)$. En general
+$H\le\bar L<H+1$ (teorema de codificación de fuente), con igualdad cuando las probabilidades son potencias de $1/2$.
+La profundidad de cada hoja es su sorpresa $-\log_2p_i$.
+
+\section{Entropía de Gibbs}
+$S=-\kB\sum_xp(x)\ln p(x)$. Casos: $p$ uniforme sobre $\Omega$ estados $\Rightarrow S=\kB\ln\Omega$ (Boltzmann);
+$p$ de Boltzmann $\Rightarrow S=(\langle E\rangle-F)/T$ (lección 1.2). Conversión:
+\begin{resultado}
+$S=\kB\ln2\cdot H$;\quad $1\ \text{bit}\equiv\kB\ln2\approx9{,}57\times10^{-24}$ J/K;\quad a temperatura $T$: $\kB T\ln2$ J por bit.
+\end{resultado}
+
+\section{La información es física: granulado}
+Sea una memoria cuyos microestados $x$ se agrupan en estados lógicos $i$ (regiones $R_i$). Con $p_i=P(x\in R_i)$ y
+$p(x\mid i)$ la distribución dentro de cada región:
+\begin{equation}S_{\text{física}}=-\kB\sum_xp(x)\ln p(x)=\kB\ln2\,H(p_1,\dots)+\sum_ip_i\,S_i,\qquad S_i=-\kB\sum_{x\in R_i}p(x|i)\ln p(x|i).\end{equation}
+(Regla de la cadena de la entropía.) Borrar fusiona los estados lógicos: si las entropías internas no cambian, la
+memoria pierde $\kB\ln2\,H$ y la segunda ley obliga a que el entorno gane al menos esa cantidad \cite{bennett,wolpert}.
+
+\begin{ejemplo}
+1 GB aleatorio: $H=8\times10^9$ bits; $S=8\times10^9\cdot9{,}57\times10^{-24}\approx7{,}7\times10^{-14}$ J/K;
+calor mínimo para borrarlo a 300 K: $TS\approx2{,}3\times10^{-11}$ J. Un texto que se comprime a 2 bits/carácter (de 8)
+tiene $H$ cuatro veces menor y su costo mínimo de borrado es cuatro veces menor.
+\end{ejemplo}
+
+\begin{aplicacion}
+Compresión $\to$ bits mínimos $\to$ calor mínimo de borrado. Muestreo: una muestra de $p$ lleva $H(p)$ bits de
+aleatoriedad; en un pbit la aporta el baño térmico (Unidad 5). Laboratorio L1: entropía empírica de Bernoulli.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Bits frente a nats ($H_{\text{bits}}=H_{\text{nats}}/\ln2$).
+\item Ambas entropías dependen del granulado elegido; ninguna es «más objetiva».
+\item Un texto con significado tiene \emph{menos} entropía que el ruido.
+\item No olvidar la entropía interna $\sum p_iS_i$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$H$ = preguntas óptimas; $S=\kB\ln2\,H$; $S_{\text{física}}$ = lógica + interna; la información es física.
+
+\begin{thebibliography}{9}\small
+\bibitem[9]{bennett} C. H. Bennett, Notes on Landauer's principle, reversible computation and Maxwell's demon, 2003.
+\bibitem[10]{wolpert} D. H. Wolpert, The stochastic thermodynamics of computation, \emph{J. Phys. A} 52, 193001 (2019).
+\bibitem[c]{cover} (Complementaria) T. M. Cover y J. A. Thomas, \emph{Elements of Information Theory}, Wiley, 2006.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.3}{Entropía de Shannon y entropía de Gibbs}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule $H$ para $(\frac12,\frac14,\frac18,\frac18)$ y dé un código prefijo óptimo.
+\item ¿Cuántas preguntas sí/no, como mínimo en el peor caso, para adivinar un número uniforme de 1 a 1000? ¿Cuál es $H$?
+\item Convierta $1$ nat a bits y a J/K.
+\item Una memoria de 1 bit tiene $p(0)=0{,}9$. ¿Cuál es su entropía lógica en bits y en J/K?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Demuestre la regla de la cadena $S_{\text{física}}=\kB\ln2\,H(\text{lógica})+\sum_ip_iS_i$.
+\item Construya el código de Huffman para $(0{,}4;0{,}3;0{,}2;0{,}1)$ y compare $\bar L$ con $H$.
+\item Un pbit ideal produce un bit aleatorio por lectura. Si se leen $10^9$ pbits por segundo, ¿cuánta entropía (J/K por s) se extrae del baño? ¿Qué potencia mínima exigiría borrar esos bits a 300 K?
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Muestre que si una memoria tiene regiones lógicas con distinta entropía interna ($S_0\neq S_1$), el costo mínimo de borrado es $T\,[\Delta S_{\text{lógica}}+\Delta S_{\text{interna}}]$ y puede ser menor o mayor que $\kB T\ln2$. Discuta un ejemplo.
+\item Para una cadena de Markov estacionaria con matriz $P$, la tasa de entropía es $h=-\sum_i\pi_i\sum_jP_{ij}\log_2P_{ij}$. Calcúlela para la cadena de 3 estados de la lección 0.5 y compárela con $H(\pi)$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $H=1{,}75$ bits; código $A{=}0$, $B{=}10$, $C{=}110$, $D{=}111$.
+
+\textbf{B2.} $\lceil\log_21000\rceil=10$ preguntas; $H=\log_21000\approx9{,}97$ bits.
+
+\textbf{B3.} $1$ nat $=1/\ln2\approx1{,}443$ bits $=\kB=1{,}38\times10^{-23}$ J/K.
+
+\textbf{B4.} $h(0{,}9)=0{,}469$ bits $\Rightarrow0{,}469\cdot9{,}57\times10^{-24}\approx4{,}49\times10^{-24}$ J/K.
+
+\textbf{I1.} $p(x)=p_i\,p(x|i)$ para $x\in R_i$; $-\sum_xp(x)\ln p(x)=-\sum_ip_i\ln p_i-\sum_ip_i\sum_{x\in R_i}p(x|i)\ln p(x|i)$; multiplique por $\kB$.
+
+\textbf{I2.} Huffman: $0{,}4\to0$, $0{,}3\to10$, $0{,}2\to110$, $0{,}1\to111$; $\bar L=0{,}4+0{,}6+0{,}6+0{,}3=1{,}9$; $H\approx1{,}846$.
+
+\textbf{I3.} $10^9\cdot9{,}57\times10^{-24}=9{,}57\times10^{-15}$ J/(K\,s); potencia de borrado $\ge T\cdot$ eso $\approx2{,}9\times10^{-12}$ W.
+
+\textbf{A1.} $\Delta S_{\text{mem}}=\Delta S_{\text{lógica}}+\Delta S_{\text{interna}}$. Si borrar a «0» lleva a una región con mayor entropía interna (p. ej. pozo más ancho), el costo baja; si la región destino es más estrecha, sube. Lo invariante es el balance total de entropía (cf. Wolpert [10]).
+
+\textbf{A2.} Filas: $(\frac23,\frac13,0)$: $0{,}918$ bits; $(\frac14,\frac12,\frac14)$: $1{,}5$; $(0,\frac13,\frac23)$: $0{,}918$. $h=0{,}3\cdot0{,}918\cdot2+0{,}4\cdot1{,}5=1{,}151$ bits/paso, menor que $H(\pi)=1{,}571$ bits: los pasos están correlacionados.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Comprima un archivo de texto y uno aleatorio con \texttt{gzip}; estime $H$ por carácter y el costo mínimo de borrado de cada uno.
+\item Simule la cadena de 3 estados y estime su tasa de entropía empíricamente.
+\end{enumerate}
+\end{document}

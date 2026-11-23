@@ -1,0 +1,391 @@
+1
+00:00:00,350 --> 00:00:02,005
+Lección 2.3.
+
+2
+00:00:02,385 --> 00:00:04,219
+La ecuación de Fokker–Planck.
+
+3
+00:00:05,350 --> 00:00:08,273
+Una sola trayectoria de
+Langevin es impredecible.
+
+4
+00:00:08,653 --> 00:00:11,613
+Pero si soltamos miles de
+partículas, su densidad
+
+5
+00:00:11,613 --> 00:00:14,452
+evoluciona de forma
+perfectamente determinista.
+
+6
+00:00:14,832 --> 00:00:18,416
+La ecuación que gobierna esa
+densidad es la de Fokker y Planck.
+
+7
+00:00:18,796 --> 00:00:22,742
+Es el puente entre la física de una
+partícula ruidosa y la estadística
+
+8
+00:00:22,742 --> 00:00:26,463
+de su distribución, y es la
+herramienta para demostrar que un chip
+
+9
+00:00:26,463 --> 00:00:29,789
+termodinámico termina muestreando
+la distribución correcta.
+
+10
+00:00:30,917 --> 00:00:32,828
+Piensa en una gota de tinta en agua.
+
+11
+00:00:33,208 --> 00:00:37,408
+Cada molécula de tinta hace su
+propio movimiento browniano, pero la
+
+12
+00:00:37,408 --> 00:00:41,358
+mancha, como un todo, se ensancha
+de manera suave y predecible.
+
+13
+00:00:41,738 --> 00:00:44,087
+Si además hay una corriente en el agua, la
+
+14
+00:00:44,087 --> 00:00:46,325
+mancha se desplaza mientras se ensancha.
+
+15
+00:00:46,705 --> 00:00:51,031
+Fokker y Planck es exactamente eso:
+un término de arrastre, que mueve la
+
+16
+00:00:51,031 --> 00:00:55,358
+densidad siguiendo la fuerza, y un
+término de difusión, que la ensancha.
+
+17
+00:00:56,483 --> 00:01:01,492
+Para la ecuación de
+Langevin sobreamortiguada,
+
+18
+00:01:01,492 --> 00:01:06,173
+la densidad p(x, t)
+obedece ∂p/∂t = −∂J/∂x,
+
+19
+00:01:06,553 --> 00:01:12,190
+donde la corriente de probabilidad
+es J = μ f p − D ∂p/∂x.
+
+20
+00:01:12,570 --> 00:01:17,676
+El primer término es el arrastre: la
+probabilidad viaja con velocidad μ f.
+
+21
+00:01:18,056 --> 00:01:20,651
+El segundo es la difusión: la probabilidad
+
+22
+00:01:20,651 --> 00:01:23,431
+fluye de donde hay más
+hacia donde hay menos.
+
+23
+00:01:23,811 --> 00:01:26,705
+Es una ecuación de
+continuidad: la probabilidad
+
+24
+00:01:26,705 --> 00:01:29,229
+no se crea ni se destruye, solo se mueve.
+
+25
+00:01:30,350 --> 00:01:31,160
+Comparemos.
+
+26
+00:01:31,540 --> 00:01:35,711
+Las barras verdes son el histograma
+de cuatro mil partículas de Langevin
+
+27
+00:01:35,711 --> 00:01:39,360
+que empiezan todas en el mismo
+punto, en el pozo de la derecha.
+
+28
+00:01:39,740 --> 00:01:42,539
+La curva amarilla es la
+solución numérica de la
+
+29
+00:01:42,539 --> 00:01:45,279
+ecuación de Fokker y
+Planck, sin ningún ruido.
+
+30
+00:01:45,659 --> 00:01:47,277
+Coinciden en todo momento.
+
+31
+00:01:47,657 --> 00:01:50,916
+Primero la densidad se ensancha
+dentro del pozo; luego,
+
+32
+00:01:50,916 --> 00:01:54,175
+lentamente, la probabilidad
+cruza la barrera y llena el
+
+33
+00:01:54,175 --> 00:01:57,374
+otro pozo hasta alcanzar la
+distribución de Boltzmann.
+
+34
+00:01:58,750 --> 00:02:01,067
+En el estado estacionario, la densidad no
+
+35
+00:02:01,067 --> 00:02:03,440
+cambia, así que la corriente es constante.
+
+36
+00:02:03,820 --> 00:02:06,762
+En una dimensión, con la
+densidad yendo a cero en
+
+37
+00:02:06,762 --> 00:02:09,223
+los extremos, la corriente debe ser cero.
+
+38
+00:02:09,603 --> 00:02:15,974
+Entonces el arrastre equilibra
+exactamente la difusión: μ f p = D ∂p/∂x.
+
+39
+00:02:16,354 --> 00:02:24,341
+Con f = −V' y la relación de Einstein,
+la solución es p ∝ e^(−V/k_B T).
+
+40
+00:02:24,721 --> 00:02:28,613
+Aquí está la demostración prometida:
+la dinámica de Langevin con el ruido
+
+41
+00:02:28,613 --> 00:02:32,292
+correcto tiene como estado estacionario
+la distribución de Boltzmann.
+
+42
+00:02:33,417 --> 00:02:36,072
+Pero no todo estado
+estacionario es equilibrio.
+
+43
+00:02:36,452 --> 00:02:39,570
+Pon una partícula en un anillo
+con un potencial ondulado y
+
+44
+00:02:39,570 --> 00:02:42,367
+empújala con una fuerza
+constante que la hace girar.
+
+45
+00:02:42,747 --> 00:02:45,920
+La densidad deja de cambiar,
+pero la corriente no es
+
+46
+00:02:45,920 --> 00:02:49,215
+cero: hay un flujo neto de
+probabilidad dando vueltas.
+
+47
+00:02:49,595 --> 00:02:52,102
+Es un estado estacionario
+fuera del equilibrio.
+
+48
+00:02:52,482 --> 00:02:55,092
+La distribución ya no
+es la de Boltzmann, y
+
+49
+00:02:55,092 --> 00:02:57,399
+el sistema disipa calor continuamente.
+
+50
+00:02:57,779 --> 00:03:00,737
+Estos estados son los
+protagonistas de la unidad tres.
+
+51
+00:03:01,850 --> 00:03:05,628
+Para un potencial cuadrático la
+ecuación se resuelve exactamente.
+
+52
+00:03:06,008 --> 00:03:10,705
+Si la partícula empieza en x₀, la
+densidad es gaussiana en todo instante,
+
+53
+00:03:11,085 --> 00:03:21,432
+con media x₀ e^(−t/τ) y varianza (k_B
+T/κ)(1 − e^(−2t/τ)), con τ = 1/(μκ).
+
+54
+00:03:21,812 --> 00:03:25,268
+La media relaja con tiempo τ
+y la varianza con la mitad.
+
+55
+00:03:25,648 --> 00:03:31,573
+Con x₀ = 2, κ = 1 y k_B T =
+0,25, en t = τ la media vale cero
+
+56
+00:03:31,573 --> 00:03:36,819
+coma setenta y cuatro y la
+varianza cero coma dos dos.
+
+57
+00:03:37,950 --> 00:03:41,983
+Fokker y Planck nos da la garantía
+de que un dispositivo de Langevin
+
+58
+00:03:41,983 --> 00:03:46,194
+muestrea la distribución correcta,
+y su espectro nos dice cuánto tarda.
+
+59
+00:03:46,574 --> 00:03:50,200
+Los modelos de difusión de la
+unidad nueve son, en el fondo,
+
+60
+00:03:50,200 --> 00:03:54,431
+ecuaciones de Fokker y Planck
+recorridas hacia adelante y hacia atrás.
+
+61
+00:03:54,811 --> 00:03:56,704
+Y en la unidad tres la corriente de
+
+62
+00:03:56,704 --> 00:03:59,299
+probabilidad nos dará la
+producción de entropía.
+
+63
+00:04:00,417 --> 00:04:02,824
+Fokker y Planck es la
+versión continua de la
+
+64
+00:04:02,824 --> 00:04:05,669
+evolución de distribuciones
+en una cadena de Markov.
+
+65
+00:04:06,049 --> 00:04:10,303
+Su caso exactamente soluble es el
+proceso de Ornstein y Uhlenbeck.
+
+66
+00:04:10,683 --> 00:04:14,084
+Su análogo para saltos discretos
+es la ecuación maestra.
+
+67
+00:04:14,464 --> 00:04:17,259
+Y la producción de entropía
+se escribe con la corriente.
+
+68
+00:04:18,383 --> 00:04:21,881
+Errores comunes: confundir
+estacionario con equilibrio.
+
+69
+00:04:22,261 --> 00:04:24,212
+Olvidar las condiciones de frontera.
+
+70
+00:04:24,592 --> 00:04:27,053
+Ignorar que con ruido
+dependiente del estado
+
+71
+00:04:27,053 --> 00:04:29,345
+la ecuación depende de la interpretación.
+
+72
+00:04:29,725 --> 00:04:32,075
+Y pensar que una sola trayectoria sigue la
+
+73
+00:04:32,075 --> 00:04:34,817
+ecuación, cuando la ecuación
+es para la densidad.
+
+74
+00:04:35,950 --> 00:04:41,180
+En resumen: la densidad de un
+proceso de Langevin obedece ∂p/∂t =
+
+75
+00:04:41,180 --> 00:04:45,847
+−∂J/∂x, con una corriente que
+combina arrastre y difusión.
+
+76
+00:04:46,227 --> 00:04:50,302
+En el equilibrio la corriente es cero
+y la solución es la de Boltzmann.
+
+77
+00:04:50,682 --> 00:04:53,253
+Si la corriente no se
+anula, tenemos un estado
+
+78
+00:04:53,253 --> 00:04:55,768
+estacionario fuera del
+equilibrio que disipa.
+
+79
+00:04:56,883 --> 00:05:01,608
+Para practicar: escribe la ecuación para
+un potencial cuadrático, demuestra que
+
+80
+00:05:01,608 --> 00:05:06,212
+Boltzmann anula la corriente, calcula
+la solución gaussiana en otro instante,
+
+81
+00:05:06,592 --> 00:05:09,026
+y explica por qué una
+fuerza constante en un
+
+82
+00:05:09,026 --> 00:05:11,072
+anillo no puede llevar al equilibrio.

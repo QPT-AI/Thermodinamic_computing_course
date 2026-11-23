@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.3}{Repaso de probabilidad}
+
+\noindent\textbf{Unidad 0.}\quad\textbf{Objetivos:} manejar Bernoulli, categóricas y gaussianas; transformar
+gaussianas multivariadas; calcular entropía de Shannon y divergencia KL. \textbf{Prerrequisitos:} cálculo,
+álgebra matricial básica.
+
+\section{¿Por qué importa?}
+Un computador termodinámico devuelve \emph{muestras}. Para saber qué calcula (la distribución), con qué
+precisión (sus momentos y el error de promediar) y cuánta información contiene (entropía), necesitamos el
+lenguaje de la probabilidad.
+
+\section{Variables discretas}
+\begin{definicion}[ (Bernoulli y categórica)]
+$x\sim\mathrm{Bernoulli}(p)$ si $P(x=1)=p$, $P(x=0)=1-p$; $\E[x]=p$, $\Var[x]=p(1-p)$.
+$x\sim\mathrm{Cat}(\pi_1,\dots,\pi_K)$ si $P(x=k)=\pi_k$ con $\pi_k\ge0$ y $\sum_k\pi_k=1$.
+\end{definicion}
+\textbf{Ley de los grandes números.} Si $x_1,\dots,x_n$ son i.i.d. con media $\mu$ y varianza $\sigma^2$, la
+media muestral $\bar x_n$ converge a $\mu$ y su error estándar es $\sigma/\sqrt n$. Para Bernoulli($p$), el
+error estándar de $\hat p$ es $\sqrt{p(1-p)/n}$.
+
+En el curso el espín de un pbit toma valores $s\in\{-1,+1\}$; si $x=(s+1)/2$ es Bernoulli($p$), entonces
+$\E[s]=2p-1$ (Unidad 4).
+
+\section{La gaussiana y el teorema central del límite}
+\begin{definicion}[ (gaussiana univariada)]
+$p(x)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\!\big(-\frac{(x-\mu)^2}{2\sigma^2}\big)$, con $\E[x]=\mu$, $\Var[x]=\sigma^2$.
+\end{definicion}
+\begin{resultado}[ (TCL)]
+Si $x_i$ son i.i.d. con media $\mu$ y varianza $\sigma^2<\infty$, $\frac{\sum_{i=1}^n x_i-n\mu}{\sigma\sqrt n}\to\N(0,1)$
+en distribución. En la animación, la suma de 20 Bernoulli(1/2) (binomial) se aproxima por $\N(10,5)$.
+\end{resultado}
+El ruido térmico de un resistor o la fuerza aleatoria sobre una partícula browniana son sumas de enormes
+números de choques microscópicos casi independientes: por eso se modelan como gaussianos (Unidad 2).
+
+\section{Gaussiana multivariada}
+$x\sim\N(\mu,\Sigma)$ en $\R^d$ con $\Sigma$ simétrica definida positiva (SPD):
+\[
+p(x)=\frac{1}{\sqrt{\det(2\pi\Sigma)}}\exp\!\Big(-\tfrac12(x-\mu)^\top\Sigma^{-1}(x-\mu)\Big).
+\]
+\begin{proposicion}
+Si $y\sim\N(0,I)$ y $x=Ay+b$, entonces $x\sim\N(b,AA^\top)$.
+\end{proposicion}
+\begin{proof}
+Linealidad: $\E[x]=A\E[y]+b=b$. $\mathrm{Cov}(x)=\E[(Ay)(Ay)^\top]=A\,\E[yy^\top]A^\top=AA^\top$. Una
+transformación afín de una gaussiana es gaussiana (su función característica sigue siendo exponencial de
+una cuadrática), y una gaussiana queda determinada por media y covarianza.
+\end{proof}
+Geométricamente, las curvas de nivel son elipses $\{x:(x-\mu)^\top\Sigma^{-1}(x-\mu)=c\}$ con ejes en los
+vectores propios $v_i$ de $\Sigma$ y semiejes $\propto\sqrt{\lambda_i}$ (lección 0.4). Recíprocamente, para
+muestrear $\N(\mu,\Sigma)$ basta $x=\mu+Ly$ con $\Sigma=LL^\top$ (Cholesky).
+
+\section{Momentos}
+Media $\mu=\E[x]$; covarianza $\Sigma=\E[(x-\mu)(x-\mu)^\top]$; momentos de orden superior
+$\E[x^k]$. Para gaussianas, los dos primeros momentos determinan todo. \textbf{Anticipo (Unidades 2 y 6):}
+el proceso de Ornstein--Uhlenbeck $\dd x=-(Ax-b)\dd t+\sqrt{2\beta^{-1}}\dd W$ tiene estado estacionario
+$\N(A^{-1}b,\beta^{-1}A^{-1})$: la media resuelve $Ax=b$ y la covarianza da $A^{-1}$.
+
+\section{Entropía de Shannon}
+\begin{definicion}[ (entropía)]
+$H(x)=-\sum_ip_i\log_2p_i$ bits; con $\ln$ se mide en nats ($1$ nat $=1/\ln2\approx1{,}443$ bits).
+Para Bernoulli: $h(p)=-p\log_2p-(1-p)\log_2(1-p)$, máxima ($1$ bit) en $p=1/2$.
+\end{definicion}
+Interpretación: $-\log_2p_i$ es la sorpresa del resultado $i$; $H$ es la sorpresa promedio y el número
+mínimo promedio de bits por símbolo para codificar (teorema de codificación de fuente).
+Para densidades se define la entropía diferencial $h=-\int p\ln p$; para $\N(\mu,\Sigma)$ en $\R^d$:
+\[h=\tfrac12\ln\det(2\pi e\,\Sigma)=\tfrac d2\ln(2\pi e)+\tfrac12\ln\det\Sigma,\]
+que puede ser negativa (si $\Sigma$ es pequeña).
+
+\section{Divergencia de Kullback--Leibler}
+\begin{definicion}[ (KL)]
+$\KL(p\|q)=\E_p\big[\ln\frac{p}{q}\big]$. Por la desigualdad de Jensen (Gibbs), $\KL(p\|q)\ge0$ con igualdad
+si y solo si $p=q$ casi en todas partes. No es simétrica ni cumple la desigualdad triangular.
+\end{definicion}
+Para gaussianas univariadas:
+\[\KL(\N(\mu_1,\sigma_1^2)\|\N(\mu_2,\sigma_2^2))=\ln\frac{\sigma_2}{\sigma_1}+\frac{\sigma_1^2+(\mu_1-\mu_2)^2}{2\sigma_2^2}-\frac12.\]
+\begin{ejemplo}
+$h(0{,}9)=-0{,}9\log_20{,}9-0{,}1\log_20{,}1=0{,}137+0{,}332=0{,}469$ bits.
+$\KL(\N(0,1)\|\N(1,4))=\ln2+\frac{1+1}{8}-\frac12\approx0{,}443$ nats. Con $\N(0,4)$ en lugar de $\N(1,4)$:
+$\KL(\N(0,1)\|\N(0,4))=0{,}318$ y $\KL(\N(0,4)\|\N(0,1))=0{,}807$: la asimetría es evidente.
+\end{ejemplo}
+
+\begin{aplicacion}
+Pbit $=$ Bernoulli controlada por un campo (Unidad 4). Estado estacionario del OU $=$ gaussiana
+multivariada (Unidades 2, 6). Entropía $\to$ costo de Landauer (Unidad 1). KL $\to$ aprendizaje de máquinas
+de Boltzmann, ELBO de difusión, geometría de la información y gradiente natural (Unidades 4, 8, 9).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $\mathrm{Cov}(Ay+b)=A\,\mathrm{Cov}(y)A^\top$, no $A^2\mathrm{Cov}(y)$.
+\item KL no es distancia. Elegir $\KL(p\|q)$ o $\KL(q\|p)$ cambia el comportamiento (cubrir modos frente a buscar modos).
+\item Bits ($\log_2$) frente a nats ($\ln$).
+\item La entropía diferencial puede ser negativa y no es invariante ante cambios de escala.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Bernoulli/categórica/gaussiana; LGN y TCL; $x=Ay+b\Rightarrow\N(b,AA^\top)$; $H=-\sum p\log p$; $\KL\ge0$ no simétrica.
+
+\begin{thebibliography}{9}\small
+\bibitem[3]{levin} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS, 2009.
+\bibitem[46]{holderrieth} P. Holderrieth y E. Erives, An introduction to flow matching and diffusion models, 2025. \url{https://arxiv.org/abs/2506.02070}
+\bibitem[c]{cover} (Complementaria, fuera del pensum) T. M. Cover y J. A. Thomas, \emph{Elements of Information Theory}, 2.ª ed., Wiley, 2006.
+\end{thebibliography}
+\end{document}

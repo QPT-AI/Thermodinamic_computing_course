@@ -1,0 +1,351 @@
+1
+00:00:00,350 --> 00:00:01,973
+Lección 9.3.
+
+2
+00:00:02,353 --> 00:00:05,194
+Modelos termodinámicos
+de eliminación de ruido.
+
+3
+00:00:06,317 --> 00:00:08,732
+Los computadores probabilísticos muestrean
+
+4
+00:00:08,732 --> 00:00:11,435
+modelos basados en energía
+con gran eficiencia.
+
+5
+00:00:11,815 --> 00:00:15,694
+Pero usar un solo modelo de energía
+para representar datos reales
+
+6
+00:00:15,694 --> 00:00:19,573
+tiene un problema serio, y Jelinčič
+y colaboradores, de Extropic,
+
+7
+00:00:19,953 --> 00:00:23,936
+propusieron en dos mil veinticinco
+una solución inspirada en la
+
+8
+00:00:23,936 --> 00:00:28,236
+difusión: los modelos termodinámicos
+de eliminación de ruido, o DTM.
+
+9
+00:00:28,616 --> 00:00:31,913
+Hoy vemos el problema, la
+solución y la cuenta de energía.
+
+10
+00:00:33,017 --> 00:00:35,392
+Los datos reales tienen modos separados.
+
+11
+00:00:35,772 --> 00:00:40,231
+Un modelo de energía monolítico que
+los representa bien necesita valles
+
+12
+00:00:40,231 --> 00:00:45,004
+profundos separados por montañas altas,
+y un muestreador local, como Gibbs o
+
+13
+00:00:45,004 --> 00:00:49,527
+Langevin, cruza esas montañas con
+probabilidad exponencialmente pequeña.
+
+14
+00:00:49,907 --> 00:00:52,712
+Más expresividad significa
+mezcla más lenta.
+
+15
+00:00:53,092 --> 00:00:57,553
+Lo medimos con una mezcla de dos modos,
+con el ochenta por ciento del peso a
+
+16
+00:00:57,553 --> 00:01:01,896
+la derecha: partiendo de una distribución
+ancha, el muestreo monolítico se
+
+17
+00:01:01,896 --> 00:01:05,536
+queda en un cincuenta y uno por
+ciento aun con ocho mil pasos.
+
+18
+00:01:06,650 --> 00:01:09,634
+La solución es no pedirle
+todo a un solo modelo.
+
+19
+00:01:10,014 --> 00:01:14,001
+Como en la difusión, se añade ruido
+a los datos en T pasos, y cada
+
+20
+00:01:14,001 --> 00:01:18,049
+paso inverso se representa con un
+modelo de energía condicional: la
+
+21
+00:01:18,049 --> 00:01:21,734
+probabilidad de la versión menos
+ruidosa dada la más ruidosa.
+
+22
+00:01:22,114 --> 00:01:26,082
+Cada uno de esos condicionales es
+casi unimodal y fácil de muestrear.
+
+23
+00:01:26,462 --> 00:01:29,253
+La complejidad se construye
+a lo largo de la cadena.
+
+24
+00:01:29,632 --> 00:01:33,010
+En nuestro ejemplo, con treinta
+y dos niveles y cuarenta
+
+25
+00:01:33,010 --> 00:01:36,268
+pasos cada uno, la fracción
+en el modo derecho sube al
+
+26
+00:01:36,268 --> 00:01:39,646
+setenta y cinco por ciento,
+acercándose al ochenta real.
+
+27
+00:01:40,750 --> 00:01:45,071
+La arquitectura propuesta, DTCA,
+implementa cada condicional como una
+
+28
+00:01:45,071 --> 00:01:49,266
+máquina de Boltzmann dispersa en
+una rejilla de setenta por setenta
+
+29
+00:01:49,266 --> 00:01:52,648
+variables binarias, cada una
+conectada a doce vecinas,
+
+30
+00:01:53,028 --> 00:01:56,117
+con algunas variables para
+los datos y el resto latentes.
+
+31
+00:01:56,497 --> 00:01:59,943
+Cada nodo es un generador de
+bits aleatorios hecho solo de
+
+32
+00:01:59,943 --> 00:02:03,568
+transistores, con respuesta
+sigmoidal medida en laboratorio y
+
+33
+00:02:03,568 --> 00:02:06,717
+un tiempo de decorrelación
+de unos cien nanosegundos.
+
+34
+00:02:07,097 --> 00:02:10,239
+La rejilla es bipartita,
+así que un barrido de Gibbs
+
+35
+00:02:10,239 --> 00:02:13,140
+completo dura unos dos
+tiempos de decorrelación.
+
+36
+00:02:14,250 --> 00:02:19,470
+El modelo de energía es E = T
+K_mix L² E_cell: número de pasos de
+
+37
+00:02:19,470 --> 00:02:24,771
+eliminación de ruido, por barridos
+de Gibbs, por número de celdas,
+
+38
+00:02:25,151 --> 00:02:29,082
+por la energía de cada celda,
+estimada en unos dos femtojulios.
+
+39
+00:02:29,462 --> 00:02:34,410
+Con ocho pasos, doscientos cincuenta
+barridos y setenta por setenta celdas, son
+
+40
+00:02:34,410 --> 00:02:38,982
+unos veinte nanojulios por muestra,
+y unos cero coma cuatro milisegundos.
+
+41
+00:02:39,362 --> 00:02:43,969
+Con esa cuenta, los autores estiman
+igualar la calidad de modelos en GPU
+
+42
+00:02:43,969 --> 00:02:48,385
+sobre Fashion-MNIST binarizado con
+unas diez mil veces menos energía.
+
+43
+00:02:49,517 --> 00:02:50,801
+¿Cómo leer esa cifra?
+
+44
+00:02:51,181 --> 00:02:55,463
+Combina mediciones reales del
+generador de bits con modelos físicos y
+
+45
+00:02:55,463 --> 00:02:59,684
+simulaciones: es una estimación,
+no la medición de un chip completo.
+
+46
+00:03:00,064 --> 00:03:03,605
+La energía de la GPU se calcula
+dividiendo operaciones por la
+
+47
+00:03:03,605 --> 00:03:06,567
+especificación del fabricante,
+lo que la subestima.
+
+48
+00:03:06,947 --> 00:03:08,915
+Y el banco de prueba es pequeño.
+
+49
+00:03:09,295 --> 00:03:12,842
+Para tareas más grandes, los
+autores combinan un DTM con
+
+50
+00:03:12,842 --> 00:03:16,074
+una red neuronal: en
+CIFAR-diez igualan a un modelo
+
+51
+00:03:16,074 --> 00:03:19,685
+puramente neuronal usando una
+red diez veces más pequeña.
+
+52
+00:03:20,065 --> 00:03:23,539
+Prometedor, y todavía por
+demostrar en hardware completo.
+
+53
+00:03:24,650 --> 00:03:27,440
+Los DTM sirven para modelado generativo en
+
+54
+00:03:27,440 --> 00:03:30,762
+hardware probabilístico;
+durante el entrenamiento,
+
+55
+00:03:31,142 --> 00:03:35,810
+una penalización adaptativa de correlación
+mantiene los condicionales fáciles
+
+56
+00:03:35,810 --> 00:03:40,053
+de mezclar; y para datos más grandes
+se combinan con redes neuronales.
+
+57
+00:03:40,433 --> 00:03:45,223
+En el laboratorio catorce
+entrenarás un DTM pequeño en THRML.
+
+58
+00:03:46,350 --> 00:03:49,296
+Errores comunes: usar un
+modelo monolítico para
+
+59
+00:03:49,296 --> 00:03:52,241
+datos multimodales y
+confiar en cadenas cortas.
+
+60
+00:03:52,621 --> 00:03:57,039
+Usar muy pocos pasos, con lo que los
+condicionales vuelven a ser multimodales.
+
+61
+00:03:57,419 --> 00:04:01,279
+Confundir el tiempo de decorrelación
+del hardware con el número de barridos.
+
+62
+00:04:01,659 --> 00:04:05,065
+Y citar las diez mil veces como
+si fuera una medición de un chip.
+
+63
+00:04:06,183 --> 00:04:09,250
+En resumen: un modelo de
+energía monolítico mezcla
+
+64
+00:04:09,250 --> 00:04:12,133
+cada vez peor a medida
+que se vuelve expresivo.
+
+65
+00:04:12,513 --> 00:04:17,275
+Un DTM encadena modelos condicionales
+fáciles, como pasos de difusión, y
+
+66
+00:04:17,275 --> 00:04:21,375
+cada uno se muestrea con Gibbs
+en una rejilla de transistores.
+
+67
+00:04:21,755 --> 00:04:26,323
+La energía se estima con T K_mix
+L² E_cell, y la ventaja de diez mil
+
+68
+00:04:26,323 --> 00:04:30,286
+veces es una estimación
+prometedora sobre un banco pequeño.
+
+69
+00:04:31,417 --> 00:04:35,539
+Para practicar: explica por qué
+un muestreador local mezcla lento.
+
+70
+00:04:35,919 --> 00:04:38,042
+Escribe la energía de un condicional.
+
+71
+00:04:38,422 --> 00:04:40,640
+Calcula la energía para cuatro pasos.
+
+72
+00:04:41,020 --> 00:04:44,765
+Y enumera tres advertencias sobre
+la estimación de diez mil veces.

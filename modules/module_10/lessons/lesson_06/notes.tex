@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.6}{Unidades tanh-lineales en un grafo de grado 16}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} la unidad tanh-lineal como pbit en promedio; proyecciones en un grafo de grado 16 con 4 entradas $\times$ 4 pbits;
+el compromiso entre sesgo del ruido y profundidad.
+\textbf{Prerrequisitos:} 10.3, 10.4, 10.5.
+
+\section{La unidad tanh-lineal}
+$y=\tanh(\sum_jw_jx_j+b)$. Un pbit con vecinos $s_j$ cumple $\mathbb E[m\mid s]=\tanh(\beta\sum_jJ_js_j+h)$: la unidad tanh-lineal es el pbit visto en promedio.
+
+\section{4 entradas $\times$ 4 pbits}
+Con grado 16, si cada entrada se codifica con un grupo de 4 pbits que comparten peso (entero probabilístico de 5 niveles, 10.5), una unidad lee 4 entradas.
+
+\section{Sesgo del ruido \evS}
+$\mathbb E[\tanh u]\ne\tanh\mathbb E[u]$ (Jensen): el ruido de entrada sesga la salida. Con 4000 unidades al azar ($x\sim U[-1,1]$, $w\sim\mathcal N(0,1{,}5^2/f)$,
+400 muestras), con grado 16 fijo:
+\begin{center}\small\begin{tabular}{ccc}\toprule
+abanico $\times$ pbits & sesgo rms & capas para $d=1024$ ($\log_fd$)\\\midrule
+$16\times1$ & 0{,}197 & 2{,}5\\ $8\times2$ & 0{,}136 & 3{,}3\\ $4\times4$ & 0{,}085 & 5{,}0\\ $2\times8$ & 0{,}053 & 10\\ $1\times16$ & 0{,}036 & ---\\\bottomrule
+\end{tabular}\end{center}
+$4\times4$ es un compromiso; el entrenamiento con pasadas muestreadas absorbe buena parte del sesgo.
+
+\section{Proyecciones de embedding}
+El embedding de cada token (digital) se escribe como sesgos sobre grupos de 4 pbits; capas tanh-lineales de abanico 4 proyectan y mezclan; la salida se lee promediando
+y vuelve a lo digital para la cabeza de vocabulario (10.7).
+
+\begin{aplicacion}
+MLP con tanh, normas DyT, proyecciones con máscara de abanico 4, entrenamiento muestreado. Laboratorio L29.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Suponer $\mathbb E[\tanh u]=\tanh\mathbb E[u]$. \quad Gastar las 16 conexiones en entradas de un pbit.
+\item Olvidar el costo en profundidad. \quad Entrenar determinista y desplegar estocástico.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\bibitem{camsari} K. Y. Camsari et al., p-bits for probabilistic spin logic, \emph{Appl. Phys. Rev.} 6, 011305 (2019).
+\end{thebibliography}
+\end{document}

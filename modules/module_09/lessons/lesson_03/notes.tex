@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{9.3}{Modelos termodinámicos de eliminación de ruido (DTM)}
+
+\noindent\textbf{Unidad 9.}\quad\textbf{Objetivos:} el compromiso mezcla--expresividad; DTM como cadena de EBM condicionales; el modelo de energía de la DTCA y la lectura
+de la cifra de $10^4\times$.
+\textbf{Prerrequisitos:} 4.3, 5.3, 9.1--9.2.
+
+\section{Compromiso mezcla--expresividad}
+Un EBM monolítico $P(x)\propto e^{-E(x)}$ que representa datos multimodales tiene valles profundos separados por barreras; un muestreador local las cruza con probabilidad
+$\sim e^{-\Delta E}$: más expresividad, mezcla más lenta.
+\begin{ejemplo}
+\evS\ Objetivo $0{,}8\,\N(2;0{,}3^2)+0{,}2\,\N(-2;0{,}3^2)$; Langevin desde $\N(0,1)$, 8000 pasos: fracción en el modo derecho $51\,\%$ (debería ser $80\,\%$).
+\end{ejemplo}
+
+\section{DTM}
+Como en la difusión, se añade ruido en $T$ pasos y cada paso inverso es un EBM condicional:
+\[P_\theta(x_{t-1}\mid x_t)\propto e^{-E^\theta_{t-1}(x_{t-1})}\,q(x_t\mid x_{t-1}),\]
+casi unimodal y fácil de muestrear; la complejidad se construye a lo largo de la cadena.
+\begin{ejemplo}
+\evS\ Mismo objetivo, 32 niveles con 40 pasos de Langevin cada uno: $75\,\%$ en el modo derecho. El error restante proviene de condicionales aún bimodales y de la discretización;
+con muy pocos niveles, los condicionales vuelven a ser multimodales.
+\end{ejemplo}
+
+\section{Arquitectura DTCA}
+Cada condicional es una máquina de Boltzmann dispersa: rejilla $L\times L$ ($L=70$) de variables binarias, grado 12, nodos de datos y latentes. Cada nodo es un generador de bits
+aleatorios solo de transistores con respuesta sigmoidal medida y $\tau_0\approx100$ ns \evM. Rejilla bipartita: un barrido $\approx2\tau_0$.
+
+\section{Energía}
+\[E=T\,K_{\text{mix}}\,L^2E_{\text{cell}},\qquad E_{\text{cell}}=E_{\text{rng}}+E_{\text{bias}}+E_{\text{clock}}+E_{\text{comm}}\approx2\ \text{fJ}.\]
+Con $T=8$, $K_{\text{mix}}=250$, $L=70$: $\approx20$ nJ por muestra y $T K_{\text{mix}}2\tau_0\approx0{,}4$ ms. Los autores estiman igualar el FID de modelos en GPU en Fashion-MNIST
+binarizado con $\sim10^4$ veces menos energía \evE. Advertencias: combina mediciones del RNG con modelos y simulaciones; la energía de GPU se calcula como FLOPs/especificación
+(subestimada); banco pequeño. Híbrido DTM + red neuronal: paridad en CIFAR-10 con una red diez veces menor.
+
+\begin{aplicacion}
+Modelado generativo en hardware probabilístico; penalización adaptativa de correlación (ACP) para mantener la mezcla durante el entrenamiento. Laboratorio L14: DTM en THRML
+y su energía con la fórmula de la DTCA.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item EBM monolítico con cadenas cortas. \quad Muy pocos pasos de eliminación de ruido.
+\item Confundir $\tau_0$ con $K_{\text{mix}}$. \quad Citar $10^4\times$ como medición de un chip.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[48]{dtm} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, arXiv:2510.23972 (2025).
+\bibitem[22]{z1} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\bibitem{ho} J. Ho, A. Jain y P. Abbeel, Denoising diffusion probabilistic models, \emph{NeurIPS} (2020).
+\end{thebibliography}
+\end{document}

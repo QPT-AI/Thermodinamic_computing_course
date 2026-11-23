@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.2}{El modelo de Ising}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Campo local de un espín con 4 vecinos alineados ($+1$), $J=1$, $h=-0{,}5$; probabilidad de $s_i=+1$ a $\beta=1$.
+\item (B) Estados fundamentales y energía del triángulo antiferromagnético $J=-1$.
+\item (B) Evalúe $m(T)$ de Onsager en $T=2{,}2$.
+\item (B) ¿Por qué la cadena 1D no se ordena a $T>0$?
+\item (I) Para la cadena 1D periódica de $N$ espines, muestre que $Z=(2\cosh\beta J)^N+(2\sinh\beta J)^N$.
+\item (I) ¿Cuántas configuraciones tiene una red $32\times32$? ¿Cuántos barridos de Gibbs usó la simulación de los apuntes por temperatura?
+\item (A) Implemente Gibbs de tablero de ajedrez y mida $\langle|m|\rangle$ para $L=16,32,64$ en $T=2{,}27$. Explique la tendencia.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $u=4-0{,}5=3{,}5$; $P=\sigma(7)=0{,}999$.
+
+\textbf{E2.} Energía de un estado: $E=s_1s_2+s_2s_3+s_3s_1$; mínimo $-1$ en los 6 estados que no son todos iguales.
+
+\textbf{E3.} $\sinh(2/2{,}2)=1{,}0396$; $1-1{,}0396^{-4}=0{,}144$; $m=0{,}144^{1/8}=0{,}78$.
+
+\textbf{E4.} Crear una pared de dominio cuesta $2J$ pero gana entropía $\ln N$: para $N$ grande la energía libre favorece las paredes a cualquier $T>0$.
+
+\textbf{E5.} Matriz de transferencia $T=\begin{pmatrix}e^{\beta J}&e^{-\beta J}\\e^{-\beta J}&e^{\beta J}\end{pmatrix}$, autovalores $2\cosh\beta J$ y $2\sinh\beta J$; $Z=\mathrm{Tr}\,T^N$.
+
+\textbf{E6.} $2^{1024}\approx1{,}8\times10^{308}$; 1200 barridos (300 de calentamiento).
+
+\textbf{E7.} En $T_c$, $\langle|m|\rangle$ decrece con $L$ como $L^{-1/8}$ (exponente crítico $\beta/\nu=1/8$).
+\end{solucion}
+\end{document}

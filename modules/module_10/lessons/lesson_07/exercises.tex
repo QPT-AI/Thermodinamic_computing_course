@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.7}{La arquitectura Z1T}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Fracción de la FPGA en 294{,}52 nJ/token.
+\item (B) Recalcule la razón $139\times$ a partir de 40{,}9 $\mu$J/token.
+\item (B) ¿Por qué factor multiplica la energía la cabeza de vocabulario?
+\item (B) ¿Qué componente domina la latencia y por qué?
+\item (I) Si la FPGA se reduce a una décima parte, ¿nueva energía por token y nueva razón frente a la H100 con MFU 10\,\%?
+\item (I) Con la cabeza incluida y la H100 con MFU 10\,\% (40{,}9 $\mu$J sin cabeza), ¿qué haría falta saber para comparar con justicia?
+\item (A) Construya una hoja de contabilidad Z1 + FPGA para su modelo del laboratorio L29 y compare con una GPU.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $285{,}78/294{,}52\approx97\,\%$.
+
+\textbf{E2.} $40\,900/294{,}52\approx139$.
+
+\textbf{E3.} $136{,}4\ \mu\text{J}/294{,}52\ \text{nJ}\approx463$.
+
+\textbf{E4.} La orquestación de la FPGA (38 de 58{,}8 $\mu$s): 38 operaciones seriales de 1 $\mu$s.
+
+\textbf{E5.} $8{,}74+28{,}58=37{,}3$ nJ; razón $\approx1100\times$.
+
+\textbf{E6.} La energía de la cabeza en la H100 y si la cifra de la H100 la incluye; comparar ambos sistemas con el mismo alcance.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

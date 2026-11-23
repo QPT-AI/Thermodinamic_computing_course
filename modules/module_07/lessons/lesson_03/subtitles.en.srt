@@ -1,0 +1,295 @@
+1
+00:00:00,350 --> 00:00:02,006
+Lesson 7.3.
+
+2
+00:00:02,386 --> 00:00:04,766
+Random walks on Cayley graphs.
+
+3
+00:00:05,883 --> 00:00:08,872
+Imagine placing a drop
+of heat on one node of a
+
+4
+00:00:08,872 --> 00:00:11,734
+graph and letting it
+spread to its neighbors.
+
+5
+00:00:12,114 --> 00:00:15,640
+Over time, the heat becomes
+uniform, and its final value
+
+6
+00:00:15,640 --> 00:00:18,851
+at each node is one divided
+by the number of nodes.
+
+7
+00:00:19,231 --> 00:00:22,004
+If the graph is a group whose
+size is the order we are
+
+8
+00:00:22,004 --> 00:00:24,981
+looking for, measuring that
+final value reveals the order.
+
+9
+00:00:25,361 --> 00:00:28,357
+Today we build that graph
+and understand its dynamics.
+
+10
+00:00:29,483 --> 00:00:34,721
+Take b = 3 modulo two hundred
+ninety-nine, whose order is thirty-three.
+
+11
+00:00:35,101 --> 00:00:39,263
+The nodes are the powers of b: a
+cycle of thirty-three elements.
+
+12
+00:00:39,643 --> 00:00:45,379
+The edges multiply by b^(±
+2^t), with t from zero to M = 9.
+
+13
+00:00:45,759 --> 00:00:52,669
+In exponent coordinates, each node j
+connects to j ± 2^t modulo thirty-three.
+
+14
+00:00:53,049 --> 00:00:55,480
+The key point: the
+neighbors are computed with
+
+15
+00:00:55,480 --> 00:00:58,121
+modular multiplication,
+without knowing the order.
+
+16
+00:00:59,250 --> 00:01:03,155
+The walker, with probability one
+half, stays put; with the other
+
+17
+00:01:03,155 --> 00:01:06,511
+half, it jumps along one of
+the twenty edges at random.
+
+18
+00:01:06,891 --> 00:01:10,631
+That is the matrix W = ½(I + P).
+
+19
+00:01:11,011 --> 00:01:16,472
+Starting with all the mass on the
+identity, the distribution after
+
+20
+00:01:16,472 --> 00:01:21,106
+ℓ steps is p_ℓ = W^ℓ δ_e: the
+discrete-time heat kernel.
+
+21
+00:01:21,486 --> 00:01:24,761
+Its difference between steps
+is the Laplacian applied
+
+22
+00:01:24,761 --> 00:01:27,603
+to the distribution: a
+discrete heat equation.
+
+23
+00:01:28,717 --> 00:01:34,058
+Since the graph is a cyclic
+group, the functions χ_k(j) =
+
+24
+00:01:34,058 --> 00:01:40,336
+e^(2πikj/r), the characters we saw
+in lesson 0.6, are eigenvectors.
+
+25
+00:01:40,716 --> 00:01:46,086
+The eigenvalue of P is the
+average of the cosines of
+
+26
+00:01:46,086 --> 00:01:50,733
+2πk2^t/r, and that of
+W is λ_k = (1 + μ_k)/2.
+
+27
+00:01:51,113 --> 00:01:55,660
+They all lie between zero and one, and
+only the zero mode equals exactly one.
+
+28
+00:01:56,783 --> 00:02:01,500
+Expanding the delta in
+characters, the value
+
+29
+00:02:01,500 --> 00:02:06,002
+at the identity is p_ℓ(e) = (1/r) Σ λ_k^ℓ.
+
+30
+00:02:06,382 --> 00:02:11,687
+The k = 0 term gives exactly
+one over r; the others decay.
+
+31
+00:02:12,067 --> 00:02:18,553
+In the example, after five steps it
+is 0.079; after ten, 0.036; after
+
+32
+00:02:18,553 --> 00:02:24,193
+twenty, 0.0304, already very
+close to one over thirty-three.
+
+33
+00:02:24,573 --> 00:02:28,000
+Computed with the spectral
+formula or by multiplying the
+
+34
+00:02:28,000 --> 00:02:30,875
+matrix, the result agrees
+to machine precision.
+
+35
+00:02:31,983 --> 00:02:33,380
+Why powers of two?
+
+36
+00:02:33,760 --> 00:02:37,925
+With only ± 1 jumps, the graph
+is a cycle and the slowest
+
+37
+00:02:37,925 --> 00:02:41,797
+eigenvalue is 0.99: seven
+hundred sixty-two steps are
+
+38
+00:02:41,797 --> 00:02:45,450
+needed for the modes to
+drop below one thousandth.
+
+39
+00:02:45,830 --> 00:02:51,751
+With the dyadic generators, the slowest
+is 0.669, and eighteen steps suffice.
+
+40
+00:02:52,131 --> 00:02:55,362
+Powers of two scatter any
+frequency: that is the
+
+41
+00:02:55,362 --> 00:02:58,457
+idea of the doubling
+lemma in the next lesson.
+
+42
+00:02:59,583 --> 00:03:03,399
+Heat kernels on groups
+describe mixing times of Markov
+
+43
+00:03:03,399 --> 00:03:07,426
+chains, such as shuffling
+cards; they appear in diffusion
+
+44
+00:03:07,426 --> 00:03:11,312
+maps and graph neural networks,
+and in expander graphs,
+
+45
+00:03:11,692 --> 00:03:14,035
+which mix fast with few generators.
+
+46
+00:03:14,415 --> 00:03:17,289
+In lab ten you will build this walk.
+
+47
+00:03:18,417 --> 00:03:21,780
+Common mistakes: forgetting
+laziness, without which there may
+
+48
+00:03:21,780 --> 00:03:24,702
+be an eigenvalue of minus
+one that prevents settling.
+
+49
+00:03:25,082 --> 00:03:27,813
+Believing the order is
+needed to build the graph.
+
+50
+00:03:28,193 --> 00:03:31,206
+Confusing the eigenvalues of P and of W.
+
+51
+00:03:31,586 --> 00:03:34,414
+And simulating the full
+vector digitally, which
+
+52
+00:03:34,414 --> 00:03:36,881
+costs r per step and loses the advantage.
+
+53
+00:03:37,983 --> 00:03:41,710
+In summary: the Cayley
+graph of ⟨b⟩ with dyadic
+
+54
+00:03:41,710 --> 00:03:45,357
+generators is built
+without knowing the order.
+
+55
+00:03:45,737 --> 00:03:51,433
+The half-lazy walk is a discrete heat
+equation, diagonalized by characters.
+
+56
+00:03:51,813 --> 00:03:55,106
+Its value at the identity
+tends to one over r, and
+
+57
+00:03:55,106 --> 00:03:58,070
+powers of two make it
+get there in few steps.
+
+58
+00:03:59,183 --> 00:04:02,031
+To practice: write the
+neighbors of a node.
+
+59
+00:04:02,411 --> 00:04:05,169
+Prove that the characters
+are eigenvectors.
+
+60
+00:04:05,549 --> 00:04:09,586
+Explain why the eigenvalues
+of W lie between zero and one.
+
+61
+00:04:09,966 --> 00:04:13,105
+And derive the heat-kernel
+formula at the identity.

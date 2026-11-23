@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.3}{Los TSU de Extropic}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule las actualizaciones por segundo del Z1 y la cota de energía por actualización.
+\item (B) ¿Qué primitiva usaría para una etiqueta de 10 clases? ¿Para la intensidad de un píxel?
+\item (B) Si un barrido necesita 4 colores, ¿cuántos barridos por segundo hace Z1 a 50 MHz?
+\item (B) ¿Por qué cada pbit necesita su propia calibración?
+\item (I) Un error de calibración de 5\,\% en $P(+1)$ equivale a qué error en el campo $u$ cerca de $u=0$ ($\beta=1$)?
+\item (I) Si se leen muestras cada 20 barridos y cada lectura transfiere 269\,568 bits a 10 pJ/bit, ¿qué potencia de E/S resulta? Compárela con 1 W.
+\item (A) Construya en THRML (o JAX) un grafo de grado 16 de $10^4$ nodos, colóreelo y simule Gibbs cromático; reporte actualizaciones/s en GPU.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $1{,}35\times10^{13}$ s$^{-1}$; $\le7{,}4\times10^{-14}$ J.
+
+\textbf{E2.} pdit; pmode (o pmog si la distribución es multimodal).
+
+\textbf{E3.} $50\times10^6/4=1{,}25\times10^7$ barridos/s.
+
+\textbf{E4.} Variabilidad de fabricación: cada dispositivo tiene sesgo y ganancia distintos.
+
+\textbf{E5.} $dP/du=2\sigma'(0)=0{,}5$: $\Delta u\approx0{,}05/0{,}5=0{,}1$.
+
+\textbf{E6.} Lecturas/s $=1{,}25\times10^7/20\cdot$ (con 4 colores) $=6{,}25\times10^5$; potencia $=6{,}25\times10^5\cdot269\,568\cdot10^{-11}\approx1{,}7$ W: ¡más que el tejido!
+
+\textbf{E7.} Del orden de $10^{9}$--$10^{10}$ actualizaciones/s en una GPU moderna.
+\end{solucion}
+\end{document}

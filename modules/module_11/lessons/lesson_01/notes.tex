@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.1}{THRML: simular TSU en GPU}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} las abstracciones de THRML; muestreo por bloques verificado contra enumeración exacta; rendimiento en giros por
+nanosegundo.
+\textbf{Prerrequisitos:} 4.3, 10.7.
+
+\section{Grafos de factores y Gibbs por bloques}
+EBM factorizado: $\mathcal E(x)=\sum_{\psi\in S}\psi(x_\psi)$ con factores locales. Gibbs: $P(x_i\mid x_{nb(i)})\propto e^{-\mathcal E_i(x_i,x_{nb(i)})}$, que solo depende de los
+factores que tocan $x_i$. Nodos sin interacción mutua (un color de un coloreado del grafo) se actualizan en paralelo: Gibbs cromático.
+
+\section{Abstracciones de THRML}
+Biblioteca de Extropic sobre JAX (versión usada: 0.1.4). \textbf{Nodos} (\texttt{SpinNode}, categóricos, continuos); \textbf{bloques} (\texttt{Block}: nodos que se actualizan
+juntos); \textbf{factores} (\texttt{SpinEBMFactor}, etc.) y \textbf{muestreadores condicionales}; \textbf{programa} (\texttt{IsingSamplingProgram},
+\texttt{BlockSamplingProgram}) y \textbf{calendario} (\texttt{SamplingSchedule}: calentamiento, muestras, barridos entre muestras). Ejecución: \texttt{sample\_states},
+vectorizada con \texttt{vmap} sobre cadenas. Inicialización: \texttt{hinton\_init}.
+
+\section{Exactitud \evS}
+Ising $4\times4$ ($J\sim\mathcal N(0,0{,}5^2)$, $h\sim\mathcal N(0,0{,}2^2)$), dos colores, 20\,000 cadenas, comparación con las $2^{16}$ configuraciones. Error máximo de
+magnetización: $0{,}40$ (1 barrido), $0{,}23$ (3), $0{,}042$ (10), $0{,}009$ (30), $0{,}010$ (100); piso $1/\sqrt{20\,000}\approx0{,}007$. Código:
+\texttt{datos/experimento\_thrml.py}.
+
+\section{Velocidad}
+Rejilla $512\times512$ (262\,144 espines, tamaño de Z1) en una RTX 2070 SUPER: 5{,}8 / 6{,}4 / 7{,}5 giros/ns con 1 / 8 / 64 cadenas \evS. FPGA que cablea el problema:
+$\sim60$ giros/ns (arXiv:2303.10728). Especificación de Z1: $269\,568\times50$ MHz $\approx1{,}35\times10^4$ giros/ns \evP, $\sim1800\times$ nuestra GPU. THRML sirve para
+diseñar, depurar, entrenar EBM y validar; no para producción.
+
+\begin{aplicacion}
+Prototipos de muestreadores (Ising, Potts, Gaussianos); entrenamiento de EBM con fases fijada y libre; escalado con \texttt{vmap} y \texttt{NamedSharding}.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Poner nodos que interactúan en el mismo bloque. \quad Calentamiento insuficiente.
+\item Comparar giros/ns sin tamaños. \quad Omitir la comprobación exacta.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{thrml} Extropic, THRML: documentación y ejemplos (carpeta \texttt{thrml/} del repositorio), 2025.
+\bibitem{dtca} Extropic, An efficient probabilistic hardware architecture for diffusion-like models, arXiv:2510.23972 (2025).
+\bibitem{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, arXiv:2303.10728 (2023).
+\end{thebibliography}
+\end{document}

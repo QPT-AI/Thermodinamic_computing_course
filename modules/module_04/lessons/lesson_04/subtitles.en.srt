@@ -1,0 +1,294 @@
+1
+00:00:00,350 --> 00:00:02,082
+Lesson 4.4.
+
+2
+00:00:02,462 --> 00:00:04,093
+Sampling diagnostics.
+
+3
+00:00:05,217 --> 00:00:08,319
+A correct sampler can be
+useless if it is slow.
+
+4
+00:00:08,699 --> 00:00:12,780
+The chain has the right stationary
+distribution, but when did it get
+
+5
+00:00:12,780 --> 00:00:16,441
+there, and how many truly
+independent samples did it give us?
+
+6
+00:00:16,821 --> 00:00:20,832
+In this lesson we learn to
+diagnose a run and two classic
+
+7
+00:00:20,832 --> 00:00:24,774
+tricks to speed it up: annealing
+and parallel tempering.
+
+8
+00:00:25,883 --> 00:00:28,407
+Every chain starts in an arbitrary state.
+
+9
+00:00:28,787 --> 00:00:31,332
+The first samples
+remember that start and do
+
+10
+00:00:31,332 --> 00:00:33,760
+not represent the stationary distribution.
+
+11
+00:00:34,140 --> 00:00:37,374
+That phase is called
+burn-in, and it is discarded.
+
+12
+00:00:37,754 --> 00:00:41,558
+A practical diagnostic is to
+launch several chains from
+
+13
+00:00:41,558 --> 00:00:45,915
+different starts: when their
+averages overlap, burn-in is over.
+
+14
+00:00:47,017 --> 00:00:51,337
+After burn-in, consecutive
+samples are still correlated.
+
+15
+00:00:51,717 --> 00:00:55,515
+As in lesson 2.6, the
+integrated autocorrelation time
+
+16
+00:00:55,515 --> 00:00:58,883
+says every how many sweeps
+we get a new sample.
+
+17
+00:00:59,263 --> 00:01:03,766
+The effective sample size is the
+number of sweeps divided by that time.
+
+18
+00:01:04,146 --> 00:01:08,071
+On a sixteen-by-sixteen lattice
+at temperature 3.5, that time
+
+19
+00:01:08,071 --> 00:01:11,868
+is about eight sweeps, and
+thirty-eight thousand sweeps are
+
+20
+00:01:11,868 --> 00:01:15,150
+worth about forty-five
+hundred independent samples.
+
+21
+00:01:16,250 --> 00:01:18,682
+Now let's approach the
+critical temperature.
+
+22
+00:01:19,062 --> 00:01:21,640
+At 2.8, the autocorrelation time of the
+
+23
+00:01:21,640 --> 00:01:24,879
+magnetization rises to
+about thirty-three sweeps.
+
+24
+00:01:25,259 --> 00:01:29,622
+At 2.27 it shoots up to more than two
+thousand, and the same thirty-eight
+
+25
+00:01:29,622 --> 00:01:33,388
+thousand sweeps are worth barely
+seventeen independent samples.
+
+26
+00:01:33,768 --> 00:01:37,214
+This is critical slowing
+down: large domains take a
+
+27
+00:01:37,214 --> 00:01:40,120
+long time to reorganize
+with local updates.
+
+28
+00:01:40,500 --> 00:01:44,778
+Near a phase transition, local
+sampling becomes very expensive.
+
+29
+00:01:45,883 --> 00:01:50,513
+If what we want is the minimum of the
+energy, we can exploit temperature.
+
+30
+00:01:50,893 --> 00:01:56,068
+Simulated annealing starts hot, where
+the chain explores freely, and cools
+
+31
+00:01:56,068 --> 00:02:01,382
+gradually to almost zero, where the
+distribution concentrates on the minima.
+
+32
+00:02:01,762 --> 00:02:07,643
+On a sixteen-by-sixteen spin glass,
+a ten-sweep cooling ends at an
+
+33
+00:02:07,643 --> 00:02:13,701
+energy of −1.25 per spin; with ten
+thousand sweeps it reaches −1.37.
+
+34
+00:02:14,081 --> 00:02:18,447
+Cooling more slowly gives better
+minima, with diminishing returns.
+
+35
+00:02:19,550 --> 00:02:21,984
+Parallel tempering runs
+several replicas at
+
+36
+00:02:21,984 --> 00:02:24,249
+different temperatures at the same time.
+
+37
+00:02:24,629 --> 00:02:30,240
+Every so often it proposes swapping
+the configurations of two neighboring
+
+38
+00:02:30,240 --> 00:02:35,928
+replicas, and accepts with probability
+min(1, e^((β_i − β_j)(E_i − E_j))).
+
+39
+00:02:36,308 --> 00:02:39,562
+That way, a configuration
+stuck in the cold replica can
+
+40
+00:02:39,562 --> 00:02:42,756
+climb to the hot one, cross
+the barrier and come back.
+
+41
+00:02:43,136 --> 00:02:48,550
+With β of 0.5 and 0.6, and an energy
+difference of twenty, the swap
+
+42
+00:02:48,550 --> 00:02:53,398
+is accepted with probability
+e^(−2), about thirteen percent.
+
+43
+00:02:54,517 --> 00:02:57,938
+In practice, always report the
+autocorrelation time and the
+
+44
+00:02:57,938 --> 00:03:01,011
+effective sample size, not
+just the number of sweeps.
+
+45
+00:03:01,391 --> 00:03:07,138
+A chip's energy per independent sample
+is the energy per sweep times that time.
+
+46
+00:03:07,518 --> 00:03:10,884
+And in optimization with
+pbit hardware, the annealing
+
+47
+00:03:10,884 --> 00:03:14,314
+schedule must slow down near
+the critical temperature.
+
+48
+00:03:15,417 --> 00:03:18,767
+Frequent mistakes: measuring
+the autocorrelation on a
+
+49
+00:03:18,767 --> 00:03:21,739
+fast observable while a
+slow one has not mixed.
+
+50
+00:03:22,119 --> 00:03:26,113
+Runs so short that the autocorrelation
+time itself is underestimated.
+
+51
+00:03:26,493 --> 00:03:28,120
+Cooling too fast.
+
+52
+00:03:28,500 --> 00:03:32,558
+And choosing temperatures so far
+apart that swaps are never accepted.
+
+53
+00:03:33,683 --> 00:03:36,588
+In summary: discard the
+burn-in, measure the
+
+54
+00:03:36,588 --> 00:03:40,417
+autocorrelation time and report
+the effective sample size.
+
+55
+00:03:40,797 --> 00:03:44,957
+Near the critical temperature,
+local sampling becomes very slow.
+
+56
+00:03:45,337 --> 00:03:48,901
+Simulated annealing uses
+temperature to optimize, and
+
+57
+00:03:48,901 --> 00:03:51,926
+parallel tempering uses
+it to cross barriers.
+
+58
+00:03:53,050 --> 00:03:56,370
+To practice: compute an
+effective sample size.
+
+59
+00:03:56,750 --> 00:03:58,701
+Explain critical slowing down.
+
+60
+00:03:59,081 --> 00:04:01,178
+Derive the swap acceptance.
+
+61
+00:04:01,558 --> 00:04:03,706
+And design a temperature ladder.

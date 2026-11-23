@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.5}{Modelos de tiempo}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba $T(d)$ para el protocolo del sistema lineal con carga, dinámica y lectura.
+\item (B) Encuentre $d^\ast$ donde la carga iguala a la dinámica.
+\item (B) Tiempo por solución con $K$ lados derechos.
+\item (B) ¿Por qué un $RC$ más pequeño hace dominar la compilación?
+\item (I) Para la inversa, la dinámica escala como $d^2\tau_r$ y la lectura como $d^2/B$. Escriba $T(d)$ y diga si la compilación domina asintóticamente.
+\item (I) Una actualización de rango $r$ de $A$ cambia $O(rd)$ elementos. ¿Cuánto cuesta recompilar frente a una carga completa para $d=1000$, $r=10$?
+\item (A) Programe el modelo y grafique la fracción de carga en función de $d$ y $RC$; añada el costo de un CG digital a $10^{12}$ flop/s.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $T=d^2/B_{\text{DAC}}+c\,d\,\tau_r+d/B_{\text{ADC}}$.
+
+\textbf{E2.} $d^2/B=c\,d\,\tau_r\Rightarrow d^\ast=c\,\tau_rB$.
+
+\textbf{E3.} $d^2/(KB)+c\,d\,\tau_r+d/B$.
+
+\textbf{E4.} La dinámica se acorta en proporción a $RC$, pero la carga no cambia: su fracción crece.
+
+\textbf{E5.} $T=d^2/B+c'd^2\tau_r+d^2/B$: todo es $O(d^2)$; la razón carga/dinámica es $1/(c'\tau_rB)$, constante en $d$.
+
+\textbf{E6.} $rd=10^4$ elementos frente a $d^2=10^6$: 100 veces menos (10 \textmu s frente a 1 ms con $B=10^9$).
+
+\textbf{E7.} CG: $\sim2d^2\sqrt\kappa$ flop; con $d=1000$, $\kappa=34$: $1{,}2\times10^7$ flop $\approx12$ \textmu s a $10^{12}$ flop/s, menor que la sola carga (1 ms):
+el método termodinámico necesita $d$ mayor, $\kappa$ grande o amortización. Ojo: suponer rendimiento pico es optimista; CG suele estar limitado por memoria, por eso los tiempos reales en GPU del artículo son mucho mayores.
+\end{solucion}
+\end{document}

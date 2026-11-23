@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{11.4}{Simuladores y flujos de investigación con agentes}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Recompensa de una solución que corre, no reproduce y tiene rúbrica 1.
+\item (B) ¿Por qué la actualización simultánea acierta las magnetizaciones en un grafo bipartito?
+\item (B) ¿Qué métrica la habría detectado?
+\item (B) ¿Por qué aislar y limitar el tiempo de ejecución?
+\item (I) Redefina la métrica de la tarea para que A no pase y C sí, con 4000 cadenas.
+\item (I) ¿Qué recompensa obtendría la trampa E si la rúbrica pesara 0? ¿Qué aprendería un agente?
+\item (A) Empaquete otro laboratorio del curso como tarea verificable y pruebe tres propuestas, incluida una trampa.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $0{,}7\cdot0{,}15+0{,}3=0{,}405$.
+
+\textbf{E2.} Los dos colores evolucionan como dos cadenas de Gibbs cromático entrelazadas, cada una correcta para sus marginales.
+
+\textbf{E3.} Las correlaciones entre vecinos (error $0{,}80$ frente a $0{,}04$).
+
+\textbf{E4.} Es código no confiable: puede colgarse, consumir recursos o actuar sobre el sistema.
+
+\textbf{E5.} Exigir también $\max|\hat C-C|\le0{,}06$ en correlaciones de vecinos (C: 0{,}04; A: 0{,}80).
+
+\textbf{E6.} 1{,}0, la máxima: aprendería a calcular la respuesta en lugar de muestrear.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

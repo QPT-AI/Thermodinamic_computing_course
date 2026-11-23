@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{9.3}{Modelos termodinámicos de eliminación de ruido}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Por qué un muestreador local mezcla lento entre modos separados?
+\item (B) Escriba la energía de un condicional en una DTM gaussiana con núcleo $q(x_t\mid x_{t-1})=\N(cx_{t-1},1-c^2)$.
+\item (B) Calcule $E$ para $T=4$, $K_{\text{mix}}=250$, $L=70$, $E_{\text{cell}}=2$ fJ.
+\item (B) Enumere tres advertencias sobre la estimación de $10^4\times$.
+\item (I) Con una barrera $\Delta E=20$ (en $k_BT$), estime el factor de Arrhenius de los cruces y compárelo con 8000 pasos.
+\item (I) ¿Por qué con muy pocos pasos de ruido los condicionales vuelven a ser multimodales?
+\item (A) Reproduzca el experimento de la lección con mallas de tiempo geométricas y estudie la fracción en el modo derecho frente al número de niveles.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} La probabilidad de subir $\Delta E$ es $\sim e^{-\Delta E}$: el tiempo entre cruces crece exponencialmente.
+
+\textbf{E2.} $E(x_{t-1})+\frac{(x_t-cx_{t-1})^2}{2(1-c^2)}$, con $E=-\log p_{t-1}$.
+
+\textbf{E3.} $4\cdot250\cdot4900\cdot2\ \text{fJ}\approx9{,}8$ nJ.
+
+\textbf{E4.} Es una estimación (no un chip completo); energía de GPU subestimada por FLOPs/especificación; banco pequeño.
+
+\textbf{E5.} $e^{-20}\approx2\times10^{-9}$: ni siquiera un cruce esperado en 8000 pasos.
+
+\textbf{E6.} Si $q$ añade mucho ruido en un paso, $x_t$ es compatible con varios modos de $p_{t-1}$: el posterior hereda la multimodalidad.
+
+\textbf{E7.} Compare con la malla uniforme ($75\,\%$ con 32 niveles); interprete el resultado en términos de dónde se separan los modos.
+\end{solucion}
+\end{document}

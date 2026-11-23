@@ -1,0 +1,307 @@
+1
+00:00:00,350 --> 00:00:02,188
+Lesson 11.5.
+
+2
+00:00:02,568 --> 00:00:05,131
+LLM research agents.
+
+3
+00:00:06,250 --> 00:00:08,918
+In the previous lesson
+we graded proposals.
+
+4
+00:00:09,297 --> 00:00:10,989
+Now we train the proposer.
+
+5
+00:00:11,369 --> 00:00:14,988
+If a language model receives
+the reward of each attempt, it
+
+6
+00:00:14,988 --> 00:00:18,361
+can learn by reinforcement
+to write better experiments.
+
+7
+00:00:18,741 --> 00:00:23,491
+Extropic, with Prime Intellect, tried
+this in October twenty twenty-six, and
+
+8
+00:00:23,491 --> 00:00:27,679
+called it the first sparks of
+thermodynamic recursive intelligence.
+
+9
+00:00:28,059 --> 00:00:30,778
+Let's look at the method,
+our own experiment on
+
+10
+00:00:30,778 --> 00:00:33,265
+cheating, and what was
+really demonstrated.
+
+11
+00:00:34,383 --> 00:00:37,784
+GRPO, group relative
+policy optimization, was
+
+12
+00:00:37,784 --> 00:00:41,637
+introduced with DeepSeekMath
+in twenty twenty-four.
+
+13
+00:00:42,017 --> 00:00:45,178
+For each task, the model
+generates a group of attempts.
+
+14
+00:00:45,558 --> 00:00:48,784
+The advantage of each attempt
+is its reward minus the
+
+15
+00:00:48,784 --> 00:00:52,071
+group mean, divided by the
+group's standard deviation.
+
+16
+00:00:52,451 --> 00:00:56,956
+Attempts better than average are
+reinforced and worse ones penalized, with
+
+17
+00:00:56,956 --> 00:01:00,790
+no need for a value network that
+estimates the expected reward.
+
+18
+00:01:01,917 --> 00:01:04,672
+Extropic's reward combines two signals.
+
+19
+00:01:05,052 --> 00:01:09,047
+Execution, with seventy percent of
+the weight, is deterministic: the
+
+20
+00:01:09,047 --> 00:01:12,690
+code runs and reproduces the
+reference metric, or it does not.
+
+21
+00:01:13,070 --> 00:01:16,909
+The rubric, with thirty percent,
+is graded by a judge model,
+
+22
+00:01:16,909 --> 00:01:20,748
+Nemotron 3 Super with one hundred
+twenty billion parameters,
+
+23
+00:01:20,748 --> 00:01:23,756
+with criteria written in
+advance for each task.
+
+24
+00:01:24,136 --> 00:01:28,169
+The authors give more weight to
+execution because it is harder to fool.
+
+25
+00:01:29,283 --> 00:01:31,765
+We test it with a toy GRPO.
+
+26
+00:01:32,145 --> 00:01:36,271
+The policy chooses among the five
+proposals of the previous lesson, with
+
+27
+00:01:36,271 --> 00:01:40,454
+groups of eight and three hundred
+steps, averaged over two hundred seeds.
+
+28
+00:01:40,834 --> 00:01:44,538
+With the full reward, the
+policy ends up choosing
+
+29
+00:01:44,538 --> 00:01:47,863
+the correct method 99.8
+percent of the time.
+
+30
+00:01:48,243 --> 00:01:53,066
+With execution only, the correct
+method drops to thirty-two percent: the
+
+31
+00:01:53,066 --> 00:01:57,285
+incorrect sampler keeps thirty-three
+and the cheat thirty-five.
+
+32
+00:01:57,665 --> 00:02:00,890
+The agent learns exactly
+what the reward rewards.
+
+33
+00:02:02,017 --> 00:02:07,755
+The real experiment trained Qwen 3.6,
+with thirty-five billion parameters and
+
+34
+00:02:07,755 --> 00:02:13,271
+three billion active, for one hundred
+GRPO steps, about twenty-five hours,
+
+35
+00:02:13,651 --> 00:02:17,470
+on about fifty tasks that
+reproduce classic experiments such
+
+36
+00:02:17,470 --> 00:02:20,717
+as Boltzmann machines and
+the wake-sleep algorithm.
+
+37
+00:02:21,097 --> 00:02:28,371
+The reward on unseen tasks rose
+from 0.127 to 0.361, almost triple.
+
+38
+00:02:28,751 --> 00:02:39,559
+For reference, on the same set, Claude
+Opus 4.8 scored 0.464 and GPT 5.5, 0.747.
+
+39
+00:02:40,683 --> 00:02:41,937
+Let's read carefully.
+
+40
+00:02:42,317 --> 00:02:44,710
+What was demonstrated
+is that a small model
+
+41
+00:02:44,710 --> 00:02:47,381
+improves a lot at reproducing
+known experiments.
+
+42
+00:02:47,761 --> 00:02:51,274
+What the name promises, agents
+that discover new algorithms
+
+43
+00:02:51,274 --> 00:02:54,430
+for the hardware and improve
+it in a recursive cycle,
+
+44
+00:02:54,810 --> 00:02:59,568
+is for now a goal: the authors say the
+next step is to move from reproducing
+
+45
+00:02:59,568 --> 00:03:03,888
+to discovering, and that the tasks
+do not yet run on their simulator.
+
+46
+00:03:04,268 --> 00:03:06,463
+Nor do they report
+observations of cheating.
+
+47
+00:03:06,843 --> 00:03:09,260
+They are first sparks, as the title says.
+
+48
+00:03:10,383 --> 00:03:16,032
+In practice, GRPO over verifiable tasks,
+a reward dominated by execution with
+
+49
+00:03:16,032 --> 00:03:20,947
+a judge for the rubric, and auditing
+of runs in search of cheating.
+
+50
+00:03:21,327 --> 00:03:25,251
+In lab thirty you will evaluate
+language models on your tasks.
+
+51
+00:03:26,383 --> 00:03:29,141
+Common mistakes:
+rewarding only the metric.
+
+52
+00:03:29,521 --> 00:03:32,339
+Trusting a judge without
+criteria fixed in advance.
+
+53
+00:03:32,719 --> 00:03:35,777
+Reading recursive self-improvement
+as something demonstrated.
+
+54
+00:03:36,157 --> 00:03:39,549
+And comparing scores
+over different task sets.
+
+55
+00:03:40,650 --> 00:03:45,445
+In summary, GRPO reinforces attempts
+better than their group's average.
+
+56
+00:03:45,825 --> 00:03:50,063
+The reward mixes execution and
+rubric, and our experiment shows that
+
+57
+00:03:50,063 --> 00:03:53,989
+without a rubric the agent learns
+cheats and incorrect methods.
+
+58
+00:03:54,369 --> 00:03:59,064
+Thermo-RSI almost tripled the reward
+of a small model at reproducing
+
+59
+00:03:59,064 --> 00:04:02,999
+experiments; discovering new
+algorithms remains the goal.
+
+60
+00:04:04,117 --> 00:04:07,226
+To practice: compute the
+advantages of a group.
+
+61
+00:04:07,606 --> 00:04:10,927
+Explain why GRPO does
+not need a value network.
+
+62
+00:04:11,307 --> 00:04:14,581
+Explain why the policy without
+a rubric chose the cheat.
+
+63
+00:04:14,961 --> 00:04:18,152
+And say what would really demonstrate
+recursive self-improvement.

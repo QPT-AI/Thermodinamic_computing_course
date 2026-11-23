@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.6}{Redes de Hopfield y memoria asociativa}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre que $s_i\leftarrow\mathrm{sgn}(u_i)$ no aumenta $E=-\tfrac12s^\top Js$.
+\item (B) Con un solo patrón guardado, calcule $u_i$ cuando $s=\xi$.
+\item (B) ¿Cuántos patrones puede guardar una red de 1000 neuronas?
+\item (B) ¿Por qué $-\xi$ también es un mínimo?
+\item (I) Muestre que la varianza del ruido cruzado es $(P-1)(N-1)/N^2\approx\alpha$ para patrones aleatorios.
+\item (I) Dé un ejemplo de dos estados entre los que la dinámica síncrona oscila.
+\item (A) Implemente la red con $N=400$ y reproduzca la curva de superposición frente a $\alpha$; repita con pistas de 30\,\% de ruido.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Solo cambian los términos con $s_i$: $\Delta E=-\Delta s_i\sum_jJ_{ij}s_j=-\Delta s_iu_i$, y $\Delta s_i$ tiene el signo de $u_i$.
+
+\textbf{E2.} $u_i=\frac1N\sum_{j\ne i}\xi_i\xi_j\xi_j=\frac{N-1}N\xi_i$: el patrón es estable.
+
+\textbf{E3.} $\approx0{,}138\times1000\approx138$ (menos si se exige recuperación perfecta).
+
+\textbf{E4.} $E(-s)=E(s)$ y la dinámica conmuta con $s\to-s$.
+
+\textbf{E5.} Suma de $(P-1)(N-1)$ términos $\pm1/N$ independientes de media cero.
+
+\textbf{E6.} Dos neuronas con $J_{12}=-1$: desde $(+,+)$ la síncrona va a $(-,-)$ y vuelve.
+
+\textbf{E7.} Con más ruido la cuenca efectiva se achica y la caída ocurre a $\alpha$ menor.
+\end{solucion}
+\end{document}

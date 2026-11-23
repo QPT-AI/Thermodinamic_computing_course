@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{10}{Quiz: modelos de lenguaje termodinámicos}
+\noindent Preguntas guía: ¿qué operaciones de un transformer son nativas de un TSU y cuáles no? ¿Por qué un TSU brilla en el decode con lote 1 y no en el prefill?
+\section*{Preguntas}
+\begin{enumerate}
+\item El decode con lote $B$ en una GPU tiene intensidad aritmética $\approx$: (a) $L$ (b) $B$ (c) $d$ (d) 295.
+\item AFT-simple causal en decode necesita un estado de tamaño: (a) $O(T)$ (b) $O(T^2)$ (c) $O(d)$ independiente de $T$ (d) $O(d^2)$.
+\item La salida media de un pbit con entrada $u$ y ganancia $\beta$ es: (a) $\sigma(\beta u)$ (b) $\tanh(\beta u)$ (c) $\beta u$ (d) $\tanh(2\beta u)$.
+\item A igual presupuesto de conexiones, el error frente al grado $k$ en 10.4 tiene forma: (a) monótona creciente (b) monótona decreciente (c) de U (d) constante.
+\item Para ganar 2 bits efectivos promediando muestras hay que multiplicar $S$ por: (a) 2 (b) 4 (c) 16 (d) 64.
+\item En un grafo de grado 16, la unidad de Z1T lee: (a) 16 entradas de 1 pbit (b) 4 entradas $\times$ 4 pbits (c) 2 entradas $\times$ 8 pbits (d) 1 entrada.
+\item En Z1T, la cabeza de vocabulario se ejecuta en: (a) Z1 (b) la FPGA y está excluida del titular (c) la GPU (d) no existe.
+\item La razón $139\times$ de Z1T supone una H100 con MFU de: (a) 1\,\% (b) 10\,\% (c) 40\,\% (d) 100\,\%.
+\item (Problema) Energía por token en GPU de un modelo de $P=11{,}55$M con $e_{\text{FLOP}}=0{,}177$ pJ y MFU 25\,\%.
+\item (Problema) Caché KV por token: 32 capas, $d=4096$, 16 bits.
+\item (Problema) Capas para mezclar 4096 entradas con abanico 4.
+\item (Problema) Sesgo de $\mathbb E[\tanh(\mu+\epsilon)]$ a segundo orden con $\mathrm{Var}\,\epsilon=\sigma^2$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (c) · 3 (b) · 4 (c) · 5 (c) · 6 (b) · 7 (b) · 8 (b).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $2\cdot11{,}55\cdot10^6\cdot0{,}177\ \text{pJ}/0{,}25\approx16{,}4\ \mu$J.
+\item $2\cdot32\cdot4096\cdot2=524\,288$ bytes $\approx0{,}52$ MB.
+\item $\log_44096=6$.
+\item $\tfrac12\tanh''(\mu)\sigma^2=-\tanh\mu\,(1-\tanh^2\mu)\,\sigma^2$: encoge hacia cero.
+\end{enumerate}
+Aprobación 8/12; fallos en 2, 5 u 8 $\Rightarrow$ repasar 10.2, 10.5, 10.7--10.8.
+\end{document}

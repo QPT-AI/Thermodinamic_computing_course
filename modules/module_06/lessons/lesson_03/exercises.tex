@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.3}{Determinantes desde estadísticas de trabajo}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca $F=\tfrac1{2\beta}\ln\det A+\text{cte}$ para $U=\tfrac12x^\top Ax$.
+\item (B) ¿Por qué $2\beta\langle W\rangle\ge\ln\det A$ (desde $A_0=I$)?
+\item (B) Escriba el trabajo de un cambio instantáneo de $I$ a $A$ en función de $x$.
+\item (B) ¿Qué estimador combina trabajos de ida y vuelta?
+\item (I) Para $d=1$, cambio instantáneo de $a_0=1$ a $a$, con $x\sim\N(0,1)$: verifique $\langle e^{-W}\rangle=a^{-1/2}$.
+\item (I) Si $W$ es gaussiano con media $\mu$ y varianza $s^2$, demuestre que $\Delta F=\mu-\beta s^2/2$. Aplíquelo a la tabla ($t_s=100$).
+\item (A) Implemente BAR con protocolos de ida ($I\to A$) y vuelta ($A\to I$) y compare su dispersión con Jarzynski para el mismo número de trayectorias.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Integral gaussiana: $Z=(2\pi/\beta)^{d/2}(\det A)^{-1/2}$; $F=-\beta^{-1}\ln Z$.
+
+\textbf{E2.} Desigualdad de Jensen en Jarzynski: $e^{-\beta\langle W\rangle}\le\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}\Rightarrow\langle W\rangle\ge\Delta F=\ln\det A/(2\beta)$.
+
+\textbf{E3.} $W=\tfrac12x^\top(A-I)x$ con $x\sim\N(0,\beta^{-1}I)$.
+
+\textbf{E4.} Bennett (BAR).
+
+\textbf{E5.} $\langle e^{-(a-1)x^2/2}\rangle=\int\frac{e^{-x^2/2}e^{-(a-1)x^2/2}}{\sqrt{2\pi}}dx=a^{-1/2}$.
+
+\textbf{E6.} $\ln\langle e^{-\beta W}\rangle=-\beta\mu+\beta^2s^2/2$. Con $\mu=-1{,}587$, $s=0{,}425$: $\Delta F\approx-1{,}587-0{,}090=-1{,}677$; $\ln\det A\approx-3{,}35$ (exacto $-3{,}40$):
+la distribución no es exactamente gaussiana.
+
+\textbf{E7.} BAR tiene menor varianza que Jarzynski en una sola dirección; la mejora es mayor cuanto más rápido el protocolo.
+\end{solucion}
+\end{document}

@@ -1,0 +1,279 @@
+1
+00:00:00,350 --> 00:00:02,093
+Lección 4.6.
+
+2
+00:00:02,473 --> 00:00:04,842
+Redes de Hopfield y memoria asociativa.
+
+3
+00:00:05,950 --> 00:00:09,557
+Tu memoria no busca recuerdos por
+dirección, como un disco duro.
+
+4
+00:00:09,937 --> 00:00:12,727
+Basta un fragmento, un
+olor o la mitad de una
+
+5
+00:00:12,727 --> 00:00:15,331
+cara, para recuperar el recuerdo completo.
+
+6
+00:00:15,711 --> 00:00:19,266
+En mil novecientos ochenta y
+dos, John Hopfield mostró que
+
+7
+00:00:19,266 --> 00:00:22,577
+un modelo de Ising a temperatura
+cero hace exactamente
+
+8
+00:00:22,577 --> 00:00:25,519
+eso: es una memoria
+direccionable por contenido.
+
+9
+00:00:26,650 --> 00:00:29,235
+La idea es esculpir el
+paisaje de energía para
+
+10
+00:00:29,235 --> 00:00:31,651
+que cada recuerdo sea
+el fondo de un valle.
+
+11
+00:00:32,031 --> 00:00:35,357
+Una pista incompleta o ruidosa
+es un punto en la ladera.
+
+12
+00:00:35,737 --> 00:00:37,952
+Dejar que el sistema baje es recordar.
+
+13
+00:00:38,332 --> 00:00:41,187
+Cuantos más recuerdos
+guardamos, más valles hay,
+
+14
+00:00:41,187 --> 00:00:43,625
+y en algún momento empiezan a interferir.
+
+15
+00:00:44,750 --> 00:00:50,845
+Para guardar los patrones ξ^μ
+usamos la regla de Hebb: los
+
+16
+00:00:50,845 --> 00:00:56,940
+acoplamientos son J = (1/N) Σ
+ξ^μ ξ^μᵀ, con diagonal cero.
+
+17
+00:00:57,320 --> 00:01:00,230
+Las neuronas que se activan
+juntas quedan conectadas.
+
+18
+00:01:00,610 --> 00:01:06,111
+Para recordar, cada espín se alinea
+con su campo local: s_i ← sgn(u_i).
+
+19
+00:01:06,491 --> 00:01:08,435
+Es el pbit con β infinito.
+
+20
+00:01:08,815 --> 00:01:12,258
+Cada una de esas actualizaciones
+nunca aumenta la energía de
+
+21
+00:01:12,258 --> 00:01:15,184
+Ising, así que la red
+siempre termina en un mínimo.
+
+22
+00:01:16,317 --> 00:01:20,195
+Guardemos tres patrones de cien
+píxeles en una red de cien neuronas.
+
+23
+00:01:20,575 --> 00:01:24,825
+Tomemos uno de ellos y volteemos el
+veinte por ciento de sus píxeles al azar.
+
+24
+00:01:25,205 --> 00:01:29,238
+Al dejar correr la dinámica, los
+píxeles se corrigen uno a uno, y en
+
+25
+00:01:29,238 --> 00:01:32,738
+pocos barridos la red recupera
+el patrón original completo.
+
+26
+00:01:33,118 --> 00:01:36,189
+La pista ruidosa estaba en la
+cuenca de atracción correcta.
+
+27
+00:01:37,317 --> 00:01:38,620
+¿Cuántos recuerdos caben?
+
+28
+00:01:39,000 --> 00:01:43,064
+El campo local de cada espín tiene
+una parte de señal, del patrón
+
+29
+00:01:43,064 --> 00:01:46,691
+buscado, y una parte de ruido
+cruzado, de todos los demás.
+
+30
+00:01:47,071 --> 00:01:51,701
+Mientras la carga α = P/N
+sea pequeña, la señal gana.
+
+31
+00:01:52,081 --> 00:01:56,552
+Alrededor de α ≈ 0,14 el
+ruido cruzado domina y la
+
+32
+00:01:56,552 --> 00:02:00,308
+memoria colapsa: los recuerdos se mezclan.
+
+33
+00:02:00,688 --> 00:02:04,502
+Además aparecen estados espurios,
+mínimos que no corresponden a
+
+34
+00:02:04,502 --> 00:02:07,833
+ningún patrón guardado, como
+mezclas de tres recuerdos.
+
+35
+00:02:08,950 --> 00:02:12,950
+Con cuatrocientas neuronas y pistas
+con un diez por ciento de ruido,
+
+36
+00:02:12,950 --> 00:02:16,833
+la superposición final con el
+patrón correcto es prácticamente uno
+
+37
+00:02:16,833 --> 00:02:20,068
+para cargas de cero coma cero
+cinco y de cero coma uno.
+
+38
+00:02:20,448 --> 00:02:23,732
+A cero coma uno seis cae
+a cero coma ocho tres, y
+
+39
+00:02:23,732 --> 00:02:26,479
+a cero coma dos, a cero coma cinco cinco.
+
+40
+00:02:26,859 --> 00:02:30,580
+Cuatrocientas neuronas guardan unos
+cincuenta recuerdos confiables.
+
+41
+00:02:31,683 --> 00:02:36,536
+Con temperatura positiva, la misma red
+construida con pbits muestrea alrededor de
+
+42
+00:02:36,536 --> 00:02:40,910
+los recuerdos, y ese es el punto de
+partida de las máquinas de Boltzmann.
+
+43
+00:02:41,290 --> 00:02:45,188
+Las redes de Hopfield modernas tienen
+capacidad exponencial y una regla
+
+44
+00:02:45,188 --> 00:02:48,755
+de actualización que se parece a
+la atención de los transformers.
+
+45
+00:02:49,135 --> 00:02:53,839
+Y en dos mil veinticuatro, Hopfield
+recibió el Nobel de Física por estas ideas.
+
+46
+00:02:54,950 --> 00:02:58,918
+Errores comunes: dejar la diagonal
+distinta de cero, actualizar
+
+47
+00:02:58,918 --> 00:03:02,949
+todas las neuronas a la vez, lo
+que puede producir oscilaciones,
+
+48
+00:03:02,949 --> 00:03:06,413
+sobrecargar la memoria más
+allá del catorce por ciento,
+
+49
+00:03:06,793 --> 00:03:10,496
+y guardar patrones muy
+correlacionados, que interfieren más.
+
+50
+00:03:11,617 --> 00:03:16,445
+En resumen: una red de Hopfield es un
+modelo de Ising con acoplamientos de Hebb.
+
+51
+00:03:16,825 --> 00:03:19,950
+Sus mínimos de energía
+son los recuerdos, y
+
+52
+00:03:19,950 --> 00:03:22,930
+recordar es descender con s_i ← sgn(u_i).
+
+53
+00:03:23,310 --> 00:03:27,117
+La capacidad es de unos
+0,14 N patrones, y más allá
+
+54
+00:03:27,117 --> 00:03:30,328
+aparecen interferencias
+y estados espurios.
+
+55
+00:03:31,450 --> 00:03:34,583
+Para practicar: demuestra
+que la energía no aumenta.
+
+56
+00:03:34,963 --> 00:03:37,787
+Calcula el campo local con
+un solo patrón guardado.
+
+57
+00:03:38,167 --> 00:03:40,947
+Estima la capacidad de
+una red de mil neuronas.
+
+58
+00:03:41,327 --> 00:03:44,475
+Y explica por qué el patrón
+invertido también es un mínimo.

@@ -1,0 +1,325 @@
+1
+00:00:00,350 --> 00:00:02,106
+Lección 5.5.
+
+2
+00:00:02,486 --> 00:00:04,015
+Otros sustratos físicos.
+
+3
+00:00:05,117 --> 00:00:08,021
+Los pbits de silicio y los
+osciladores acoplados no
+
+4
+00:00:08,021 --> 00:00:10,527
+son las únicas formas
+de computar con ruido.
+
+5
+00:00:10,907 --> 00:00:14,763
+Hay circuitos en los que la
+información la llevan partículas que se
+
+6
+00:00:14,763 --> 00:00:18,677
+difunden al azar, neuronas
+superconductoras, redes de resistencias y
+
+7
+00:00:18,677 --> 00:00:21,900
+capacitores que difunden
+voltaje, y reacciones químicas.
+
+8
+00:00:22,280 --> 00:00:26,777
+En esta lección recorremos ese
+zoológico y lo que cada sustrato aporta.
+
+9
+00:00:27,883 --> 00:00:32,008
+En un circuito browniano, un token,
+por ejemplo un electrón aislado
+
+10
+00:00:32,008 --> 00:00:35,516
+o un skyrmion magnético, se
+difunde al azar por un cable.
+
+11
+00:00:35,896 --> 00:00:38,244
+Tres piezas bastan para construir lógica.
+
+12
+00:00:38,624 --> 00:00:42,262
+Un Hub, donde el token puede salir
+por cualquiera de tres cables.
+
+13
+00:00:42,642 --> 00:00:45,412
+Un CJoin, que solo deja
+pasar cuando llegan
+
+14
+00:00:45,412 --> 00:00:48,117
+dos tokens a la vez, uno por cada entrada.
+
+15
+00:00:48,497 --> 00:00:51,331
+Y un Ratchet, un trinquete
+que impide retroceder.
+
+16
+00:00:51,711 --> 00:00:54,800
+Con ellas se arma cualquier
+circuito, y el cómputo
+
+17
+00:00:54,800 --> 00:00:57,517
+avanza solo, impulsado
+por el ruido térmico.
+
+18
+00:00:58,650 --> 00:00:59,435
+¿Cuánto tarda?
+
+19
+00:00:59,815 --> 00:01:04,019
+Sin trinquetes, un token que recorre
+veinte sitios por difusión libre tarda
+
+20
+00:01:04,019 --> 00:01:07,662
+en promedio unas doscientas diez
+unidades de tiempo, y con enorme
+
+21
+00:01:07,662 --> 00:01:11,809
+variabilidad: la desviación es el
+ochenta y cuatro por ciento de la media.
+
+22
+00:01:12,189 --> 00:01:16,261
+Con un sesgo que duplica la tasa
+hacia adelante, el tiempo baja a unas
+
+23
+00:01:16,261 --> 00:01:20,159
+diecinueve unidades y la variabilidad
+al treinta y ocho por ciento.
+
+24
+00:01:20,539 --> 00:01:24,678
+El precio es disipar el logaritmo
+de dos, en k_B T, por cada paso:
+
+25
+00:01:24,678 --> 00:01:29,381
+exactamente el compromiso de las
+relaciones de incertidumbre termodinámica.
+
+26
+00:01:30,483 --> 00:01:34,614
+Un rf-SQUID, un anillo superconductor
+con una unión de Josephson,
+
+27
+00:01:34,614 --> 00:01:38,363
+tiene un potencial de pozo
+doble en el flujo magnético, con
+
+28
+00:01:38,363 --> 00:01:42,176
+barrera e inclinación ajustables
+por líneas de polarización.
+
+29
+00:01:42,556 --> 00:01:46,011
+A temperatura de milikelvin,
+el ruido térmico lo hace
+
+30
+00:01:46,011 --> 00:01:49,204
+saltar entre pozos: es
+una neurona termodinámica.
+
+31
+00:01:49,584 --> 00:01:54,255
+Su ventaja es la velocidad y la baja
+disipación; su costo, la criogenia.
+
+32
+00:01:54,635 --> 00:01:57,801
+Por debajo de cierta
+temperatura, el salto deja de ser
+
+33
+00:01:57,801 --> 00:02:00,556
+térmico y pasa a ser por
+efecto túnel cuántico.
+
+34
+00:02:00,936 --> 00:02:03,609
+También se han propuesto
+osciladores mecánicos
+
+35
+00:02:03,609 --> 00:02:06,165
+microscópicos como
+dispositivos de Langevin.
+
+36
+00:02:07,283 --> 00:02:12,396
+Una red de resistencias y capacitores
+cumple C V̇ = −L V, donde L es
+
+37
+00:02:12,396 --> 00:02:16,982
+el laplaciano del grafo: el
+voltaje se difunde como el calor.
+
+38
+00:02:17,362 --> 00:02:21,151
+Si el grafo es el de Cayley de
+un grupo, esa difusión calcula la
+
+39
+00:02:21,151 --> 00:02:25,295
+probabilidad de regreso de una
+caminata aleatoria, y es la base física
+
+40
+00:02:25,295 --> 00:02:29,024
+del algoritmo de factorización
+por difusión de la unidad siete.
+
+41
+00:02:29,404 --> 00:02:33,842
+Las redes de reacciones químicas, por
+su parte, computan con concentraciones y
+
+42
+00:02:33,842 --> 00:02:37,824
+se analizan con la teoría de circuitos
+de la lección tres punto nueve.
+
+43
+00:02:38,950 --> 00:02:39,760
+Comparemos.
+
+44
+00:02:40,140 --> 00:02:45,216
+Los pbits CMOS y magnéticos trabajan a
+temperatura ambiente y en nanosegundos.
+
+45
+00:02:45,596 --> 00:02:48,820
+Los osciladores acoplados
+resuelven problemas continuos.
+
+46
+00:02:49,200 --> 00:02:52,977
+Los circuitos brownianos computan
+sin reloj, pero lentamente.
+
+47
+00:02:53,357 --> 00:02:56,566
+Los SQUID son rápidos,
+pero necesitan criogenia.
+
+48
+00:02:56,946 --> 00:03:00,503
+Las redes RC difunden sin
+ruido útil, y las reacciones
+
+49
+00:03:00,503 --> 00:03:03,599
+químicas son lentas pero
+masivamente paralelas.
+
+50
+00:03:03,979 --> 00:03:05,770
+Ningún sustrato gana en todo.
+
+51
+00:03:06,883 --> 00:03:11,403
+En el reto del laboratorio siete simularás
+un sumador browniano con Gillespie.
+
+52
+00:03:11,783 --> 00:03:15,925
+En la unidad siete usaremos redes
+RC para la búsqueda de orden.
+
+53
+00:03:16,305 --> 00:03:19,478
+Y la teoría de conductancias
+de la lección tres punto
+
+54
+00:03:19,478 --> 00:03:22,292
+nueve sirve para diseñar
+computadores químicos.
+
+55
+00:03:23,417 --> 00:03:27,946
+Errores comunes: creer que el cómputo
+browniano sin reloj es gratis.
+
+56
+00:03:28,326 --> 00:03:32,291
+Ignorar la potencia de refrigeración
+de los dispositivos criogénicos.
+
+57
+00:03:32,671 --> 00:03:37,461
+Confundir la difusión determinista de
+una red RC con el muestreo estocástico.
+
+58
+00:03:37,841 --> 00:03:40,951
+Y comparar sustratos sin
+fijar la tarea y la precisión.
+
+59
+00:03:42,083 --> 00:03:45,469
+En resumen: los circuitos
+brownianos computan con tokens
+
+60
+00:03:45,469 --> 00:03:48,612
+que se difunden y pagan su
+velocidad con disipación.
+
+61
+00:03:48,992 --> 00:03:54,170
+Los SQUID son neuronas termodinámicas
+criogénicas, las redes RC difunden voltaje
+
+62
+00:03:54,170 --> 00:03:58,765
+sobre un grafo, y las reacciones
+químicas computan con concentraciones.
+
+63
+00:03:59,145 --> 00:04:02,307
+Cada sustrato tiene una
+primitiva y un límite propios.
+
+64
+00:04:03,417 --> 00:04:07,606
+Para practicar: calcula el tiempo de
+primer paso de una caminata libre.
+
+65
+00:04:07,986 --> 00:04:11,361
+Calcula la entropía disipada
+por paso con un sesgo de dos.
+
+66
+00:04:11,741 --> 00:04:13,889
+Explica por qué hacen falta trinquetes.
+
+67
+00:04:14,269 --> 00:04:16,756
+Y escribe la dinámica de una red RC.

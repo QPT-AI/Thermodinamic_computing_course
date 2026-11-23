@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{3}{Quiz: termodinámica estocástica}
+\noindent Preguntas guía: ¿puede un computador ser rápido \emph{y} eficiente? ¿Qué pagamos exactamente cuando lo aceleramos?
+\section*{Preguntas}
+\begin{enumerate}
+\item En la energética de Sekimoto, el calor por trayectoria usa el producto: (a) de Itô (b) de Stratonovich (c) cualquiera (d) ninguno.
+\item El teorema de fluctuación integral es: (a) $\langle\Sigma\rangle=0$ (b) $\langle e^{-\Sigma}\rangle=1$ (c) $\langle e^{\Sigma}\rangle=1$ (d) $\Sigma\ge0$ siempre.
+\item Jarzynski: (a) $\langle W\rangle=\Delta F$ (b) $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$ (c) $e^{-\beta\langle W\rangle}=e^{-\beta\Delta F}$ (d) $W\ge\Delta F$ en cada trayectoria.
+\item El límite de velocidad sobreamortiguado es: (a) $\tau\Sigma\ge W_2^2/(\mu\kB T)$ (b) $\tau\ge\Sigma$ (c) $\Sigma\ge\tau W_2^2$ (d) $W_2\le\tau$.
+\item Con aceleración de reloj $\lambda$, la potencia escala como: (a) $\lambda$ (b) $\lambda^2$ (c) $1$ (d) $\lambda^{-1}$.
+\item La TUR dice: (a) $\epsilon^2\ge2/\Sigma$ (b) $\epsilon^2\le2/\Sigma$ (c) $\epsilon^2\ge\Sigma/2$ (d) $\epsilon\ge1/\mathcal A$.
+\item Reiniciar un bit con $p=\tfrac12$ hasta $\varepsilon\to0$ cuesta como mínimo: (a) 0 (b) $\kB T\ln2$ (c) $\kB T$ (d) $2\kB T$.
+\item En respuesta lineal, $\langle W_{\text{ex}}\rangle\ge$: (a) $\mathcal L/\tau$ (b) $\mathcal L^2/\tau$ (c) $\mathcal L^2\tau$ (d) $\mathcal L$.
+\item (Problema) Trampa arrastrada ($\kappa=\gamma=\kB T=1$, $v=1$, $t=3$): $\langle W\rangle$ y $\mathrm{Var}(W)$.
+\item (Problema) $W_2^2$ entre $\N(0,1)$ y $\N(2,4)$ y la entropía mínima para ese transporte en $\tau=1$ ($\mu=\kB T=1$).
+\item (Problema) Energía de una lectura con $\varepsilon=10^{-6}$ bajo ruido $kT/C$.
+\item (Problema) Cadena $A\rightleftarrows B\rightleftarrows C$ (constantes 1, $[C]=1$, $[A]=2$): $[B]$, $j$, $R$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (a) · 5 (b) · 6 (a) · 7 (b) · 8 (b).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $\langle W\rangle=3-(1-e^{-3})\approx2{,}05$; $\mathrm{Var}(W)=2\kB T\langle W\rangle\approx4{,}10$.
+\item $W_2^2=2^2+(2-1)^2=5$; $\Sigma\ge5$.
+\item $\tfrac12Q^{-1}(10^{-6})^2\approx11{,}3\,\kB T$.
+\item $[B]=1{,}5$, $j=0{,}5$, $R=\ln2/0{,}5=1{,}39$.
+\end{enumerate}
+Aprobación 8/12; fallos en 4, 6 u 8 $\Rightarrow$ repasar 3.4, 3.6, 3.8.
+\end{document}

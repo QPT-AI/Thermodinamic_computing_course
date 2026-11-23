@@ -1,0 +1,245 @@
+1
+00:00:00,350 --> 00:00:01,978
+Lesson 3.5.
+
+2
+00:00:02,358 --> 00:00:04,959
+Protocol design and clock acceleration.
+
+3
+00:00:06,083 --> 00:00:10,675
+To solve a problem with a thermodynamic
+computer you have to load it: take the
+
+4
+00:00:10,675 --> 00:00:14,795
+hardware from an initial state to
+the energy that encodes the problem.
+
+5
+00:00:15,176 --> 00:00:17,322
+Is it better to do it
+all at once or slowly?
+
+6
+00:00:17,702 --> 00:00:20,501
+And if we want to go faster,
+what do we have to pay?
+
+7
+00:00:20,881 --> 00:00:26,245
+In this lesson we see two design tools:
+gradual loading and clock acceleration.
+
+8
+00:00:27,350 --> 00:00:30,925
+Let's stiffen a trap
+from one to four again.
+
+9
+00:00:31,305 --> 00:00:36,533
+If we do it all at once, the
+particle has no time to react and the
+
+10
+00:00:36,533 --> 00:00:41,049
+work is 1.5 k_B T, more than
+twice the free energy, 0.69.
+
+11
+00:00:41,429 --> 00:00:47,335
+If we do it over a time τ, the work
+drops: 1.08 with τ equal to one
+
+12
+00:00:47,335 --> 00:00:52,535
+half, 0.83 with τ equal to two,
+0.73 with τ equal to eight.
+
+13
+00:00:52,915 --> 00:00:56,334
+For long times, the
+dissipated work decays as
+
+14
+00:00:56,334 --> 00:00:59,373
+one over τ, as the speed limits predict.
+
+15
+00:01:00,483 --> 00:01:01,929
+Now the inverse question:
+
+16
+00:01:02,309 --> 00:01:04,829
+how do we speed up a computation
+without changing what it does?
+
+17
+00:01:05,209 --> 00:01:10,190
+Let's take the Langevin equation and multiply
+the potential by a factor λ, together
+
+18
+00:01:10,190 --> 00:01:14,751
+with the noise strength, as if we raised
+the temperature by the same factor.
+
+19
+00:01:15,131 --> 00:01:19,365
+If we also measure time with
+a clock λ times faster, s
+
+20
+00:01:19,365 --> 00:01:23,127
+= λ t, the equation is
+exactly the original one.
+
+21
+00:01:23,507 --> 00:01:27,999
+The trajectories are the same,
+only traversed λ times faster.
+
+22
+00:01:29,117 --> 00:01:29,874
+What do we pay?
+
+23
+00:01:30,254 --> 00:01:33,109
+All energies are multiplied by λ, so the
+
+24
+00:01:33,109 --> 00:01:36,036
+heat dissipated per operation grows by λ.
+
+25
+00:01:36,416 --> 00:01:41,955
+Since the operation also takes λ times
+less time, power grows by λ squared.
+
+26
+00:01:42,335 --> 00:01:45,191
+But entropy production,
+which is heat divided by
+
+27
+00:01:45,191 --> 00:01:48,642
+temperature, does not change,
+and neither does efficiency.
+
+28
+00:01:49,022 --> 00:01:53,389
+The two trajectories you see are
+the same noise realization: the fast
+
+29
+00:01:53,389 --> 00:01:57,567
+one, with λ = 4, reaches the same
+result in a quarter of the time.
+
+30
+00:01:58,683 --> 00:02:02,534
+Suppose a computation dissipates
+ten k_B T in one microsecond.
+
+31
+00:02:02,914 --> 00:02:06,042
+With clock acceleration λ
+= 10, it takes a hundred
+
+32
+00:02:06,042 --> 00:02:08,732
+nanoseconds and dissipates
+a hundred k_B T.
+
+33
+00:02:09,112 --> 00:02:12,099
+Power goes from ten k_B
+T per microsecond to a
+
+34
+00:02:12,099 --> 00:02:15,539
+thousand k_B T per microsecond:
+a hundred times more.
+
+35
+00:02:15,919 --> 00:02:18,370
+The entropy produced is still ten.
+
+36
+00:02:18,750 --> 00:02:22,509
+In real hardware, acceleration
+is limited by the bandwidth of
+
+37
+00:02:22,509 --> 00:02:25,898
+the components and by the
+power the chip can dissipate.
+
+38
+00:02:27,017 --> 00:02:31,804
+In practice, loading the problem with
+a ramp reduces dissipation, and clock
+
+39
+00:02:31,804 --> 00:02:36,846
+acceleration lets us trade speed for
+power without changing entropy production.
+
+40
+00:02:37,226 --> 00:02:40,770
+In lab four you will check
+those scaling laws and look
+
+41
+00:02:40,770 --> 00:02:43,855
+for the loading time that
+maximizes efficiency.
+
+42
+00:02:44,983 --> 00:02:49,390
+Careful: scaling only the potential
+without the noise changes the distribution.
+
+43
+00:02:49,770 --> 00:02:55,792
+Entropy not changing does not mean
+acceleration is free: heat and power grow.
+
+44
+00:02:56,172 --> 00:02:58,491
+Hardware has a finite bandwidth.
+
+45
+00:02:58,871 --> 00:03:01,347
+And a gradual load still
+dissipates something.
+
+46
+00:03:02,450 --> 00:03:07,885
+In summary: loading a problem gradually
+reduces dissipation as one over τ.
+
+47
+00:03:08,265 --> 00:03:13,120
+Clock acceleration scales energies
+and noise by λ, and traverses
+
+48
+00:03:13,120 --> 00:03:17,217
+the same trajectories λ times
+faster: heat grows by λ,
+
+49
+00:03:17,597 --> 00:03:22,838
+power by λ squared, and entropy
+production and efficiency do not change.
+
+50
+00:03:23,950 --> 00:03:29,319
+To practice: explain clock acceleration,
+prove the change of variables, compute the
+
+51
+00:03:29,319 --> 00:03:34,236
+work of a sudden load and apply the
+scaling laws with lambda equal to three.

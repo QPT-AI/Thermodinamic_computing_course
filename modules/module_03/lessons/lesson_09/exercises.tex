@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.9}{Matrices de conductancia de no equilibrio}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Para $A\rightleftarrows B$ con $k^\pm=1$, calcule $f$, $j$ y $r$ con $[A]=2$, $[B]=1$ ($\kB T=1$).
+\item (B) Muestre que $r\to\kB T/j_{\text{eq}}$ cerca del equilibrio.
+\item (B) Para la cadena $A\rightleftarrows B\rightleftarrows C$ (constantes 1, $c=1$), encuentre $[B]$ estacionaria y verifique $R=r_1+r_2$ con $a=5$.
+\item (B) ¿Por qué la matriz de conductancia es semidefinida positiva?
+\item (I) Dos reacciones en paralelo entre los mismos quimiostatos $A$ y $C$: muestre que las conductancias se suman.
+\item (I) En la cadena, ¿para qué $a$ la conductancia duplica el valor lineal?
+\item (A) Simule la cadena con Gillespie en un volumen finito ($\Omega=100$ moléculas por unidad de concentración) y compare la corriente media con $(a-1)/2$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $j=2-1=1$, $f=\ln2=0{,}693$, $r=0{,}693$.
+
+\textbf{E2.} $j=j_{\text{eq}}(e^{f^+}-e^{f^-})$ con $f=f^+-f^-$ pequeño: $j\approx j_{\text{eq}}f/\kB T$.
+
+\textbf{E3.} $[B]=3$, $j=2$, $f_1=\ln(5/3)=0{,}511$, $f_2=\ln3=1{,}099$; $r_1+r_2=0{,}805=(f_1+f_2)/j=\ln5/2$.
+
+\textbf{E4.} $J^\top F=J^\top RJ=\sum_\rho j_\rho f_\rho\ge0$ para toda $J$ factible, pues cada término es no negativo.
+
+\textbf{E5.} Misma fuerza $f$ (mismos quimiostatos), corrientes que se suman: $G=(j_1+j_2)/f=G_1+G_2$.
+
+\textbf{E6.} $G=(a-1)/(2\ln a)=1$: $a\approx3{,}51$.
+
+\textbf{E7.} Para $\Omega$ grande la corriente media por unidad de volumen converge a la de acción de masas; las fluctuaciones relativas decaen como $\Omega^{-1/2}$.
+\end{solucion}
+\end{document}

@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.1}{Calor, trabajo y entropía a nivel de trayectoria}
+
+\noindent\textbf{Unidad 3 --- Termodinámica estocástica.}\quad\textbf{Objetivos:} definir $W$ y $Q$ por trayectoria; primera ley
+por trayectoria; distribución del trabajo; entropía estocástica. \textbf{Prerrequisitos:} 1.1, 2.2, 2.3.
+
+\section{Energética estocástica (Sekimoto)}
+Para Langevin sobreamortiguada en $V(x,\lambda(t))$, a lo largo de una trayectoria:
+\begin{resultado}
+\begin{equation}dW=\frac{\partial V}{\partial\lambda}\,d\lambda,\qquad dQ=\frac{\partial V}{\partial x}\circ dx,\qquad dV=dW+dQ .\end{equation}
+\end{resultado}
+$W$ es trabajo hecho sobre el sistema al mover el control; $Q$ es calor \emph{recibido} del baño (el producto $\circ$ de Stratonovich, punto
+medio, es necesario para que valga la regla de la cadena ordinaria y, con ella, la primera ley) \cite{seifert,peliti}.
+
+\section{Ejemplo: trampa armónica arrastrada}
+$V=\frac\kappa2(x-vt)^2$, $\tau=\gamma/\kappa$. El trabajo es gaussiano con
+\[\langle W\rangle=\gamma v^2\big[t-\tau(1-e^{-t/\tau})\big],\qquad\Var(W)=2\kB T\langle W\rangle,\]
+y $\Delta F=0$. Con $\kappa=\gamma=\kB T=v=1$, $t=3$: $\langle W\rangle=2{,}05$, $\Var=4{,}10$, $P(W<0)=\Phi(-\langle W\rangle/\sigma)\approx15{,}6\,\%$.
+Una simulación con $2\times10^4$ trayectorias \evS{} da $2{,}04$, $4{,}09$ y $15{,}5\,\%$. La relación $\Var=2\kB T\langle W_{\text{dis}}\rangle$ para
+trabajo gaussiano es una consecuencia de la igualdad de Jarzynski (lección 3.3).
+
+\section{Entropía estocástica}
+$s(t)=-\kB\ln p(x_t,t)$ con $p$ la solución de Fokker--Planck; $\langle s\rangle=S_{\text{Gibbs}}$. La entropía del medio cambia
+$\Delta s_m=-Q/T$. La producción total $\Delta s_{\text{tot}}=\Delta s+\Delta s_m$ cumple $\langle\Delta s_{\text{tot}}\rangle\ge0$, pero
+puede ser negativa en trayectorias individuales (lección 3.2).
+
+\begin{aplicacion}
+La energía de una operación (borrado, actualización de un pbit) es una variable aleatoria; solo su promedio está acotado por Landauer.
+Laboratorio L4: arrastrar una trampa y estimar $\Delta F$ con Jarzynski y Bennett.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Signos: $Q$ recibido, $W$ sobre el sistema. \quad Itô en el calor rompe la primera ley.
+\item $W<0$ individual no viola la segunda ley. \quad Trabajo $\neq$ cambio de energía.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[11]{seifert} U. Seifert, Stochastic thermodynamics, fluctuation theorems and molecular machines, \emph{Rep. Prog. Phys.} 75, 126001 (2012).
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\end{thebibliography}
+\end{document}

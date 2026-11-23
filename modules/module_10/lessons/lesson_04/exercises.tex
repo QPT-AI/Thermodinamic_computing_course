@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.4}{Transformers dispersos}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Ancho con grado 8 y presupuesto de 8192 conexiones.
+\item (B) ¿Por qué sube el error con grado muy bajo?
+\item (B) Capas para cubrir 4096 entradas con grado 16: patrón local frente a mundo pequeño.
+\item (B) ¿Por qué las capas dispersas pueden ser lentas en una GPU?
+\item (I) Con grado 16, ¿cuántas conexiones tiene una capa de ancho 4096? ¿Y la densa equivalente?
+\item (I) Proponga un patrón de mundo pequeño de grado 16: cuántas conexiones locales y cuántos saltos largos.
+\item (A) Repita el barrido iso-FLOP con otro maestro y otro presupuesto; ¿se mueve el óptimo?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $8192/8=1024$.
+
+\textbf{E2.} Cada unidad depende de muy pocas entradas y no puede representar las combinaciones que el maestro necesita.
+
+\textbf{E3.} Local: $4096/16=256$; mundo pequeño: $\log_{16}4096=3$.
+
+\textbf{E4.} Acceso irregular a memoria y poca reutilización; las unidades tensoriales están optimizadas para bloques densos.
+
+\textbf{E5.} $4096\cdot16=65\,536$ frente a $4096^2\approx1{,}7\times10^7$: 256 veces menos.
+
+\textbf{E6.} Por ejemplo 12 locales y 4 saltos aleatorios.
+
+\textbf{E7.} Suele moverse con el presupuesto y la tarea.
+\end{solucion}
+\end{document}

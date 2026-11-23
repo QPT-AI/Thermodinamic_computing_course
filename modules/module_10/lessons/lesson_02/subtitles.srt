@@ -1,0 +1,296 @@
+1
+00:00:00,350 --> 00:00:01,925
+Lección 10.2.
+
+2
+00:00:02,305 --> 00:00:04,456
+Atención libre y atención lineal.
+
+3
+00:00:05,583 --> 00:00:09,717
+La atención compara cada token con
+todos los anteriores: un costo que
+
+4
+00:00:09,717 --> 00:00:13,730
+crece con el cuadrado del contexto
+y una caché que crece sin parar.
+
+5
+00:00:14,110 --> 00:00:18,045
+Para un hardware con conectividad
+fija y dispersa, eso es un problema.
+
+6
+00:00:18,425 --> 00:00:22,264
+Hoy vemos alternativas que mezclan
+información entre posiciones sin
+
+7
+00:00:22,264 --> 00:00:26,389
+productos de consultas por claves:
+el transformer libre de atención, sus
+
+8
+00:00:26,389 --> 00:00:29,883
+variantes locales y la atención
+convolucional con compuertas.
+
+9
+00:00:31,017 --> 00:00:35,643
+El transformer libre de atención, AFT,
+propuesto por Zhai y colaboradores en
+
+10
+00:00:35,643 --> 00:00:40,026
+dos mil veintiuno, calcula la salida
+de cada posición como una compuerta
+
+11
+00:00:40,026 --> 00:00:43,983
+sigmoide de la consulta por un
+promedio ponderado de los valores.
+
+12
+00:00:44,363 --> 00:00:48,796
+Los pesos son exponenciales de las claves
+más un sesgo de posición aprendido.
+
+13
+00:00:49,176 --> 00:00:52,317
+Todo es elemento a elemento
+en la dimensión del modelo:
+
+14
+00:00:52,317 --> 00:00:55,001
+no hay producto escalar
+entre consulta y clave.
+
+15
+00:00:56,117 --> 00:01:00,186
+Sin sesgos de posición, la variante
+AFT-simple causal tiene una
+
+16
+00:01:00,186 --> 00:01:04,515
+forma recurrente: basta acumular
+dos sumas, la de las exponenciales
+
+17
+00:01:04,515 --> 00:01:08,197
+de las claves y la de esas
+exponenciales por los valores.
+
+18
+00:01:08,577 --> 00:01:11,926
+Cada nuevo token actualiza
+las sumas y lee la salida.
+
+19
+00:01:12,306 --> 00:01:15,455
+Verificamos con sesenta y
+cuatro posiciones que la forma
+
+20
+00:01:15,455 --> 00:01:18,098
+paralela y la recurrente
+coinciden exactamente.
+
+21
+00:01:18,478 --> 00:01:21,032
+El estado es de solo
+dos vectores, en lugar
+
+22
+00:01:21,032 --> 00:01:23,349
+de una caché que crece con el contexto.
+
+23
+00:01:24,450 --> 00:01:26,602
+En costo, la diferencia es grande.
+
+24
+00:01:26,982 --> 00:01:29,402
+Para un contexto de
+cuatro mil noventa y seis
+
+25
+00:01:29,402 --> 00:01:31,821
+tokens y dimensión cuatro
+mil noventa y seis,
+
+26
+00:01:32,201 --> 00:01:36,817
+las puntuaciones de atención de una
+capa cuestan unas doscientas setenta y
+
+27
+00:01:36,817 --> 00:01:40,996
+cinco mil millones de operaciones,
+y AFT-simple unas cien millones.
+
+28
+00:01:41,376 --> 00:01:43,483
+Es una mezcla lineal en el contexto.
+
+29
+00:01:43,863 --> 00:01:47,213
+El precio es expresividad,
+porque AFT-simple no puede
+
+30
+00:01:47,213 --> 00:01:50,690
+enfocar una posición concreta
+como lo hace la atención.
+
+31
+00:01:51,817 --> 00:01:55,691
+AFT-conv recupera algo de
+expresividad con sesgos de posición
+
+32
+00:01:55,691 --> 00:01:59,757
+locales, aprendidos dentro de una
+ventana, como una convolución.
+
+33
+00:02:00,137 --> 00:02:03,848
+La atención convolucional con
+compuertas sigue la misma idea:
+
+34
+00:02:03,848 --> 00:02:07,194
+mezcla cada posición con sus
+vecinas mediante un filtro
+
+35
+00:02:07,194 --> 00:02:10,541
+aprendido y la modula con
+una compuerta multiplicativa.
+
+36
+00:02:10,921 --> 00:02:13,808
+Las conexiones son locales
+y fijas, justo lo que
+
+37
+00:02:13,808 --> 00:02:16,275
+un grafo de grado fijo puede implementar.
+
+38
+00:02:17,383 --> 00:02:21,505
+Para hardware termodinámico, estas
+variantes tienen tres virtudes:
+
+39
+00:02:21,505 --> 00:02:25,252
+no necesitan productos densos
+entre consultas y claves, usan
+
+40
+00:02:25,252 --> 00:02:29,186
+operaciones elemento a elemento
+como exponenciales y sigmoides,
+
+41
+00:02:29,566 --> 00:02:33,724
+cercanas a la respuesta de un pbit,
+y su conectividad es local y fija.
+
+42
+00:02:34,104 --> 00:02:37,644
+Por eso aparecen en los diseños
+de modelos de lenguaje para chips
+
+43
+00:02:37,644 --> 00:02:41,728
+probabilísticos, como los transformers
+dispersos de las próximas lecciones.
+
+44
+00:02:42,850 --> 00:02:46,653
+Estos modelos sirven para contextos
+largos y generación en flujo con
+
+45
+00:02:46,653 --> 00:02:50,513
+estado constante, y forman la familia
+de mezcladores eficientes junto
+
+46
+00:02:50,513 --> 00:02:53,701
+a la atención lineal y los
+modelos de espacio de estados.
+
+47
+00:02:54,081 --> 00:02:58,565
+En el laboratorio veintiocho
+entrenarás un modelo AFT-conv pequeño.
+
+48
+00:02:59,683 --> 00:03:03,223
+Errores comunes: suponer
+que AFT completo es lineal,
+
+49
+00:03:03,223 --> 00:03:06,422
+cuando sus sesgos completos
+cuestan cuadrático.
+
+50
+00:03:06,802 --> 00:03:09,805
+Olvidar la estabilidad
+numérica de las exponenciales.
+
+51
+00:03:10,185 --> 00:03:14,373
+Esperar la capacidad de recuperación
+de la atención con mezcla solo local.
+
+52
+00:03:14,753 --> 00:03:17,569
+Y comparar calidad con
+distinto número de parámetros.
+
+53
+00:03:18,683 --> 00:03:23,220
+En resumen, AFT reemplaza la atención
+por un promedio ponderado con
+
+54
+00:03:23,220 --> 00:03:27,417
+pesos exponenciales y una
+compuerta, todo elemento a elemento.
+
+55
+00:03:27,797 --> 00:03:32,436
+Su versión causal simple es recurrente,
+con estado constante y sin caché.
+
+56
+00:03:32,816 --> 00:03:36,477
+Las variantes locales recuperan
+expresividad con conectividad
+
+57
+00:03:36,477 --> 00:03:40,077
+fija, lo que las hace naturales
+para hardware termodinámico.
+
+58
+00:03:41,183 --> 00:03:44,400
+Para practicar: escribe la salida de AFT.
+
+59
+00:03:44,780 --> 00:03:46,573
+Deduce su forma recurrente.
+
+60
+00:03:46,953 --> 00:03:50,023
+Compara el tamaño del estado
+de decode con la atención.
+
+61
+00:03:50,403 --> 00:03:53,711
+Y di qué puede hacer la
+atención que AFT-simple no.

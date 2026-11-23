@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.7}{Entrenamiento consciente del hardware}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} entrenamiento consciente de cuantización a 4 bits (estimador directo); inyección de ruido; dispersión fija
+desde el paso 0; medir las ganancias con honestidad.
+\textbf{Prerrequisitos:} 5.6, 5.7.
+
+\section{Experimento \evS}
+Perceptrón $10\to32\to2$ (ReLU), tarea no lineal en 10 dimensiones (3000 de entrenamiento, 1000 de prueba), SGD, 60 épocas, semillas 1--3. Hardware simulado:
+pesos de 4 bits (15 niveles simétricos por tensor) y ruido multiplicativo $\tilde W=\hat W\odot(1+\sigma\xi)$, promediado sobre 20 sorteos.
+
+\section{Técnicas}
+\textbf{QAT con estimador directo:} el paso hacia adelante usa $\hat W=Q_4(W)$; el hacia atrás trata el redondeo como identidad,
+$\partial\mathcal L/\partial W\approx\partial\mathcal L/\partial\hat W$. \textbf{Inyección de ruido:} multiplicar los pesos por $(1+\sigma\xi)$ en cada paso, con $\sigma$ igual al
+desajuste real; favorece soluciones planas. \textbf{Dispersión fija:} $W=M\odot W_{\text{libre}}$ con la máscara del grafo del chip desde el paso 0.
+
+\section{Resultados (media de 3 semillas)}
+\begin{center}\begin{tabular}{lcc}\toprule
+& $\sigma=0{,}1$ & $\sigma=0{,}2$\\\midrule
+precisión en coma flotante & \multicolumn{2}{c}{95,0\,\%}\\
+despliegue ingenuo en hardware & 90,4\,\% & 88,0\,\%\\
+QAT + inyección de ruido & 90,5\,\% & 89,0\,\%\\\bottomrule\end{tabular}\end{center}
+Dispersión al 25\,\%: máscara fija desde el paso 0, 92,5\,\%; podar una red densa sin reentrenar, 91,9\,\%.
+
+\section{Lectura honesta}
+Aquí el efecto dominante es la penalización del hardware (5--7 puntos); el entrenamiento consciente recupera a lo sumo un punto. En modelos grandes la QAT a 4 bits es estándar
+y eficaz, pero las ganancias dependen del modelo, la tarea y el ruido: siempre comparar con el despliegue ingenuo y con varias semillas.
+
+\begin{aplicacion}
+Receta: modelar el chip (bits, ruido, máscara, precisión de lectura); entrenar con paso hacia adelante cuantizado y ruido; fijar la máscara desde el principio (transformers tipo Z1T,
+Unidad 10); reportar precisión en hardware frente al despliegue ingenuo.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Evaluar solo en coma flotante. \quad Ruido inyectado muy distinto del real.
+\item Podar después de entrenar. \quad Afirmar mejoras con una sola semilla.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{jacob} B. Jacob et al., Quantization and training of neural networks for efficient integer-arithmetic-only inference, \emph{CVPR} (2018).
+\bibitem[22]{z1} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\bibitem[31]{err} M. Aifer et al., Error mitigation for thermodynamic computing, 2024.
+\end{thebibliography}
+\end{document}

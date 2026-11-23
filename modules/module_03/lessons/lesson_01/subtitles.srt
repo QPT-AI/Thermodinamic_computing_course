@@ -1,0 +1,383 @@
+1
+00:00:00,350 --> 00:00:01,930
+Lección 3.1.
+
+2
+00:00:02,310 --> 00:00:05,578
+Calor, trabajo y entropía
+a nivel de trayectoria.
+
+3
+00:00:06,683 --> 00:00:09,815
+La termodinámica clásica
+habla de promedios: calor y
+
+4
+00:00:09,815 --> 00:00:13,007
+trabajo de un gas con diez
+a la veintitrés moléculas.
+
+5
+00:00:13,387 --> 00:00:17,357
+Pero un pbit, una molécula o un
+nodo de un chip termodinámico
+
+6
+00:00:17,357 --> 00:00:21,131
+son sistemas pequeños, donde
+cada realización es distinta.
+
+7
+00:00:21,511 --> 00:00:25,848
+La termodinámica estocástica,
+desarrollada por Sekimoto y Seifert,
+
+8
+00:00:25,848 --> 00:00:29,725
+define calor, trabajo y entropía
+para una sola trayectoria.
+
+9
+00:00:30,105 --> 00:00:33,393
+Es el lenguaje para medir la
+energía de un cómputo ruidoso.
+
+10
+00:00:34,517 --> 00:00:37,950
+Imagina una partícula en una
+trampa que movemos con una mano.
+
+11
+00:00:38,330 --> 00:00:42,475
+Cuando la mano mueve la trampa,
+cambia la energía potencial de la
+
+12
+00:00:42,475 --> 00:00:46,238
+partícula: eso es trabajo,
+energía que nosotros inyectamos.
+
+13
+00:00:46,618 --> 00:00:51,593
+Cuando la partícula se mueve por sí sola
+dentro de la trampa, empujada por el baño,
+
+14
+00:00:51,593 --> 00:00:55,970
+su energía cambia porque intercambia
+energía con el fluido: eso es calor.
+
+15
+00:00:56,350 --> 00:00:59,371
+La contabilidad es la de
+siempre, pero hecha paso
+
+16
+00:00:59,371 --> 00:01:02,022
+a paso sobre una única
+trayectoria ruidosa.
+
+17
+00:01:03,150 --> 00:01:08,274
+Formalmente, con una energía V(x,
+λ) controlada por un parámetro λ(t),
+
+18
+00:01:08,654 --> 00:01:13,117
+el trabajo es el cambio
+de energía por mover el
+
+19
+00:01:13,117 --> 00:01:17,770
+parámetro con la partícula
+quieta: dW = ∂_λ V dλ.
+
+20
+00:01:18,150 --> 00:01:23,553
+El calor recibido es el cambio
+de energía por el movimiento de
+
+21
+00:01:23,553 --> 00:01:28,084
+la partícula con el parámetro
+fijo: dQ = ∂_x V ∘ dx,
+
+22
+00:01:28,464 --> 00:01:31,030
+con la regla del punto
+medio de Stratonovich.
+
+23
+00:01:31,410 --> 00:01:35,284
+Sumando, dV = dW + dQ:
+la primera ley se cumple
+
+24
+00:01:35,284 --> 00:01:38,663
+en cada trayectoria, no solo en promedio.
+
+25
+00:01:39,783 --> 00:01:42,996
+Arrastremos una trampa
+armónica a velocidad constante.
+
+26
+00:01:43,376 --> 00:01:47,526
+Arriba ves la trampa en movimiento y
+la partícula que la sigue con retraso.
+
+27
+00:01:47,906 --> 00:01:52,190
+Abajo, tres contadores a lo largo
+de la misma trayectoria: el trabajo
+
+28
+00:01:52,190 --> 00:01:56,100
+acumulado, el calor acumulado y
+el cambio de energía potencial.
+
+29
+00:01:56,480 --> 00:01:59,122
+El trabajo crece en
+promedio porque la partícula
+
+30
+00:01:59,122 --> 00:02:01,543
+se queda atrás y la
+mano debe tirar de ella.
+
+31
+00:02:01,923 --> 00:02:06,379
+El calor es mayormente negativo: la
+partícula entrega energía al fluido.
+
+32
+00:02:06,759 --> 00:02:11,183
+Y en todo instante el cambio de energía
+es exactamente la suma de ambos.
+
+33
+00:02:12,283 --> 00:02:14,947
+Repitamos el experimento veinte mil veces.
+
+34
+00:02:15,327 --> 00:02:19,939
+El trabajo varía de una realización a
+otra y forma una distribución gaussiana.
+
+35
+00:02:20,319 --> 00:02:23,582
+Su media es positiva, como
+exige la segunda ley, porque
+
+36
+00:02:23,582 --> 00:02:26,547
+la energía libre no cambia
+al trasladar la trampa.
+
+37
+00:02:26,927 --> 00:02:30,359
+Pero fíjate en la cola izquierda:
+en alrededor del quince por
+
+38
+00:02:30,359 --> 00:02:33,228
+ciento de las realizaciones
+el trabajo es negativo.
+
+39
+00:02:33,608 --> 00:02:36,974
+El baño, por azar, empujó la
+partícula a nuestro favor.
+
+40
+00:02:37,354 --> 00:02:41,978
+Eso no viola la segunda ley: la segunda
+ley es una afirmación sobre promedios,
+
+41
+00:02:41,978 --> 00:02:45,949
+y en sistemas pequeños las violaciones
+individuales son frecuentes.
+
+42
+00:02:47,050 --> 00:02:49,673
+También la entropía se
+define por trayectoria.
+
+43
+00:02:50,053 --> 00:02:55,465
+La entropía del sistema es s = −k_B
+ln p(x, t), evaluada en el punto
+
+44
+00:02:55,465 --> 00:03:00,320
+donde está la partícula; su
+promedio es la entropía de Gibbs.
+
+45
+00:03:00,700 --> 00:03:05,296
+La entropía del medio cambia como
+menos el calor recibido dividido por T.
+
+46
+00:03:05,676 --> 00:03:09,556
+La entropía total producida en una
+trayectoria es la suma de ambas.
+
+47
+00:03:09,936 --> 00:03:14,713
+Su promedio nunca es negativo, pero
+trayectorias individuales pueden reducirla.
+
+48
+00:03:15,093 --> 00:03:19,755
+La próxima lección cuantifica exactamente
+cuán frecuentes son esas reducciones.
+
+49
+00:03:20,883 --> 00:03:26,794
+Con rigidez uno, fricción uno, k_B T
+igual a uno, velocidad uno y duración
+
+50
+00:03:26,794 --> 00:03:32,146
+tres, la teoría da un trabajo medio
+de tres menos uno menos e^(−3),
+
+51
+00:03:32,526 --> 00:03:37,924
+unos dos coma cero cinco, y una varianza
+del doble de la media, cuatro coma uno.
+
+52
+00:03:38,304 --> 00:03:42,374
+La simulación da dos coma cero
+cuatro y cuatro coma cero nueve.
+
+53
+00:03:42,754 --> 00:03:46,423
+La probabilidad de trabajo
+negativo predicha es quince coma
+
+54
+00:03:46,423 --> 00:03:49,531
+seis por ciento, y la
+medida es quince coma cinco.
+
+55
+00:03:50,650 --> 00:03:52,278
+Esto importa para el cómputo.
+
+56
+00:03:52,658 --> 00:03:55,460
+Un borrado individual
+puede costar menos que la
+
+57
+00:03:55,460 --> 00:03:58,321
+cota de Landauer; solo
+el promedio está acotado.
+
+58
+00:03:58,701 --> 00:04:01,473
+La energía de una
+operación en un pbit es una
+
+59
+00:04:01,473 --> 00:04:03,937
+variable aleatoria con media y varianza.
+
+60
+00:04:04,317 --> 00:04:07,254
+Y en el laboratorio cuatro
+arrastrarás una trampa para
+
+61
+00:04:07,254 --> 00:04:10,409
+estimar diferencias de energía
+libre a partir del trabajo.
+
+62
+00:04:11,517 --> 00:04:13,992
+La primera ley de la lección uno punto uno
+
+63
+00:04:13,992 --> 00:04:16,349
+se vuelve una identidad por trayectoria.
+
+64
+00:04:16,729 --> 00:04:20,394
+La entropía estocástica usa la
+densidad de Fokker y Planck.
+
+65
+00:04:20,774 --> 00:04:23,011
+Y las próximas lecciones convertirán la
+
+66
+00:04:23,011 --> 00:04:25,420
+distribución del trabajo en leyes exactas.
+
+67
+00:04:26,550 --> 00:04:29,787
+Errores comunes: confundir
+las convenciones de signo.
+
+68
+00:04:30,167 --> 00:04:34,517
+Usar la regla de Itô para el calor,
+cuando se necesita la del punto medio.
+
+69
+00:04:34,897 --> 00:04:37,708
+Creer que un trabajo negativo
+viola la segunda ley.
+
+70
+00:04:38,088 --> 00:04:40,396
+Y confundir trabajo con cambio de energía.
+
+71
+00:04:41,517 --> 00:04:45,108
+En resumen: el trabajo es el
+cambio de energía por mover el
+
+72
+00:04:45,108 --> 00:04:49,065
+control, y el calor, el cambio
+por el movimiento de la partícula.
+
+73
+00:04:49,445 --> 00:04:52,209
+La primera ley vale
+trayectoria por trayectoria.
+
+74
+00:04:52,589 --> 00:04:55,996
+El trabajo fluctúa: su media
+respeta la segunda ley, pero
+
+75
+00:04:55,996 --> 00:04:59,105
+las realizaciones individuales
+pueden ser negativas.
+
+76
+00:05:00,217 --> 00:05:04,844
+Para practicar: escribe el trabajo y
+el calor en una trampa armónica móvil.
+
+77
+00:05:05,224 --> 00:05:07,620
+Explica por qué el calor usa Stratonovich.
+
+78
+00:05:08,000 --> 00:05:10,438
+Predice qué ocurre al
+duplicar la velocidad.
+
+79
+00:05:10,818 --> 00:05:13,444
+Y calcula el promedio de
+la entropía estocástica.

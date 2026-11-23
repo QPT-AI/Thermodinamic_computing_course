@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.10}{Optimización con Ising y lógica probabilística invertible}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} Max-Cut y QUBO como estados fundamentales de Ising; compuertas como penalizaciones; lógica invertible y
+factorización fijando un multiplicador; límites del enfoque.
+\textbf{Prerrequisitos:} 4.4 (recocido), 4.5 (pbits).
+
+\section{Optimización como estado fundamental}
+A $T\to0$, $p\propto e^{-\beta E}$ se concentra en los mínimos de $E$. Si la solución de un problema es el mínimo de una energía de Ising, un chip de
+pbits la busca enfriándose \cite{lucas}.
+\begin{resultado}[ (Max-Cut)]
+Con $s_i=\pm1$ indicando el lado de cada nodo, $\text{corte}(s)=\sum_{i<j}w_{ij}(1-s_is_j)/2$. Maximizar el corte equivale a minimizar $E=-\sum J_{ij}s_is_j$
+con $J_{ij}=-w_{ij}$ (antiferromagnético).
+\end{resultado}
+\begin{ejemplo}
+Grafo aleatorio con $n=10$ nodos y 18 aristas: corte máximo 14 (fuerza bruta, $2^{10}$ estados). Recocido con pbits ($T:2\to0{,}05$, 300 barridos):
+corte 14 en 100 de 100 corridas \evS.
+\end{ejemplo}
+QUBO: variables $x\in\{0,1\}$ con costo cuadrático; $x=(1+s)/2$ lo convierte en Ising (más una constante). SAT: una penalización por cláusula; la energía mínima
+es 0 si y solo si la fórmula es satisfacible.
+
+\section{Compuertas como energías y lógica invertible}
+\begin{definicion}[ (penalización AND)]
+$P_{\text{AND}}(u,v,z)=uv-2uz-2vz+3z$, con $u,v,z\in\{0,1\}$, vale 0 exactamente en las cuatro filas de $z=u\wedge v$ y $\ge1$ en las demás.
+\end{definicion}
+Un circuito es la suma de las penalizaciones de sus compuertas (compartiendo variables). A $\beta=2$ las cuatro filas válidas tienen probabilidad $0{,}227$
+cada una. Fijando la salida:
+\begin{center}\begin{tabular}{lcccc}\toprule
+$(u,v)$ & 00 & 01 & 10 & 11\\\midrule
+$p(u,v\mid z=1)$ & 0,002 & 0,106 & 0,106 & 0,785\\
+$p(u,v\mid z=0)$ & 0,319 & 0,319 & 0,319 & 0,043\\\bottomrule\end{tabular}\end{center}
+El mismo circuito calcula hacia adelante (entradas fijas) y hacia atrás (salidas fijas): lógica probabilística invertible \cite{camsari}.
+
+\section{Factorizar fijando un multiplicador}
+Fijar la salida de un multiplicador en $N$ hace que las entradas busquen $p,q$ con $pq=N$. Modelo de juguete: $N=143$, $p,q$ impares de 4 bits, energía
+$(N-pq)^2$, recocido de Metropolis: $11\times13$ en 79 de 200 corridas. No rompe la criptografía: el paisaje es rugoso, $(N-pq)^2$ tiene términos de orden
+alto (requiere espines auxiliares) y el tiempo crece rápidamente con el número de bits. La Unidad 7 presenta un algoritmo por difusión con garantías.
+
+\begin{aplicacion}
+Programación de tareas, rutas, carteras (QUBO); p-computadores en FPGA y máquinas de Ising dispersas \cite{aadit}.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Penalizaciones débiles frente al objetivo. \quad Olvidar la constante QUBO $\leftrightarrow$ Ising.
+\item Esperar tiempo polinomial en problemas NP-difíciles. \quad Términos de orden alto sin espines auxiliares.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[17]{camsari} K. Y. Camsari, B. M. Sutton y S. Datta, p-bits for probabilistic spin logic, Appl. Phys. Rev. 6, 011305 (2019).
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, Nat. Electron. 5, 460 (2022).
+\bibitem{lucas} A. Lucas, Ising formulations of many NP problems, Front. Phys. 2, 5 (2014).
+\end{thebibliography}
+\end{document}

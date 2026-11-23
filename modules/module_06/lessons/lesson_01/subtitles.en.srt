@@ -1,0 +1,288 @@
+1
+00:00:00,350 --> 00:00:01,974
+Lesson 6.1.
+
+2
+00:00:02,354 --> 00:00:06,616
+Linear systems from the first
+moment of an OU process.
+
+3
+00:00:07,717 --> 00:00:12,581
+Solving a linear system is perhaps the
+most common task in scientific computing.
+
+4
+00:00:12,961 --> 00:00:17,255
+A digital computer does it with
+factorizations or with conjugate gradient.
+
+5
+00:00:17,635 --> 00:00:22,927
+Today we see another way: build a physical
+system whose equilibrium is the solution,
+
+6
+00:00:22,927 --> 00:00:27,401
+let it relax in the presence of
+thermal noise and average its position.
+
+7
+00:00:27,781 --> 00:00:30,770
+It is the central idea of
+thermodynamic linear algebra.
+
+8
+00:00:31,883 --> 00:00:35,000
+Take a symmetric positive
+definite matrix A.
+
+9
+00:00:35,380 --> 00:00:42,094
+We define the potential
+U(x) = ½ xᵀ A x − bᵀ x.
+
+10
+00:00:42,474 --> 00:00:48,837
+Its gradient is A x − b, so its
+only minimum is exactly x = A⁻¹ b.
+
+11
+00:00:49,217 --> 00:00:52,129
+Physically, it is a
+set of coupled harmonic
+
+12
+00:00:52,129 --> 00:00:56,057
+oscillators: A sets the springs
+and b the external forces.
+
+13
+00:00:57,183 --> 00:01:03,090
+In contact with a heat bath, the position
+obeys the overdamped Langevin equation: an
+
+14
+00:01:03,090 --> 00:01:08,223
+Ornstein-Uhlenbeck process that pushes
+toward the minimum and adds noise.
+
+15
+00:01:08,603 --> 00:01:15,610
+At equilibrium, x follows a Gaussian
+with mean A⁻¹ b and covariance β⁻¹ A⁻¹.
+
+16
+00:01:15,990 --> 00:01:19,557
+The solution of the system is the
+first moment of the distribution.
+
+17
+00:01:19,937 --> 00:01:22,379
+The noise is not in the
+way: it is what guarantees
+
+18
+00:01:22,379 --> 00:01:24,772
+that the system explores
+and reaches equilibrium.
+
+19
+00:01:25,883 --> 00:01:27,743
+The protocol has three steps.
+
+20
+00:01:28,123 --> 00:01:32,547
+First, load A and b into the
+couplings and forces of the device.
+
+21
+00:01:32,927 --> 00:01:37,734
+Second, wait an equilibration
+time t₀, of order κ τ_r times a
+
+22
+00:01:37,734 --> 00:01:43,328
+logarithm, where κ is the condition
+number and τ_r the relaxation time.
+
+23
+00:01:43,708 --> 00:01:49,473
+Third, time-average x over a
+window τ with an analog integrator.
+
+24
+00:01:49,853 --> 00:01:52,405
+That average is the
+estimate of the solution.
+
+25
+00:01:53,517 --> 00:01:56,475
+Let's simulate a Wishart
+matrix of dimension
+
+26
+00:01:56,475 --> 00:01:59,232
+fifty, with condition number thirty-four.
+
+27
+00:01:59,612 --> 00:02:04,147
+With k_B T = 0.01, after equilibrating,
+the relative error of the
+
+28
+00:02:04,147 --> 00:02:08,612
+average is seven percent with a
+window of ten units, two percent
+
+29
+00:02:08,612 --> 00:02:12,450
+with a hundred and below one
+percent with nine hundred.
+
+30
+00:02:12,830 --> 00:02:16,097
+If we cool ten times, the
+error falls about three times:
+
+31
+00:02:16,097 --> 00:02:18,956
+with a hundred units it
+drops to six thousandths.
+
+32
+00:02:19,336 --> 00:02:22,358
+The error scales as one
+over the square root of β τ.
+
+33
+00:02:23,483 --> 00:02:27,073
+The paper by Aifer and
+colleagues gives the exact times.
+
+34
+00:02:27,453 --> 00:02:33,185
+In the overdamped regime,
+the required window
+
+35
+00:02:33,185 --> 00:02:38,025
+is τ = 2κ²d‖A‖ τ_r / (β‖b‖²ε²(1 − P)).
+
+36
+00:02:38,405 --> 00:02:41,185
+It grows with the dimension,
+with the square of the
+
+37
+00:02:41,185 --> 00:02:44,346
+condition number and with the
+inverse square of the error.
+
+38
+00:02:44,726 --> 00:02:50,097
+That gives a complexity of order
+d κ² ε⁻², against d² √κ for
+
+39
+00:02:50,097 --> 00:02:55,557
+conjugate gradient: the advantage
+appears at large dimension.
+
+40
+00:02:56,683 --> 00:03:00,767
+This solver shines when a fast
+approximate solution is enough:
+
+41
+00:03:00,767 --> 00:03:05,114
+inside iterative methods, in Newton
+steps, in the natural gradient
+
+42
+00:03:05,114 --> 00:03:09,132
+we will see in unit eight, or
+in Gaussian process regression.
+
+43
+00:03:09,512 --> 00:03:14,036
+In lab nine you will compare it with
+conjugate gradient and with Cholesky.
+
+44
+00:03:15,150 --> 00:03:18,137
+Common mistakes: averaging from time zero,
+
+45
+00:03:18,137 --> 00:03:20,910
+when the transient biases the estimate.
+
+46
+00:03:21,290 --> 00:03:24,388
+Using a matrix that is not
+positive definite without
+
+47
+00:03:24,388 --> 00:03:27,963
+transforming the system, which
+squares the condition number.
+
+48
+00:03:28,343 --> 00:03:30,950
+Expecting high precision,
+when the error falls
+
+49
+00:03:30,950 --> 00:03:33,273
+only as one over the square root of time.
+
+50
+00:03:33,653 --> 00:03:35,715
+And ignoring the cost
+of loading the matrix.
+
+51
+00:03:36,817 --> 00:03:41,813
+In summary: with the right quadratic
+potential, the thermal equilibrium of
+
+52
+00:03:41,813 --> 00:03:46,539
+coupled oscillators is a Gaussian
+centered on the solution of A x = b.
+
+53
+00:03:46,919 --> 00:03:49,831
+One equilibrates,
+time-averages, and the error
+
+54
+00:03:49,831 --> 00:03:52,427
+falls as one over the square root of β τ.
+
+55
+00:03:52,807 --> 00:03:57,032
+The complexity is of order d κ² ε⁻².
+
+56
+00:03:58,150 --> 00:04:02,315
+To practice: prove that the minimum
+of the potential is the solution.
+
+57
+00:04:02,695 --> 00:04:05,015
+Explain why the transient is discarded.
+
+58
+00:04:05,395 --> 00:04:09,212
+Compute how much the error falls if
+the window is multiplied by four.
+
+59
+00:04:09,592 --> 00:04:11,511
+And say what happens to the condition
+
+60
+00:04:11,511 --> 00:04:13,741
+number when moving to
+the normal equations.

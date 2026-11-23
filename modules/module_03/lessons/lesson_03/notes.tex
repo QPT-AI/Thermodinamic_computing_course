@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.3}{Teoremas de fluctuación: Crooks y Jarzynski}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} igualdad de Jarzynski y teorema de Crooks; estimar $\Delta F$ desde procesos
+rápidos; sesgo de estimadores y BAR. \textbf{Prerrequisitos:} 3.1, 3.2, 1.1.
+
+\section{Enunciados}
+Sistema inicialmente en equilibrio con $\lambda_i$, protocolo $\lambda(t)$ hasta $\lambda_f$ en tiempo finito:
+\begin{resultado}
+\textbf{Jarzynski (1997):} $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$, $\Delta F=F(\lambda_f)-F(\lambda_i)$ \cite{jarzynski}.
+\textbf{Crooks (1999):} $\dfrac{P_F(W)}{P_R(-W)}=e^{\beta(W-\Delta F)}$, con $P_R$ el proceso inverso iniciado en equilibrio con $\lambda_f$.
+\end{resultado}
+Consecuencias: Jensen $\Rightarrow\langle W\rangle\ge\Delta F$; las distribuciones $P_F(W)$ y $P_R(-W)$ se cruzan en $W=\Delta F$; y
+$-\langle W_R\rangle\le\Delta F\le\langle W_F\rangle$. Integrando Crooks se obtiene Jarzynski. Para trabajo gaussiano,
+$\Delta F=\langle W\rangle-\frac\beta2\Var(W)$.
+
+\section{Ejemplo: endurecer una trampa}
+$V=\frac\kappa2x^2$ con $\kappa:1\to4$ en $\tau=0{,}5$ ($\kB T=\mu=1$). $\Delta F=\frac{\kB T}2\ln\frac{\kappa_f}{\kappa_i}=\frac12\ln4\approx0{,}693$.
+Con $10^5$ trayectorias \evS: $\langle W_F\rangle\approx1{,}077$ (disipado $\approx0{,}38$), $-\langle W_R\rangle\approx0{,}494$, y el estimador de
+Jarzynski $-\ln\overline{e^{-W}}\approx0{,}693$. La distribución del trabajo no es gaussiana.
+
+\section{Sesgo y eficiencia}
+El promedio exponencial está dominado por trayectorias raras con $W$ pequeño. Con $N$ muestras, $\widehat{\Delta F}_N=-\kB T\ln\frac1N\sum e^{-\beta W_i}$
+está sesgado hacia arriba (por Jensen, $\E\widehat{\Delta F}_N\ge\Delta F$). En el ejemplo: $N=5$: $\approx0{,}73$; $N=20$: $\approx0{,}70$;
+$N=1000$: $\approx0{,}693$ \evS. El número de trayectorias necesario crece aproximadamente como $e^{\beta W_{\text{dis}}}$. El estimador de
+Bennett (BAR), que combina directas e inversas resolviendo
+$\sum_i\frac{1}{1+e^{\beta(W_i^F-\Delta F)}}=\sum_j\frac{1}{1+e^{\beta(W_j^R+\Delta F)}}$, tiene varianza mínima.
+
+\begin{aplicacion}
+Energías libres de plegamiento (pinzas ópticas); $\ln\det A$ desde el trabajo entre potenciales cuadráticos (L4, lección 6.3):
+$\Delta F=\frac{\kB T}2\ln\frac{\det A_1}{\det A_0}$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Empezar fuera de equilibrio invalida la igualdad. \quad Pocas trayectorias con mucha disipación: sesgo enorme.
+\item $\langle e^{-\beta W}\rangle\neq e^{-\beta\langle W\rangle}$. \quad Jarzynski contiene la segunda ley.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[12]{jarzynski} C. Jarzynski, \emph{Phys. Rev. Lett.} 78, 2690 (1997).
+\bibitem[11]{seifert} U. Seifert, Stochastic thermodynamics..., 2012.
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics}, 2021.
+\end{thebibliography}
+\end{document}

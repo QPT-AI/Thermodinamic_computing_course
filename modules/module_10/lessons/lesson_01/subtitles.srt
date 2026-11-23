@@ -1,0 +1,300 @@
+1
+00:00:00,350 --> 00:00:01,914
+Lección 10.1.
+
+2
+00:00:02,294 --> 00:00:03,865
+Repaso de transformers.
+
+3
+00:00:04,983 --> 00:00:09,541
+Antes de llevar un modelo de lenguaje
+a hardware termodinámico, hay que saber
+
+4
+00:00:09,541 --> 00:00:13,624
+con precisión qué hace un transformer
+y dónde gasta tiempo y energía.
+
+5
+00:00:14,004 --> 00:00:18,188
+Esta lección es un repaso dirigido:
+las piezas del bloque, cuántas
+
+6
+00:00:18,188 --> 00:00:22,561
+operaciones cuesta cada token, la
+memoria de la caché y la diferencia
+
+7
+00:00:22,561 --> 00:00:26,174
+crucial entre procesar el
+prompt y generar token a token.
+
+8
+00:00:27,283 --> 00:00:29,896
+Un transformer es una
+pila de bloques iguales
+
+9
+00:00:29,896 --> 00:00:32,160
+sobre un flujo residual de dimensión d.
+
+10
+00:00:32,540 --> 00:00:36,466
+Cada bloque tiene una normalización,
+una atención que mezcla
+
+11
+00:00:36,466 --> 00:00:40,720
+información entre posiciones, otra
+normalización y una red de dos
+
+12
+00:00:40,720 --> 00:00:44,253
+capas, el MLP, que procesa
+cada posición por separado.
+
+13
+00:00:44,633 --> 00:00:48,384
+La atención calcula consultas,
+claves y valores, y pondera los
+
+14
+00:00:48,384 --> 00:00:52,315
+valores con un softmax de los
+productos entre consultas y claves.
+
+15
+00:00:53,417 --> 00:00:57,035
+Cada bloque tiene unos 12
+d² parámetros: cuatro en las
+
+16
+00:00:57,035 --> 00:01:01,457
+proyecciones de atención y ocho
+en el MLP con expansión de cuatro.
+
+17
+00:01:01,837 --> 00:01:05,249
+Procesar un token cuesta unas
+dos operaciones por parámetro.
+
+18
+00:01:05,629 --> 00:01:10,794
+La atención añade un término que crece
+con el contexto L: 4 L d por bloque.
+
+19
+00:01:11,174 --> 00:01:16,913
+Para d = 4096 y un contexto de cuatro mil,
+son sesenta y siete millones de operaciones
+
+20
+00:01:16,913 --> 00:01:21,785
+de atención frente a cuatrocientos de
+las matrices: las matrices dominan.
+
+21
+00:01:22,917 --> 00:01:26,072
+Al generar, las claves
+y valores de los tokens
+
+22
+00:01:26,072 --> 00:01:30,050
+anteriores no cambian, así que
+se guardan: es la caché KV.
+
+23
+00:01:30,430 --> 00:01:33,013
+Su tamaño por token es
+dos por el número de
+
+24
+00:01:33,013 --> 00:01:35,236
+capas por d por los bytes por número.
+
+25
+00:01:35,616 --> 00:01:39,926
+En un modelo de siete mil millones
+de parámetros con treinta y dos capas
+
+26
+00:01:39,926 --> 00:01:44,116
+y precisión de dieciséis bits, es
+medio megabyte por token: con cuatro
+
+27
+00:01:44,116 --> 00:01:47,648
+mil tokens de contexto, más de
+dos gigabytes por secuencia.
+
+28
+00:01:48,750 --> 00:01:52,355
+Procesar el prompt, el prefill,
+hace muchas operaciones
+
+29
+00:01:52,355 --> 00:01:55,829
+por cada byte de peso leído:
+es limitado por cómputo.
+
+30
+00:01:56,209 --> 00:01:59,050
+Generar token a token,
+el decode, lee todos los
+
+31
+00:01:59,050 --> 00:02:01,952
+pesos para producir un
+solo token por secuencia.
+
+32
+00:02:02,332 --> 00:02:06,218
+Con el modelo del techo, una GPU
+moderna necesita unas doscientas
+
+33
+00:02:06,218 --> 00:02:09,745
+noventa y cinco operaciones
+por byte para trabajar a pleno.
+
+34
+00:02:10,125 --> 00:02:13,200
+Con lote uno, el decode
+hace una: su utilización
+
+35
+00:02:13,200 --> 00:02:15,762
+máxima es del cero coma tres por ciento.
+
+36
+00:02:16,142 --> 00:02:21,279
+Con lote dieciséis, del cinco por ciento;
+con sesenta y cuatro, del veintidós.
+
+37
+00:02:22,383 --> 00:02:23,946
+Aquí aparece la oportunidad.
+
+38
+00:02:24,326 --> 00:02:27,919
+En un TSU espacial, los pesos
+viven en el propio chip como
+
+39
+00:02:27,919 --> 00:02:32,068
+acoplamientos, así que no hay que
+leerlos de memoria en cada token.
+
+40
+00:02:32,448 --> 00:02:35,624
+El decode con lote uno,
+el peor caso para una
+
+41
+00:02:35,624 --> 00:02:38,587
+GPU, no penaliza la utilización de un TSU.
+
+42
+00:02:38,967 --> 00:02:43,898
+En cambio, el prefill, que la GPU hace
+muy bien, no ofrece ventaja clara.
+
+43
+00:02:44,278 --> 00:02:46,912
+Por eso los modelos de
+lenguaje termodinámicos
+
+44
+00:02:46,912 --> 00:02:49,602
+apuntan sobre todo a la
+generación interactiva.
+
+45
+00:02:50,717 --> 00:02:54,652
+Con estas cuentas se estiman las
+operaciones por token, se dimensiona
+
+46
+00:02:54,652 --> 00:02:58,131
+la caché y se predice la
+utilización con el modelo del techo.
+
+47
+00:02:58,511 --> 00:03:02,381
+En el laboratorio veintiocho
+medirás prefill y decode en tu GPU.
+
+48
+00:03:03,483 --> 00:03:05,843
+Errores comunes: usar la utilización del
+
+49
+00:03:05,843 --> 00:03:08,380
+prefill para estimar
+la energía del decode.
+
+50
+00:03:08,760 --> 00:03:11,154
+Ignorar la caché en el
+presupuesto de memoria.
+
+51
+00:03:11,534 --> 00:03:14,738
+Suponer que la atención domina
+con contextos moderados.
+
+52
+00:03:15,118 --> 00:03:19,113
+Y afirmar ventaja de un TSU en
+cargas dominadas por el prefill.
+
+53
+00:03:20,217 --> 00:03:24,352
+En resumen: un bloque tiene unos
+12 d² parámetros y cada token
+
+54
+00:03:24,352 --> 00:03:27,888
+cuesta dos operaciones por
+parámetro más la atención.
+
+55
+00:03:28,268 --> 00:03:33,037
+La caché KV ocupa medio megabyte por
+token en un modelo de siete mil millones.
+
+56
+00:03:33,417 --> 00:03:37,241
+El prefill está limitado por
+cómputo y el decode por memoria,
+
+57
+00:03:37,241 --> 00:03:40,877
+con utilización bajísima en
+lotes pequeños: justo donde un
+
+58
+00:03:40,877 --> 00:03:44,137
+TSU, con los pesos en el
+chip, tiene su oportunidad.
+
+59
+00:03:45,250 --> 00:03:48,247
+Para practicar: cuenta los
+parámetros de un bloque.
+
+60
+00:03:48,627 --> 00:03:50,313
+Calcula la caché por token.
+
+61
+00:03:50,693 --> 00:03:54,408
+Calcula la utilización máxima del
+decode con lote treinta y dos.
+
+62
+00:03:54,788 --> 00:03:58,152
+Y explica por qué el prefill
+está limitado por cómputo.

@@ -1,0 +1,298 @@
+1
+00:00:00,350 --> 00:00:01,965
+Lesson 3.8.
+
+2
+00:00:02,345 --> 00:00:05,766
+Thermodynamic length and
+energy–time trade-offs.
+
+3
+00:00:06,883 --> 00:00:11,200
+In the previous lesson we saw that
+loading a problem slowly dissipates less.
+
+4
+00:00:11,580 --> 00:00:13,947
+But with a fixed time there
+are infinitely many ways
+
+5
+00:00:13,947 --> 00:00:16,086
+to go from the initial
+energy to the final one.
+
+6
+00:00:16,466 --> 00:00:17,535
+Which one dissipates least?
+
+7
+00:00:17,915 --> 00:00:22,604
+The answer is geometric: the space
+of control parameters has a metric,
+
+8
+00:00:22,604 --> 00:00:26,690
+and the best protocol travels
+its geodesic at constant speed.
+
+9
+00:00:27,070 --> 00:00:29,764
+That metric defines the
+thermodynamic length.
+
+10
+00:00:30,883 --> 00:00:35,386
+Imagine crossing ground with mud
+of varying depth in a fixed time.
+
+11
+00:00:35,766 --> 00:00:40,305
+Each stretch costs more the faster
+you cross it and the deeper the mud.
+
+12
+00:00:40,685 --> 00:00:44,967
+If you go at the same speed the whole
+way, you pay a lot in the deep zones.
+
+13
+00:00:45,347 --> 00:00:49,783
+It is better to go slowly where the
+mud is deep and fast where it is firm.
+
+14
+00:00:50,163 --> 00:00:53,489
+In a physical system, the
+mud is friction: how slowly
+
+15
+00:00:53,489 --> 00:00:56,375
+the system readjusts
+when we move the control.
+
+16
+00:00:57,483 --> 00:01:03,968
+Let λ be the control parameter and
+X = −∂_λ V the conjugate force.
+
+17
+00:01:04,348 --> 00:01:10,011
+Near equilibrium, the
+excess work is ⟨W_ex⟩ ≈ ∫ λ̇
+
+18
+00:01:10,011 --> 00:01:14,880
+ζ(λ) λ̇ dt, quadratic
+in the control speed.
+
+19
+00:01:15,260 --> 00:01:20,372
+The coefficient is the friction
+tensor, ζ = β ∫ ⟨δX(t) δX(0)⟩
+
+20
+00:01:20,372 --> 00:01:25,149
+dt: the variance of the force
+times its correlation time.
+
+21
+00:01:25,529 --> 00:01:29,210
+It is another face of the
+fluctuation–dissipation theorem: where
+
+22
+00:01:29,210 --> 00:01:33,121
+fluctuations are large and slow,
+moving the control dissipates more.
+
+23
+00:01:34,250 --> 00:01:36,417
+The friction tensor is a metric.
+
+24
+00:01:36,797 --> 00:01:41,941
+With it we define the
+thermodynamic length, ℒ =
+
+25
+00:01:41,941 --> 00:01:46,537
+∫ √ζ |dλ|, which does not depend on speed.
+
+26
+00:01:46,917 --> 00:01:53,348
+The Cauchy–Schwarz inequality
+gives the bound ⟨W_ex⟩ ≥ ℒ²/τ.
+
+27
+00:01:53,728 --> 00:02:00,116
+Equality is reached when the
+thermodynamic speed, √ζ λ̇, is constant.
+
+28
+00:02:00,496 --> 00:02:03,891
+The optimal protocol goes
+slowly where friction is high
+
+29
+00:02:03,891 --> 00:02:06,792
+and fast where it is low,
+just like in the mud.
+
+30
+00:02:07,917 --> 00:02:11,479
+Let's return to the trap we
+stiffen from one to four.
+
+31
+00:02:11,859 --> 00:02:14,803
+Here X = −x²/2,
+
+32
+00:02:15,183 --> 00:02:21,417
+and with μ = k_B T = 1 the friction
+tensor is ζ(κ) = 1/(4κ³): the soft
+
+33
+00:02:21,417 --> 00:02:26,672
+trap is slow and fluctuates a
+lot, so it is costly to move.
+
+34
+00:02:27,052 --> 00:02:34,844
+The thermodynamic length is
+1/√κᵢ − 1/√κ_f, exactly one half.
+
+35
+00:02:35,224 --> 00:02:40,701
+The optimal protocol is κ(t) =
+(1 − t/2τ)⁻²: it starts slowly
+
+36
+00:02:40,701 --> 00:02:45,820
+and speeds up at the end, when
+the trap is already stiff.
+
+37
+00:02:46,950 --> 00:02:50,334
+Let's compare with the exact
+computation of the particle's variance.
+
+38
+00:02:50,714 --> 00:02:54,504
+With τ = 4, the linear
+ramp dissipates 0.076
+
+39
+00:02:54,504 --> 00:02:57,777
+k_B T in excess; the optimal protocol,
+
+40
+00:02:58,157 --> 00:03:04,256
+0.063; and the bound ℒ²/τ is 0.0625.
+
+41
+00:03:04,636 --> 00:03:07,461
+The optimal protocol almost
+saturates it, and the
+
+42
+00:03:07,461 --> 00:03:09,941
+linear ramp dissipates
+twenty percent more.
+
+43
+00:03:10,321 --> 00:03:15,872
+Doubling the time halves the excess:
+that is the energy–time trade-off.
+
+44
+00:03:16,983 --> 00:03:21,231
+Thermodynamic length guides the
+design of annealing schedules,
+
+45
+00:03:21,231 --> 00:03:25,273
+which must slow down near
+critical points, the loading of a
+
+46
+00:03:25,273 --> 00:03:29,658
+thermodynamic chip's couplings,
+and erasure and reset protocols.
+
+47
+00:03:30,038 --> 00:03:33,104
+In unit nine we will see
+that the noise schedule
+
+48
+00:03:33,104 --> 00:03:35,722
+of a diffusion model plays the same role.
+
+49
+00:03:36,850 --> 00:03:40,726
+Careful: the bound holds in the
+slow, linear-response regime.
+
+50
+00:03:41,106 --> 00:03:45,555
+Don't confuse thermodynamic length,
+which lives in parameter space,
+
+51
+00:03:45,555 --> 00:03:49,406
+with the Wasserstein distance,
+which lives in state space.
+
+52
+00:03:49,786 --> 00:03:52,257
+The optimal protocol is not linear in the
+
+53
+00:03:52,257 --> 00:03:54,788
+parameter, but in the thermodynamic speed.
+
+54
+00:03:55,168 --> 00:03:59,431
+And near a critical point friction
+grows, and with it the cost.
+
+55
+00:04:00,550 --> 00:04:04,720
+In summary: near equilibrium,
+the excess work is quadratic in
+
+56
+00:04:04,720 --> 00:04:08,685
+the control speed, with the
+friction tensor as the metric.
+
+57
+00:04:09,065 --> 00:04:14,830
+The thermodynamic length bounds
+the excess, ⟨W_ex⟩ ≥ ℒ²/τ, and the
+
+58
+00:04:14,830 --> 00:04:20,944
+optimal protocol travels the geodesic
+at constant thermodynamic speed.
+
+59
+00:04:22,050 --> 00:04:25,943
+To practice: derive the friction
+tensor of the harmonic trap.
+
+60
+00:04:26,323 --> 00:04:30,368
+Compute the length and the minimum
+excess for another stiffness change.
+
+61
+00:04:30,748 --> 00:04:33,042
+Write the general optimal protocol.
+
+62
+00:04:33,422 --> 00:04:37,932
+And explain why annealing must slow
+down near the critical temperature.

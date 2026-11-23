@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.2}{Torx: programación estocástica diferenciable}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} circuitos estocásticos parametrizados (PSC); la identidad de desplazamiento logarítmico y los estimadores de
+gradiente; compuertas derivadas de generadores y el error de componerlas por aristas.
+\textbf{Prerrequisitos:} 2.8, 11.1.
+
+\section{Circuitos estocásticos parametrizados}
+Verdon et al.\ (agosto de 2026): un PSC es una secuencia de capas de compuertas estocásticas locales sobre cables con tipo (binarios, categóricos, continuos); torx es la
+biblioteca en JAX que los construye, ejecuta (simulador de vector de estado, por muestras, o con aleatoriedad de hardware) y deriva. Compuertas de mezcla
+$G(\theta)=(1-\sigma(\theta))I+\sigma(\theta)B$: $\mathrm{PNOT}(p)=\left(\begin{smallmatrix}1-p&p\\p&1-p\end{smallmatrix}\right)$, PSWAP, PCNOT. Circuito:
+$\rho_{\text{out}}=G_k\cdots G_1\rho_{\text{in}}$.
+
+\textbf{Nota de evidencia.} torx no está instalado en este entorno; los números de esta lección provienen de una reimplementación mínima en NumPy escrita a partir de
+las definiciones del artículo (\texttt{datos/psc\_minimo.py}) \evS.
+
+\section{Entrenamiento}
+PNOT$\cdot$PSWAP$\cdot$PCNOT sobre $|00\rangle$, objetivo $(\tfrac12,0,0,\tfrac12)$, Adam 3000 pasos: pérdida $0{,}33\to2\cdot10^{-5}$; distribución final
+$(0{,}498;\,0{,}002;\,0{,}002;\,0{,}498)$.
+
+\section{Gradientes desde ejecuciones}
+$\partial_\theta G=\sigma(1-\sigma)(B-I)=G(\theta)-G(\theta^-)$ con $\sigma(\theta^-)=\sigma(\theta)^2$, es decir $\theta^-=-\ln((1+e^{-\theta})^2-1)$ (verificado con error
+$\sim10^{-11}$). Por linealidad, $\partial_{\theta_j}J=\mathbb E_{\theta}[f]-\mathbb E_{\theta_j^-}[f]$: diferencia de dos promedios de ejecuciones. REINFORCE:
+$\partial J=\mathbb E[f(z^{(k)})\,\partial\log G_j(z^{(j)}\mid z^{(j-1)})]$, requiere la trayectoria interna.
+
+Con $S=1000$ ejecuciones y 400 repeticiones: exacto $-0{,}0428$; desplazamiento $-0{,}0420\pm0{,}021$; REINFORCE $-0{,}0424\pm0{,}010$. Ambos insesgados; aquí
+REINFORCE tuvo menos varianza. La ventaja del desplazamiento es que solo requiere leer la salida.
+
+\section{Compuertas derivadas de generadores}
+$\mathrm{PIsing}(\theta)=e^{\Delta t\,Q}$ con tasas de Glauber $Q_{ab}=\sigma(-\beta(E(s_a)-E(s_b)))$. Con $J=1$, $\beta=2$, desde la uniforme: estados alineados
+$0{,}294$ ($\Delta t=0{,}1$), $0{,}458$ (1), $0{,}491$ (5) $=$ Boltzmann. Componer PIsing por aristas en un anillo de 8 espines ($\beta=1{,}5$, $J=1$) no da el Ising del
+anillo: distancia de variación total estacionaria $0{,}84$, frente a Gibbs cromático exacto. El artículo reporta el mismo efecto ($0{,}402$ en su configuración) y usa
+compuertas de Gibbs por sitio.
+
+\section{Hardware}
+El artículo ejecuta un Ising de 8 sitios con aleatoriedad de pbits calibrados del chip X0 (plataforma XTR-0, error de calibración $\sim5\,\%$, relajación $\sim100$ ns),
+con Metropolis--Hastings y muestreo por importancia, y obtiene distancias consistentes con la referencia en software \evP.
+
+\begin{aplicacion}
+Paseos aleatorios, difusión discreta, redes estocásticas en grafos, difusión con saltos; mismo circuito lógico con aleatoriedad de software o hardware.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Componer equilibrios locales esperando el global. \quad REINFORCE sin acceso a estados internos.
+\item Probabilidades en 0 o 1 (puntuación divergente). \quad Ignorar la calibración de los pbits reales.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{psc} G. Verdon et al., A framework for stochastic differentiable programming, arXiv:2608.01612 (2026).
+\bibitem{torx} Extropic, ejemplos de torx (carpeta \texttt{torx/} del repositorio), 2026.
+\bibitem{reinforce} R. J. Williams, Simple statistical gradient-following algorithms, \emph{Mach. Learn.} 8, 229 (1992).
+\end{thebibliography}
+\end{document}

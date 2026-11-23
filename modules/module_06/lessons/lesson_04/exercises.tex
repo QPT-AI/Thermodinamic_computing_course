@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.4}{Complejidad de los algoritmos termodinámicos}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Tiempo de relajación del modo más lento en unidades de $\tau_r$ (sobreamortiguado).
+\item (B) Amortiguamiento óptimo para $\ddot x=-\lambda x-\gamma\dot x$.
+\item (B) ¿Para qué $d$ se cumple $d\kappa^2\varepsilon^{-2}<d^2\sqrt\kappa$ con $\kappa=100$, $\varepsilon=0{,}1$?
+\item (B) ¿Por qué escalar $b$ no hace al método arbitrariamente rápido?
+\item (I) Para $\ddot x=-\lambda x-\gamma\dot x$ con $\gamma=2\sqrt{\lambda_{\min}}$, ¿cuál es la tasa de decaimiento del modo $\lambda_{\max}$? ¿Y la del modo lento?
+\item (I) Con la tabla de la simulación, estime el exponente $a$ en $t\propto\kappa^a$ para cada régimen.
+\item (A) Añada ruido a la simulación de la lección y compare el tiempo total (equilibración + promedio) de ambos regímenes para $\varepsilon=10^{-2}$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\gamma/\lambda_{\min}=\kappa\tau_r$.
+
+\textbf{E2.} Crítico: $\gamma=2\sqrt\lambda$ (raíces reales dobles, decaimiento $\sqrt\lambda$).
+
+\textbf{E3.} $d>\kappa^{3/2}\varepsilon^{-2}=1000\times100=10^5$ (en unidades no comparables sin modelo de tiempo; solo orientativo).
+
+\textbf{E4.} La energía de inicialización $b^\top A^{-1}b$ crece como $c^2$: $E\tau$ está acotado por abajo.
+
+\textbf{E5.} Para $\lambda_{\max}$ subamortiguado: parte real $\gamma/2=\sqrt{\lambda_{\min}}$; para el modo lento, crítico, tasa $\sqrt{\lambda_{\min}}$. Todos decaen a $\sqrt{\lambda_{\min}}$: tiempo $\propto1/\sqrt{\lambda_{\min}}=\sqrt\kappa$ (con $\lambda_{\max}=1$).
+
+\textbf{E6.} SA: $\log(2372/207)/\log10\approx1{,}06$; subA: $\log(172/49)/\log10\approx0{,}55$.
+
+\textbf{E7.} La equilibración favorece al subamortiguado; el promedio depende también de la autocorrelación, lo que reduce parte de la ventaja.
+\end{solucion}
+\end{document}

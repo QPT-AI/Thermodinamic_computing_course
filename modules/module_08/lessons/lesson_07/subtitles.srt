@@ -1,0 +1,293 @@
+1
+00:00:00,350 --> 00:00:02,184
+Lección 8.7.
+
+2
+00:00:02,564 --> 00:00:04,529
+Entrenamiento consciente del hardware.
+
+3
+00:00:05,650 --> 00:00:09,622
+Un modelo entrenado en una GPU
+con precisión completa no sabe
+
+4
+00:00:09,622 --> 00:00:13,073
+nada del chip donde va a
+correr: pesos de pocos bits,
+
+5
+00:00:13,073 --> 00:00:16,784
+dispositivos ruidosos y una
+conectividad fija y dispersa.
+
+6
+00:00:17,164 --> 00:00:19,442
+Llevarlo así al hardware tiene un costo.
+
+7
+00:00:19,822 --> 00:00:22,997
+La alternativa es entrenar
+sabiendo cómo es el hardware.
+
+8
+00:00:23,377 --> 00:00:27,953
+Hoy medimos tres técnicas en un experimento
+pequeño, y cuánto ayudan de verdad.
+
+9
+00:00:29,083 --> 00:00:32,826
+Usamos un perceptrón con una capa
+oculta de treinta y dos neuronas
+
+10
+00:00:32,826 --> 00:00:36,341
+para una tarea de clasificación
+no lineal en diez dimensiones.
+
+11
+00:00:36,721 --> 00:00:39,748
+El hardware simulado tiene
+pesos de cuatro bits y un
+
+12
+00:00:39,748 --> 00:00:42,717
+error multiplicativo
+aleatorio en cada dispositivo.
+
+13
+00:00:43,097 --> 00:00:46,864
+En precisión completa, la red acierta
+el noventa y cinco por ciento.
+
+14
+00:00:47,244 --> 00:00:51,334
+Llevada al hardware sin más, baja al
+noventa coma cuatro con un diez por
+
+15
+00:00:51,334 --> 00:00:54,855
+ciento de ruido, y al ochenta y
+ocho con un veinte por ciento.
+
+16
+00:00:55,983 --> 00:01:00,794
+El entrenamiento consciente de cuantización
+calcula la pérdida con los pesos ya
+
+17
+00:01:00,794 --> 00:01:04,996
+cuantizados a cuatro bits, pero
+actualiza una copia en coma flotante.
+
+18
+00:01:05,376 --> 00:01:09,751
+El redondeo no tiene derivada útil,
+así que se usa el estimador directo:
+
+19
+00:01:09,751 --> 00:01:13,579
+en el paso hacia atrás, el redondeo
+se trata como la identidad.
+
+20
+00:01:13,959 --> 00:01:17,755
+Así, la red aprende pesos que
+funcionan bien después de redondear.
+
+21
+00:01:18,883 --> 00:01:23,564
+La inyección de ruido multiplica los pesos
+por un factor aleatorio en cada paso de
+
+22
+00:01:23,564 --> 00:01:27,559
+entrenamiento, con la misma magnitud
+que el desajuste del dispositivo.
+
+23
+00:01:27,939 --> 00:01:32,011
+La red aprende soluciones planas,
+que no dependen de valores exactos.
+
+24
+00:01:32,391 --> 00:01:35,717
+En nuestro experimento, combinando
+cuantización y ruido, la
+
+25
+00:01:35,717 --> 00:01:38,874
+precisión en el hardware sube
+del noventa coma cuatro al
+
+26
+00:01:38,874 --> 00:01:41,749
+noventa coma cinco con un
+diez por ciento de ruido,
+
+27
+00:01:42,129 --> 00:01:45,526
+y del ochenta y ocho al ochenta
+y nueve con un veinte por ciento.
+
+28
+00:01:45,906 --> 00:01:49,445
+Promediando tres semillas, la
+mejora es real pero pequeña.
+
+29
+00:01:50,550 --> 00:01:53,399
+El chip tiene una
+conectividad fija y dispersa,
+
+30
+00:01:53,399 --> 00:01:55,823
+como el grafo de grado dieciséis del Z1.
+
+31
+00:01:56,203 --> 00:02:00,976
+En lugar de entrenar una red densa y podarla
+después, conviene fijar la máscara de
+
+32
+00:02:00,976 --> 00:02:04,992
+conexiones desde el primer paso y
+entrenar solo los pesos permitidos.
+
+33
+00:02:05,372 --> 00:02:09,268
+Con un veinticinco por ciento de
+conexiones, la red con máscara fija
+
+34
+00:02:09,268 --> 00:02:13,106
+acierta el noventa y dos coma cinco
+por ciento, frente al noventa y
+
+35
+00:02:13,106 --> 00:02:16,142
+uno coma nueve de podar una
+red densa sin reentrenar.
+
+36
+00:02:17,250 --> 00:02:18,236
+¿Qué aprendemos?
+
+37
+00:02:18,616 --> 00:02:23,606
+En este experimento, el mayor efecto es
+la pérdida al pasar al hardware, de cinco
+
+38
+00:02:23,606 --> 00:02:27,795
+a siete puntos; el entrenamiento
+consciente recupera solo una parte.
+
+39
+00:02:28,175 --> 00:02:32,368
+Eso no contradice los resultados
+publicados con modelos grandes, donde la
+
+40
+00:02:32,368 --> 00:02:36,618
+cuantización de cuatro bits con
+entrenamiento consciente es estándar, pero
+
+41
+00:02:36,618 --> 00:02:41,271
+recuerda que las ganancias dependen del
+modelo, de la tarea y del nivel de ruido.
+
+42
+00:02:41,651 --> 00:02:45,528
+Siempre hay que medir contra la línea
+base ingenua y con varias semillas.
+
+43
+00:02:46,650 --> 00:02:51,308
+La receta: modela el chip, entrena con
+el paso hacia adelante cuantizado y con
+
+44
+00:02:51,308 --> 00:02:55,548
+ruido de dispositivo, fija la máscara
+de dispersión desde el principio,
+
+45
+00:02:55,928 --> 00:02:59,516
+como en los transformers tipo Z1T
+de la unidad diez, y reporta la
+
+46
+00:02:59,516 --> 00:03:03,435
+precisión en hardware frente al
+despliegue ingenuo con varias semillas.
+
+47
+00:03:04,550 --> 00:03:07,714
+Errores comunes: evaluar
+solo en coma flotante.
+
+48
+00:03:08,094 --> 00:03:11,006
+Inyectar un ruido muy
+distinto del desajuste real.
+
+49
+00:03:11,386 --> 00:03:14,449
+Podar después de entrenar para
+encajar en el grafo del chip.
+
+50
+00:03:14,829 --> 00:03:17,092
+Y afirmar mejoras con una sola semilla.
+
+51
+00:03:18,217 --> 00:03:21,770
+En resumen: entrenar sabiendo
+cómo es el hardware significa
+
+52
+00:03:21,770 --> 00:03:25,263
+cuantizar en el paso hacia
+adelante, inyectar el ruido del
+
+53
+00:03:25,263 --> 00:03:28,455
+dispositivo y fijar la
+dispersión desde el principio.
+
+54
+00:03:28,835 --> 00:03:33,886
+En nuestro experimento, el hardware cuesta
+de cinco a siete puntos y el entrenamiento
+
+55
+00:03:33,886 --> 00:03:38,165
+consciente recupera hasta uno; la
+máscara fija gana algo frente a podar.
+
+56
+00:03:38,545 --> 00:03:41,644
+Mide siempre contra la línea
+base y con varias semillas.
+
+57
+00:03:42,750 --> 00:03:45,520
+Para practicar: explica
+el estimador directo.
+
+58
+00:03:45,900 --> 00:03:49,400
+Explica por qué la inyección de
+ruido favorece soluciones planas.
+
+59
+00:03:49,780 --> 00:03:52,696
+Explica por qué fijar la
+máscara desde el principio.
+
+60
+00:03:53,076 --> 00:03:56,228
+Y diseña la evaluación de un
+método consciente del hardware.

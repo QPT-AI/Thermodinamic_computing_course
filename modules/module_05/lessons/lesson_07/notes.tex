@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.7}{Abstracciones de hardware}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} el problema de conectividad $N^2$ y el grafo padre fijo; embebido de menores con cadenas y elección de
+su fuerza; costo de embeber un modelo denso en un grafo de grado 16.
+\textbf{Prerrequisitos:} 4.1, 5.3.
+
+\section{El problema \texorpdfstring{$N^2$}{N2}}
+Un Ising completo tiene $|E|=N(N-1)/2$ acoplamientos; un grafo de grado fijo $d$, $|E_d|=Nd/2$. Para $N=10^4$ y $d=16$: $8\times10^4$ frente a $5\times10^7$.
+Además, en un chip los cables deben ser cortos: los vecinos de cada pbit están cerca en el plano. Ese grafo fijo y disperso es el \emph{grafo padre}.
+
+\section{Embebido de menores}
+\begin{definicion}[ (cadena)]
+Una variable lógica de grado $k>d$ se representa con $c$ pbits físicos unidos por acoplamientos ferromagnéticos fuertes $J_c$. Cada copia aporta vecinos
+libres; en una cadena, las copias internas usan 2 aristas para sus vecinas de cadena:
+\[c\ \ge\ \Big\lceil\frac{k-2}{d-2}\Big\rceil\qquad(k>d).\]
+\end{definicion}
+\begin{ejemplo}
+$d=16$: $k=15\Rightarrow c=1$; $k=31\Rightarrow c=3$; $k=99\Rightarrow c=7$; $k=999\Rightarrow c=72$.
+\end{ejemplo}
+
+\section{Fuerza de la cadena}
+Para dos copias aisladas con energía $-J_cs_1s_2$, la probabilidad de que discrepen (cadena rota) es
+\[P_{\text{rota}}=\frac{2e^{-\beta J_c}}{2e^{\beta J_c}+2e^{-\beta J_c}}=\frac{1}{1+e^{2\beta J_c}}.\]
+\begin{center}\begin{tabular}{lccc}\toprule
+$\beta J_c$ & 1 & 2 & 3\\\midrule
+exacta & 0,119 & 0,018 & 0,0025\\
+Gibbs, $2\times10^5$ barridos \evS & 0,119 & 0,018 & 0,0027\\\bottomrule\end{tabular}\end{center}
+Una cadena demasiado fuerte se congela: voltear la variable lógica exige voltear todas las copias y la mezcla se vuelve lenta. Hay que equilibrar.
+Al decodificar, las cadenas rotas se resuelven por voto mayoritario o se descartan.
+
+\section{Costo en el Z1}
+Z1: $269\,568$ pbits $\times16/2\approx2{,}2\times10^6$ acoplamientos. Un modelo disperso de grado 16 usa $269\,568$ variables; uno denso de mil variables
+necesita 72 copias por variable, es decir, el chip alcanzaría para $\approx3\,744$ variables sin contar el ruteo. Conclusión: diseñar modelos dispersos y
+locales desde el principio (Unidades 9--10). El coloreo del grafo padre fija las fases de reloj por barrido (lección 4.3).
+
+\begin{aplicacion}
+Laboratorio L8: construir un grafo de grado 16, colorearlo y embeber un modelo denso pequeño; medir rupturas en función de $\beta J_c$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Suponer que cualquier modelo corre directamente. \quad Ignorar las cadenas rotas al decodificar.
+\item Cadenas tan fuertes que la mezcla se congela. \quad Contar copias sin contar el ruteo.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[22]{z1} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, 2022.
+\bibitem{choi} V. Choi, Minor-embedding in adiabatic quantum computation, Quantum Inf. Process. 7, 193 (2008).
+\end{thebibliography}
+\end{document}

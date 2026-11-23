@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.9}{Teoría de campo medio}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} ecuaciones autoconsistentes; solución gráfica e iterativa; comparación con el resultado exacto 2D;
+campo medio como capas tanh y como inferencia variacional.
+\textbf{Prerrequisitos:} 4.5 (pbits), 4.2 (Ising 2D).
+
+\section{Las ecuaciones de campo medio}
+Un pbit con entrada $u_i$ tiene media $\tanh(\beta u_i)$, pero $u_i=\sum_jJ_{ij}s_j+h_i$ depende de vecinos que fluctúan. Reemplazando $s_j\to m_j=\langle s_j\rangle$:
+\begin{equation}
+m_i=\tanh\Big(\beta\big(\textstyle\sum_jJ_{ij}m_j+h_i\big)\Big).
+\end{equation}
+Se desprecian las correlaciones: $\langle s_is_j\rangle\approx m_im_j$. Es exacto en el límite de muchos vecinos débiles (modelo de Curie--Weiss).
+
+\section{Solución gráfica y transición}
+En una red uniforme con $z$ vecinos y $h=0$: $m=\tanh(\beta zJm)$. Si $\beta zJ<1$ la única solución es $m=0$; si $\beta zJ>1$ aparecen $\pm m^*\neq0$ (y
+$m=0$ se vuelve inestable). Por lo tanto $T_c^{\text{MF}}=zJ/\kB$. Cerca de $T_c$, $m\approx\sqrt{3(T_c-T)/T_c}$ (exponente $\tfrac12$).
+\begin{ejemplo}
+Red cuadrada, $z=4$: $T_c^{\text{MF}}=4$ frente a $2{,}269$ exacto. Magnetización:
+\begin{center}\begin{tabular}{lccccc}\toprule
+$T$ & 1,5 & 2,0 & 2,5 & 3,0 & 3,5\\\midrule
+campo medio & 0,990 & 0,958 & 0,891 & 0,776 & 0,581\\
+Onsager & 0,986 & 0,911 & 0 & 0 & 0\\\bottomrule\end{tabular}\end{center}
+El campo medio sobreestima el orden porque ignora las fluctuaciones que lo destruyen.
+\end{ejemplo}
+
+\section{De muestrear a capas tanh}
+La iteración $m^{(k+1)}=\tanh(\beta(Jm^{(k)}+h))$ es una red neuronal profunda con pesos compartidos y activación tanh. Con $T=2$ y $m^{(0)}=0{,}5$:
+$0{,}762;\ 0{,}909;\ 0{,}949;\ 0{,}956;\ 0{,}957$. Una red de pbits muestrea; su promedio de campo medio es una red neuronal determinista.
+
+\section{Visión variacional}
+Entre las distribuciones factorizadas $q(s)=\prod_iq_i(s_i)$, el campo medio minimiza $F_{\text{MF}}[q]=\langle E\rangle_q-TS(q)=F+\kB T\,\mathrm{KL}(q\|p)$.
+Por la desigualdad de Gibbs--Bogoliubov, $F_{\text{MF}}\ge F$. Es inferencia variacional; propagación de creencias y correcciones TAP lo refinan.
+
+\begin{aplicacion}
+Fase del modelo aproximada para máquinas de Boltzmann; unidades tanh construidas con pbits (lección 10.6).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Confiar en $T_c^{\text{MF}}$ en 2D (error de casi un factor 2). \quad Tomar $m=0$ bajo $T_c$ (inestable).
+\item Olvidar que ignora correlaciones. \quad Iterar sin amortiguamiento: oscila en antiferromagnetos.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem{opper} M. Opper y D. Saad (eds.), \emph{Advanced Mean Field Methods}, MIT Press, 2001.
+\bibitem[18]{kaiser} J. Kaiser y S. Datta, Probabilistic computing with p-bits, 2021.
+\end{thebibliography}
+\end{document}

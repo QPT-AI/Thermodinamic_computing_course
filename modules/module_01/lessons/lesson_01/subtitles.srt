@@ -1,0 +1,422 @@
+1
+00:00:00,350 --> 00:00:02,069
+Lección 1.1.
+
+2
+00:00:02,449 --> 00:00:05,100
+Leyes de la termodinámica y energía libre.
+
+3
+00:00:06,217 --> 00:00:09,292
+Un chip es una máquina
+térmica funcionando al revés:
+
+4
+00:00:09,292 --> 00:00:12,190
+recibe trabajo eléctrico
+y lo convierte en calor.
+
+5
+00:00:12,570 --> 00:00:16,691
+Si queremos computar con la física,
+y no a pesar de ella, necesitamos
+
+6
+00:00:16,691 --> 00:00:20,275
+las reglas que gobiernan la
+energía, el calor y el desorden.
+
+7
+00:00:20,655 --> 00:00:24,846
+En esta lección repasamos las leyes
+de la termodinámica y presentamos
+
+8
+00:00:24,846 --> 00:00:28,431
+la cantidad que más usaremos
+en el curso: la energía libre.
+
+9
+00:00:29,550 --> 00:00:33,931
+Pongamos en contacto dos cajas de
+partículas, una caliente y otra fría.
+
+10
+00:00:34,311 --> 00:00:36,629
+En cada choque a través de la pared, dos
+
+11
+00:00:36,629 --> 00:00:39,063
+partículas se reparten su energía al azar.
+
+12
+00:00:39,443 --> 00:00:42,970
+Nadie le dice a la energía
+hacia dónde ir, y sin embargo la
+
+13
+00:00:42,970 --> 00:00:46,258
+energía media de las dos
+cajas converge al mismo valor.
+
+14
+00:00:46,638 --> 00:00:50,514
+Ese estado final, en el que ya no
+hay flujo neto, es el equilibrio
+
+15
+00:00:50,514 --> 00:00:54,507
+térmico, y la temperatura es
+precisamente la cantidad que se iguala.
+
+16
+00:00:54,887 --> 00:00:59,295
+La flecha del tiempo aparece sola, a
+partir de choques que son simétricos.
+
+17
+00:01:00,417 --> 00:01:03,061
+La ley cero dice que el
+equilibrio térmico es
+
+18
+00:01:03,061 --> 00:01:05,941
+transitivo, y eso permite
+definir la temperatura.
+
+19
+00:01:06,321 --> 00:01:10,676
+La primera ley es la conservación de la
+energía: el cambio de energía interna
+
+20
+00:01:10,676 --> 00:01:14,410
+es el calor que entra más el trabajo
+que se hace sobre el sistema.
+
+21
+00:01:14,790 --> 00:01:19,013
+La segunda ley dice que la entropía
+total de un sistema aislado nunca
+
+22
+00:01:19,013 --> 00:01:23,297
+disminuye; para un sistema en contacto
+con un baño a temperatura T, el
+
+23
+00:01:23,297 --> 00:01:27,215
+cambio de entropía es al menos
+el calor recibido dividido por T.
+
+24
+00:01:27,595 --> 00:01:30,556
+La tercera ley fija el
+cero: la entropía tiende a
+
+25
+00:01:30,556 --> 00:01:33,336
+un mínimo cuando la
+temperatura tiende a cero.
+
+26
+00:01:34,450 --> 00:01:35,491
+¿Qué es la entropía?
+
+27
+00:01:35,871 --> 00:01:40,362
+Boltzmann respondió: S = k_B
+ln Ω, donde Ω es el número
+
+28
+00:01:40,362 --> 00:01:44,445
+de microestados compatibles
+con lo que observamos.
+
+29
+00:01:44,825 --> 00:01:46,043
+Piensa en cien monedas.
+
+30
+00:01:46,423 --> 00:01:49,155
+El macroestado cincuenta
+caras se puede lograr de
+
+31
+00:01:49,155 --> 00:01:52,109
+muchísimas más maneras que
+el macroestado cien caras.
+
+32
+00:01:52,489 --> 00:01:56,916
+Al crecer el número de monedas, la
+distribución se concentra alrededor de
+
+33
+00:01:56,916 --> 00:02:00,676
+la mitad: su ancho relativo decae
+como uno sobre la raíz de N.
+
+34
+00:02:01,056 --> 00:02:05,681
+La segunda ley es estadística: el sistema
+termina en los macroestados con más
+
+35
+00:02:05,681 --> 00:02:09,645
+microestados simplemente porque
+son abrumadoramente más probables.
+
+36
+00:02:10,750 --> 00:02:15,761
+A temperatura fija, el sistema no
+minimiza su energía ni maximiza su
+
+37
+00:02:15,761 --> 00:02:20,329
+entropía por separado: minimiza
+la energía libre, F = U − T S.
+
+38
+00:02:20,709 --> 00:02:21,866
+Es una competencia.
+
+39
+00:02:22,246 --> 00:02:25,984
+Considera dos estados: uno
+de energía baja con un solo
+
+40
+00:02:25,984 --> 00:02:30,761
+microestado, y otro con energía ε
+más alta pero con mil microestados.
+
+41
+00:02:31,141 --> 00:02:35,137
+A baja temperatura gana la energía y
+el sistema prefiere el estado bajo.
+
+42
+00:02:35,517 --> 00:02:39,488
+Al subir la temperatura, el término
+de entropía, T S, crece hasta
+
+43
+00:02:39,488 --> 00:02:43,582
+dominar, y la población se vuelca
+al estado de muchos microestados.
+
+44
+00:02:43,962 --> 00:02:47,183
+La transición ocurre cuando
+las energías libres se igualan.
+
+45
+00:02:48,283 --> 00:02:50,969
+La energía libre tiene
+un significado operativo.
+
+46
+00:02:51,349 --> 00:02:55,462
+En un proceso a temperatura
+constante, el trabajo que hay
+
+47
+00:02:55,462 --> 00:02:59,430
+que hacer sobre un sistema
+para llevarlo de un estado a
+
+48
+00:02:59,430 --> 00:03:03,182
+otro es al menos el cambio
+de energía libre: W ≥ ΔF.
+
+49
+00:03:03,562 --> 00:03:07,212
+La igualdad solo se alcanza con
+procesos infinitamente lentos.
+
+50
+00:03:07,592 --> 00:03:11,747
+La diferencia, W menos ΔF,
+es trabajo disipado como
+
+51
+00:03:11,747 --> 00:03:15,250
+calor, y siempre es
+mayor o igual que cero.
+
+52
+00:03:15,630 --> 00:03:18,317
+Esta desigualdad es la
+que, en la lección uno
+
+53
+00:03:18,317 --> 00:03:20,825
+punto cinco, da el costo de borrar un bit.
+
+54
+00:03:21,950 --> 00:03:24,227
+Pongamos números al
+sistema de dos estados.
+
+55
+00:03:24,607 --> 00:03:28,888
+Con una diferencia de energía de
+cero coma uno electronvoltios y mil
+
+56
+00:03:28,888 --> 00:03:33,233
+microestados, la temperatura de
+transición es la energía dividida por
+
+57
+00:03:33,233 --> 00:03:37,199
+k_B por el logaritmo de mil: unos
+ciento sesenta y ocho kelvin.
+
+58
+00:03:37,579 --> 00:03:41,825
+A trescientos kelvin la diferencia de
+energía libre es negativa, unos menos
+
+59
+00:03:41,825 --> 00:03:46,241
+setenta y nueve milielectronvoltios, y
+la fracción del sistema en el estado de
+
+60
+00:03:46,241 --> 00:03:50,147
+muchos microestados es de aproximadamente
+noventa y cinco por ciento.
+
+61
+00:03:51,250 --> 00:03:53,996
+En un computador estas
+leyes son muy concretas.
+
+62
+00:03:54,376 --> 00:03:56,823
+Por la primera ley, toda
+la potencia eléctrica
+
+63
+00:03:56,823 --> 00:03:58,898
+termina como calor que hay que extraer.
+
+64
+00:03:59,278 --> 00:04:02,787
+Por la segunda, borrar información
+exige expulsar entropía.
+
+65
+00:04:03,167 --> 00:04:07,685
+Y en un chip termodinámico, el ruido
+térmico lleva al sistema hacia estados
+
+66
+00:04:07,685 --> 00:04:11,540
+de baja energía libre: esa es la
+base del muestreo de Boltzmann.
+
+67
+00:04:12,650 --> 00:04:16,346
+En la siguiente lección pasaremos
+del conteo de microestados a la
+
+68
+00:04:16,346 --> 00:04:19,758
+distribución de Boltzmann, y
+veremos que la energía libre es
+
+69
+00:04:19,758 --> 00:04:22,943
+menos k_B T por el logaritmo
+de la función de partición.
+
+70
+00:04:23,323 --> 00:04:26,998
+En la unidad tres refinaremos la
+desigualdad del trabajo con la
+
+71
+00:04:26,998 --> 00:04:30,615
+igualdad de Jarzynski, que vale
+incluso para procesos rápidos.
+
+72
+00:04:31,717 --> 00:04:34,319
+Cuidado con algunas confusiones: el calor
+
+73
+00:04:34,319 --> 00:04:36,795
+es energía transferida, no temperatura.
+
+74
+00:04:37,175 --> 00:04:40,368
+La entropía de un sistema
+sí puede disminuir, siempre
+
+75
+00:04:40,368 --> 00:04:43,079
+que la del entorno
+aumente al menos lo mismo.
+
+76
+00:04:43,459 --> 00:04:46,531
+Decir que la entropía es
+desorden es solo una metáfora.
+
+77
+00:04:46,911 --> 00:04:49,707
+Y presta atención a la
+convención de signos del trabajo.
+
+78
+00:04:50,817 --> 00:04:53,500
+En resumen: el equilibrio es el estado sin
+
+79
+00:04:53,500 --> 00:04:56,439
+flujos netos, y la
+temperatura lo caracteriza.
+
+80
+00:04:56,819 --> 00:05:00,363
+La energía se conserva y la
+entropía total no disminuye.
+
+81
+00:05:00,742 --> 00:05:06,310
+La entropía cuenta microestados, y a
+temperatura fija el sistema minimiza la
+
+82
+00:05:06,310 --> 00:05:11,146
+energía libre, F = U − T S, que
+además acota el trabajo necesario.
+
+83
+00:05:12,250 --> 00:05:16,601
+Para practicar: cuenta los microestados
+de cincuenta y de cien caras.
+
+84
+00:05:16,981 --> 00:05:20,556
+Calcula la población del sistema
+de dos estados a cien kelvin.
+
+85
+00:05:20,936 --> 00:05:23,935
+Aplica la primera ley a un
+balance de calor y trabajo.
+
+86
+00:05:24,315 --> 00:05:26,905
+Y explica por qué la
+igualdad entre trabajo y
+
+87
+00:05:26,905 --> 00:05:29,841
+energía libre exige un
+proceso infinitamente lento.

@@ -1,0 +1,387 @@
+1
+00:00:00,350 --> 00:00:02,124
+Lección 2.5.
+
+2
+00:00:02,504 --> 00:00:04,750
+El teorema de fluctuación–disipación.
+
+3
+00:00:05,883 --> 00:00:10,850
+Hemos visto la misma idea tres veces: el
+ruido de una resistencia es proporcional
+
+4
+00:00:10,850 --> 00:00:15,695
+a su resistencia; el coeficiente de
+difusión es proporcional a la movilidad; la
+
+5
+00:00:15,695 --> 00:00:19,803
+fricción y el ruido de Langevin
+están amarrados por la temperatura.
+
+6
+00:00:20,183 --> 00:00:21,266
+No es casualidad.
+
+7
+00:00:21,646 --> 00:00:26,409
+Todas son casos de un solo principio:
+el teorema de fluctuación y disipación.
+
+8
+00:00:26,789 --> 00:00:29,638
+Dice que la forma en que un
+sistema responde cuando lo
+
+9
+00:00:29,638 --> 00:00:32,909
+empujamos está escrita en cómo
+fluctúa cuando lo dejamos solo.
+
+10
+00:00:34,017 --> 00:00:36,698
+Imagina un columpio en un
+parque con mucho viento.
+
+11
+00:00:37,078 --> 00:00:39,558
+Puedes aprender cómo
+responde de dos maneras.
+
+12
+00:00:39,938 --> 00:00:44,400
+Una: lo empujas suavemente y mides
+cómo se desplaza y cómo vuelve.
+
+13
+00:00:44,780 --> 00:00:48,984
+Otra: no lo tocas y solo observas
+cómo se mueve por el viento, cómo se
+
+14
+00:00:48,984 --> 00:00:52,769
+correlaciona su posición ahora
+con su posición un rato después.
+
+15
+00:00:53,149 --> 00:00:56,059
+El teorema dice que, en
+equilibrio térmico, ambas
+
+16
+00:00:56,059 --> 00:00:58,553
+mediciones contienen la misma información.
+
+17
+00:00:58,933 --> 00:01:02,158
+La fricción que frena tu
+empujón es la misma que, con
+
+18
+00:01:02,158 --> 00:01:04,897
+el viento térmico,
+produce las fluctuaciones.
+
+19
+00:01:06,017 --> 00:01:09,635
+Formalmente: aplicamos una
+fuerza pequeña F a partir del
+
+20
+00:01:09,635 --> 00:01:12,737
+instante cero y medimos
+el desplazamiento medio.
+
+21
+00:01:13,117 --> 00:01:16,655
+En el régimen lineal, ese
+desplazamiento es β F por la
+
+22
+00:01:16,655 --> 00:01:20,848
+diferencia entre la autocorrelación
+en cero y la autocorrelación
+
+23
+00:01:21,228 --> 00:01:27,700
+en t del sistema sin perturbar:
+⟨x⟩_F(t) = β F [C(0) − C(t)].
+
+24
+00:01:28,080 --> 00:01:30,814
+Equivalentemente, la
+función de respuesta es
+
+25
+00:01:30,814 --> 00:01:33,673
+menos β por la derivada
+de la autocorrelación.
+
+26
+00:01:34,053 --> 00:01:38,180
+La respuesta a un empujón es la
+relajación de una fluctuación espontánea.
+
+27
+00:01:39,283 --> 00:01:42,393
+Comprobémoslo con el proceso
+de Ornstein y Uhlenbeck.
+
+28
+00:01:42,773 --> 00:01:46,224
+Primero, sin perturbar,
+medimos la autocorrelación de
+
+29
+00:01:46,224 --> 00:01:49,218
+una trayectoria larga:
+decae exponencialmente.
+
+30
+00:01:49,598 --> 00:01:53,008
+Después aplicamos una fuerza
+pequeña a un ensamble de diez
+
+31
+00:01:53,008 --> 00:01:55,889
+mil partículas y medimos
+el desplazamiento medio.
+
+32
+00:01:56,269 --> 00:01:59,560
+Los puntos de la respuesta
+caen sobre la curva predicha a
+
+33
+00:01:59,560 --> 00:02:02,909
+partir de las fluctuaciones,
+dentro del error estadístico.
+
+34
+00:02:03,289 --> 00:02:05,925
+Dos experimentos distintos, una sola ley.
+
+35
+00:02:07,050 --> 00:02:11,614
+De este teorema salen, como casos
+particulares, resultados que ya conocemos.
+
+36
+00:02:11,994 --> 00:02:16,150
+Para una partícula libre, la
+respuesta es la movilidad y la
+
+37
+00:02:16,150 --> 00:02:20,729
+fluctuación es la difusión: D =
+μ k_B T, la relación de Einstein.
+
+38
+00:02:21,109 --> 00:02:26,225
+Para un circuito, la respuesta es
+la impedancia y la fluctuación es
+
+39
+00:02:26,225 --> 00:02:30,806
+el ruido de voltaje: S_V = 4
+k_B T R, la fórmula de Nyquist.
+
+40
+00:02:31,186 --> 00:02:35,915
+En el dominio de frecuencias, el espectro
+de las fluctuaciones es proporcional a la
+
+41
+00:02:35,915 --> 00:02:40,245
+parte disipativa de la respuesta, la
+parte imaginaria de la susceptibilidad.
+
+42
+00:02:41,350 --> 00:02:43,432
+El teorema solo vale en equilibrio.
+
+43
+00:02:43,812 --> 00:02:47,894
+Si el sistema está forzado, como el
+anillo con corriente de la lección
+
+44
+00:02:47,894 --> 00:02:51,392
+anterior, o si el ruido no es
+térmico, la relación se rompe.
+
+45
+00:02:51,772 --> 00:02:55,150
+Una forma práctica de medir
+la violación es definir una
+
+46
+00:02:55,150 --> 00:02:59,080
+temperatura efectiva: el cociente
+entre fluctuación y respuesta.
+
+47
+00:02:59,460 --> 00:03:02,526
+Si coincide con la temperatura
+del baño, el sistema
+
+48
+00:03:02,526 --> 00:03:05,532
+está en equilibrio; si no,
+algo lo está empujando.
+
+49
+00:03:05,912 --> 00:03:08,822
+En un chip termodinámico,
+esta comparación sirve
+
+50
+00:03:08,822 --> 00:03:11,731
+para diagnosticar ruido
+no térmico y desajustes.
+
+51
+00:03:12,850 --> 00:03:16,177
+Una pinza óptica atrapa una
+esfera con rigidez de un
+
+52
+00:03:16,177 --> 00:03:18,993
+micronewton por metro,
+a trescientos kelvin.
+
+53
+00:03:19,373 --> 00:03:23,155
+Por equipartición, la varianza
+de la posición es k_B T / κ,
+
+54
+00:03:23,155 --> 00:03:27,002
+unos cuatro por diez a la menos
+quince metros cuadrados: una
+
+55
+00:03:27,002 --> 00:03:30,207
+fluctuación típica de
+sesenta y cuatro nanómetros.
+
+56
+00:03:30,587 --> 00:03:36,002
+Sin aplicar ninguna fuerza, ese número
+ya nos dice la respuesta: una fuerza de
+
+57
+00:03:36,002 --> 00:03:40,722
+un piconewton desplazará la esfera,
+en promedio, F/κ, un micrómetro.
+
+58
+00:03:41,102 --> 00:03:43,292
+Medir el ruido calibra el instrumento.
+
+59
+00:03:44,417 --> 00:03:48,254
+En la práctica, el teorema permite
+calibrar instrumentos midiendo
+
+60
+00:03:48,254 --> 00:03:51,501
+su ruido, medir temperaturas
+a partir de fluctuaciones,
+
+61
+00:03:51,881 --> 00:03:55,207
+y diagnosticar hardware: si
+la temperatura efectiva no
+
+62
+00:03:55,207 --> 00:03:58,965
+coincide con la del baño, hay
+ruido no térmico o forzamiento.
+
+63
+00:03:59,345 --> 00:04:03,861
+Y en diseño impone un compromiso:
+más disipación significa más ruido.
+
+64
+00:04:04,983 --> 00:04:08,786
+Esta lección une el ruido de
+Nyquist y la relación de Einstein.
+
+65
+00:04:09,166 --> 00:04:13,330
+En la próxima lección usaremos la
+autocorrelación para poner barras de error.
+
+66
+00:04:13,710 --> 00:04:15,922
+Y en la unidad tres veremos relaciones de
+
+67
+00:04:15,922 --> 00:04:18,673
+fluctuación que valen
+incluso lejos del equilibrio.
+
+68
+00:04:19,783 --> 00:04:24,274
+Errores frecuentes: usar el teorema con
+fuerzas grandes o fuera del equilibrio.
+
+69
+00:04:24,654 --> 00:04:28,281
+Confundir la función de respuesta
+con la respuesta a un escalón.
+
+70
+00:04:28,661 --> 00:04:30,065
+Olvidar el factor beta.
+
+71
+00:04:30,445 --> 00:04:33,556
+Y usar la versión clásica
+a frecuencias cuánticas.
+
+72
+00:04:34,683 --> 00:04:40,538
+En resumen: en equilibrio, la respuesta
+lineal a un empujón está determinada
+
+73
+00:04:40,538 --> 00:04:45,468
+por las fluctuaciones espontáneas:
+⟨x⟩_F(t) = β F [C(0) − C(t)].
+
+74
+00:04:45,848 --> 00:04:48,489
+Einstein y Nyquist son casos particulares.
+
+75
+00:04:48,869 --> 00:04:51,465
+Fuera del equilibrio,
+el teorema falla, y esa
+
+76
+00:04:51,465 --> 00:04:53,772
+falla es una herramienta de diagnóstico.
+
+77
+00:04:54,883 --> 00:04:59,559
+Para practicar: calcula la autocorrelación
+y la respuesta de un OU concreto.
+
+78
+00:04:59,939 --> 00:05:01,823
+Deriva la relación de Einstein.
+
+79
+00:05:02,203 --> 00:05:05,323
+Calcula la rigidez de una
+trampa a partir del ruido.
+
+80
+00:05:05,703 --> 00:05:09,716
+Y explica qué indica una temperatura
+efectiva más alta que la del baño.

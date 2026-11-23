@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.6}{Relaciones de incertidumbre termodinámica}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Para el contador sesgado, calcule $\langle J\rangle$, $\mathrm{Var}(J)$ y $\Sigma$ en tiempo $t$.
+\item (B) Verifique que $\epsilon^2\Sigma\ge2$ y que tiende a 2 cuando $k_+\to k_-$.
+\item (B) ¿Cuánta entropía hace falta, como mínimo, para un error relativo del 1 \%?
+\item (B) ¿Cuándo es más ajustada la cota cinética que la TUR?
+\item (I) Con $N=100$, $k_-=1$, ¿para qué $k_+$ se igualan $2/\Sigma$ y $1/\mathcal A$ en el tiempo de cómputo?
+\item (I) Un reloj molecular da $10^4$ tics con desviación relativa del 2 \%. Acote su disipación en unidades de $\kB T$.
+\item (A) Simule con Gillespie el tiempo hasta $N=50$ pasos netos para $k_+\in\{1{,}5;5;50\}$ y compare $\epsilon_T^2$ con ambas cotas.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Saltos adelante y atrás son procesos de Poisson independientes: $\langle J\rangle=(k_+-k_-)t$, $\mathrm{Var}(J)=(k_++k_-)t$,
+$\Sigma=(k_+-k_-)t\ln(k_+/k_-)$.
+
+\textbf{E2.} $\epsilon^2\Sigma=(k_++k_-)\ln(k_+/k_-)/(k_+-k_-)$. Con $k_+=k_-(1+x)$: $(2+x)\,(x-x^2/2+x^3/3)/x=2+x^2/6+O(x^3)\ge2$.
+
+\textbf{E3.} $\epsilon^2=10^{-4}\Rightarrow\Sigma\ge2\times10^4\,\kB$.
+
+\textbf{E4.} Lejos del equilibrio ($k_-\ll k_+$): $\epsilon^2\mathcal A\to1$ mientras $\epsilon^2\Sigma$ crece como $\ln(k_+/k_-)$.
+
+\textbf{E5.} $2/(N\ln k_+)=(k_+-1)/[N(k_++1)]$, es decir $2(k_++1)=(k_+-1)\ln k_+$: $k_+\approx 11{,}0$.
+
+\textbf{E6.} $\Sigma\ge2/\epsilon^2=2/(4\times10^{-4})=5000\,\kB$: al menos $5000\,\kB T$ de calor en total, $0{,}5\,\kB T$ por tic.
+
+\textbf{E7.} Teoría ($N=50$): $\epsilon_T^2\approx(k_++1)/[50(k_+-1)]$ $=0{,}10;\ 0{,}030;\ 0{,}021$. TUR: $2/(50\ln k_+)=0{,}099;\ 0{,}025;\ 0{,}010$.
+Cinética: $(k_+-1)/[50(k_++1)]=0{,}004;\ 0{,}013;\ 0{,}019$. La simulación debe quedar por encima de ambas.
+\end{solucion}
+\end{document}

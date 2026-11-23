@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.4}{El proceso de Ornstein--Uhlenbeck}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item (Pensum C.1) Derive la estacionaria del OU y explique cómo sus dos primeros momentos resuelven $Ax=b$ y dan $A^{-1}$.
+\item Resuelva la ecuación de Lyapunov para $A=\diag(1,4)$, $\beta=2$.
+\item Para el OU 1D, ¿cuál es $\langle\delta x(t)\delta x(t+s)\rangle$ estacionario?
+\item ¿Por qué el tiempo hasta la solución crece con $\kappa$?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Muestre que la media $\mu(t)$ satisface $\dot\mu=-(A\mu-b)$ y escríbala con $e^{-At}$.
+\item Para la discretización de Euler $x_{k+1}=x_k-\Delta t(Ax_k-b)+\sqrt{2\Delta t/\beta}\,z_k$ en 1D ($A=a$), calcule la varianza estacionaria exacta y su sesgo relativo frente a $1/(\beta a)$.
+\item Estime la varianza del promedio temporal $\bar x_T$ en 1D para $T\gg1/a$: muestre $\Var\bar x_T\approx\frac{2}{\beta a^2T}$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Para $A$ no simétrica con espectro en el semiplano derecho, la ecuación de Lyapunov sigue determinando $\Sigma_\infty$ pero $\Sigma_\infty\neq\beta^{-1}A^{-1}$. Muestre un ejemplo $2\times2$. ¿Por qué el estado no es de equilibrio?
+\item (Anticipo L3) Usando I3 en $d$ dimensiones con modos propios, estime el tiempo $T$ para alcanzar error relativo $\varepsilon$ en $A^{-1}b$ y relacione con $O(d\kappa^2\varepsilon^{-2})$ del pensum (lección 6.4).
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} Véanse las notas.
+
+\textbf{B2.} $\Sigma_\infty=\beta^{-1}A^{-1}=\diag(\frac12,\frac18)$.
+
+\textbf{B3.} $\frac{1}{\beta a}e^{-a|s|}$.
+
+\textbf{B4.} La componente más lenta relaja en $1/\lambda_{\min}$ y decorrelaciona en ese tiempo; el paso de integración (o la escala del hardware) está limitado por $\lambda_{\max}$. El número de «tiempos de correlación» necesarios en unidades del más rápido es $\propto\kappa$.
+
+\textbf{I1.} Tomando esperanza en la EDE: $\dot\mu=-(A\mu-b)$, $\mu(t)=A^{-1}b+e^{-At}(x_0-A^{-1}b)$.
+
+\textbf{I2.} $v=(1-a\Delta t)^2v+2\Delta t/\beta\Rightarrow v=\frac{2\Delta t/\beta}{1-(1-a\Delta t)^2}=\frac{1}{\beta a(1-a\Delta t/2)}$: sesgo relativo $\approx a\Delta t/2$.
+
+\textbf{I3.} $\Var\bar x_T=\frac1{T^2}\iint C(t-t')\approx\frac{2}{T}\int_0^\infty C(s)ds=\frac2T\cdot\frac{1}{\beta a}\cdot\frac1a$.
+
+\textbf{A1.} $A=\begin{pmatrix}1&1\\-1&1\end{pmatrix}$ (rotación más contracción): $A\Sigma+\Sigma A^\top=2\beta^{-1}I$ da $\Sigma=\beta^{-1}I$, mientras que $A^{-1}$ no es simétrica. Hay corrientes de probabilidad circulantes (NESS): la parte antisimétrica de $A$ no proviene de un potencial.
+
+\textbf{A2.} Cada modo propio aporta $\Var\approx\frac{2}{\beta\lambda_i^2T}$ al promedio temporal; el error cuadrático total es $\sum_i\frac{2}{\beta\lambda_i^2T}\le\frac{2d}{\beta\lambda_{\min}^2T}$. Exigir que sea $\le\varepsilon^2\|A^{-1}b\|^2$ da $T\propto\frac{d}{\varepsilon^2}\cdot\frac{1}{\lambda_{\min}^2\|A^{-1}b\|^2}$; expresado en unidades del tiempo más rápido $1/\lambda_{\max}$ y para $b$ genérico aparece el factor $\kappa^2$, que es el origen del escalado $O(d\kappa^2\varepsilon^{-2})$ del pensum (derivación completa en [30], lección 6.4).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Laboratorio L3 (tarea 1): implemente Euler--Maruyama para el OU con matrices de Wishart de $d=10$ a $500$.
+\item Verifique numéricamente $\Sigma(t)=\beta^{-1}A^{-1}(I-e^{-2At})$ con 10\,000 trayectorias.
+\end{enumerate}
+\end{document}

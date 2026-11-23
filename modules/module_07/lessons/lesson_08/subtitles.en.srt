@@ -1,0 +1,313 @@
+1
+00:00:00,350 --> 00:00:01,981
+Lesson 7.8.
+
+2
+00:00:02,361 --> 00:00:03,716
+Comparative complexity.
+
+3
+00:00:04,817 --> 00:00:06,610
+We close the unit by comparing.
+
+4
+00:00:06,990 --> 00:00:10,187
+We have seen three ways
+to find an order: quantum
+
+5
+00:00:10,187 --> 00:00:13,841
+interference, physical diffusion
+and digital collisions.
+
+6
+00:00:14,221 --> 00:00:17,000
+Each counts different
+steps, and a step of one
+
+7
+00:00:17,000 --> 00:00:19,659
+does not cost the same
+as a step of another.
+
+8
+00:00:20,039 --> 00:00:24,282
+Comparing seriously requires asking which
+physical resource each step consumes.
+
+9
+00:00:25,383 --> 00:00:30,611
+A quantum step is a gate on a few
+qubits; the algorithm uses on the
+
+10
+00:00:30,611 --> 00:00:35,760
+order of n logical qubits and n³
+gates, with n the number of bits.
+
+11
+00:00:36,140 --> 00:00:40,725
+A diffusion step is a simultaneous
+average over all nodes:
+
+12
+00:00:40,725 --> 00:00:45,230
+only O(n²) steps are needed,
+but on a network of at least
+
+13
+00:00:45,230 --> 00:00:48,787
+r nodes read with about
+2n bits of precision.
+
+14
+00:00:49,167 --> 00:00:53,183
+A digital step is a word
+operation: cheap, but the best
+
+15
+00:00:53,183 --> 00:00:56,687
+algorithms need a
+subexponential number of them.
+
+16
+00:00:57,817 --> 00:00:59,248
+Let's put numbers to a
+
+17
+00:00:59,248 --> 00:01:03,739
+two-thousand-forty-eight-bit number,
+as order-of-magnitude estimates.
+
+18
+00:01:04,119 --> 00:01:06,427
+Shor: about four thousand one hundred
+
+19
+00:01:06,427 --> 00:01:09,172
+logical qubits and about
+nine billion gates.
+
+20
+00:01:09,552 --> 00:01:14,268
+Diffusion: about seventeen million steps,
+but a network of up to two to the two
+
+21
+00:01:14,268 --> 00:01:18,508
+thousand forty-eight nodes and four
+thousand bits of readout precision.
+
+22
+00:01:18,888 --> 00:01:21,403
+The number field sieve:
+on the order of two
+
+23
+00:01:21,403 --> 00:01:23,744
+to the one hundred seventeen operations.
+
+24
+00:01:24,124 --> 00:01:26,701
+Pollard's rho: two to
+the five hundred twelve.
+
+25
+00:01:27,817 --> 00:01:31,466
+The lesson is that the difficulty
+does not disappear: it moves.
+
+26
+00:01:31,846 --> 00:01:34,988
+Shor pays for it in quantum
+coherence and error correction.
+
+27
+00:01:35,368 --> 00:01:38,998
+Diffusion pays for it in area,
+in number of nodes and in
+
+28
+00:01:38,998 --> 00:01:42,693
+analog precision, which grow
+exponentially with the bits.
+
+29
+00:01:43,073 --> 00:01:44,824
+Digital pays for it in time.
+
+30
+00:01:45,204 --> 00:01:48,842
+Interference that amplifies
+versus dissipation that erases:
+
+31
+00:01:48,842 --> 00:01:53,160
+dissipation is cheap per step, but
+needs to represent the whole group.
+
+32
+00:01:54,283 --> 00:01:56,957
+The same comparison
+appears in linear algebra.
+
+33
+00:01:57,337 --> 00:02:01,549
+The quantum HHL algorithm
+solves A x = b in a time that
+
+34
+00:02:01,549 --> 00:02:05,147
+grows only with the
+logarithm of the dimension,
+
+35
+00:02:05,527 --> 00:02:09,883
+but requires a sparse matrix accessible
+through an oracle and delivers a
+
+36
+00:02:09,883 --> 00:02:14,299
+quantum state, not the vector: reading
+all entries costs what was gained.
+
+37
+00:02:14,679 --> 00:02:20,018
+The thermodynamic linear algebra
+of unit six delivers the classical
+
+38
+00:02:20,018 --> 00:02:24,719
+vector, scales as d κ² ε⁻² and
+pays for loading the matrix.
+
+39
+00:02:25,099 --> 00:02:27,994
+Different promises, different fine print.
+
+40
+00:02:29,117 --> 00:02:32,535
+For any advantage claim, ask four things.
+
+41
+00:02:32,915 --> 00:02:35,539
+What is a step, and how much
+does it cost physically?
+
+42
+00:02:35,919 --> 00:02:40,083
+How do area, energy and
+precision grow with problem size?
+
+43
+00:02:40,463 --> 00:02:43,054
+What is delivered at the end, and
+how much does it cost to read it?
+
+44
+00:02:43,434 --> 00:02:47,012
+Against which classical algorithm is
+it compared, and under what conditions?
+
+45
+00:02:47,392 --> 00:02:51,716
+With those questions, the results
+of this unit fall into place: deep
+
+46
+00:02:51,716 --> 00:02:56,041
+ideas about the structure of groups,
+not shortcuts for cryptography.
+
+47
+00:02:57,150 --> 00:03:02,247
+Use this comparison to evaluate
+claims with explicit models of time,
+
+48
+00:03:02,247 --> 00:03:07,194
+area, energy and precision, labeling
+each number as in lesson 5.8.
+
+49
+00:03:07,574 --> 00:03:11,395
+In the final project you will include
+a resource table like today's.
+
+50
+00:03:12,517 --> 00:03:15,188
+Common mistakes: comparing step counts of
+
+51
+00:03:15,188 --> 00:03:17,925
+different models as if they cost the same.
+
+52
+00:03:18,305 --> 00:03:21,446
+Ignoring that diffusion needs
+on the order of r nodes.
+
+53
+00:03:21,826 --> 00:03:25,926
+Ignoring HHL's input
+oracle and quantum output.
+
+54
+00:03:26,306 --> 00:03:28,745
+And confusing physical
+with logical qubits.
+
+55
+00:03:29,850 --> 00:03:32,923
+In summary: a quantum
+step, a diffusion step and
+
+56
+00:03:32,923 --> 00:03:35,676
+a digital step consume
+different resources.
+
+57
+00:03:36,056 --> 00:03:39,888
+For two thousand forty-eight
+bits, Shor uses thousands of
+
+58
+00:03:39,888 --> 00:03:44,057
+logical qubits, diffusion few
+steps but an exponentially large
+
+59
+00:03:44,057 --> 00:03:47,755
+and precise network, and
+digital a subexponential time.
+
+60
+00:03:48,135 --> 00:03:50,740
+The difficulty moves,
+it does not disappear.
+
+61
+00:03:51,120 --> 00:03:56,677
+And the same careful reading applies to
+HHL versus thermodynamic linear algebra.
+
+62
+00:03:57,783 --> 00:04:01,264
+To practice: say which resource
+each kind of step consumes.
+
+63
+00:04:01,644 --> 00:04:05,168
+Compute the diffusion bound for
+two thousand forty-eight bits.
+
+64
+00:04:05,548 --> 00:04:09,532
+Explain why reading HHL's
+output cancels its advantage.
+
+65
+00:04:09,912 --> 00:04:13,299
+And write the four questions
+for any advantage claim.

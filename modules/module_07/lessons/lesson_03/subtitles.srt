@@ -1,0 +1,313 @@
+1
+00:00:00,350 --> 00:00:02,006
+Lección 7.3.
+
+2
+00:00:02,386 --> 00:00:04,766
+Caminatas aleatorias en grafos de Cayley.
+
+3
+00:00:05,883 --> 00:00:08,957
+Imagina que pones una gota
+de calor en un nodo de un
+
+4
+00:00:08,957 --> 00:00:11,734
+grafo y dejas que se
+reparta hacia los vecinos.
+
+5
+00:00:12,114 --> 00:00:15,723
+Con el tiempo, el calor se
+vuelve uniforme, y su valor final
+
+6
+00:00:15,723 --> 00:00:18,851
+en cada nodo es uno dividido
+por el número de nodos.
+
+7
+00:00:19,231 --> 00:00:22,193
+Si el grafo es un grupo
+cuyo tamaño es el orden que
+
+8
+00:00:22,193 --> 00:00:24,981
+buscamos, medir ese valor
+final revela el orden.
+
+9
+00:00:25,361 --> 00:00:28,357
+Hoy construimos ese grafo
+y entendemos su dinámica.
+
+10
+00:00:29,483 --> 00:00:34,721
+Tomemos b = 3 módulo doscientos noventa
+y nueve, cuyo orden es treinta y tres.
+
+11
+00:00:35,101 --> 00:00:39,263
+Los nodos son las potencias de b: un
+ciclo de treinta y tres elementos.
+
+12
+00:00:39,643 --> 00:00:45,379
+Las aristas multiplican por b^(±
+2^t), con t de cero a M = 9.
+
+13
+00:00:45,759 --> 00:00:49,255
+En coordenadas de
+exponente, cada nodo j se
+
+14
+00:00:49,255 --> 00:00:52,669
+conecta con j ± 2^t módulo treinta y tres.
+
+15
+00:00:53,049 --> 00:00:55,498
+Lo importante: los vecinos se calculan con
+
+16
+00:00:55,498 --> 00:00:58,121
+multiplicación modular,
+sin conocer el orden.
+
+17
+00:00:59,250 --> 00:01:03,123
+El caminante, con probabilidad
+un medio, se queda quieto; con la
+
+18
+00:01:03,123 --> 00:01:06,511
+otra mitad, salta por una de
+las veinte aristas al azar.
+
+19
+00:01:06,891 --> 00:01:10,631
+Esa es la matriz W = ½(I + P).
+
+20
+00:01:11,011 --> 00:01:16,216
+Empezando con toda la masa en la
+identidad, la distribución tras ℓ
+
+21
+00:01:16,216 --> 00:01:21,106
+pasos es p_ℓ = W^ℓ δ_e: el núcleo
+de calor en tiempo discreto.
+
+22
+00:01:21,486 --> 00:01:24,664
+Su diferencia entre pasos
+es el laplaciano aplicado a
+
+23
+00:01:24,664 --> 00:01:27,603
+la distribución: una
+ecuación del calor discreta.
+
+24
+00:01:28,717 --> 00:01:34,566
+Como el grafo es un grupo cíclico, las
+funciones χ_k(j) = e^(2πikj/r), los
+
+25
+00:01:34,566 --> 00:01:40,336
+caracteres que vimos en la lección
+cero punto seis, son vectores propios.
+
+26
+00:01:40,716 --> 00:01:46,044
+El valor propio de P es
+el promedio de los cosenos
+
+27
+00:01:46,044 --> 00:01:50,733
+de 2πk2^t/r, y el de W
+es λ_k = (1 + μ_k)/2.
+
+28
+00:01:51,113 --> 00:01:55,660
+Todos están entre cero y uno, y solo
+el modo cero vale exactamente uno.
+
+29
+00:01:56,783 --> 00:02:01,500
+Expandiendo la delta
+en caracteres, el valor
+
+30
+00:02:01,500 --> 00:02:06,002
+en la identidad es p_ℓ(e) = (1/r) Σ λ_k^ℓ.
+
+31
+00:02:06,382 --> 00:02:11,687
+El término k = 0 da exactamente
+uno sobre r; los demás decaen.
+
+32
+00:02:12,067 --> 00:02:16,217
+En el ejemplo, tras cinco pasos
+vale cero coma cero siete nueve;
+
+33
+00:02:16,217 --> 00:02:20,367
+tras diez, cero coma cero tres
+seis; tras veinte, cero coma cero
+
+34
+00:02:20,367 --> 00:02:24,193
+tres cero cuatro, ya muy cerca
+de uno sobre treinta y tres.
+
+35
+00:02:24,573 --> 00:02:27,887
+Calculado con la fórmula espectral
+o multiplicando la matriz,
+
+36
+00:02:27,887 --> 00:02:30,875
+el resultado coincide hasta
+la precisión de la máquina.
+
+37
+00:02:31,983 --> 00:02:33,380
+¿Por qué potencias de dos?
+
+38
+00:02:33,760 --> 00:02:37,785
+Con solo los saltos ± 1, el grafo
+es un ciclo y el valor propio
+
+39
+00:02:37,785 --> 00:02:41,554
+más lento es cero coma nueve
+nueve: hacen falta setecientos
+
+40
+00:02:41,554 --> 00:02:45,450
+sesenta y dos pasos para que
+los modos bajen de una milésima.
+
+41
+00:02:45,830 --> 00:02:48,882
+Con los generadores diádicos,
+el más lento es cero
+
+42
+00:02:48,882 --> 00:02:51,751
+coma seis seis nueve, y
+bastan dieciocho pasos.
+
+43
+00:02:52,131 --> 00:02:55,497
+Las potencias de dos dispersan
+cualquier frecuencia: es la
+
+44
+00:02:55,497 --> 00:02:58,457
+idea del lema de duplicación
+de la próxima lección.
+
+45
+00:02:59,583 --> 00:03:03,513
+Los núcleos de calor en grupos
+describen los tiempos de mezcla de
+
+46
+00:03:03,513 --> 00:03:07,685
+cadenas de Markov, como barajar
+cartas; aparecen en mapas de difusión
+
+47
+00:03:07,685 --> 00:03:11,312
+y redes neuronales sobre grafos,
+y en los grafos expansores,
+
+48
+00:03:11,692 --> 00:03:14,035
+que mezclan rápido con pocos generadores.
+
+49
+00:03:14,415 --> 00:03:17,289
+En el laboratorio diez
+construirás esta caminata.
+
+50
+00:03:18,417 --> 00:03:21,559
+Errores comunes: olvidar la
+pereza, sin la cual puede
+
+51
+00:03:21,559 --> 00:03:24,702
+haber un valor propio menos
+uno que impide asentarse.
+
+52
+00:03:25,082 --> 00:03:27,813
+Creer que hace falta el orden
+para construir el grafo.
+
+53
+00:03:28,193 --> 00:03:31,206
+Confundir los valores propios de P y de W.
+
+54
+00:03:31,586 --> 00:03:34,427
+Y simular el vector
+completo en digital, que
+
+55
+00:03:34,427 --> 00:03:36,881
+cuesta r por paso y pierde la ventaja.
+
+56
+00:03:37,983 --> 00:03:41,133
+En resumen: el grafo de Cayley de ⟨b⟩ con
+
+57
+00:03:41,133 --> 00:03:45,357
+generadores diádicos se
+construye sin conocer el orden.
+
+58
+00:03:45,737 --> 00:03:48,585
+La caminata semi-perezosa
+es una ecuación del
+
+59
+00:03:48,585 --> 00:03:51,433
+calor discreta,
+diagonalizada por caracteres.
+
+60
+00:03:51,813 --> 00:03:54,912
+Su valor en la identidad
+tiende a uno sobre r, y las
+
+61
+00:03:54,912 --> 00:03:58,070
+potencias de dos hacen que
+lo alcance en pocos pasos.
+
+62
+00:03:59,183 --> 00:04:02,031
+Para practicar: escribe
+los vecinos de un nodo.
+
+63
+00:04:02,411 --> 00:04:05,169
+Demuestra que los caracteres
+son vectores propios.
+
+64
+00:04:05,549 --> 00:04:09,586
+Explica por qué los valores propios
+de W están entre cero y uno.
+
+65
+00:04:09,966 --> 00:04:13,105
+Y deduce la fórmula del núcleo
+de calor en la identidad.

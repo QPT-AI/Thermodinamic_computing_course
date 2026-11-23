@@ -1,0 +1,331 @@
+1
+00:00:00,350 --> 00:00:02,105
+Lección 4.10.
+
+2
+00:00:02,485 --> 00:00:06,149
+Optimización con Ising y lógica
+probabilística invertible.
+
+3
+00:00:07,250 --> 00:00:09,542
+Un modelo de Ising a temperatura baja se
+
+4
+00:00:09,542 --> 00:00:12,006
+concentra en sus estados
+de mínima energía.
+
+5
+00:00:12,386 --> 00:00:16,909
+Si logramos escribir un problema de forma
+que su solución sea el mínimo de una
+
+6
+00:00:16,909 --> 00:00:21,317
+energía de Ising, podemos resolverlo
+dejando que un chip de pbits se enfríe.
+
+7
+00:00:21,697 --> 00:00:25,396
+Muchos problemas de optimización
+combinatoria, como el corte
+
+8
+00:00:25,396 --> 00:00:28,602
+máximo o la satisfacibilidad,
+admiten esa escritura.
+
+9
+00:00:28,982 --> 00:00:32,232
+Y hay algo más sorprendente:
+los circuitos lógicos
+
+10
+00:00:32,232 --> 00:00:35,092
+escritos así se pueden
+ejecutar hacia atrás.
+
+11
+00:00:36,217 --> 00:00:40,819
+El problema del corte máximo pide dividir
+los nodos de un grafo en dos grupos de
+
+12
+00:00:40,819 --> 00:00:44,846
+modo que el mayor número posible de
+aristas cruce de un grupo al otro.
+
+13
+00:00:45,226 --> 00:00:50,311
+Asignemos un espín a cada nodo: más uno
+para un grupo y menos uno para el otro.
+
+14
+00:00:50,691 --> 00:00:54,720
+Una arista está cortada
+si sus extremos tienen
+
+15
+00:00:54,720 --> 00:00:59,276
+espines opuestos, y el corte
+vale Σ (1 − s_i s_j)/2.
+
+16
+00:00:59,655 --> 00:01:03,789
+Maximizar el corte es
+minimizar una energía de Ising
+
+17
+00:01:03,789 --> 00:01:07,447
+con acoplamientos
+antiferromagnéticos, J = −w.
+
+18
+00:01:08,550 --> 00:01:12,254
+Tomemos un grafo aleatorio de
+diez nodos y dieciocho aristas.
+
+19
+00:01:12,634 --> 00:01:15,897
+Por fuerza bruta sabemos que
+el corte máximo es catorce.
+
+20
+00:01:16,277 --> 00:01:19,447
+Con pbits y un recocido de
+trescientos barridos, la red
+
+21
+00:01:19,447 --> 00:01:23,135
+encuentra un corte de catorce en
+las cien corridas que probamos.
+
+22
+00:01:23,515 --> 00:01:26,620
+Para grafos grandes no hay
+garantías, pero los pbits
+
+23
+00:01:26,620 --> 00:01:30,142
+exploran muchas soluciones
+buenas en paralelo y muy rápido.
+
+24
+00:01:31,250 --> 00:01:32,766
+Ahora un circuito lógico.
+
+25
+00:01:33,146 --> 00:01:37,674
+Para la compuerta AND,
+con variables cero o
+
+26
+00:01:37,674 --> 00:01:42,307
+uno, la penalización P
+= uv − 2uz − 2vz + 3z
+
+27
+00:01:42,687 --> 00:01:45,580
+vale cero exactamente en
+las cuatro filas de la
+
+28
+00:01:45,580 --> 00:01:48,658
+tabla de verdad, y es
+positiva en todas las demás.
+
+29
+00:01:49,038 --> 00:01:52,926
+A β = 2, las cuatro filas
+válidas aparecen cada una con
+
+30
+00:01:52,926 --> 00:01:57,732
+probabilidad cero coma dos tres:
+la red muestrea la tabla de verdad.
+
+31
+00:01:58,112 --> 00:02:02,030
+Cualquier circuito se construye sumando
+las penalizaciones de sus compuertas.
+
+32
+00:02:03,150 --> 00:02:04,285
+Aquí está la magia.
+
+33
+00:02:04,665 --> 00:02:08,522
+Fijemos la salida z = 1 y
+dejemos libres las entradas.
+
+34
+00:02:08,902 --> 00:02:12,209
+La red encuentra la única
+entrada compatible, uno y
+
+35
+00:02:12,209 --> 00:02:15,063
+uno, con probabilidad
+cero coma siete nueve.
+
+36
+00:02:15,443 --> 00:02:20,812
+Si fijamos z = 0, reparte la probabilidad
+entre las tres entradas que dan cero.
+
+37
+00:02:21,192 --> 00:02:25,160
+Es lógica invertible: el mismo
+circuito calcula hacia adelante,
+
+38
+00:02:25,160 --> 00:02:28,750
+fijando las entradas, y hacia
+atrás, fijando las salidas.
+
+39
+00:02:29,850 --> 00:02:33,916
+Si invertimos un multiplicador,
+fijando su salida en un número
+
+40
+00:02:33,916 --> 00:02:37,588
+N, las entradas buscan dos
+factores cuyo producto sea N.
+
+41
+00:02:37,968 --> 00:02:40,847
+Es factorización sin
+algoritmo de factorización.
+
+42
+00:02:41,227 --> 00:02:46,823
+Con un modelo de juguete para N = 143,
+con factores impares de cuatro bits, el
+
+43
+00:02:46,823 --> 00:02:52,276
+recocido encuentra once por trece en
+setenta y nueve de doscientas corridas.
+
+44
+00:02:52,656 --> 00:02:55,078
+Cuidado: esto no rompe la criptografía.
+
+45
+00:02:55,458 --> 00:02:59,141
+El paisaje de energía de la
+factorización es muy rugoso, y el
+
+46
+00:02:59,141 --> 00:03:02,704
+tiempo de búsqueda crece
+rápidamente con el número de bits.
+
+47
+00:03:03,817 --> 00:03:07,960
+Cualquier problema QUBO, de
+variables binarias con costo
+
+48
+00:03:07,960 --> 00:03:11,808
+cuadrático, se convierte
+en Ising con x = (1 + s)/2.
+
+49
+00:03:12,188 --> 00:03:15,484
+La satisfacibilidad usa una
+penalización por cláusula.
+
+50
+00:03:15,864 --> 00:03:20,962
+Los p-computadores en FPGA ya hacen
+miles de millones de volteos por segundo.
+
+51
+00:03:21,342 --> 00:03:23,919
+Y en la unidad siete
+veremos un algoritmo de
+
+52
+00:03:23,919 --> 00:03:27,023
+factorización por difusión
+con garantías demostradas.
+
+53
+00:03:28,150 --> 00:03:31,410
+Errores comunes: penalizaciones
+demasiado débiles,
+
+54
+00:03:31,410 --> 00:03:34,279
+que hacen más baratos
+los estados inválidos.
+
+55
+00:03:34,659 --> 00:03:37,658
+Olvidar la constante al
+pasar de QUBO a Ising.
+
+56
+00:03:38,038 --> 00:03:42,334
+Esperar soluciones en tiempo
+polinomial de problemas NP-difíciles.
+
+57
+00:03:42,714 --> 00:03:44,896
+Y olvidar que los términos de orden alto
+
+58
+00:03:44,896 --> 00:03:47,623
+necesitan espines auxiliares
+en hardware de pares.
+
+59
+00:03:48,750 --> 00:03:52,521
+En resumen: muchos problemas
+de optimización son mínimos de
+
+60
+00:03:52,521 --> 00:03:55,973
+energías de Ising, y los
+pbits los buscan enfriándose.
+
+61
+00:03:56,353 --> 00:04:00,677
+Las compuertas lógicas se escriben como
+penalizaciones cuyos mínimos son la
+
+62
+00:04:00,677 --> 00:04:04,828
+tabla de verdad, y fijando las salidas
+los circuitos corren hacia atrás.
+
+63
+00:04:05,208 --> 00:04:07,745
+Es una herramienta
+poderosa, pero no elimina
+
+64
+00:04:07,745 --> 00:04:10,166
+la dificultad intrínseca de los problemas.
+
+65
+00:04:11,283 --> 00:04:14,332
+Para practicar: verifica
+la penalización AND.
+
+66
+00:04:14,712 --> 00:04:17,757
+Escribe el Ising del corte
+máximo en un triángulo.
+
+67
+00:04:18,137 --> 00:04:20,538
+Convierte la penalización a espines.
+
+68
+00:04:20,918 --> 00:04:25,347
+Y explica por qué la salida fijada
+no da certeza a temperatura finita.

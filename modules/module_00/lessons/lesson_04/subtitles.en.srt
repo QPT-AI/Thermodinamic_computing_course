@@ -1,0 +1,457 @@
+1
+00:00:00,350 --> 00:00:02,068
+Lesson 0.4.
+
+2
+00:00:02,448 --> 00:00:04,130
+Linear algebra refresher.
+
+3
+00:00:05,250 --> 00:00:09,472
+Almost every thermodynamic algorithm
+in this course ends up in a matrix.
+
+4
+00:00:09,852 --> 00:00:12,623
+The thermodynamic linear solver relaxes a
+
+5
+00:00:12,623 --> 00:00:15,596
+system whose dynamics
+are set by a matrix A.
+
+6
+00:00:15,976 --> 00:00:18,589
+Its speed is limited by
+the condition number.
+
+7
+00:00:18,969 --> 00:00:22,228
+Thermodynamic natural
+gradient uses the Woodbury
+
+8
+00:00:22,228 --> 00:00:25,962
+identity, and the K-FAC method
+uses Kronecker products.
+
+9
+00:00:26,342 --> 00:00:30,188
+In this lesson we review those
+tools with a geometric eye.
+
+10
+00:00:31,317 --> 00:00:34,568
+A two-by-two matrix is a
+transformation of the plane.
+
+11
+00:00:34,948 --> 00:00:38,826
+Look at what it does to the unit
+circle: it turns it into an ellipse.
+
+12
+00:00:39,206 --> 00:00:42,213
+If the matrix is symmetric,
+there are two perpendicular
+
+13
+00:00:42,213 --> 00:00:44,783
+directions that only
+stretch, without rotating.
+
+14
+00:00:45,163 --> 00:00:48,656
+If it is also positive
+definite, both stretches are
+
+15
+00:00:48,656 --> 00:00:51,738
+positive: the matrix
+never flips a direction.
+
+16
+00:00:52,118 --> 00:00:55,900
+Another way to see it:
+the function ½ xᵀ A x is a
+
+17
+00:00:55,900 --> 00:00:59,065
+bowl with a single minimum at the origin.
+
+18
+00:01:00,183 --> 00:01:06,109
+Eigenvectors are the directions the
+matrix does not rotate: A v = λ v.
+
+19
+00:01:06,489 --> 00:01:11,268
+A symmetric matrix has orthogonal
+eigenvectors and real eigenvalues.
+
+20
+00:01:11,648 --> 00:01:15,844
+That is why it decomposes as
+A = Q Λ Qᵀ: first we rotate to
+
+21
+00:01:15,844 --> 00:01:20,395
+align the eigen-axes with the
+coordinate axes, then stretch each
+
+22
+00:01:20,395 --> 00:01:24,234
+axis by its eigenvalue, and
+finally undo the rotation.
+
+23
+00:01:24,614 --> 00:01:27,847
+The animation applies those
+three steps one by one,
+
+24
+00:01:27,847 --> 00:01:30,573
+and the result matches
+applying A directly.
+
+25
+00:01:31,683 --> 00:01:38,134
+The condition number, κ = λ_max / λ_min,
+measures how elongated the bowl is.
+
+26
+00:01:38,514 --> 00:01:42,076
+With κ close to one, the level
+curves are almost circles
+
+27
+00:01:42,076 --> 00:01:45,256
+and gradient descent goes
+straight to the minimum.
+
+28
+00:01:45,636 --> 00:01:49,358
+With large κ, the valley
+is narrow: gradient descent
+
+29
+00:01:49,358 --> 00:01:53,223
+bounces from wall to wall
+and crawls along the bottom.
+
+30
+00:01:53,603 --> 00:01:55,554
+The two trajectories you see are real
+
+31
+00:01:55,554 --> 00:01:57,821
+computations with the
+same number of steps.
+
+32
+00:01:58,201 --> 00:02:02,323
+In thermodynamic algorithms, κ
+appears as the ratio between the
+
+33
+00:02:02,323 --> 00:02:06,118
+slowest and the fastest time
+scale of the physical system.
+
+34
+00:02:07,250 --> 00:02:11,175
+Consider the dynamics ẋ = −A x.
+
+35
+00:02:11,555 --> 00:02:17,687
+Its solution is x(t) = e^(−At)
+x₀, the exponential of a matrix.
+
+36
+00:02:18,067 --> 00:02:23,897
+In the eigenbasis it is simple:
+each component decays as e^(−λᵢ t).
+
+37
+00:02:24,277 --> 00:02:27,464
+The component with a large
+eigenvalue vanishes fast;
+
+38
+00:02:27,464 --> 00:02:30,528
+the one with a small
+eigenvalue takes a long time.
+
+39
+00:02:30,908 --> 00:02:33,857
+That is why all trajectories
+first fall onto the
+
+40
+00:02:33,857 --> 00:02:36,499
+slow axis and then
+creep toward the origin.
+
+41
+00:02:36,879 --> 00:02:40,553
+The total relaxation time is
+set by the smallest eigenvalue,
+
+42
+00:02:40,553 --> 00:02:43,675
+and the integration step
+is limited by the largest.
+
+43
+00:02:44,055 --> 00:02:45,870
+Their ratio is κ again.
+
+44
+00:02:46,983 --> 00:02:51,078
+The Kronecker product B ⊗
+C builds a big matrix by
+
+45
+00:02:51,078 --> 00:02:54,844
+placing a copy of C
+scaled by each entry of B.
+
+46
+00:02:55,224 --> 00:02:59,696
+Two n-by-n matrices produce
+one that is n² by n².
+
+47
+00:03:00,076 --> 00:03:05,541
+The valuable part is that you never
+need to form it: (B ⊗ C) vec(X) = vec(C
+
+48
+00:03:05,541 --> 00:03:10,204
+X Bᵀ), and the inverse is the
+Kronecker product of the inverses.
+
+49
+00:03:10,584 --> 00:03:15,056
+Inverting two small matrices costs
+far less than inverting one big one.
+
+50
+00:03:15,436 --> 00:03:18,546
+This is the idea behind the
+K-FAC method of unit eight.
+
+51
+00:03:19,650 --> 00:03:22,372
+The Woodbury identity says how the inverse
+
+52
+00:03:22,372 --> 00:03:25,094
+changes when we add a low-rank correction.
+
+53
+00:03:25,474 --> 00:03:30,376
+If we know the inverse of A, the
+inverse of A plus U C V only requires
+
+54
+00:03:30,376 --> 00:03:35,349
+inverting a small k-by-k matrix,
+where k is the rank of the correction.
+
+55
+00:03:35,729 --> 00:03:38,890
+The colored blocks show
+the sizes: instead of
+
+56
+00:03:38,890 --> 00:03:42,754
+inverting something d by d,
+we invert something k by k.
+
+57
+00:03:43,134 --> 00:03:48,307
+In machine learning, the curvature matrix
+is often a multiple of the identity plus a
+
+58
+00:03:48,307 --> 00:03:52,679
+term whose rank equals the batch
+size, and Woodbury makes it tractable.
+
+59
+00:03:53,783 --> 00:03:56,754
+Take A with rows three, one and one, two.
+
+60
+00:03:57,134 --> 00:03:58,008
+It is symmetric.
+
+61
+00:03:58,388 --> 00:04:06,126
+Its eigenvalues are five plus or minus
+root five, over two: about 3.62 and 1.38.
+
+62
+00:04:06,506 --> 00:04:09,500
+Both are positive, so
+it is positive definite.
+
+63
+00:04:09,880 --> 00:04:13,848
+Its condition number is about 2.62.
+
+64
+00:04:14,228 --> 00:04:17,592
+The determinant is the
+product of the eigenvalues,
+
+65
+00:04:17,592 --> 00:04:20,551
+five, and the trace is
+their sum, also five.
+
+66
+00:04:21,683 --> 00:04:24,607
+In the course, the condition
+number will determine
+
+67
+00:04:24,607 --> 00:04:27,354
+how long the thermodynamic
+linear solver takes.
+
+68
+00:04:27,734 --> 00:04:29,909
+The matrix exponential describes the
+
+69
+00:04:29,909 --> 00:04:32,628
+relaxation of the
+Ornstein–Uhlenbeck process.
+
+70
+00:04:33,008 --> 00:04:37,512
+Kronecker products are the heart of
+K-FAC and of its thermodynamic version.
+
+71
+00:04:37,892 --> 00:04:43,025
+And Woodbury lets us invert low-rank
+curvature matrices in the natural gradient.
+
+72
+00:04:44,150 --> 00:04:47,613
+These ideas connect with what
+we have seen and what is coming.
+
+73
+00:04:47,993 --> 00:04:52,330
+The covariance of a Gaussian is a
+symmetric positive-definite matrix.
+
+74
+00:04:52,710 --> 00:04:56,613
+The spectral gap of a Markov
+chain is also an eigenvalue.
+
+75
+00:04:56,993 --> 00:05:01,621
+The Ornstein–Uhlenbeck process is the
+matrix exponential with noise, and the
+
+76
+00:05:01,621 --> 00:05:06,066
+stability of its numerical integration
+depends on the largest eigenvalue.
+
+77
+00:05:07,183 --> 00:05:08,758
+Beware of four mistakes.
+
+78
+00:05:09,138 --> 00:05:12,955
+Symmetric does not mean
+positive definite: the matrix
+
+79
+00:05:12,955 --> 00:05:16,196
+one, two, two, one has
+a negative eigenvalue.
+
+80
+00:05:16,576 --> 00:05:19,895
+All entries being positive
+guarantees nothing either.
+
+81
+00:05:20,275 --> 00:05:22,941
+The exponential of a sum
+is not the product of
+
+82
+00:05:22,941 --> 00:05:25,490
+exponentials if the
+matrices do not commute.
+
+83
+00:05:25,870 --> 00:05:28,190
+And never form the Kronecker product
+
+84
+00:05:28,190 --> 00:05:31,475
+explicitly: use the identity
+with the vec operator.
+
+85
+00:05:32,583 --> 00:05:36,765
+In summary: a symmetric
+positive-definite matrix
+
+86
+00:05:36,765 --> 00:05:41,557
+stretches space along orthogonal
+axes, with A = Q Λ Qᵀ.
+
+87
+00:05:41,937 --> 00:05:44,238
+The condition number measures the ratio
+
+88
+00:05:44,238 --> 00:05:46,716
+between the slowest and the fastest scale.
+
+89
+00:05:47,096 --> 00:05:50,754
+The matrix exponential
+solves linear relaxation, and
+
+90
+00:05:50,754 --> 00:05:55,044
+Kronecker and Woodbury turn
+giant inversions into small ones.
+
+91
+00:05:56,150 --> 00:05:59,415
+Check what you learned:
+prove that a symmetric
+
+92
+00:05:59,415 --> 00:06:03,390
+positive-definite matrix has
+real, positive eigenvalues.
+
+93
+00:06:03,770 --> 00:06:08,108
+Write the inverse of a Kronecker
+product and its action on vec of X.
+
+94
+00:06:08,488 --> 00:06:12,589
+Solve the relaxation with a diagonal
+matrix with values one and one hundred.
+
+95
+00:06:12,969 --> 00:06:18,043
+And use Woodbury to invert lambda times
+the identity plus a rank-one correction.

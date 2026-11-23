@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.4}{El demonio de Maxwell y la máquina de Szilard}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Derive $W=\kB T\ln2$ para la expansión isotérmica de $V/2$ a $V$ de un gas de una molécula.
+\item Si la pared se coloca en $V/3$, ¿cuánto trabajo se extrae en promedio por ciclo (expandiendo siempre hasta $V$)?
+\item Con acierto del 80\,\%, ¿cuál es el trabajo máximo por ciclo a 300 K?
+\item ¿En qué paso del ciclo se paga el costo según Bennett?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Si el demonio nunca borra su memoria y usa una cinta de $N$ bits inicialmente en cero, ¿cuánto trabajo puede extraer? ¿Qué le pasa a la cinta? Interprete la cinta como un «combustible» de baja entropía.
+\item Muestre que $I(X;M)=1-h(\epsilon)$ bits para un canal binario simétrico con entrada uniforme.
+\item Un demonio opera a 1 MHz a 300 K. ¿Qué potencia máxima extrae? ¿Qué potencia mínima disipa al borrar?
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Generalice la máquina de Szilard a una pared en posición $aV$ con expansión posterior hasta $V$. Muestre que el trabajo medio es $\kB T\,H(a)$ en nats y que se maximiza en $a=1/2$.
+\item (Sagawa--Ueda, anticipo de la Unidad 3) Con retroalimentación, $\langle e^{-\beta(W-\Delta F)-I}\rangle=1$. Use Jensen para obtener $\langle W\rangle\ge\Delta F-\kB T\langle I\rangle$ y relacione con el ejercicio B3.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $W=\int_{V/2}^{V}\kB T\,\dd V'/V'=\kB T\ln2$.
+
+\textbf{B2.} Con probabilidad $1/3$ la molécula está en el tercio izquierdo y se expande de $V/3$ a $V$: $\kB T\ln3$; con $2/3$, de $2V/3$ a $V$: $\kB T\ln\frac32$. Media: $\kB T[\frac13\ln3+\frac23\ln\frac32]=\kB T\,H(\frac13)\approx0{,}637\,\kB T$ (en nats), menor que $\kB T\ln2=0{,}693\,\kB T$.
+
+\textbf{B3.} $I=1-h(0{,}2)=0{,}278$ bits; $W_{\max}=0{,}278\cdot2{,}87\times10^{-21}\approx8{,}0\times10^{-22}$ J.
+
+\textbf{B4.} Al reiniciar la memoria del demonio (borrado).
+
+\textbf{I1.} Hasta $N\kB T\ln2$; la cinta termina llena de bits aleatorios (máxima entropía). Una cinta en cero es un recurso de baja entropía que se «quema» para obtener trabajo.
+
+\textbf{I2.} $I=H(M)-H(M|X)=1-h(\epsilon)$ porque $M$ es uniforme y, dado $X$, $M$ es Bernoulli$(\epsilon)$.
+
+\textbf{I3.} Extrae $\le10^6\cdot2{,}87\times10^{-21}=2{,}87\times10^{-15}$ W y disipa $\ge$ lo mismo al borrar.
+
+\textbf{A1.} $\langle W\rangle=\kB T[a\ln\frac1a+(1-a)\ln\frac1{1-a}]=\kB T\,H_{\text{nats}}(a)$, máximo $\ln2$ en $a=\frac12$.
+
+\textbf{A2.} Jensen: $e^{-\langle\beta(W-\Delta F)+I\rangle}\le1\Rightarrow\langle W\rangle\ge\Delta F-\kB T\langle I\rangle$. En un ciclo ($\Delta F=0$), el trabajo extraído $-\langle W\rangle\le\kB T\langle I\rangle$, como en B3.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Laboratorio L2 (reto): simule con Langevin una partícula en un pozo doble, mida su lado, aplique un protocolo de inclinación según la medición y estime el trabajo extraído; incluya el costo de borrar el registro.
+\item Simule el demonio de la animación con distintos umbrales de rapidez y grafique la diferencia de temperatura alcanzada.
+\end{enumerate}
+\end{document}

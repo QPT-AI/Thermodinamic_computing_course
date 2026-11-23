@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.6}{Unidades tanh-lineales en un grafo de grado 16}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Por qué un pbit implementa una unidad tanh-lineal?
+\item (B) Niveles de la suma de 4 pbits $\pm1$.
+\item (B) Capas para mezclar $d=4096$ con abanico 4.
+\item (B) Explique el origen del sesgo.
+\item (I) Desarrolle $\mathbb E[\tanh(\mu+\epsilon)]$ a segundo orden en $\epsilon$ con $\mathrm{Var}\,\epsilon=\sigma^2$. ¿Hacia dónde empuja el sesgo?
+\item (I) ¿Cuántos pbits hacen falta para una proyección $d_{\text{in}}=256\to d_{\text{out}}=256$ con abanico 4 y grupos de 4 pbits por valor?
+\item (A) Entrene un MLP tanh con entradas muestreadas y compare la exactitud con el mismo MLP determinista.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Su salida media condicionada a los vecinos es $\tanh$ del campo local, una suma ponderada.
+
+\textbf{E2.} 5: $-4,-2,0,2,4$.
+
+\textbf{E3.} $\log_44096=6$.
+
+\textbf{E4.} La tangente es curva: promediar sobre un campo ruidoso no coincide con evaluar en el campo medio.
+
+\textbf{E5.} $\tanh\mu+\tfrac12\tanh''(\mu)\sigma^2$, con $\tanh''=-2\tanh(1-\tanh^2)$: el sesgo empuja hacia cero (encoge la salida).
+
+\textbf{E6.} 256 salidas $\times$ 4 pbits por valor $=1024$ pbits por capa; para mezclar las 256 entradas hacen falta $\log_4256=4$ capas: $\sim4096$ pbits.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

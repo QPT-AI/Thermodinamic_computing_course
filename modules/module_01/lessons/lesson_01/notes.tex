@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.1}{Leyes de la termodinámica y energía libre}
+
+\noindent\textbf{Unidad 1 --- Termodinámica e información.}\quad\textbf{Objetivos:} enunciar las leyes; interpretar
+$S=\kB\ln\Omega$; usar $F=U-TS$ y $W\ge\Delta F$. \textbf{Prerrequisitos:} lección 0.3; física básica.
+
+\section{¿Por qué importa?}
+Un chip convierte trabajo eléctrico en calor. Para computar \emph{con} la física necesitamos el lenguaje de
+la energía, el calor y la entropía; la cantidad central del curso será la energía libre \cite{peliti}.
+
+\begin{intuicion}
+Dos cajas de partículas en contacto intercambian energía en choques aleatorios simétricos. Sin dirección
+impuesta, las energías medias convergen al mismo valor: el equilibrio. La temperatura es la variable que se iguala.
+(La animación usa un modelo cinético: en cada choque, la energía total del par se reparte uniformemente al azar \evS.)
+\end{intuicion}
+
+\section{Las leyes}
+\begin{itemize}
+\item \textbf{Ley cero.} El equilibrio térmico es transitivo; define clases de equivalencia etiquetadas por $T$.
+\item \textbf{Primera ley.} $\Delta U=Q+W$, con $Q$ el calor \emph{recibido} y $W$ el trabajo hecho \emph{sobre} el sistema.
+\item \textbf{Segunda ley.} Para un sistema aislado $\Delta S\ge0$. Para un sistema en contacto con un baño a $T$
+(Clausius): $\dd S\ge\delta Q/T$, equivalente a $\Delta S_{\text{sist}}+\Delta S_{\text{baño}}\ge0$ con $\Delta S_{\text{baño}}=-Q/T$.
+\item \textbf{Tercera ley.} $S\to S_{\min}$ (cero para un estado fundamental no degenerado) cuando $T\to0$.
+\end{itemize}
+
+\section{Entropía y microestados}
+\begin{definicion}[ (entropía de Boltzmann)]
+$S=\kB\ln\Omega$, con $\Omega$ el número de microestados compatibles con el macroestado.
+\end{definicion}
+Para $N$ monedas, $\Omega(n\ \text{caras})=\binom Nn$; con $N=100$, $\Omega(50)=\binom{100}{50}\approx1{,}01\times10^{29}$ y
+$\Omega(100)=1$. La fracción de caras tiene media $1/2$ y desviación $\frac{1}{2\sqrt N}$: para $N\sim10^{23}$ las
+fluctuaciones relativas son $\sim10^{-12}$. La segunda ley es una afirmación estadística: los macroestados con más
+microestados son abrumadoramente más probables.
+
+\section{Energía libre}
+A temperatura y volumen fijos, el equilibrio minimiza la energía libre de Helmholtz
+\begin{equation}F=U-TS .\end{equation}
+\begin{proof}[Justificación]
+Sistema más baño a $T$: $\Delta S_{\text{univ}}=\Delta S-Q/T=\Delta S-\Delta U/T$ (sin trabajo) $=-\Delta F/T\ge0$, luego $\Delta F\le0$.
+\end{proof}
+\textbf{Competencia energía--entropía.} Estado $A$: $E=0$, $\Omega=1$. Estado $B$: $E=\varepsilon$, $\Omega=g$. Entonces
+$F_A=0$, $F_B=\varepsilon-\kB T\ln g$ y $\frac{p_B}{p_A}=e^{-(F_B-F_A)/\kB T}=g\,e^{-\varepsilon/\kB T}$. La transición
+($F_A=F_B$) ocurre en $T^*=\varepsilon/(\kB\ln g)$.
+\begin{ejemplo}
+$\varepsilon=0{,}1$ eV, $g=1000$: $T^*=0{,}1/(8{,}617\times10^{-5}\cdot6{,}908)\approx168$ K. A 300 K,
+$\Delta F=0{,}1-0{,}02585\cdot6{,}908\approx-0{,}0786$ eV y $p_B=1/(1+e^{\Delta F/\kB T})=1/(1+e^{-3{,}04})\approx0{,}954$.
+A 100 K, $p_B\approx0{,}009$.
+\end{ejemplo}
+
+\section{Trabajo y energía libre}
+\begin{resultado}
+En un proceso isotérmico (contacto con un baño a $T$), $W\ge\Delta F$, con igualdad solo en el límite cuasiestático.
+$W_{\text{dis}}=W-\Delta F\ge0$ es trabajo disipado como calor.
+\end{resultado}
+\begin{proof}
+$\Delta U=Q+W$ y $\Delta S\ge Q/T\Rightarrow W=\Delta U-Q\ge\Delta U-T\Delta S=\Delta F$.
+\end{proof}
+En la lección 1.5 esta desigualdad da el costo de Landauer; la simulación de borrado mostró $W(\tau)\approx\kB T\ln2+a/\tau$.
+La Unidad 3 la refina con la igualdad de Jarzynski $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$.
+
+\begin{aplicacion}
+Primera ley: la potencia de un chip es calor a extraer. Segunda ley: borrar exige expulsar entropía. En un TSU, el
+ruido térmico lleva al sistema hacia estados de baja $F$: la base del muestreo de Boltzmann (Unidades 4--5).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Calor $\neq$ temperatura. La entropía de un \emph{sistema} puede bajar; la del universo no.
+\item «Entropía = desorden» es solo una metáfora. Convenciones de signo de $W$: aquí, trabajo sobre el sistema.
+\item El mínimo de $F$ caracteriza el equilibrio a $T$ y $V$ fijos; a $T$ y $p$ fijos se usa $G=H-TS$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Equilibrio y $T$; $\Delta U=Q+W$; $\Delta S_{\text{univ}}\ge0$; $S=\kB\ln\Omega$; mínimo de $F=U-TS$; $W\ge\Delta F$.
+
+\begin{thebibliography}{9}\small
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, Princeton University Press, 2021.
+\bibitem[10]{wolpert} D. H. Wolpert, The stochastic thermodynamics of computation, \emph{J. Phys. A} 52, 193001 (2019).
+\bibitem[12]{jarz} C. Jarzynski, Nonequilibrium equality for free energy differences, \emph{Phys. Rev. Lett.} 78, 2690 (1997).
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.7}{Abstracciones de hardware}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Aristas de un grafo completo y de uno de grado 16 para $N=10^4$.
+\item (B) Copias mínimas para embeber una variable de grado $k=50$ en un grafo de grado $d=16$.
+\item (B) Probabilidad de ruptura de una cadena de dos copias con $\beta J_c=2$.
+\item (B) ¿Por qué una cadena demasiado fuerte hace lento el muestreo?
+\item (I) Deduzca $P_{\text{rota}}=1/(1+e^{2\beta J_c})$ y obtenga la expresión para una cadena de $c$ copias sin campos externos (probabilidad de que no todas coincidan).
+\item (I) ¿Cuántas variables de un modelo denso caben en un chip de $M$ pbits de grado $d$? Aplíquelo a $M=269\,568$, $d=16$ y $N$ variables.
+\item (A) Implemente embebido en una rejilla con diagonales (grado 8) para $K_6$ y mida la fracción de muestras con cadenas rotas frente a $\beta J_c$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $49\,995\,000$ y $80\,000$.
+
+\textbf{E2.} $\lceil48/14\rceil=4$.
+
+\textbf{E3.} $1/(1+e^4)=0{,}018$.
+
+\textbf{E4.} La variable lógica solo cambia si cambian todas las copias; los estados intermedios cuestan $2J_c$ por enlace roto, así que el volteo es
+exponencialmente raro (Arrhenius).
+
+\textbf{E5.} Cadena abierta de $c$ copias: cada uno de los $c-1$ enlaces está roto de forma independiente con probabilidad $p=1/(1+e^{2\beta J_c})$;
+$P(\text{alguna rota})=1-(1-p)^{c-1}$.
+
+\textbf{E6.} Cada variable necesita $c=\lceil(N-3)/(d-2)\rceil$ copias; caben $M/c$ si $M/c\ge N$. Con $N=1000$: $c=72$, $M/c=3\,744\ge1000$: cabe (sin ruteo).
+
+\textbf{E7.} La fracción de rupturas cae aproximadamente como $e^{-2\beta J_c}$ por enlace.
+\end{solucion}
+\end{document}

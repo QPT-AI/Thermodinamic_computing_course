@@ -1,0 +1,341 @@
+1
+00:00:00,350 --> 00:00:02,194
+Lección 8.5.
+
+2
+00:00:02,574 --> 00:00:03,978
+K-FAC termodinámico.
+
+3
+00:00:05,083 --> 00:00:08,975
+El cuello de botella de K-FAC
+es invertir los factores de
+
+4
+00:00:08,975 --> 00:00:12,594
+cada capa, que cuesta n³
+para una capa de n neuronas.
+
+5
+00:00:12,974 --> 00:00:16,489
+En dos mil veinticinco, Donatella
+y colaboradores propusieron
+
+6
+00:00:16,489 --> 00:00:19,600
+hacer esas inversiones en
+un computador termodinámico.
+
+7
+00:00:19,980 --> 00:00:24,705
+La idea es la de la unidad seis aplicada
+a cada capa, con un detalle práctico
+
+8
+00:00:24,705 --> 00:00:29,246
+importante: cuántos bits necesitan la
+entrada y la salida del dispositivo.
+
+9
+00:00:30,350 --> 00:00:33,171
+La GPU calcula, como
+siempre, las estadísticas
+
+10
+00:00:33,171 --> 00:00:35,747
+de activaciones y gradientes de cada capa.
+
+11
+00:00:36,127 --> 00:00:41,176
+En lugar de invertir los factores
+digitalmente, los carga en el dispositivo, que
+
+12
+00:00:41,176 --> 00:00:45,784
+resuelve sistemas A x = b de tamaño
+n con dinámica de Ornstein-Uhlenbeck.
+
+13
+00:00:46,164 --> 00:00:51,849
+El resultado vuelve a la GPU,
+que aplica el paso G⁻¹ ∇W A⁻¹.
+
+14
+00:00:52,229 --> 00:00:54,792
+Los promedios móviles
+de los factores pueden
+
+15
+00:00:54,792 --> 00:00:57,296
+vivir en la GPU o en
+el propio dispositivo.
+
+16
+00:00:58,417 --> 00:01:04,210
+Por capa y por iteración, K-FAC
+digital cuesta O(b n² + n³).
+
+17
+00:01:04,590 --> 00:01:09,361
+La versión termodinámica
+cuesta O(b n² + n² κ²), donde
+
+18
+00:01:09,361 --> 00:01:13,514
+κ acota el número de
+condición de los factores,
+
+19
+00:01:13,894 --> 00:01:18,052
+y sin promedios móviles en
+memoria, solo O(b n) de memoria.
+
+20
+00:01:18,432 --> 00:01:21,297
+La ventaja crece linealmente
+con el ancho de la
+
+21
+00:01:21,297 --> 00:01:23,979
+red: el término cúbico
+se vuelve cuadrático.
+
+22
+00:01:24,359 --> 00:01:29,155
+Con las capas de los transformers modernos,
+de miles de neuronas, eso importa.
+
+23
+00:01:30,283 --> 00:01:31,797
+¿Cuánto se gana en la práctica?
+
+24
+00:01:32,177 --> 00:01:36,752
+Los autores midieron qué fracción del
+tiempo dedica K-FAC a invertir en tareas
+
+25
+00:01:36,752 --> 00:01:40,975
+del banco AlgoPerf: un once por ciento
+en un transformer de visión sobre
+
+26
+00:01:40,975 --> 00:01:45,373
+ImageNet, y un veintisiete por ciento
+en una red de grafos sobre moléculas.
+
+27
+00:01:45,753 --> 00:01:49,934
+Si esa parte se vuelve casi gratuita,
+estiman llegar a la misma métrica de
+
+28
+00:01:49,934 --> 00:01:54,170
+validación cerca de un cincuenta por
+ciento más rápido en la red de grafos.
+
+29
+00:01:54,550 --> 00:01:57,665
+Ojo: acelerar solo un
+veintisiete por ciento del tiempo
+
+30
+00:01:57,665 --> 00:02:00,894
+permite, por la ley de Amdahl,
+ganar a lo sumo un treinta
+
+31
+00:02:00,894 --> 00:02:03,612
+y siete por ciento con
+el mismo número de pasos,
+
+32
+00:02:03,992 --> 00:02:06,513
+así que esa estimación
+debe incluir también
+
+33
+00:02:06,513 --> 00:02:09,268
+cambios en los pasos;
+conviene leer el detalle.
+
+34
+00:02:09,648 --> 00:02:12,787
+Son estimaciones a partir
+de mediciones digitales y
+
+35
+00:02:12,787 --> 00:02:16,911
+simulaciones: ningún dispositivo
+físico ejecutó estos experimentos.
+
+36
+00:02:18,017 --> 00:02:22,396
+El dispositivo recibe los factores
+por convertidores digital analógico y
+
+37
+00:02:22,396 --> 00:02:26,776
+entrega la solución por convertidores
+analógico digital, con pocos bits.
+
+38
+00:02:27,156 --> 00:02:31,557
+Un cuantizador ingenuo puede romper
+la positividad de los factores; los
+
+39
+00:02:31,557 --> 00:02:35,835
+autores usan uno conservador, de
+diagonal dominante, que la preserva.
+
+40
+00:02:36,214 --> 00:02:40,751
+En el entrenamiento de una ResNet
+encontraron que la cuantización de entrada
+
+41
+00:02:40,751 --> 00:02:45,108
+afecta poco, pero la de salida importa:
+hacen falta al menos ocho bits de
+
+42
+00:02:45,108 --> 00:02:49,407
+salida, y con ocho bits K-FAC ya
+compite con Adam en precisión completa.
+
+43
+00:02:50,517 --> 00:02:52,289
+Una advertencia metodológica.
+
+44
+00:02:52,669 --> 00:02:56,649
+En nuestra capa softmax medimos
+un solo paso: con un cuantizador
+
+45
+00:02:56,649 --> 00:03:01,002
+uniforme ingenuo, la entrada es lo
+que más daña, con un coseno de cero
+
+46
+00:03:01,002 --> 00:03:05,045
+coma siete a cuatro bits, y la
+salida apenas cambia la dirección.
+
+47
+00:03:05,425 --> 00:03:09,930
+Es lo contrario de lo que encontraron los
+autores en entrenamiento completo, con su
+
+48
+00:03:09,930 --> 00:03:13,892
+cuantizador conservador y errores que
+se acumulan durante miles de pasos.
+
+49
+00:03:14,272 --> 00:03:16,891
+La lección: las métricas
+de un solo paso no
+
+50
+00:03:16,891 --> 00:03:19,754
+sustituyen a los experimentos
+de entrenamiento.
+
+51
+00:03:20,883 --> 00:03:24,352
+Úsalo en redes anchas, donde
+la inversión cúbica domina.
+
+52
+00:03:24,732 --> 00:03:29,109
+Antes de prometer aceleraciones, mide qué
+fracción del tiempo se va en invertir.
+
+53
+00:03:29,489 --> 00:03:31,769
+Y diseña con un cuantizador de entrada
+
+54
+00:03:31,769 --> 00:03:34,349
+conservador y al menos
+ocho bits de salida.
+
+55
+00:03:34,729 --> 00:03:38,260
+En el laboratorio once barrerás
+los bits de entrada y salida.
+
+56
+00:03:39,383 --> 00:03:42,495
+Errores comunes: prometer
+una aceleración total cuando
+
+57
+00:03:42,495 --> 00:03:45,087
+la inversión es solo
+una fracción del tiempo.
+
+58
+00:03:45,467 --> 00:03:47,820
+Ignorar el factor de
+condición al cuadrado.
+
+59
+00:03:48,200 --> 00:03:51,341
+Usar cuantizadores ingenuos
+que rompen la positividad.
+
+60
+00:03:51,721 --> 00:03:55,206
+Y juzgar la precisión necesaria
+con métricas de un solo paso.
+
+61
+00:03:56,317 --> 00:04:02,151
+En resumen, K-FAC termodinámico reemplaza
+las inversiones cúbicas de cada capa por
+
+62
+00:04:02,151 --> 00:04:07,630
+soluciones analógicas de costo n² κ²,
+con una ventaja que crece con el ancho.
+
+63
+00:04:08,010 --> 00:04:11,271
+Las aceleraciones son estimadas,
+no medidas en hardware.
+
+64
+00:04:11,651 --> 00:04:14,636
+Y la precisión importa:
+entrada con cuantizador
+
+65
+00:04:14,636 --> 00:04:17,368
+conservador y al menos
+ocho bits de salida.
+
+66
+00:04:18,483 --> 00:04:22,420
+Para practicar: calcula la razón
+de costos para una capa ancha.
+
+67
+00:04:22,800 --> 00:04:25,650
+Aplica la ley de Amdahl a
+la fracción de inversión.
+
+68
+00:04:26,030 --> 00:04:29,589
+Explica cómo un cuantizador
+uniforme rompe la positividad.
+
+69
+00:04:29,969 --> 00:04:32,193
+Y explica por qué los errores de salida
+
+70
+00:04:32,193 --> 00:04:34,588
+pesan más en entrenamiento que en un paso.

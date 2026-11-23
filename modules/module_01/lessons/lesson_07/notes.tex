@@ -1,0 +1,64 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.7}{Arco histórico}
+
+\noindent\textbf{Unidad 1.}\quad\textbf{Objetivo:} situar las ideas del curso en su historia y asociar a cada figura
+la herramienta que usaremos. \textbf{Prerrequisitos:} lecciones 1.1--1.6.
+
+\section{Tres ríos}
+El cómputo termodinámico es la confluencia de (i) la termodinámica, nacida de las máquinas de vapor; (ii) la teoría de
+la información, nacida de las telecomunicaciones; y (iii) las redes neuronales inspiradas en la física. A ellos se suma,
+desde finales del siglo XX, (iv) la termodinámica estocástica.
+
+\section{Línea de tiempo}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{llX}\toprule
+Año & Figura & Idea y herramienta del curso\\\midrule
+1824 & S. Carnot & Eficiencia máxima $\eta=1-T_f/T_c$: los límites dependen solo de temperaturas.\\
+1865 & R. Clausius & Segunda ley y entropía, $\dd S=\delta Q_{\text{rev}}/T$.\\
+1877 & L. Boltzmann & $S=k\ln W$: la entropía cuenta microestados (lección 1.1).\\
+1902 & J. W. Gibbs & Ensambles estadísticos, $p=e^{-\beta E}/Z$ (lección 1.2): el «programa» de un TSU.\\
+1948 & C. Shannon & Entropía de la información $H=-\sum p\log_2p$ (lección 1.3).\\
+1961 & R. Landauer & $Q\ge\kB T\ln2$ por bit borrado \cite{landauer} (lección 1.5).\\
+1973--82 & C. Bennett & Cómputo reversible; resolución del demonio de Maxwell \cite{bennett} (lección 1.4).\\
+1982 & J. Hopfield & Redes con $E(s)=-\frac12\sum W_{ij}s_is_j$: memoria asociativa \cite{hopfield} (lección 4.6).\\
+1985 & Ackley, Hinton, Sejnowski & Máquina de Boltzmann y su regla de aprendizaje \cite{ackley} (lección 4.7).\\
+1997 & C. Jarzynski & $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$ fuera del equilibrio \cite{jarzynski} (lección 3.3).\\
+1999 & G. Crooks & Teorema de fluctuación de trayectorias (lección 3.3).\\
+2024 & Hopfield y Hinton & Premio Nobel de Física por las redes neuronales.\\
+2019--26 & varios & Informe CCC sobre cómputo termodinámico \cite{conte}; primeros TSU y SPU (Unidad 5).\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Ecuaciones emblemáticas}
+\[\eta_{\text{Carnot}}=1-\frac{T_f}{T_c},\quad S=k\ln W,\quad p=\frac{e^{-\beta E}}{Z},\quad H=-\sum p\log_2p,\quad Q\ge\kB T\ln2,\quad\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}.\]
+\begin{ejemplo}
+Carnot entre 600 K y 300 K: $\eta=1-300/600=0{,}5$. Jarzynski implica la segunda ley: por Jensen,
+$e^{-\beta\langle W\rangle}\le\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}\Rightarrow\langle W\rangle\ge\Delta F$.
+\end{ejemplo}
+
+\begin{aplicacion}
+Carnot/Clausius: límites y eficiencia (Unidad 3). Boltzmann/Gibbs: programa del TSU (Unidades 4--5).
+Shannon/Landauer/Bennett: costo de la información. Hopfield/Hinton: Unidad 4. Jarzynski/Crooks: energías libres y
+determinantes por estadística de trabajo (Unidades 3 y 6).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Shannon no «copió» a Gibbs: la equivalencia formal se reconoció después.
+\item La resolución del demonio está en el borrado (Bennett), no en la medición.
+\item Las máquinas de Boltzmann no eran erróneas: eran caras de muestrear en hardware digital.
+\item Jarzynski no contradice la segunda ley: la implica en promedio.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[8]{landauer} R. Landauer, \emph{IBM J. Res. Dev.} 5, 183 (1961).
+\bibitem[9]{bennett} C. H. Bennett, Notes on Landauer's principle..., 2003.
+\bibitem[12]{jarzynski} C. Jarzynski, \emph{Phys. Rev. Lett.} 78, 2690 (1997).
+\bibitem[14]{ackley} D. H. Ackley, G. E. Hinton y T. J. Sejnowski, \emph{Cognitive Science} 9, 147 (1985).
+\bibitem[15]{hopfield} J. J. Hopfield, \emph{PNAS} 79, 2554 (1982).
+\bibitem[6]{conte} T. Conte et al., \emph{Thermodynamic Computing}, 2019.
+\end{thebibliography}
+\end{document}

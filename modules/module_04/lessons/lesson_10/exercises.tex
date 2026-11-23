@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.10}{Optimización con Ising y lógica probabilística invertible}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Verifique que $P_{\text{AND}}=uv-2uz-2vz+3z$ vale 0 exactamente en la tabla de verdad.
+\item (B) Escriba $J$ y $h$ del Max-Cut en un triángulo con pesos unitarios. ¿Cuál es el corte máximo?
+\item (B) Convierta $P_{\text{AND}}$ a espines con $x=(1+s)/2$.
+\item (B) ¿Por qué fijar $z=1$ en AND da $(1,1)$ con probabilidad $<1$ a $\beta$ finito? ¿Cómo aumentarla?
+\item (I) Diseñe una penalización para OR: $z=u\vee v$.
+\item (I) Escriba la penalización de un semisumador combinando AND y XOR (use una variable auxiliar para XOR).
+\item (A) Implemente un multiplicador de 3×3 bits como suma de penalizaciones de compuertas y factorice 35 fijando la salida.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $(0,0,0)\!:0$; $(0,1,0)\!:0$; $(1,0,0)\!:0$; $(1,1,1)\!:1-2-2+3=0$; los otros cuatro: $3,1,1,1$.
+
+\textbf{E2.} $J_{ij}=-1$ en las tres aristas, $h=0$; corte máximo 2 (un triángulo no puede cortar las 3 aristas: frustración).
+
+\textbf{E3.} Sustituyendo $x=(1+s)/2$ y desarrollando: $P=\tfrac14\big(s_us_v-2s_us_z-2s_vs_z-s_u-s_v+2s_z+3\big)$.
+
+\textbf{E4.} Los estados con $P=1$ tienen peso $e^{-\beta}$; aumentar $\beta$ (o el peso de la penalización).
+
+\textbf{E5.} $P_{\text{OR}}=uv+u+v+z-2uz-2vz$ (0 en la tabla, $\ge1$ fuera).
+
+\textbf{E6.} XOR requiere una auxiliar (no es separable con términos de a pares); suma de $P_{\text{AND}}(u,v,c)$ y una penalización XOR con auxiliar.
+
+\textbf{E7.} El recocido encuentra $5\times7$ con probabilidad que depende de la velocidad de enfriamiento y del peso de las penalizaciones.
+\end{solucion}
+\end{document}

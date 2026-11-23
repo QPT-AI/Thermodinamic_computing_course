@@ -1,0 +1,121 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.1}{El muro energético de la IA}
+
+\noindent\textbf{Unidad 0 --- Orientación y nivelación matemática.}\quad
+\textbf{Objetivos:} (i) derivar la energía de conmutación $\tfrac12CV^2$ y la potencia dinámica
+$P=\alpha CV^2f$; (ii) explicar el escalado de Dennard y su final; (iii) argumentar por qué mover datos
+cuesta más que calcular; (iv) usar el modelo roofline.
+\textbf{Prerrequisitos:} circuitos básicos (capacitor, resistencia), notación científica.
+
+\section{¿Por qué importa?}
+La pregunta central del curso es cuándo, por qué y en cuánto el hardware probabilístico basado en la
+física puede hacer la IA más eficiente energéticamente. Para responderla primero hay que saber
+\emph{dónde se gasta hoy la energía}. El pensum lo resume así: la capacidad de la red eléctrica es ya
+un obstáculo principal para construir centros de datos, y la mayor parte de la energía de un acelerador
+digital se gasta en \emph{mover} bits y en \emph{suprimir} el ruido térmico, no en calcular \cite{conte}.
+
+\begin{intuicion}
+Una fábrica eficiente con el almacén al otro lado de la ciudad: producir es barato, el transporte es
+caro. En un chip el núcleo aritmético es la fábrica, la memoria es el almacén y los cables son la
+carretera. Cada cable es un capacitor que hay que cargar y descargar.
+\end{intuicion}
+
+\section{Energía de conmutación}
+Un nodo digital (la salida de una compuerta más el cable que alimenta) se modela como un capacitor $C$
+que una fuente de voltaje $V$ carga a través de la resistencia $R$ del transistor.
+\begin{proposicion}
+Al cargar $C$ de $0$ a $V$ desde una fuente fija, la fuente entrega $E_{\text{fuente}}=CV^2$, el capacitor
+almacena $\tfrac12CV^2$ y la resistencia disipa $\tfrac12CV^2$, \emph{independientemente de $R$}.
+\end{proposicion}
+\begin{proof}
+La carga transferida es $Q=CV$ a potencial constante $V$: $E_{\text{fuente}}=QV=CV^2$. La energía en el
+capacitor es $\int_0^{Q}\frac{q}{C}\dd q=\tfrac12CV^2$. Directamente: $i(t)=\frac VR e^{-t/RC}$, y
+$E_R=\int_0^\infty Ri^2\dd t=\frac{V^2}{R}\int_0^\infty e^{-2t/RC}\dd t=\frac{V^2}{R}\cdot\frac{RC}{2}=\tfrac12CV^2$.
+\end{proof}
+Al descargar (transición $1\to0$) la energía almacenada también se disipa, de modo que un ciclo
+completo $0\to1\to0$ cuesta $CV^2$. Si en promedio una fracción $\alpha$ (factor de actividad) de la
+capacidad total conmutada $C$ completa un ciclo cada periodo de reloj,
+\begin{resultado}[ (potencia dinámica)]
+\begin{equation}P_{\text{din}}=\alpha\,C\,V^2 f .\end{equation}
+\end{resultado}
+\noindent(Algunos textos definen $\alpha$ por transición y escriben $\tfrac12\alpha CV^2f$; la física es la misma.)
+A esto se suma la potencia estática por fugas, que crece al bajar el voltaje umbral.
+
+\section{Escalado de Dennard y su final}
+Dennard et al. (1974) observaron que si todas las dimensiones y voltajes de un MOSFET se reducen por un
+factor $k>1$, entonces $C\to C/k$, $V\to V/k$, el retardo baja por $k$ y $f\to kf$. Así:
+\[
+P_{\text{transistor}}\propto CV^2f\to \frac{C}{k}\frac{V^2}{k^2}kf=\frac{P}{k^2},\qquad
+\frac{\text{transistores}}{\text{área}}\to k^2\cdot\frac{\text{transistores}}{\text{área}},\qquad
+\frac{P}{\text{área}}\to\text{constante}.
+\]
+Hacia mediados de la década de 2000 el voltaje de alimentación dejó de bajar: reducir el voltaje umbral
+dispara la corriente de fuga (que crece exponencialmente al bajar el umbral) y estrecha los márgenes de
+ruido. Con $V$ fijo, $P_{\text{transistor}}\to(C/k)V^2(kf)=P$ y la densidad de potencia crece como $k^2$
+por generación. Consecuencias: frecuencias estancadas, «silicio oscuro» (no se pueden encender todos los
+transistores a la vez) y la potencia como recurso escaso. La ley de Moore (densidad) continuó; el
+escalado de Dennard (potencia por área constante) no.
+
+\section{El costo de mover datos}
+La capacidad de un cable crece con su longitud. Con un valor típico de orden de magnitud \evE{} de
+$C'\approx\SI{0.2}{fF/\micro m}$, un cable de 1 mm tiene $C\approx\SI{200}{fF}$ y a $V=0{,}8$ V una
+transición disipa $\tfrac12CV^2\approx\SI{64}{fJ}$, unas 200 veces más que una compuerta local de
+$\sim1$ fF. Las mediciones clásicas de Horowitz para 45 nm (referencia complementaria, fuera del pensum)
+dan del orden de 0,9 pJ para una suma de punto flotante de 32 bits, 3,7 pJ para una multiplicación,
+5 pJ para leer 32 bits de una SRAM de 8 KB y 640 pJ para leer 32 bits de DRAM externa.
+\begin{ejemplo}
+Un acelerador ejecuta un producto matriz--vector $y=Wx$ con $W\in\R^{4096\times4096}$ en fp16, en lote 1.
+Operaciones: $2\cdot4096^2\approx3{,}4\times10^7$ FLOP. Bytes leídos: $2\cdot4096^2\approx3{,}4\times10^7$ B.
+Intensidad aritmética $I\approx1$ FLOP/byte. Si leer un byte de DRAM cuesta del orden de 160 pJ ((640 pJ / 32 bits) $\times$ 8) y una operación
+$\sim1$ pJ, la energía de memoria domina por un factor del orden de $10^2$.
+\end{ejemplo}
+
+\section{El cuello de botella de von Neumann y el roofline}
+En la arquitectura de von Neumann memoria y procesador están separados. El modelo roofline acota el
+rendimiento alcanzable:
+\begin{equation}\text{rend.}(I)=\min\bigl(\pi_{\max},\ \beta_{\text{mem}}\,I\bigr),\qquad I^*=\pi_{\max}/\beta_{\text{mem}},\end{equation}
+donde $\pi_{\max}$ es el pico de cómputo (FLOP/s), $\beta_{\text{mem}}$ el ancho de banda (B/s) e $I$ la
+intensidad aritmética (FLOP/B). Para $I<I^*$ el programa está limitado por memoria. La decodificación
+autorregresiva de un LLM con lote 1 tiene $I\approx1$ (cada peso se usa una vez) y queda muy a la
+izquierda del codo; volveremos a esto en la Unidad 10 (prefill frente a decode).
+
+\begin{aplicacion}
+\textbf{¿A dónde va la energía de una GPU?} (i) Movimiento de datos entre registros, SRAM, HBM y red;
+(ii) márgenes de voltaje para que cada bit sea determinista frente al ruido; (iii) generación de
+aleatoriedad pseudoaleatoria para cargas probabilísticas (difusión, muestreo de tokens, inferencia
+bayesiana). El reto del laboratorio L1 mide con NVML la energía por muestra aleatoria (J/muestra), que
+será la línea base digital de todo el semestre.
+\end{aplicacion}
+
+\section{Conexiones}
+La Unidad 1 mostrará que el límite fundamental por bit borrado es $\kB T\ln2\approx2{,}9\times10^{-21}$ J,
+muy por debajo de $CV^2$. La Unidad 5 introduce la contabilidad
+$E_{\text{total}}=E_{\text{tejido}}+E_{\text{E/S}}+E_{\text{digital}}$, y la Unidad 10 aplica el roofline a
+prefill y decode en transformers.
+
+\begin{error}
+\begin{itemize}[nosep]
+\item La disipación por transición no depende de $R$: es $\tfrac12CV^2$ (cambia solo cuán rápido ocurre).
+\item Contar FLOPs no basta: en cargas con baja intensidad aritmética domina el movimiento de bytes.
+\item Moore $\neq$ Dennard: la densidad siguió creciendo; la potencia por área dejó de ser constante.
+\item Potencia (W) no es energía (J): compare energía por tarea (J/token, J/muestra), no vatios.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+\begin{itemize}[nosep]
+\item Ciclo de un nodo: $CV^2$; potencia dinámica $P=\alpha CV^2f$.
+\item El fin de Dennard convirtió la potencia en el recurso escaso.
+\item Mover datos cuesta órdenes de magnitud más que calcular; von Neumann separa ambos.
+\end{itemize}
+
+\begin{thebibliography}{9}\small
+\bibitem[6]{conte} T. Conte et al., \emph{Thermodynamic Computing} (CCC workshop report), 2019. \url{https://arxiv.org/abs/1911.01968}
+\bibitem[7]{quanta} Quanta Magazine, \emph{Thermodynamic Computers Go With the (Energy) Flow}, 2026.
+\bibitem[21]{extropic} Extropic, \emph{Thermodynamic Computing From Zero to One}, 2025. \url{https://extropic.ai/writing}
+\bibitem[c]{horowitz} (Complementaria, fuera del pensum) M. Horowitz, Computing's energy problem (and what we can do about it), ISSCC 2014.
+\bibitem[c]{dennard} (Complementaria, fuera del pensum) R. H. Dennard et al., Design of ion-implanted MOSFETs with very small physical dimensions, \emph{IEEE J. Solid-State Circuits} 9, 256 (1974).
+\end{thebibliography}
+\end{document}

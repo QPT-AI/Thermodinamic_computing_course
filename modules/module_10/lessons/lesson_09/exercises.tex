@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.9}{Caso de estudio: un modelo de lenguaje AFT}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Por qué la primera difusión solo aprendió frecuencias de letras?
+\item (B) Razón de pesos de proyección entre el modelo denso y el de $k=4$.
+\item (B) ¿Qué haría ganar al gradiente natural en tiempo?
+\item (B) ¿Por qué la cifra de difusión es una cota superior?
+\item (I) Cuente las capas de muestreo secuenciales del modelo $k=4$ y justifique el número 8.
+\item (I) Con la cabeza de 71 símbolos, ¿qué fracción de los FLOPs por token es la cabeza en el modelo denso? ¿Y en el disperso?
+\item (A) Ejecute \texttt{caso\_estudio.py} con otro corpus o con $k=16$ y actualice la tabla y el registro de mapeo.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} La posición enmascarada solo recibe información de las vecinas, diluida entre 64 posiciones; los sesgos locales no crecían por el ruido del gradiente.
+
+\textbf{E2.} $98\,304/4608\approx21$.
+
+\textbf{E3.} Una resolución analógica rápida y barata del sistema lineal (TNGD), o menos iteraciones de CG con buen precondicionador.
+
+\textbf{E4.} MDLM optimiza una ELBO: $-\log p\le$ ELBO; la verosimilitud real es menor o igual.
+
+\textbf{E5.} Por bloque: q/k/v en paralelo, luego o, w1 y w2: 4; dos bloques: 8.
+
+\textbf{E6.} Cabeza: $2\cdot64\cdot71=9088$ FLOP; denso: $9088/206\,720\approx4{,}4\,\%$; disperso: $9088/19\,328\approx47\,\%$: al dispersar el cuerpo, la cabeza pesa mucho más
+(compárese con 10.8).
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

@@ -1,0 +1,329 @@
+1
+00:00:00,350 --> 00:00:02,071
+Lección 6.4.
+
+2
+00:00:02,451 --> 00:00:05,048
+Complejidad de los
+algoritmos termodinámicos.
+
+3
+00:00:06,150 --> 00:00:09,198
+¿Qué significa que un algoritmo
+analógico sea más rápido?
+
+4
+00:00:09,578 --> 00:00:12,004
+Un computador digital cuenta operaciones.
+
+5
+00:00:12,385 --> 00:00:17,016
+Un dispositivo termodinámico no hace
+operaciones: evoluciona en el tiempo.
+
+6
+00:00:17,396 --> 00:00:21,171
+Para comparar hay que fijar reglas:
+medir el tiempo en unidades del
+
+7
+00:00:21,171 --> 00:00:25,059
+tiempo de relajación y aceptar que
+el hardware crece con el problema.
+
+8
+00:00:25,439 --> 00:00:28,152
+Hoy vemos de dónde salen
+las complejidades de la
+
+9
+00:00:28,152 --> 00:00:30,583
+tabla de Aifer y qué
+limitaciones esconden.
+
+10
+00:00:31,683 --> 00:00:32,699
+Tres supuestos.
+
+11
+00:00:33,079 --> 00:00:36,633
+Primero, el dispositivo tiene
+d osciladores y hasta d²
+
+12
+00:00:36,633 --> 00:00:39,857
+acoplamientos, que
+evolucionan todos en paralelo.
+
+13
+00:00:40,237 --> 00:00:44,156
+Segundo, la escala de
+tiempo física es τ_r =
+
+14
+00:00:44,156 --> 00:00:47,450
+γ/‖A‖, fijada por el modo más rápido.
+
+15
+00:00:47,830 --> 00:00:51,997
+Tercero, la complejidad cuenta el
+tiempo total en unidades de τ_r, sin
+
+16
+00:00:51,997 --> 00:00:55,985
+incluir la carga de la matriz, que
+veremos en la lección siguiente.
+
+17
+00:00:56,365 --> 00:00:59,470
+Con estas reglas, el análisis
+de complejidad analógica
+
+18
+00:00:59,470 --> 00:01:02,057
+es sutil, y los propios
+autores lo advierten.
+
+19
+00:01:03,183 --> 00:01:07,797
+Cada modo propio de A relaja con su
+propia tasa, proporcional a su autovalor.
+
+20
+00:01:08,177 --> 00:01:10,923
+El modo más rápido fija
+la escala de tiempo,
+
+21
+00:01:10,923 --> 00:01:13,605
+pero el más lento decide
+cuándo terminamos.
+
+22
+00:01:13,985 --> 00:01:17,116
+La razón entre ambos es
+el número de condición κ.
+
+23
+00:01:17,496 --> 00:01:22,663
+Por eso la equilibración en el régimen
+sobreamortiguado tarda del orden de κ τ_r:
+
+24
+00:01:22,663 --> 00:01:27,127
+una matriz mal condicionada es un
+sistema físico con modos muy lentos.
+
+25
+00:01:28,250 --> 00:01:29,360
+La inercia ayuda.
+
+26
+00:01:29,740 --> 00:01:34,354
+En el régimen subamortiguado, con
+masa y un amortiguamiento ajustado al
+
+27
+00:01:34,354 --> 00:01:38,579
+modo lento, la relajación escala
+como la raíz de κ en lugar de κ.
+
+28
+00:01:38,959 --> 00:01:43,210
+Lo simulamos con la matriz de la
+lección seis punto uno, normalizada.
+
+29
+00:01:43,590 --> 00:01:47,879
+Con κ igual a treinta y cuatro, llegar
+a un error de una milésima tarda
+
+30
+00:01:47,879 --> 00:01:52,531
+doscientas siete unidades sobreamortiguado
+y cuarenta y nueve subamortiguado.
+
+31
+00:01:52,911 --> 00:01:57,797
+Con κ diez veces mayor, dos mil trescientas
+setenta frente a ciento setenta y
+
+32
+00:01:57,797 --> 00:02:02,049
+dos: el primero creció once veces
+y el segundo apenas tres y media.
+
+33
+00:02:02,429 --> 00:02:06,343
+Es la misma aceleración del método
+de la bola pesada en optimización.
+
+34
+00:02:07,450 --> 00:02:08,863
+Ahora la tabla completa.
+
+35
+00:02:09,243 --> 00:02:15,706
+Para sistemas lineales, el método
+sobreamortiguado escala como d κ² ε⁻²,
+
+36
+00:02:16,086 --> 00:02:24,849
+y el subamortiguado como d κ^(3/2) ε⁻²,
+frente a d² √κ del gradiente conjugado.
+
+37
+00:02:25,229 --> 00:02:28,043
+La ganancia es lineal
+en d, pero se paga con
+
+38
+00:02:28,043 --> 00:02:30,601
+peor dependencia en κ y en la precisión.
+
+39
+00:02:30,981 --> 00:02:34,198
+En sus simulaciones, Aifer
+y colaboradores encuentran
+
+40
+00:02:34,198 --> 00:02:37,476
+ventaja práctica para
+dimensiones de mil o cinco mil y
+
+41
+00:02:37,476 --> 00:02:41,058
+precisiones modestas, no para
+soluciones de alta precisión.
+
+42
+00:02:42,183 --> 00:02:45,389
+Una tentación: si multiplicamos
+b por una constante
+
+43
+00:02:45,389 --> 00:02:48,595
+grande, la fórmula del
+tiempo baja con su cuadrado.
+
+44
+00:02:48,975 --> 00:02:52,324
+Pero inicializar el
+sistema cuesta una energía
+
+45
+00:02:52,324 --> 00:02:56,400
+proporcional a bᵀ A⁻¹ b, que
+sube con el mismo cuadrado.
+
+46
+00:02:56,780 --> 00:03:01,837
+Lo que queda acotado es el
+producto: la energía por el
+
+47
+00:03:01,837 --> 00:03:06,237
+tiempo es al menos 2κ²
+d β⁻¹ τ_r / (ε²(1 − P)).
+
+48
+00:03:06,617 --> 00:03:10,539
+Se puede ir más rápido gastando
+más energía, pero no gratis: es
+
+49
+00:03:10,539 --> 00:03:13,962
+una relación energía tiempo
+propia de estos algoritmos.
+
+50
+00:03:15,083 --> 00:03:19,521
+Ante cualquier afirmación de complejidad,
+pregunta en qué unidades se mide el
+
+51
+00:03:19,521 --> 00:03:24,017
+tiempo, cómo crece el hardware con la
+dimensión, qué número de condición y qué
+
+52
+00:03:24,017 --> 00:03:27,994
+precisión tiene tu problema real,
+y si incluye la carga y la lectura.
+
+53
+00:03:29,117 --> 00:03:31,939
+Errores comunes: comparar
+unidades de relajación
+
+54
+00:03:31,939 --> 00:03:34,291
+con operaciones sin un modelo de tiempo.
+
+55
+00:03:34,671 --> 00:03:38,073
+Olvidar que el hardware crece
+como el cuadrado de la dimensión.
+
+56
+00:03:38,453 --> 00:03:41,213
+Ignorar los factores de
+condición y precisión.
+
+57
+00:03:41,593 --> 00:03:44,744
+Y escalar el vector para
+acelerar sin contar la energía.
+
+58
+00:03:45,850 --> 00:03:49,136
+En resumen: la complejidad
+analógica se mide en tiempos de
+
+59
+00:03:49,136 --> 00:03:51,969
+relajación con hardware
+que crece con el problema.
+
+60
+00:03:52,349 --> 00:03:56,417
+El número de condición aparece
+porque los modos lentos tardan κ
+
+61
+00:03:56,417 --> 00:03:59,904
+veces más, o solo raíz de κ
+con inercia bien ajustada.
+
+62
+00:04:00,284 --> 00:04:03,612
+La ganancia es lineal en la
+dimensión, a cambio de peor
+
+63
+00:04:03,612 --> 00:04:07,606
+dependencia en precisión, y la
+energía por el tiempo está acotada.
+
+64
+00:04:08,717 --> 00:04:12,579
+Para practicar: calcula el tiempo
+de relajación del modo lento.
+
+65
+00:04:12,959 --> 00:04:15,011
+Encuentra el amortiguamiento óptimo.
+
+66
+00:04:15,391 --> 00:04:17,631
+Encuentra la dimensión a partir de la cual
+
+67
+00:04:17,631 --> 00:04:19,924
+gana el método
+termodinámico en el ejemplo.
+
+68
+00:04:20,304 --> 00:04:24,187
+Y explica por qué escalar el vector
+no lo hace infinitamente rápido.

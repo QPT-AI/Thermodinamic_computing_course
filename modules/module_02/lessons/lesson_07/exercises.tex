@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.7}{EDEs numéricas}
+
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Paso máximo estable para $A$ con valores propios $0{,}5$ y $20$?
+\item (B) Varianza estacionaria de EM para el OU con $\lambda=2$, $\beta=1$, $\Delta t=0{,}1$. Compare con la exacta.
+\item (B) Escriba la discretización exacta del OU 1D.
+\item (B) ¿Por qué el término de Milstein se anula con ruido aditivo?
+\item (I) Derive $\Var_{\text{EM}}$ del OU resolviendo $v=(1-\lambda\Delta t)^2v+2\Delta t/\beta$.
+\item (I) Para el OU multivariado con EM, muestre que la covarianza estacionaria $S$ cumple $S=(I-\Delta tA)S(I-\Delta tA)^\top+2\Delta t\beta^{-1}I$ y que $S\to\beta^{-1}A^{-1}$ cuando $\Delta t\to0$.
+\item (A) Derive el término de Milstein con el lema de Itô aplicado a $g(x)$ en $\int_t^{t+\Delta t}g(x_s)\,dW_s$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\Delta t<2/20=0{,}1$.
+
+\textbf{E2.} $1/(2(1-0{,}1))=0{,}556$ frente a $0{,}5$: $+11\,\%$.
+
+\textbf{E3.} $x_{k+1}=e^{-\lambda\Delta t}x_k+\sqrt{(1-e^{-2\lambda\Delta t})/(\beta\lambda)}\,z_k$ (más la media si hay término $b$).
+
+\textbf{E4.} Con $g$ constante, $g'=0$.
+
+\textbf{E5.} $v[1-(1-\lambda\Delta t)^2]=2\Delta t/\beta$, y $1-(1-u)^2=u(2-u)$, con $u=\lambda\Delta t$: $v=\frac{2\Delta t/\beta}{\lambda\Delta t(2-\lambda\Delta t)}=\frac{1}{\beta\lambda(1-u/2)}$.
+
+\textbf{E6.} Tomando covarianzas en $x_{k+1}=(I-\Delta tA)x_k+\sqrt{2\Delta t/\beta}\,z_k$. Desarrollando: $0=-\Delta t(AS+SA)+\Delta t^2ASA+2\Delta t\beta^{-1}I$; al orden principal $AS+SA=2\beta^{-1}I$.
+
+\textbf{E7.} $g(x_s)\approx g(x_t)+g'(x_t)g(x_t)(W_s-W_t)$; $\int_t^{t+\Delta t}(W_s-W_t)dW_s=\frac12[(\Delta W)^2-\Delta t]$ (Itô).
+\end{solucion}
+\end{document}

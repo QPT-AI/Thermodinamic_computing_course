@@ -1,0 +1,293 @@
+1
+00:00:00,350 --> 00:00:02,149
+Lesson 5.7.
+
+2
+00:00:02,529 --> 00:00:04,030
+Hardware abstractions.
+
+3
+00:00:05,150 --> 00:00:07,362
+An Ising model with every possible
+
+4
+00:00:07,362 --> 00:00:10,354
+connection has one
+coupling per pair of spins.
+
+5
+00:00:10,734 --> 00:00:14,163
+With ten thousand spins
+that is almost fifty million
+
+6
+00:00:14,163 --> 00:00:17,591
+couplings, and each one
+needs a wire and a register.
+
+7
+00:00:17,971 --> 00:00:19,816
+No chip can wire that.
+
+8
+00:00:20,196 --> 00:00:22,887
+That is why hardware
+offers a fixed, sparse
+
+9
+00:00:22,887 --> 00:00:25,391
+graph, and programs have to adapt to it.
+
+10
+00:00:26,517 --> 00:00:32,956
+A complete graph on N nodes has N(N
+− 1)/2 edges: it grows as the square.
+
+11
+00:00:33,336 --> 00:00:37,737
+A graph of fixed degree d
+has N d/2: it grows linearly.
+
+12
+00:00:38,117 --> 00:00:41,168
+For ten thousand nodes and
+degree sixteen, that is
+
+13
+00:00:41,168 --> 00:00:44,037
+eighty thousand edges
+instead of fifty million.
+
+14
+00:00:44,417 --> 00:00:47,934
+Moreover, on a chip the
+connections must be short, so
+
+15
+00:00:47,934 --> 00:00:50,987
+each pbit's neighbors
+are nearby in the plane.
+
+16
+00:00:51,367 --> 00:00:53,687
+That fixed graph is
+called the parent graph.
+
+17
+00:00:54,817 --> 00:00:59,051
+What if a model variable needs more
+neighbors than the hardware offers?
+
+18
+00:00:59,431 --> 00:01:03,811
+We represent it with a chain of
+physical pbits joined by strong
+
+19
+00:01:03,811 --> 00:01:08,123
+ferromagnetic couplings, so that
+they behave as a single spin.
+
+20
+00:01:08,503 --> 00:01:11,108
+Each copy contributes
+its own free neighbors.
+
+21
+00:01:11,488 --> 00:01:13,801
+With degree sixteen, a variable with
+
+22
+00:01:13,801 --> 00:01:17,015
+ninety-nine neighbors needs
+at least seven copies.
+
+23
+00:01:17,395 --> 00:01:19,350
+This is called minor embedding.
+
+24
+00:01:20,450 --> 00:01:24,413
+The chain coupling must be
+strong, because if the copies
+
+25
+00:01:24,413 --> 00:01:28,801
+disagree, the logical variable
+is undefined: the chain breaks.
+
+26
+00:01:29,181 --> 00:01:35,464
+For two isolated copies, the breaking
+probability is 1/(1 + e^(2βJ_c)).
+
+27
+00:01:35,844 --> 00:01:40,067
+With βJ_c = 1 it is twelve
+percent; with two, under
+
+28
+00:01:40,067 --> 00:01:44,042
+two percent; with three,
+a quarter of a percent.
+
+29
+00:01:44,422 --> 00:01:49,070
+But a coupling that is too strong
+freezes the chain and slows mixing.
+
+30
+00:01:49,450 --> 00:01:50,334
+It has to be balanced.
+
+31
+00:01:51,450 --> 00:01:55,624
+The cost of embedding is the number of
+physical pbits per logical variable.
+
+32
+00:01:56,004 --> 00:02:01,242
+For sparse models of degree below sixteen,
+it is one: the model fits directly.
+
+33
+00:02:01,622 --> 00:02:04,190
+For degree thirty-one, three copies.
+
+34
+00:02:04,570 --> 00:02:09,212
+For a dense model of a thousand variables,
+each with nine hundred ninety-nine
+
+35
+00:02:09,212 --> 00:02:13,853
+neighbors, at least seventy-two copies
+per variable are needed, plus routing.
+
+36
+00:02:14,233 --> 00:02:18,787
+That is why algorithms for thermodynamic
+hardware are designed sparse from
+
+37
+00:02:18,787 --> 00:02:22,910
+the start, as we will see with the
+sparse transformers of unit ten.
+
+38
+00:02:24,017 --> 00:02:25,402
+Let's compute with the Z1.
+
+39
+00:02:25,782 --> 00:02:28,214
+Its two hundred sixty-nine thousand
+
+40
+00:02:28,214 --> 00:02:31,966
+degree-sixteen pbits have
+about two million couplings.
+
+41
+00:02:32,346 --> 00:02:35,345
+A sparse degree-sixteen
+model fills the whole chip
+
+42
+00:02:35,345 --> 00:02:38,164
+with two hundred sixty-nine
+thousand variables.
+
+43
+00:02:38,544 --> 00:02:43,020
+A dense model, in contrast, with seventy-two
+copies per variable, would barely
+
+44
+00:02:43,020 --> 00:02:47,210
+reach about three thousand seven
+hundred variables, not counting routing.
+
+45
+00:02:48,317 --> 00:02:52,436
+The design rule is to choose
+sparse, local models from the start,
+
+46
+00:02:52,436 --> 00:02:56,238
+and to embed with chains only
+the few high-degree variables.
+
+47
+00:02:56,618 --> 00:03:00,814
+The coloring of the parent graph sets
+how many clock phases a sweep takes.
+
+48
+00:03:01,194 --> 00:03:06,610
+In lab eight you will embed a small
+dense model into a degree-sixteen graph.
+
+49
+00:03:07,717 --> 00:03:11,690
+Common mistakes: assuming
+any model runs directly.
+
+50
+00:03:12,070 --> 00:03:15,254
+Ignoring broken chains
+when decoding samples.
+
+51
+00:03:15,634 --> 00:03:19,336
+Using chain couplings so
+strong that mixing freezes.
+
+52
+00:03:19,716 --> 00:03:22,091
+And counting the copies
+without counting the routing.
+
+53
+00:03:23,217 --> 00:03:27,735
+In summary: full connectivity
+grows as N² and cannot be
+
+54
+00:03:27,735 --> 00:03:32,253
+wired, so hardware offers a
+fixed, sparse parent graph.
+
+55
+00:03:32,633 --> 00:03:36,122
+High-degree variables are
+embedded as chains of coupled
+
+56
+00:03:36,122 --> 00:03:39,676
+copies, with a strength that
+balances breaks and mixing.
+
+57
+00:03:40,056 --> 00:03:44,239
+The cost of embedding pushes toward
+designing sparse models from the start.
+
+58
+00:03:45,350 --> 00:03:48,505
+To practice: count the
+edges of both graphs.
+
+59
+00:03:48,885 --> 00:03:51,441
+Compute the minimum
+copies for a given degree.
+
+60
+00:03:51,821 --> 00:03:54,560
+Compute the breaking
+probability of a chain.
+
+61
+00:03:54,940 --> 00:03:59,028
+And explain why a chain that is
+too strong makes sampling slow.

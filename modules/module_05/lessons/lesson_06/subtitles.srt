@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:02,023
+Lección 5.6.
+
+2
+00:00:02,403 --> 00:00:04,207
+No idealidades analógicas.
+
+3
+00:00:05,317 --> 00:00:09,504
+En la pizarra, un acoplamiento vale
+exactamente cero coma tres siete.
+
+4
+00:00:09,884 --> 00:00:13,756
+En un chip analógico, ese número
+se guarda con pocos bits, cada
+
+5
+00:00:13,756 --> 00:00:17,752
+transistor es un poco distinto de
+su vecino, los circuitos no son
+
+6
+00:00:17,752 --> 00:00:21,195
+perfectamente lineales y la
+corriente misma tiene ruido.
+
+7
+00:00:21,575 --> 00:00:25,182
+La pregunta práctica es cuánto
+deforman estas imperfecciones
+
+8
+00:00:25,182 --> 00:00:28,309
+la distribución que
+muestreamos, y cómo se corrigen.
+
+9
+00:00:29,417 --> 00:00:32,145
+Tomemos un modelo de
+Ising de diez espines con
+
+10
+00:00:32,145 --> 00:00:35,645
+acoplamientos aleatorios, que
+podemos enumerar exactamente.
+
+11
+00:00:36,025 --> 00:00:39,201
+Cuanticemos los acoplamientos
+a b bits y midamos la
+
+12
+00:00:39,201 --> 00:00:43,126
+divergencia KL entre la distribución
+verdadera y la cuantizada.
+
+13
+00:00:43,506 --> 00:00:47,644
+Con dos bits, la KL es uno
+coma ocho: el modelo es otro.
+
+14
+00:00:48,024 --> 00:00:49,875
+Con tres, cero coma dos uno.
+
+15
+00:00:50,255 --> 00:00:52,384
+Con cuatro, cero coma cero siete.
+
+16
+00:00:52,764 --> 00:00:56,620
+Con seis bits baja a dos milésimas,
+y con ocho es despreciable.
+
+17
+00:00:57,000 --> 00:00:59,907
+Cada bit adicional reduce
+el error a una fracción.
+
+18
+00:01:01,017 --> 00:01:05,473
+El desajuste entre dispositivos actúa
+como un error aleatorio en cada campo.
+
+19
+00:01:05,853 --> 00:01:10,514
+Si cada pbit tiene un desplazamiento
+gaussiano de su campo con desviación
+
+20
+00:01:10,514 --> 00:01:14,537
+cero coma cero cinco, la KL
+promedio es de unas ocho milésimas.
+
+21
+00:01:14,917 --> 00:01:19,228
+Con cero coma uno sube a cero coma
+cero tres, y con cero coma dos, a
+
+22
+00:01:19,228 --> 00:01:22,843
+cero coma uno tres: crece como
+el cuadrado del desajuste.
+
+23
+00:01:23,223 --> 00:01:27,348
+Por eso cada pbit se calibra
+individualmente, como vimos en X0.
+
+24
+00:01:28,450 --> 00:01:29,897
+Otras dos fuentes de error.
+
+25
+00:01:30,277 --> 00:01:33,998
+La no linealidad: el circuito
+que suma el campo local no es
+
+26
+00:01:33,998 --> 00:01:37,655
+perfectamente lineal, y la
+curva de transferencia del pbit
+
+27
+00:01:37,655 --> 00:01:40,682
+no es exactamente una
+sigmoide; según el pensum,
+
+28
+00:01:41,062 --> 00:01:44,053
+un comparador con ruido
+de disparo produce una
+
+29
+00:01:44,053 --> 00:01:46,719
+curva tipo probit, cercana pero distinta.
+
+30
+00:01:47,099 --> 00:01:51,464
+Y el ruido de disparo, debido a la
+naturaleza discreta de la carga, añade
+
+31
+00:01:51,464 --> 00:01:55,769
+fluctuaciones que no son térmicas y
+que cambian la temperatura efectiva.
+
+32
+00:01:56,149 --> 00:01:58,906
+Todo esto se modela,
+se mide y se compensa.
+
+33
+00:02:00,017 --> 00:02:03,183
+Una mitigación elegante es
+el redondeo estocástico.
+
+34
+00:02:03,563 --> 00:02:07,705
+En lugar de redondear un valor al
+nivel más cercano, se redondea hacia
+
+35
+00:02:07,705 --> 00:02:11,610
+arriba o hacia abajo con probabilidad
+proporcional a la distancia.
+
+36
+00:02:11,990 --> 00:02:15,932
+Cada redondeo es ruidoso, pero
+su valor esperado es exacto.
+
+37
+00:02:16,312 --> 00:02:21,440
+Si promediamos varios redondeos independientes,
+el error medio de los acoplamientos
+
+38
+00:02:21,440 --> 00:02:25,765
+baja de cero coma uno a cero coma
+cero dos con dieciséis repeticiones,
+
+39
+00:02:26,145 --> 00:02:28,345
+mientras que el redondeo determinista se
+
+40
+00:02:28,345 --> 00:02:30,711
+queda en cero coma cero
+nueve para siempre.
+
+41
+00:02:31,817 --> 00:02:36,371
+Otra idea es el cuantizador conservador:
+elegir el rango y la escala de los
+
+42
+00:02:36,371 --> 00:02:41,047
+niveles para que los acoplamientos
+grandes, que más pesan en la distribución,
+
+43
+00:02:41,047 --> 00:02:44,691
+se representen bien, aunque los
+pequeños pierdan resolución.
+
+44
+00:02:45,071 --> 00:02:48,586
+Y en la salida, como veremos en
+la unidad ocho, hacen falta al
+
+45
+00:02:48,586 --> 00:02:51,704
+menos ocho bits para que los
+gradientes no se degraden.
+
+46
+00:02:52,084 --> 00:02:54,651
+El diseño de un chip termodinámico es, en
+
+47
+00:02:54,651 --> 00:02:57,094
+buena parte, un presupuesto de errores.
+
+48
+00:02:58,217 --> 00:03:02,615
+En la práctica se elige el número
+de bits a partir de una KL objetivo,
+
+49
+00:03:02,615 --> 00:03:07,014
+se calibra cada dispositivo, se usa
+redondeo estocástico para eliminar
+
+50
+00:03:07,014 --> 00:03:10,408
+sesgos y, como veremos en
+la lección ocho punto siete,
+
+51
+00:03:10,788 --> 00:03:13,902
+se entrena el modelo sabiendo
+que el hardware es imperfecto.
+
+52
+00:03:15,017 --> 00:03:18,307
+Errores frecuentes: juzgar la
+precisión por el error de los
+
+53
+00:03:18,307 --> 00:03:21,431
+acoplamientos en vez de por
+el error de la distribución.
+
+54
+00:03:21,811 --> 00:03:26,308
+Suponer que los errores se promedian,
+cuando el sesgo determinista no lo hace.
+
+55
+00:03:26,688 --> 00:03:28,381
+Ignorar el ruido de disparo.
+
+56
+00:03:28,761 --> 00:03:33,450
+Y calibrar una sola vez, cuando la deriva
+con la temperatura exige recalibrar.
+
+57
+00:03:34,550 --> 00:03:38,401
+En resumen: la cuantización, el
+desajuste, la no linealidad y
+
+58
+00:03:38,401 --> 00:03:41,936
+el ruido de disparo deforman
+la distribución muestreada.
+
+59
+00:03:42,316 --> 00:03:46,636
+La KL cae rápido con los bits y
+crece como el cuadrado del desajuste.
+
+60
+00:03:47,016 --> 00:03:50,593
+Calibrar, redondear estocásticamente
+y cuantizar con criterio
+
+61
+00:03:50,593 --> 00:03:53,994
+forman el presupuesto de errores
+de un chip termodinámico.
+
+62
+00:03:55,117 --> 00:03:59,238
+Para practicar: demuestra que el
+redondeo estocástico no tiene sesgo.
+
+63
+00:03:59,618 --> 00:04:03,180
+Explica por qué la KL crece
+como el cuadrado del desajuste.
+
+64
+00:04:03,560 --> 00:04:06,620
+Elige el número de bits
+para una KL objetivo.
+
+65
+00:04:07,000 --> 00:04:10,614
+Y explica cómo el ruido de disparo
+cambia la temperatura efectiva.

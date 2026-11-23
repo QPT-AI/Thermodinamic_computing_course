@@ -1,0 +1,269 @@
+1
+00:00:00,350 --> 00:00:01,940
+Lesson 6.2.
+
+2
+00:00:02,320 --> 00:00:04,974
+Matrix inverse and Lyapunov equations.
+
+3
+00:00:06,083 --> 00:00:10,257
+In the previous lesson we used only the
+mean of the equilibrium distribution.
+
+4
+00:00:10,637 --> 00:00:13,426
+But the fluctuations
+also contain information.
+
+5
+00:00:13,806 --> 00:00:18,118
+The equilibrium covariance is
+β⁻¹ A⁻¹: if we measure how the
+
+6
+00:00:18,118 --> 00:00:22,429
+variables fluctuate, we get the
+inverse of the whole matrix.
+
+7
+00:00:22,809 --> 00:00:26,411
+And with a small change, we
+also solve Lyapunov equations.
+
+8
+00:00:27,517 --> 00:00:32,292
+The inverse protocol sets b =
+0, so that the mean is zero.
+
+9
+00:00:32,672 --> 00:00:37,295
+After equilibrating, analog
+multipliers compute each product
+
+10
+00:00:37,295 --> 00:00:41,380
+x_i x_j, and analog integrators
+average it over time.
+
+11
+00:00:41,760 --> 00:00:44,466
+That is d² multipliers and integrators.
+
+12
+00:00:44,846 --> 00:00:48,002
+At the end, A⁻¹ is β times
+the matrix of averages.
+
+13
+00:00:49,117 --> 00:00:50,652
+Here comes a surprise.
+
+14
+00:00:51,032 --> 00:00:53,861
+In the linear system,
+cooling reduced the error.
+
+15
+00:00:54,241 --> 00:00:58,823
+For the inverse it does not: if the
+temperature drops, the fluctuations shrink
+
+16
+00:00:58,823 --> 00:01:03,347
+proportionally, and the relative error
+of the covariance is exactly the same.
+
+17
+00:01:03,727 --> 00:01:07,893
+What matters is how many
+independent fluctuations we average,
+
+18
+00:01:07,893 --> 00:01:11,376
+that is, the window τ
+measured in relaxation times.
+
+19
+00:01:12,483 --> 00:01:17,475
+We simulate a Wishart matrix of dimension
+ten, with condition number twenty-two.
+
+20
+00:01:17,855 --> 00:01:22,555
+The relative error of the inverse is
+fifty percent with a window of a hundred
+
+21
+00:01:22,555 --> 00:01:27,193
+units, twenty-six with three hundred,
+and seven percent with three thousand.
+
+22
+00:01:27,573 --> 00:01:30,946
+Second moments converge much
+more slowly than the mean.
+
+23
+00:01:31,326 --> 00:01:34,347
+The required window is τ
+= 4κ d(d + 1) τ_r / ((1 −
+
+24
+00:01:34,347 --> 00:01:37,187
+P) ε²), so the complexity
+is of order d² κ ε⁻²,
+
+25
+00:01:37,567 --> 00:01:44,248
+against d^ω digitally.
+
+26
+00:01:45,350 --> 00:01:46,613
+Now let's generalize.
+
+27
+00:01:46,993 --> 00:01:50,775
+If the drift is a stable
+matrix M, not necessarily
+
+28
+00:01:50,775 --> 00:01:53,951
+symmetric, and the noise has covariance C,
+
+29
+00:01:54,331 --> 00:02:01,325
+the stationary covariance satisfies
+the Lyapunov equation M Σ + Σ Mᵀ = C.
+
+30
+00:02:01,705 --> 00:02:04,273
+The inverse is the symmetric special case.
+
+31
+00:02:04,653 --> 00:02:08,922
+With dimension ten, the error of
+the Lyapunov solution is twenty-four
+
+32
+00:02:08,922 --> 00:02:13,005
+percent with a hundred units and
+four percent with three thousand.
+
+33
+00:02:13,385 --> 00:02:17,393
+Digitally, the Bartels–Stewart
+algorithm costs d³.
+
+34
+00:02:18,517 --> 00:02:22,314
+Lyapunov equations appear
+in control theory, where
+
+35
+00:02:22,314 --> 00:02:26,491
+controllability Gramians tell
+which states a system can
+
+36
+00:02:26,491 --> 00:02:31,428
+reach; in stability analysis; and
+in steady-state Kalman filters.
+
+37
+00:02:31,808 --> 00:02:35,381
+A device of coupled oscillators
+solves them simply by
+
+38
+00:02:35,381 --> 00:02:39,225
+letting noise do its work and
+measuring the correlations.
+
+39
+00:02:40,350 --> 00:02:44,438
+Second moments are useful for
+approximate preconditioners, for
+
+40
+00:02:44,438 --> 00:02:48,460
+the posterior covariance in
+Bayesian inference, which we will
+
+41
+00:02:48,460 --> 00:02:52,087
+see in lesson 6.6, and for
+Gramians and Kalman filters.
+
+42
+00:02:52,467 --> 00:02:55,938
+In lab nine you will compare
+it with digital methods.
+
+43
+00:02:57,050 --> 00:02:59,496
+Common mistakes: lowering
+the temperature to
+
+44
+00:02:59,496 --> 00:03:01,775
+improve the inverse, which does not help.
+
+45
+00:03:02,155 --> 00:03:05,077
+Forgetting to set b to zero
+or to subtract the mean.
+
+46
+00:03:05,457 --> 00:03:09,155
+Underestimating the hardware,
+which requires d² multipliers.
+
+47
+00:03:09,535 --> 00:03:13,980
+And using an unstable drift, for
+which no stationary covariance exists.
+
+48
+00:03:15,083 --> 00:03:18,786
+In summary: the equilibrium
+covariance is β⁻¹ A⁻¹, so
+
+49
+00:03:18,786 --> 00:03:22,419
+measuring correlations gives
+the inverse, and with a
+
+50
+00:03:22,419 --> 00:03:26,541
+general drift it gives the
+solution of a Lyapunov equation.
+
+51
+00:03:26,921 --> 00:03:30,504
+Temperature does not change the
+relative error; the window does.
+
+52
+00:03:30,884 --> 00:03:35,051
+The complexity is of order d² κ ε⁻².
+
+53
+00:03:36,183 --> 00:03:40,436
+To practice: derive the covariance
+from the Lyapunov equation.
+
+54
+00:03:40,815 --> 00:03:44,345
+Explain why the relative error
+does not depend on temperature.
+
+55
+00:03:44,725 --> 00:03:47,290
+Count the multipliers for
+dimension one hundred.
+
+56
+00:03:47,670 --> 00:03:51,788
+And say which noise is needed to
+solve a general Lyapunov equation.

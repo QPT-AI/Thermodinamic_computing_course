@@ -1,0 +1,380 @@
+1
+00:00:00,350 --> 00:00:02,045
+Lección 1.3.
+
+2
+00:00:02,425 --> 00:00:04,937
+Entropía de Shannon y entropía de Gibbs.
+
+3
+00:00:06,050 --> 00:00:08,564
+Shannon, pensando en
+mensajes telegráficos,
+
+4
+00:00:08,564 --> 00:00:10,961
+escribió una fórmula para la información.
+
+5
+00:00:11,341 --> 00:00:14,039
+Gibbs, setenta años
+antes, había escrito la
+
+6
+00:00:14,039 --> 00:00:16,611
+misma fórmula para la entropía de un gas.
+
+7
+00:00:16,991 --> 00:00:18,237
+¿Es una coincidencia?
+
+8
+00:00:18,617 --> 00:00:19,504
+En absoluto.
+
+9
+00:00:19,884 --> 00:00:23,473
+En esta lección veremos que
+ambas miden lo mismo, la
+
+10
+00:00:23,473 --> 00:00:27,408
+incertidumbre sobre un estado,
+y que la constante que las
+
+11
+00:00:27,408 --> 00:00:31,895
+convierte, k_B ln 2, es el puente
+entre bits y julios por kelvin.
+
+12
+00:00:32,275 --> 00:00:35,786
+Esa es la frase de Landauer:
+la información es física.
+
+13
+00:00:36,917 --> 00:00:37,973
+Juguemos a adivinar.
+
+14
+00:00:38,353 --> 00:00:41,000
+Escondo una carta entre
+ocho igualmente probables.
+
+15
+00:00:41,380 --> 00:00:43,984
+La mejor estrategia es
+partir el conjunto por
+
+16
+00:00:43,984 --> 00:00:46,184
+la mitad con cada pregunta de sí o no.
+
+17
+00:00:46,564 --> 00:00:49,648
+Con tres preguntas siempre
+la encuentro: tres bits.
+
+18
+00:00:50,028 --> 00:00:54,052
+Ahora supón que las cartas no son
+igualmente probables: una sale la
+
+19
+00:00:54,052 --> 00:00:57,657
+mitad de las veces, otra un
+cuarto y dos un octavo cada una.
+
+20
+00:00:58,037 --> 00:01:00,581
+Conviene preguntar primero
+por la más probable.
+
+21
+00:01:00,961 --> 00:01:04,520
+El número medio de preguntas
+baja a uno coma setenta y cinco.
+
+22
+00:01:04,900 --> 00:01:08,780
+Esa cifra es exactamente la entropía
+de Shannon de la distribución.
+
+23
+00:01:09,883 --> 00:01:15,274
+La entropía de Shannon es H = −Σ p log₂ p.
+
+24
+00:01:15,654 --> 00:01:19,608
+Cada resultado de probabilidad
+p aporta una sorpresa de menos
+
+25
+00:01:19,608 --> 00:01:23,431
+logaritmo de p bits, y la
+entropía es la sorpresa promedio.
+
+26
+00:01:23,811 --> 00:01:27,147
+El teorema de codificación
+de Shannon dice que ningún
+
+27
+00:01:27,147 --> 00:01:30,357
+código puede usar, en
+promedio, menos de H bits por
+
+28
+00:01:30,357 --> 00:01:33,882
+símbolo, y que se puede llegar
+tan cerca como se quiera.
+
+29
+00:01:34,262 --> 00:01:38,350
+En el árbol de preguntas, la
+profundidad de cada hoja es su sorpresa.
+
+30
+00:01:39,483 --> 00:01:46,203
+La entropía de Gibbs aplica la misma
+fórmula a los microestados físicos, con
+
+31
+00:01:46,203 --> 00:01:51,949
+logaritmo natural y la constante
+de Boltzmann: S = −k_B Σ p ln p.
+
+32
+00:01:52,329 --> 00:01:56,118
+Si todos los microestados
+accesibles son igualmente
+
+33
+00:01:56,118 --> 00:02:00,352
+probables, se reduce a k_B ln
+Ω, la fórmula de Boltzmann.
+
+34
+00:02:00,732 --> 00:02:03,046
+Y si la distribución
+es la de Boltzmann, la
+
+35
+00:02:03,046 --> 00:02:05,628
+entropía de Gibbs coincide
+con la termodinámica.
+
+36
+00:02:06,008 --> 00:02:09,570
+Cambiar de base de
+logaritmo es solo cambiar de
+
+37
+00:02:09,570 --> 00:02:13,814
+unidades: un bit equivale a
+k_B ln 2 de entropía física.
+
+38
+00:02:14,917 --> 00:02:19,033
+Una memoria es un sistema físico
+cuyo espacio de microestados está
+
+39
+00:02:19,033 --> 00:02:23,336
+dividido en regiones lógicas: la
+región del cero y la región del uno.
+
+40
+00:02:23,716 --> 00:02:28,282
+La entropía física total se separa
+en dos partes: la entropía de
+
+41
+00:02:28,282 --> 00:02:32,705
+Shannon de los estados lógicos,
+multiplicada por k_B ln 2, más
+
+42
+00:02:32,705 --> 00:02:36,273
+el promedio de la entropía
+interna de cada región.
+
+43
+00:02:36,654 --> 00:02:40,715
+Cuando borramos, fusionamos las
+regiones lógicas: la parte lógica
+
+44
+00:02:40,715 --> 00:02:45,338
+desaparece y, por la segunda ley, esa
+entropía tiene que salir al entorno.
+
+45
+00:02:45,718 --> 00:02:48,983
+Los bits no son abstracciones:
+cuentan microestados.
+
+46
+00:02:50,083 --> 00:02:53,255
+Un gigabyte de datos
+completamente aleatorios contiene
+
+47
+00:02:53,255 --> 00:02:56,132
+ocho mil millones de bits
+de entropía de Shannon.
+
+48
+00:02:56,512 --> 00:03:00,738
+Como entropía física, eso es ocho mil
+
+49
+00:03:00,738 --> 00:03:05,763
+millones por k_B ln 2:
+unos 7,7 × 10⁻¹⁴ J/K.
+
+50
+00:03:06,143 --> 00:03:10,600
+Es diminuta comparada con la entropía
+térmica del propio chip, pero no es cero.
+
+51
+00:03:10,980 --> 00:03:17,725
+Borrarla a temperatura ambiente exige
+expulsar al menos 2,3 × 10⁻¹¹ J de calor.
+
+52
+00:03:18,105 --> 00:03:21,459
+Si los datos fueran un texto
+comprimible con dos bits por
+
+53
+00:03:21,459 --> 00:03:24,753
+carácter, el costo mínimo
+sería proporcionalmente menor.
+
+54
+00:03:25,883 --> 00:03:30,065
+En la práctica, un bit equivale
+a k_B ln 2, unos nueve coma
+
+55
+00:03:30,065 --> 00:03:34,033
+seis por diez a la menos
+veinticuatro julios por kelvin.
+
+56
+00:03:34,413 --> 00:03:37,986
+La compresión de datos fija
+cuántos bits hay que guardar y,
+
+57
+00:03:37,986 --> 00:03:41,013
+por Landauer, cuánto cuesta
+como mínimo borrarlos.
+
+58
+00:03:41,393 --> 00:03:44,434
+Y cuando un chip termodinámico
+produce una muestra, la
+
+59
+00:03:44,434 --> 00:03:47,812
+aleatoriedad que contiene la
+toma prestada del baño térmico.
+
+60
+00:03:48,917 --> 00:03:53,276
+En la próxima lección el demonio de
+Maxwell convertirá información en trabajo.
+
+61
+00:03:53,656 --> 00:03:55,722
+Después veremos el costo de borrarla.
+
+62
+00:03:56,102 --> 00:04:00,602
+En la unidad tres la entropía se volverá
+una cantidad por trayectoria, y en
+
+63
+00:04:00,602 --> 00:04:04,622
+la unidad ocho la divergencia KL
+dará la geometría del aprendizaje.
+
+64
+00:04:05,750 --> 00:04:08,547
+Errores comunes: mezclar bits con nats.
+
+65
+00:04:08,927 --> 00:04:12,119
+Pensar que una entropía es
+subjetiva y la otra objetiva,
+
+66
+00:04:12,119 --> 00:04:15,083
+cuando ambas dependen de
+cómo agrupamos los estados.
+
+67
+00:04:15,463 --> 00:04:17,853
+Creer que un texto con
+significado tiene más
+
+68
+00:04:17,853 --> 00:04:20,135
+entropía que el ruido, cuando es al revés.
+
+69
+00:04:20,515 --> 00:04:23,688
+Y olvidar la entropía interna
+de cada estado lógico.
+
+70
+00:04:24,817 --> 00:04:27,790
+En resumen: la entropía
+de Shannon es el número
+
+71
+00:04:27,790 --> 00:04:30,954
+medio de preguntas binarias,
+la sorpresa promedio.
+
+72
+00:04:31,334 --> 00:04:34,853
+La de Gibbs es la misma fórmula
+sobre microestados físicos.
+
+73
+00:04:35,233 --> 00:04:39,978
+Un bit equivale a k_B ln 2 de
+entropía física, y la entropía de
+
+74
+00:04:39,978 --> 00:04:44,197
+una memoria se separa en una
+parte lógica y una interna.
+
+75
+00:04:44,577 --> 00:04:46,119
+La información es física.
+
+76
+00:04:47,250 --> 00:04:50,893
+Para practicar: calcula una
+entropía y su código óptimo.
+
+77
+00:04:51,273 --> 00:04:54,861
+Cuenta las preguntas para adivinar
+un número entre uno y mil.
+
+78
+00:04:55,241 --> 00:04:58,176
+Convierte un nat a bits
+y a julios por kelvin.
+
+79
+00:04:58,556 --> 00:05:01,576
+Y calcula la entropía lógica
+de una memoria sesgada.

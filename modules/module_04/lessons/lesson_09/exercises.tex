@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.9}{Teoría de campo medio}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Resuelva numéricamente $m=\tanh(4m/T)$ con $T=3{,}5$.
+\item (B) Muestre que cerca de $T_c$, $m\approx\sqrt{3(T_c-T)/T_c}$.
+\item (B) ¿Cuál es $T_c^{\text{MF}}$ para la red triangular ($z=6$)?
+\item (B) ¿Por qué el campo medio es exacto con alcance infinito?
+\item (I) Con campo $h$ y $T>T_c$, derive la susceptibilidad $\chi=\partial m/\partial h|_{h=0}=\beta/(1-\beta zJ)$.
+\item (I) Para dos espines con $J_{12}=1$, $\beta=1$, $h=0$, compare $\langle s_1s_2\rangle$ exacto con la predicción $m_1m_2$ del campo medio.
+\item (A) Implemente la iteración amortiguada $m\leftarrow(1-\gamma)m+\gamma\tanh(\beta(Jm+h))$ en un vidrio $\pm J$ y estudie la convergencia frente a $\gamma$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $m\approx0{,}581$.
+
+\textbf{E2.} $\tanh x\approx x-x^3/3$: $m=\tau m-\tau^3m^3/3$ con $\tau=T_c/T$; $m^2\approx3(\tau-1)/\tau^3\approx3(T_c-T)/T_c$.
+
+\textbf{E3.} $T_c^{\text{MF}}=6J$ (exacto: $3{,}64J$).
+
+\textbf{E4.} Cada espín siente la suma de muchos términos débiles; por la ley de los grandes números las fluctuaciones del campo son despreciables.
+
+\textbf{E5.} Linealizando: $m=\beta(zJm+h)\Rightarrow m=\beta h/(1-\beta zJ)$.
+
+\textbf{E6.} Exacto $\tanh1=0{,}762$; campo medio con $h=0$ y $\beta zJ=1$ en el límite: $m=0$, $m_1m_2=0$. Ignora toda la correlación.
+
+\textbf{E7.} Sin amortiguar ($\gamma=1$) puede oscilar; $\gamma\approx0{,}5$ suele converger.
+\end{solucion}
+\end{document}

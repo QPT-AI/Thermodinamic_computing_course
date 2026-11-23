@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.1}{Calor, trabajo y entropía a nivel de trayectoria}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba $dW$ y $dQ$ para $V=\frac\kappa2(x-\lambda)^2$.
+\item (B) ¿Por qué el calor necesita el producto de Stratonovich?
+\item (B) En la trampa arrastrada, ¿qué pasa con $\langle W\rangle$ y $P(W<0)$ si la velocidad se duplica (tiempos largos)?
+\item (B) ¿Cuál es el promedio de $s=-\kB\ln p$?
+\item (I) Derive $\langle W\rangle$ para la trampa arrastrada usando que el retraso medio $\langle x\rangle-vt$ obedece una ecuación lineal.
+\item (I) Muestre que para trabajo gaussiano con $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$ se cumple $\Var(W)=2\kB T(\langle W\rangle-\Delta F)$.
+\item (A) Simule la trampa arrastrada y verifique $dV=dW+dQ$ con la regla de Itô y con la de Stratonovich; cuantifique la discrepancia de Itô.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $dW=-\kappa(x-\lambda)\,d\lambda$; $dQ=\kappa(x-\lambda)\circ dx$.
+
+\textbf{E2.} Con Itô, $d[f(x)]=f'dx+\frac12f''(dx)^2$; el producto de punto medio absorbe ese término y conserva $dV=dW+dQ$.
+
+\textbf{E3.} Para $t\gg\tau$, $\langle W\rangle\approx\gamma v^2t$: se cuadruplica; $\langle W\rangle/\sigma\propto\sqrt{\langle W\rangle}$ crece $\Rightarrow P(W<0)$ disminuye.
+
+\textbf{E4.} $-\kB\int p\ln p=S_{\text{Gibbs}}$.
+
+\textbf{E5.} $y=\langle x\rangle-vt$ cumple $\dot y=-y/\tau-v$, $y(t)=-v\tau(1-e^{-t/\tau})$; $\frac{d\langle W\rangle}{dt}=-\kappa\langle x-vt\rangle v=\kappa v^2\tau(1-e^{-t/\tau})$; integrando, la fórmula.
+
+\textbf{E6.} Para $W\sim\N(\mu,\sigma^2)$: $\langle e^{-\beta W}\rangle=e^{-\beta\mu+\beta^2\sigma^2/2}=e^{-\beta\Delta F}\Rightarrow\sigma^2=2\kB T(\mu-\Delta F)$.
+
+\textbf{E7.} (Abierto.) Con Itô aparece un error sistemático $\approx\frac12\kappa\cdot2\Delta t$ por paso, es decir $\kappa\,t$ acumulado (en unidades con $\kB T=\gamma=1$).
+\end{solucion}
+\end{document}

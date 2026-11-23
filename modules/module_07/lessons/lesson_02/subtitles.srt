@@ -1,0 +1,307 @@
+1
+00:00:00,350 --> 00:00:01,943
+Lección 7.2.
+
+2
+00:00:02,323 --> 00:00:03,566
+El algoritmo de Shor.
+
+3
+00:00:04,683 --> 00:00:08,910
+En mil novecientos noventa y cuatro,
+Peter Shor mostró que un computador
+
+4
+00:00:08,910 --> 00:00:13,018
+cuántico encuentra el orden en tiempo
+polinomial en el número de bits.
+
+5
+00:00:13,398 --> 00:00:16,388
+Es la referencia contra la
+que compararemos la difusión.
+
+6
+00:00:16,768 --> 00:00:21,117
+Hoy recorremos sus cuatro pasos
+con un ejemplo pequeño, N = 21,
+
+7
+00:00:21,117 --> 00:00:25,052
+que podemos simular exactamente
+en un computador clásico.
+
+8
+00:00:26,183 --> 00:00:32,131
+Primero se prepara una superposición
+uniforme de todos los exponentes x de
+
+9
+00:00:32,131 --> 00:00:37,516
+cero a Q − 1, con Q una potencia
+de dos mayor que N²; aquí Q = 512.
+
+10
+00:00:37,896 --> 00:00:43,873
+Segundo, un circuito reversible calcula
+a^x mod N en un segundo registro.
+
+11
+00:00:44,253 --> 00:00:49,492
+Con a = 2, los valores se repiten cada
+seis exponentes: el orden es seis.
+
+12
+00:00:49,872 --> 00:00:52,803
+Al medir el segundo registro,
+el primero queda en una
+
+13
+00:00:52,803 --> 00:00:56,397
+superposición de exponentes
+separados exactamente por el período.
+
+14
+00:00:57,517 --> 00:00:59,753
+Tercero, la transformada cuántica de
+
+15
+00:00:59,753 --> 00:01:02,486
+Fourier convierte esa
+periodicidad en picos.
+
+16
+00:01:02,866 --> 00:01:06,581
+Las amplitudes de los resultados
+que no encajan con el período se
+
+17
+00:01:06,581 --> 00:01:09,953
+cancelan por interferencia, y
+las que encajan se refuerzan.
+
+18
+00:01:10,333 --> 00:01:15,081
+En el ejemplo, la probabilidad se
+concentra cerca de los múltiplos de
+
+19
+00:01:15,081 --> 00:01:19,829
+Q/r, unos ochenta y cinco coma tres:
+en cero, ochenta y cinco, ciento
+
+20
+00:01:19,829 --> 00:01:24,233
+setenta y uno, doscientos cincuenta
+y seis, y así sucesivamente.
+
+21
+00:01:25,350 --> 00:01:27,822
+Cuarto, el posprocesamiento clásico.
+
+22
+00:01:28,202 --> 00:01:32,263
+Un resultado y cumple y/Q ≈ k/r.
+
+23
+00:01:32,643 --> 00:01:35,454
+El algoritmo de fracciones
+continuas encuentra la
+
+24
+00:01:35,454 --> 00:01:37,920
+mejor fracción con
+denominador menor que N.
+
+25
+00:01:38,300 --> 00:01:45,516
+Para y = 85, 85/512 se aproxima
+por un sexto: el orden es seis.
+
+26
+00:01:45,896 --> 00:01:51,574
+Pero para y = 171 sale un tercio, y
+solo obtenemos un divisor del orden.
+
+27
+00:01:51,954 --> 00:01:55,571
+En este ejemplo, una sola corrida
+da el orden directamente con
+
+28
+00:01:55,571 --> 00:01:59,071
+probabilidad treinta y uno por
+ciento; combinando unas pocas
+
+29
+00:01:59,071 --> 00:02:02,454
+corridas con el mínimo común
+múltiplo se recupera siempre.
+
+30
+00:02:03,583 --> 00:02:04,474
+¿Cuánto cuesta?
+
+31
+00:02:04,854 --> 00:02:09,193
+La exponenciación modular domina:
+con aritmética de escuela son
+
+32
+00:02:09,193 --> 00:02:13,119
+del orden de n³ compuertas,
+con n el número de bits de N.
+
+33
+00:02:13,499 --> 00:02:16,331
+La transformada de Fourier cuesta n².
+
+34
+00:02:16,711 --> 00:02:18,807
+Todo es polinomial, frente al costo
+
+35
+00:02:18,807 --> 00:02:21,801
+subexponencial de los
+mejores algoritmos clásicos.
+
+36
+00:02:22,181 --> 00:02:25,473
+El precio está en el hardware:
+miles de qubits lógicos con
+
+37
+00:02:25,473 --> 00:02:28,595
+corrección de errores, que
+todavía no existen a escala.
+
+38
+00:02:29,717 --> 00:02:32,465
+Guardemos la idea central
+para el resto de la unidad.
+
+39
+00:02:32,845 --> 00:02:35,104
+Shor amplifica los picos de Fourier por
+
+40
+00:02:35,104 --> 00:02:38,465
+interferencia: las frecuencias
+que no encajan se cancelan.
+
+41
+00:02:38,845 --> 00:02:42,474
+La difusión hará lo contrario:
+amortiguará todos los modos
+
+42
+00:02:42,474 --> 00:02:45,727
+de Fourier distintos de
+cero, y lo que sobrevive, la
+
+43
+00:02:45,727 --> 00:02:49,169
+distribución uniforme sobre
+el grupo, revela su tamaño.
+
+44
+00:02:49,549 --> 00:02:52,688
+Interferencia que amplifica
+frente a disipación que borra.
+
+45
+00:02:53,817 --> 00:02:55,994
+Shor amenaza la criptografía de clave
+
+46
+00:02:55,994 --> 00:02:58,643
+pública y motiva los
+estándares poscuánticos.
+
+47
+00:02:59,023 --> 00:03:02,983
+El mismo núcleo de búsqueda de
+período resuelve logaritmos discretos.
+
+48
+00:03:03,363 --> 00:03:06,395
+Las demostraciones experimentales
+hasta hoy factorizan
+
+49
+00:03:06,395 --> 00:03:08,978
+números diminutos con
+circuitos simplificados.
+
+50
+00:03:09,358 --> 00:03:13,638
+En el laboratorio diez simularás la
+distribución y las fracciones continuas.
+
+51
+00:03:14,750 --> 00:03:18,269
+Errores comunes: creer que
+el computador cuántico prueba
+
+52
+00:03:18,269 --> 00:03:21,285
+todos los exponentes y
+lee todas las respuestas.
+
+53
+00:03:21,665 --> 00:03:24,432
+Tomar el denominador como
+el orden sin verificarlo.
+
+54
+00:03:24,812 --> 00:03:27,672
+Olvidar que algunos resultados
+dan solo un divisor.
+
+55
+00:03:28,052 --> 00:03:30,808
+Y confundir qubits lógicos
+con qubits físicos.
+
+56
+00:03:31,917 --> 00:03:36,041
+En resumen, Shor prepara una
+superposición, calcula la exponenciación
+
+57
+00:03:36,041 --> 00:03:40,285
+modular, aplica la transformada de
+Fourier para convertir el período en
+
+58
+00:03:40,285 --> 00:03:44,350
+picos de probabilidad, y recupera
+el orden con fracciones continuas.
+
+59
+00:03:44,730 --> 00:03:47,396
+Su costo es polinomial
+en el número de bits.
+
+60
+00:03:47,776 --> 00:03:51,491
+Interfiere para amplificar; la
+difusión disipará para borrar.
+
+61
+00:03:52,617 --> 00:03:57,074
+Para practicar: explica por
+qué Q debe ser al menos N².
+
+62
+00:03:57,454 --> 00:03:59,980
+Desarrolla la fracción
+continua del ejemplo.
+
+63
+00:04:00,360 --> 00:04:02,683
+Combina dos corridas que dan divisores.
+
+64
+00:04:03,063 --> 00:04:04,973
+Y di qué etapa domina el costo.

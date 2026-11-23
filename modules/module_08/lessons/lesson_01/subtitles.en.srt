@@ -1,0 +1,293 @@
+1
+00:00:00,350 --> 00:00:02,092
+Lesson 8.1.
+
+2
+00:00:02,472 --> 00:00:05,217
+Information geometry and
+the natural gradient.
+
+3
+00:00:06,350 --> 00:00:09,205
+Gradient descent takes
+steps in the steepest
+
+4
+00:00:09,205 --> 00:00:12,773
+direction, but it measures
+distance in parameter space.
+
+5
+00:00:13,153 --> 00:00:16,042
+And parameters are an
+arbitrary choice: the same
+
+6
+00:00:16,042 --> 00:00:18,450
+model can be written in a thousand ways.
+
+7
+00:00:18,830 --> 00:00:20,739
+What really matters is how much the
+
+8
+00:00:20,739 --> 00:00:23,249
+distribution represented
+by the model changes.
+
+9
+00:00:23,629 --> 00:00:27,806
+Measuring steps that way leads to
+the natural gradient, and solving it
+
+10
+00:00:27,806 --> 00:00:32,103
+requires exactly what thermodynamic
+hardware does well: a linear system.
+
+11
+00:00:33,217 --> 00:00:38,924
+If we move the parameters from θ
+to θ + d, the KL divergence between
+
+12
+00:00:38,924 --> 00:00:43,876
+the old and new distribution
+is, for small steps, ½ dᵀ F d.
+
+13
+00:00:44,256 --> 00:00:47,979
+The matrix F is the Fisher
+information: the expected
+
+14
+00:00:47,979 --> 00:00:51,702
+outer product of the gradient
+of the log-likelihood.
+
+15
+00:00:52,082 --> 00:00:55,740
+It is a metric: it says how far
+apart two nearby models are,
+
+16
+00:00:55,740 --> 00:00:58,910
+measured by their predictions,
+not by their numbers.
+
+17
+00:01:00,017 --> 00:01:03,666
+The natural gradient is the
+direction of steepest descent of
+
+18
+00:01:03,666 --> 00:01:06,830
+the loss when the step size
+is measured with the KL.
+
+19
+00:01:07,210 --> 00:01:13,614
+Solving that problem with Lagrange
+multipliers gives g̃ = F⁻¹ ∇ℓ.
+
+20
+00:01:13,994 --> 00:01:18,798
+The update rule is θ ← θ − η F⁻¹ ∇ℓ.
+
+21
+00:01:19,178 --> 00:01:23,148
+An important consequence: in the
+small-step limit, the natural
+
+22
+00:01:23,148 --> 00:01:26,798
+gradient does not depend on
+how we parametrize the model.
+
+23
+00:01:27,917 --> 00:01:32,519
+Let's fit a Gaussian with mean μ and
+standard deviation σ to data with
+
+24
+00:01:32,519 --> 00:01:36,595
+mean two and standard deviation
+0.1, starting at zero and one.
+
+25
+00:01:36,975 --> 00:01:41,036
+The Fisher information is diagonal:
+one over sigma squared for the
+
+26
+00:01:41,036 --> 00:01:44,728
+mean, and two over sigma squared
+for the standard deviation.
+
+27
+00:01:45,108 --> 00:01:48,484
+When σ shrinks, the
+loss becomes very steep
+
+28
+00:01:48,484 --> 00:01:51,468
+and gradient descent needs tiny steps.
+
+29
+00:01:51,848 --> 00:01:57,255
+The natural gradient multiplies by
+σ² and corrects exactly that effect.
+
+30
+00:01:58,383 --> 00:02:03,201
+The result: with the best fixed learning
+rate, gradient descent needs one
+
+31
+00:02:03,201 --> 00:02:07,293
+hundred six steps to get within
+one thousandth of the optimum.
+
+32
+00:02:07,673 --> 00:02:11,421
+The natural gradient, with rate
+one, does it in seven steps.
+
+33
+00:02:11,801 --> 00:02:16,653
+The trajectories are also different:
+ordinary gradient makes a long arc
+
+34
+00:02:16,653 --> 00:02:21,709
+and then creeps along the narrow valley;
+the natural one fixes the mean in
+
+35
+00:02:21,709 --> 00:02:25,809
+a single step and then adjusts
+the deviation in a few steps.
+
+36
+00:02:26,917 --> 00:02:28,215
+Why isn't it always used?
+
+37
+00:02:28,595 --> 00:02:31,349
+Because F is an N × N matrix, with N the
+
+38
+00:02:31,349 --> 00:02:34,380
+number of parameters,
+which can be millions.
+
+39
+00:02:34,760 --> 00:02:39,079
+Forming it costs N² and
+solving the system, N³.
+
+40
+00:02:39,459 --> 00:02:43,275
+That is why popular optimizers
+use cheap approximations, such as
+
+41
+00:02:43,275 --> 00:02:46,793
+Adam, which uses only the
+diagonal of the empirical Fisher.
+
+42
+00:02:47,173 --> 00:02:50,335
+The next lessons show how a thermodynamic
+
+43
+00:02:50,335 --> 00:02:53,575
+device solves the full system efficiently.
+
+44
+00:02:54,683 --> 00:02:59,312
+The natural gradient appears in neural
+network training, in the natural
+
+45
+00:02:59,312 --> 00:03:04,005
+policy gradient of reinforcement
+learning, and in variational inference.
+
+46
+00:03:04,385 --> 00:03:08,190
+In this unit we will see how to
+make it affordable: conjugate
+
+47
+00:03:08,190 --> 00:03:11,683
+gradient, Woodbury, the
+thermodynamic version and K-FAC.
+
+48
+00:03:12,783 --> 00:03:16,100
+Common mistakes: confusing
+the Fisher with the Hessian.
+
+49
+00:03:16,480 --> 00:03:19,201
+Forgetting damping, when
+the Fisher is singular
+
+50
+00:03:19,201 --> 00:03:21,805
+because there are fewer
+data than parameters.
+
+51
+00:03:22,185 --> 00:03:24,985
+Expecting exact invariance
+with finite steps.
+
+52
+00:03:25,365 --> 00:03:30,183
+And believing Adam is a natural-gradient
+method, when it uses only a diagonal.
+
+53
+00:03:31,283 --> 00:03:36,935
+In summary: the Fisher information is
+the local metric of the KL, and the
+
+54
+00:03:36,935 --> 00:03:42,045
+natural gradient F⁻¹ ∇ℓ is steepest
+descent in distribution space.
+
+55
+00:03:42,425 --> 00:03:45,899
+In the Gaussian fit, seven
+steps against one hundred six.
+
+56
+00:03:46,279 --> 00:03:49,357
+Its cost is a linear
+system of size N, the task
+
+57
+00:03:49,357 --> 00:03:52,106
+thermodynamic hardware knows how to solve.
+
+58
+00:03:53,217 --> 00:03:57,390
+To practice: derive the quadratic
+approximation of the KL.
+
+59
+00:03:57,770 --> 00:03:59,583
+Compute the Fisher of the Gaussian.
+
+60
+00:03:59,963 --> 00:04:03,411
+Derive the natural gradient
+with a Lagrange multiplier.
+
+61
+00:04:03,791 --> 00:04:05,998
+And say which part of
+the Fisher Adam uses.

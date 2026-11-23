@@ -1,0 +1,342 @@
+1
+00:00:00,350 --> 00:00:01,979
+Lección 2.2.
+
+2
+00:00:02,359 --> 00:00:03,900
+La ecuación de Langevin.
+
+3
+00:00:05,017 --> 00:00:06,437
+Ya tenemos ruido puro.
+
+4
+00:00:06,817 --> 00:00:10,358
+Ahora agreguemos física:
+fuerzas, fricción y masa.
+
+5
+00:00:10,738 --> 00:00:13,841
+El resultado es la ecuación
+de Langevin, la ecuación de
+
+6
+00:00:13,841 --> 00:00:16,493
+movimiento de una partícula
+en un baño térmico.
+
+7
+00:00:16,873 --> 00:00:20,505
+Es la ecuación que obedecen los
+voltajes de un circuito ruidoso,
+
+8
+00:00:20,505 --> 00:00:24,138
+los osciladores de un chip
+termodinámico y, como veremos, la que
+
+9
+00:00:24,138 --> 00:00:26,976
+usan los algoritmos para
+muestrear distribuciones.
+
+10
+00:00:28,083 --> 00:00:31,994
+Imagina una canica en un tazón
+lleno de miel que, además, tiembla.
+
+11
+00:00:32,374 --> 00:00:36,712
+Tres cosas actúan sobre ella: la
+pendiente del tazón la empuja hacia el
+
+12
+00:00:36,712 --> 00:00:41,050
+fondo, la miel frena su movimiento,
+y los temblores la sacuden al azar.
+
+13
+00:00:41,430 --> 00:00:45,373
+Si la miel es poco viscosa, la
+canica oscila antes de detenerse.
+
+14
+00:00:45,753 --> 00:00:48,127
+Si es muy viscosa, la
+canica simplemente se
+
+15
+00:00:48,127 --> 00:00:50,169
+arrastra hacia el fondo, sin oscilar.
+
+16
+00:00:50,549 --> 00:00:53,390
+En ambos casos nunca se
+queda quieta: el temblor
+
+17
+00:00:53,390 --> 00:00:55,994
+la mantiene explorando
+alrededor del mínimo.
+
+18
+00:00:57,117 --> 00:01:02,930
+En ecuaciones: masa por aceleración es
+igual a la fuerza del potencial, menos
+
+19
+00:01:02,930 --> 00:01:08,139
+la fricción γ v, más una fuerza
+aleatoria de intensidad √(2 γ k_B T).
+
+20
+00:01:08,519 --> 00:01:11,653
+A la izquierda ves la posición
+frente al tiempo; a la
+
+21
+00:01:11,653 --> 00:01:14,965
+derecha, el espacio de fases,
+posición contra velocidad.
+
+22
+00:01:15,345 --> 00:01:18,232
+La trayectoria gira en
+espiral hacia el mínimo, pero
+
+23
+00:01:18,232 --> 00:01:20,842
+el ruido la mantiene
+dando vueltas en una nube.
+
+24
+00:01:21,222 --> 00:01:24,737
+Esa nube es la distribución de
+Boltzmann en el espacio de fases.
+
+25
+00:01:25,850 --> 00:01:29,414
+Cuando la fricción domina, la
+inercia se vuelve irrelevante:
+
+26
+00:01:29,414 --> 00:01:32,502
+la velocidad se ajusta
+instantáneamente a la fuerza.
+
+27
+00:01:32,882 --> 00:01:39,433
+Eliminamos la masa y obtenemos
+la ecuación sobreamortiguada: ẋ
+
+28
+00:01:39,433 --> 00:01:44,927
+= μ f(x) + √(2 μ k_B T)
+ξ(t), con movilidad μ = 1/γ.
+
+29
+00:01:45,307 --> 00:01:49,283
+Las dos simulaciones usan el mismo
+potencial; con fricción alta, la
+
+30
+00:01:49,283 --> 00:01:53,733
+trayectoria subamortiguada se vuelve
+indistinguible de la sobreamortiguada.
+
+31
+00:01:54,113 --> 00:01:57,344
+Esta es la ecuación que
+usaremos casi siempre: es la del
+
+32
+00:01:57,344 --> 00:02:00,345
+pozo doble de Landauer y
+la del solucionador lineal.
+
+33
+00:02:01,450 --> 00:02:04,034
+¿Por qué el ruido tiene
+exactamente esa intensidad?
+
+34
+00:02:04,414 --> 00:02:08,654
+Si fuera mayor, el sistema se
+calentaría; si fuera menor, se enfriaría.
+
+35
+00:02:09,034 --> 00:02:12,048
+Solo con intensidad 2
+μ k_B T la distribución
+
+36
+00:02:12,048 --> 00:02:15,262
+estacionaria es la de
+Boltzmann a temperatura T.
+
+37
+00:02:15,642 --> 00:02:21,847
+El coeficiente de difusión es entonces
+D = μ k_B T: la relación de Einstein.
+
+38
+00:02:22,227 --> 00:02:26,850
+La fricción y el ruido no son independientes;
+los fija la misma temperatura.
+
+39
+00:02:27,230 --> 00:02:31,153
+El histograma de la simulación
+coincide con e^(−βV).
+
+40
+00:02:32,283 --> 00:02:33,203
+Hay dos relojes.
+
+41
+00:02:33,583 --> 00:02:39,207
+El tiempo inercial, m/γ, dice cuánto
+tarda la velocidad en olvidar su valor.
+
+42
+00:02:39,587 --> 00:02:43,169
+El tiempo de relajación,
+γ/κ, con κ la rigidez del
+
+43
+00:02:43,169 --> 00:02:47,539
+potencial, dice cuánto tarda la
+posición en volver al mínimo.
+
+44
+00:02:47,919 --> 00:02:52,478
+Si el primero es mucho más corto, la
+descripción sobreamortiguada es exacta.
+
+45
+00:02:52,858 --> 00:02:55,774
+Para una esfera de un
+micrómetro en agua, el tiempo
+
+46
+00:02:55,774 --> 00:02:58,518
+inercial es de unos dos
+décimos de microsegundo.
+
+47
+00:02:58,898 --> 00:03:02,688
+En un circuito, el papel
+de γ/κ lo juega R C: con
+
+48
+00:03:02,688 --> 00:03:06,246
+un kiloohmio y un
+picofaradio, un nanosegundo.
+
+49
+00:03:07,350 --> 00:03:11,059
+Esta ecuación aparecerá en todos
+los laboratorios de la primera
+
+50
+00:03:11,059 --> 00:03:15,003
+mitad: el borrado de Landauer, el
+solucionador lineal de Ornstein y
+
+51
+00:03:15,003 --> 00:03:18,359
+Uhlenbeck, los osciladores
+acoplados de Normal Computing.
+
+52
+00:03:18,739 --> 00:03:22,166
+Y también es un algoritmo: para
+muestrear una distribución de
+
+53
+00:03:22,166 --> 00:03:25,199
+Boltzmann solo necesitamos
+el gradiente del potencial.
+
+54
+00:03:26,317 --> 00:03:28,405
+En la próxima lección escribiremos la
+
+55
+00:03:28,405 --> 00:03:30,945
+ecuación de Fokker y
+Planck para la densidad.
+
+56
+00:03:31,325 --> 00:03:36,261
+Luego estudiaremos el caso cuadrático,
+el proceso de Ornstein y Uhlenbeck, y el
+
+57
+00:03:36,261 --> 00:03:40,948
+teorema de fluctuación y disipación,
+que justifica la relación de Einstein.
+
+58
+00:03:42,050 --> 00:03:45,621
+Errores frecuentes: elegir el
+ruido sin relacionarlo con la
+
+59
+00:03:45,621 --> 00:03:49,314
+fricción, usar la ecuación
+sobreamortiguada cuando la inercia
+
+60
+00:03:49,314 --> 00:03:52,825
+importa, olvidar el factor dos
+en la intensidad del ruido,
+
+61
+00:03:53,205 --> 00:03:56,328
+y confundir la movilidad con
+el coeficiente de difusión.
+
+62
+00:03:57,450 --> 00:04:02,074
+En resumen: la ecuación de Langevin
+combina fuerza, fricción y ruido.
+
+63
+00:04:02,454 --> 00:04:08,906
+En el régimen de alta fricción se
+reduce a ẋ = μ f + √(2 μ k_B T) ξ.
+
+64
+00:04:09,286 --> 00:04:13,086
+La relación de Einstein, D = μ
+k_B T, garantiza que el estado
+
+65
+00:04:13,086 --> 00:04:17,011
+estacionario sea la distribución
+de Boltzmann, y las escalas de
+
+66
+00:04:17,011 --> 00:04:20,499
+tiempo de los dispositivos
+deciden qué descripción usar.
+
+67
+00:04:21,617 --> 00:04:26,484
+Para practicar: escribe la ecuación para
+un potencial cuadrático y su varianza.
+
+68
+00:04:26,864 --> 00:04:30,289
+Calcula el tiempo inercial para
+una esfera de cien nanómetros.
+
+69
+00:04:30,669 --> 00:04:34,205
+Muestra que un ruido mal calibrado
+equivale a otra temperatura.
+
+70
+00:04:34,585 --> 00:04:37,145
+Y calcula un tiempo de relajación RC.

@@ -1,0 +1,623 @@
+1
+00:00:00,350 --> 00:00:02,061
+Lección 1.5.
+
+2
+00:00:02,441 --> 00:00:03,934
+El principio de Landauer.
+
+3
+00:00:05,050 --> 00:00:07,144
+Tu teléfono se calienta cuando trabaja.
+
+4
+00:00:07,524 --> 00:00:09,945
+Cada operación que realiza un procesador
+
+5
+00:00:09,945 --> 00:00:12,790
+termina, tarde o temprano,
+convertida en calor.
+
+6
+00:00:13,170 --> 00:00:16,514
+La pregunta de esta lección
+es sorprendentemente profunda:
+
+7
+00:00:16,894 --> 00:00:21,414
+¿existe un costo mínimo, impuesto por
+la física, para procesar información?
+
+8
+00:00:21,794 --> 00:00:26,101
+En 1961 Rolf Landauer dio
+una respuesta precisa.
+
+9
+00:00:26,481 --> 00:00:30,531
+No todas las operaciones cuestan,
+pero hay una que sí: borrar.
+
+10
+00:00:30,911 --> 00:00:33,990
+Borrar un bit tiene un
+precio mínimo en energía, y
+
+11
+00:00:33,990 --> 00:00:36,577
+ese precio depende solo de la temperatura.
+
+12
+00:00:37,683 --> 00:00:40,830
+Imaginemos la memoria más
+simple posible: una caja
+
+13
+00:00:40,830 --> 00:00:43,787
+con una sola partícula
+y una pared en el medio.
+
+14
+00:00:44,167 --> 00:00:46,751
+Si la partícula está
+a la izquierda, el bit
+
+15
+00:00:46,751 --> 00:00:49,275
+vale cero; si está a la derecha, vale uno.
+
+16
+00:00:49,655 --> 00:00:53,559
+Borrar significa dejar el bit en
+cero sin importar su valor anterior.
+
+17
+00:00:53,939 --> 00:00:56,712
+Una forma de hacerlo es
+quitar la pared y empujar
+
+18
+00:00:56,712 --> 00:00:59,088
+un pistón desde la derecha hasta la mitad.
+
+19
+00:00:59,468 --> 00:01:02,280
+Al final, la partícula está
+siempre a la izquierda.
+
+20
+00:01:02,660 --> 00:01:06,481
+Observa lo que ocurrió: el espacio
+disponible se redujo a la mitad.
+
+21
+00:01:06,861 --> 00:01:10,463
+Comprimir algo que está en
+contacto con un baño térmico exige
+
+22
+00:01:10,463 --> 00:01:13,769
+trabajo, y ese trabajo sale
+como calor hacia el entorno.
+
+23
+00:01:14,883 --> 00:01:18,639
+Ahora una versión más realista:
+un pozo doble de potencial.
+
+24
+00:01:19,019 --> 00:01:22,845
+Cada punto amarillo es una copia
+de la memoria, una partícula que
+
+25
+00:01:22,845 --> 00:01:26,788
+tiembla por el ruido térmico,
+simulada con la dinámica de Langevin.
+
+26
+00:01:27,168 --> 00:01:30,934
+Al inicio, la mitad de las copias
+está en el pozo izquierdo y
+
+27
+00:01:30,934 --> 00:01:34,082
+la otra mitad en el derecho:
+el bit es desconocido.
+
+28
+00:01:34,462 --> 00:01:36,868
+El protocolo de borrado tiene tres pasos.
+
+29
+00:01:37,248 --> 00:01:41,061
+Primero bajamos la barrera, y las
+partículas se mezclan libremente.
+
+30
+00:01:41,441 --> 00:01:44,411
+Después inclinamos el
+potencial hacia la izquierda,
+
+31
+00:01:44,411 --> 00:01:46,914
+y todas se deslizan
+hacia el pozo del cero.
+
+32
+00:01:47,294 --> 00:01:49,410
+Por último subimos la barrera de nuevo.
+
+33
+00:01:49,790 --> 00:01:52,968
+El histograma verde muestra
+la distribución: empezó
+
+34
+00:01:52,968 --> 00:01:56,021
+con dos picos iguales y
+terminó con un solo pico.
+
+35
+00:01:56,401 --> 00:01:58,238
+Perdimos un bit de incertidumbre.
+
+36
+00:01:59,350 --> 00:02:01,035
+Pongamos números a esa pérdida.
+
+37
+00:02:01,415 --> 00:02:07,673
+La entropía de la memoria
+es S = −k_B Σ p ln p.
+
+38
+00:02:08,053 --> 00:02:11,848
+Antes del borrado, cada
+estado tiene probabilidad
+
+39
+00:02:11,848 --> 00:02:15,255
+un medio, así que la
+entropía vale k_B ln 2.
+
+40
+00:02:15,635 --> 00:02:20,118
+Después, el estado cero tiene
+probabilidad uno, y la entropía es cero.
+
+41
+00:02:20,498 --> 00:02:24,090
+La memoria perdió k_B ln 2 de entropía.
+
+42
+00:02:24,470 --> 00:02:28,783
+Pero la segunda ley exige que la
+entropía total del universo no disminuya.
+
+43
+00:02:29,163 --> 00:02:32,740
+Por lo tanto, el entorno debe
+ganar al menos esa cantidad.
+
+44
+00:02:33,120 --> 00:02:38,030
+Un entorno a temperatura T que recibe
+un calor Q gana una entropía Q/T.
+
+45
+00:02:38,410 --> 00:02:44,534
+Despejando, el calor disipado
+cumple Q ≥ k_B T ln 2.
+
+46
+00:02:44,914 --> 00:02:46,613
+Esta es la cota de Landauer.
+
+47
+00:02:47,717 --> 00:02:53,050
+Podemos llegar al mismo resultado
+con la energía libre, F = U − TS.
+
+48
+00:02:53,430 --> 00:02:56,356
+En un proceso isotérmico,
+el trabajo que hacemos sobre
+
+49
+00:02:56,356 --> 00:02:59,066
+el sistema es al menos el
+cambio de energía libre.
+
+50
+00:02:59,446 --> 00:03:04,850
+Como los dos pozos son simétricos,
+la energía interna no cambia: ΔU = 0.
+
+51
+00:03:05,230 --> 00:03:09,231
+Entonces el cambio de
+energía libre es menos T por
+
+52
+00:03:09,231 --> 00:03:12,672
+el cambio de entropía,
+que vale k_B T ln 2.
+
+53
+00:03:13,052 --> 00:03:16,014
+Y como la energía interna
+no cambió, todo ese trabajo
+
+54
+00:03:16,014 --> 00:03:18,530
+se convierte en calor
+que sale hacia el baño.
+
+55
+00:03:18,910 --> 00:03:23,699
+Las dos rutas, la de la entropía y la
+de la energía libre, dan la misma cota.
+
+56
+00:03:24,817 --> 00:03:26,030
+Calculemos el número.
+
+57
+00:03:26,410 --> 00:03:33,811
+La constante de Boltzmann
+vale 1,380649 × 10⁻²³ J/K.
+
+58
+00:03:34,191 --> 00:03:40,243
+A temperatura ambiente, trescientos
+kelvin, y con el logaritmo natural de dos,
+
+59
+00:03:40,243 --> 00:03:46,140
+aproximadamente cero coma seis nueve
+tres, obtenemos 2,87 × 10⁻²¹ J por bit.
+
+60
+00:03:46,520 --> 00:03:50,276
+La cota crece linealmente con
+la temperatura: si enfriamos el
+
+61
+00:03:50,276 --> 00:03:53,787
+sistema a cuatro kelvin, baja
+unas setenta y cinco veces.
+
+62
+00:03:54,167 --> 00:03:55,623
+Comparemos con el hardware.
+
+63
+00:03:56,003 --> 00:04:00,345
+Según el pensum, una
+actualización de pbit en un
+
+64
+00:04:00,345 --> 00:04:04,507
+chip tipo Z1 cuesta como
+máximo 7,4 × 10⁻¹⁴ J.
+
+65
+00:04:04,887 --> 00:04:08,312
+Eso es unos veintiséis millones
+de veces la cota de Landauer.
+
+66
+00:04:08,692 --> 00:04:12,441
+Los dispositivos actuales están
+muy lejos del límite fundamental.
+
+67
+00:04:13,550 --> 00:04:15,736
+¿Qué operaciones están obligadas a pagar?
+
+68
+00:04:16,116 --> 00:04:19,100
+Las que son lógicamente
+irreversibles, es decir, las
+
+69
+00:04:19,100 --> 00:04:21,911
+que fusionan varias entradas
+en una misma salida.
+
+70
+00:04:22,291 --> 00:04:25,555
+La compuerta NOT es una
+biyección: de la salida se
+
+71
+00:04:25,555 --> 00:04:28,492
+recupera la entrada, y
+no exige disipar nada.
+
+72
+00:04:28,872 --> 00:04:33,531
+La compuerta AND, en cambio, envía tres
+entradas distintas a la salida cero.
+
+73
+00:04:33,911 --> 00:04:36,906
+Con entradas uniformes,
+entra la información de dos
+
+74
+00:04:36,906 --> 00:04:39,432
+bits y sale apenas cero
+coma ochenta y uno.
+
+75
+00:04:39,812 --> 00:04:42,467
+Se pierden unos uno
+coma diecinueve bits, y
+
+76
+00:04:42,467 --> 00:04:44,814
+eso tiene un costo mínimo de Landauer.
+
+77
+00:04:45,194 --> 00:04:49,675
+Charles Bennett mostró la salida:
+calcular de forma reversible, copiar el
+
+78
+00:04:49,675 --> 00:04:53,664
+resultado y luego descalcular,
+deshaciendo los pasos intermedios.
+
+79
+00:04:54,044 --> 00:04:57,044
+Así, el borrado obligatorio
+se reduce al mínimo.
+
+80
+00:04:58,150 --> 00:05:01,328
+Hay una condición escondida:
+la cota de Landauer solo
+
+81
+00:05:01,328 --> 00:05:04,206
+se alcanza si el borrado
+es infinitamente lento.
+
+82
+00:05:04,586 --> 00:05:08,255
+Si el protocolo dura un tiempo
+τ finito, el sistema no alcanza
+
+83
+00:05:08,255 --> 00:05:11,333
+a seguir el equilibrio y
+se disipa un trabajo extra.
+
+84
+00:05:11,713 --> 00:05:15,554
+Para protocolos lentos, ese
+exceso decrece como uno sobre τ.
+
+85
+00:05:15,934 --> 00:05:19,736
+La curva amarilla muestra el trabajo
+medio frente a la duración del
+
+86
+00:05:19,736 --> 00:05:23,311
+protocolo: se acerca a la línea
+de Landauer, pero desde arriba.
+
+87
+00:05:23,691 --> 00:05:27,661
+Este es el primer ejemplo de un
+compromiso fundamental del curso, que
+
+88
+00:05:27,661 --> 00:05:31,515
+estudiaremos en la unidad tres:
+calcular rápido cuesta más energía.
+
+89
+00:05:32,617 --> 00:05:35,531
+¿Por qué entonces los chips
+gastan millones de veces más?
+
+90
+00:05:35,911 --> 00:05:39,959
+Primero, por confiabilidad: la
+probabilidad de que el ruido térmico
+
+91
+00:05:39,959 --> 00:05:44,371
+voltee un bit decae exponencialmente
+con la altura de la barrera, así que
+
+92
+00:05:44,371 --> 00:05:48,057
+un bit digital robusto necesita
+barreras de decenas de k_B T.
+
+93
+00:05:48,436 --> 00:05:52,448
+Segundo, por la comunicación:
+mover un bit por un cable
+
+94
+00:05:52,448 --> 00:05:56,242
+cuesta del orden de C V²,
+sin relación con Landauer.
+
+95
+00:05:56,622 --> 00:06:00,825
+Por eso el cómputo termodinámico no
+busca llegar al límite de Landauer,
+
+96
+00:06:00,825 --> 00:06:04,615
+sino dejar de pagar por suprimir
+el ruido y usarlo como recurso.
+
+97
+00:06:04,995 --> 00:06:08,184
+En el laboratorio dos simularás
+este borrado y medirás el
+
+98
+00:06:08,184 --> 00:06:10,871
+trabajo en función de la
+duración del protocolo.
+
+99
+00:06:11,983 --> 00:06:14,224
+Este principio aparece en todo el curso.
+
+100
+00:06:14,604 --> 00:06:19,681
+Resuelve la paradoja del demonio de Maxwell
+de la lección anterior: el demonio debe
+
+101
+00:06:19,681 --> 00:06:23,962
+borrar su memoria, y ese borrado
+paga exactamente lo que había ganado.
+
+102
+00:06:24,342 --> 00:06:28,118
+En la unidad tres veremos el
+trabajo y el calor a nivel de una
+
+103
+00:06:28,118 --> 00:06:31,711
+sola trayectoria, la igualdad
+de Jarzynski y los límites de
+
+104
+00:06:31,711 --> 00:06:35,182
+velocidad, que hacen preciso
+el costo del borrado rápido.
+
+105
+00:06:35,562 --> 00:06:40,288
+Y en la unidad cinco compararemos la
+energía real de un pbit con esta cota.
+
+106
+00:06:41,417 --> 00:06:42,878
+Cuatro errores frecuentes.
+
+107
+00:06:43,258 --> 00:06:47,824
+Primero, creer que toda operación
+cuesta k_B T ln 2: solo el
+
+108
+00:06:47,824 --> 00:06:52,011
+borrado lógicamente irreversible
+tiene un costo mínimo.
+
+109
+00:06:52,391 --> 00:06:55,635
+Segundo, pensar que el costo
+se paga al medir: en la
+
+110
+00:06:55,635 --> 00:06:58,879
+formulación de Landauer y
+Bennett se paga al borrar.
+
+111
+00:06:59,259 --> 00:07:02,771
+Tercero, olvidar que la cota
+supone un bit completamente
+
+112
+00:07:02,771 --> 00:07:06,910
+desconocido; si el bit ya se conoce,
+no hay entropía que eliminar.
+
+113
+00:07:07,290 --> 00:07:11,506
+Y cuarto, creer que Landauer es lo
+que hoy limita a los chips; lo que
+
+114
+00:07:11,506 --> 00:07:15,051
+domina son los márgenes de
+ruido y el movimiento de datos.
+
+115
+00:07:16,183 --> 00:07:17,025
+Resumamos.
+
+116
+00:07:17,405 --> 00:07:22,240
+Borrar un bit reduce la entropía
+de la memoria en k_B ln 2.
+
+117
+00:07:22,620 --> 00:07:28,321
+La segunda ley obliga a
+expulsar al menos k_B T ln 2 de
+
+118
+00:07:28,321 --> 00:07:33,503
+calor, unos 2,87 × 10⁻²¹
+J a temperatura ambiente.
+
+119
+00:07:33,883 --> 00:07:37,173
+Solo pagan las operaciones
+lógicamente irreversibles, y
+
+120
+00:07:37,173 --> 00:07:40,044
+el límite solo se alcanza
+con protocolos lentos.
+
+121
+00:07:40,424 --> 00:07:41,967
+La información es física.
+
+122
+00:07:43,083 --> 00:07:45,722
+Antes de seguir, pon a
+prueba tu comprensión.
+
+123
+00:07:46,102 --> 00:07:50,164
+Calcula el calor mínimo para borrar
+un gigabyte a trescientos kelvin.
+
+124
+00:07:50,544 --> 00:07:53,024
+Calcula el costo de
+reiniciar un bit que ya
+
+125
+00:07:53,024 --> 00:07:55,504
+vale cero con probabilidad
+cero coma nueve.
+
+126
+00:07:55,884 --> 00:08:00,661
+Explica por qué la compuerta NOT no
+tiene costo de Landauer y la AND sí.
+
+127
+00:08:01,041 --> 00:08:03,734
+Y piensa qué ocurre con
+el trabajo de borrado si
+
+128
+00:08:03,734 --> 00:08:06,146
+el protocolo se hace
+diez veces más rápido.
+
+129
+00:08:06,526 --> 00:08:09,726
+Las soluciones están en la hoja
+de ejercicios de esta lección.

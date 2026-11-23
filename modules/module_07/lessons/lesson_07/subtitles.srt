@@ -1,0 +1,297 @@
+1
+00:00:00,350 --> 00:00:02,124
+Lección 7.7.
+
+2
+00:00:02,505 --> 00:00:04,158
+La variante por colisiones.
+
+3
+00:00:05,283 --> 00:00:09,804
+La difusión necesita un hardware con
+r nodos y una lectura muy precisa.
+
+4
+00:00:10,184 --> 00:00:14,454
+Existe una alternativa puramente
+digital que usa el mismo grafo: lanzar
+
+5
+00:00:14,454 --> 00:00:18,243
+caminantes al azar y esperar a
+que dos caigan en el mismo nodo.
+
+6
+00:00:18,623 --> 00:00:22,272
+Cada coincidencia, o colisión,
+revela un múltiplo del orden.
+
+7
+00:00:22,652 --> 00:00:26,382
+Hoy vemos cuántas muestras hacen
+falta y cómo se extrae el orden.
+
+8
+00:00:27,483 --> 00:00:31,497
+Una palabra es una
+sucesión de saltos ± 2^t.
+
+9
+00:00:31,877 --> 00:00:36,123
+Su exponente total E es un
+entero, y su punto final es b^E
+
+10
+00:00:36,123 --> 00:00:39,709
+mod N, que se calcula con
+exponenciación modular.
+
+11
+00:00:40,089 --> 00:00:45,399
+Si dos palabras con exponentes distintos
+llegan al mismo punto, entonces
+
+12
+00:00:45,399 --> 00:00:50,192
+b^D ≡ 1 con D la diferencia de
+exponentes: el orden r divide a D.
+
+13
+00:00:50,572 --> 00:00:52,537
+Una colisión es una relación.
+
+14
+00:00:53,650 --> 00:00:55,818
+¿Cuántas muestras hasta
+la primera colisión?
+
+15
+00:00:56,198 --> 00:01:00,849
+Es la paradoja del cumpleaños:
+con T puntos casi uniformes en r
+
+16
+00:01:00,849 --> 00:01:05,942
+casillas, el número esperado de
+pares que coinciden es T(T − 1)/(2r),
+
+17
+00:01:06,322 --> 00:01:10,426
+y la primera colisión aparece
+hacia √(π r/2) muestras.
+
+18
+00:01:10,806 --> 00:01:15,150
+Lo simulamos con N igual a un millón
+veintidós mil ciento diecisiete
+
+19
+00:01:15,150 --> 00:01:18,791
+y orden cinco mil trescientos
+trece: en mil repeticiones,
+
+20
+00:01:19,171 --> 00:01:22,827
+la primera colisión llega en promedio
+en la muestra noventa y cuatro
+
+21
+00:01:22,827 --> 00:01:26,214
+coma seis, frente a la predicción
+de noventa y uno coma cuatro.
+
+22
+00:01:27,317 --> 00:01:32,738
+Cada relación es D_i = q_i r con
+un multiplicador desconocido.
+
+23
+00:01:33,118 --> 00:01:37,745
+El máximo común divisor acumulado
+de las D_i es siempre un múltiplo de
+
+24
+00:01:37,745 --> 00:01:41,645
+r, y es exactamente r cuando
+los q_i no comparten factores.
+
+25
+00:01:42,025 --> 00:01:46,175
+Si se comportan como enteros al
+azar, eso ocurre con s relaciones
+
+26
+00:01:46,175 --> 00:01:50,390
+con probabilidad uno sobre zeta
+de s: sesenta y uno por ciento con
+
+27
+00:01:50,390 --> 00:01:53,902
+dos, ochenta y tres con tres,
+noventa y dos con cuatro.
+
+28
+00:01:54,282 --> 00:01:58,947
+En la simulación, dos relaciones bastaron
+el sesenta por ciento de las veces,
+
+29
+00:01:58,947 --> 00:02:03,189
+tres o menos el ochenta y cinco, y
+cuatro o menos el noventa y cuatro.
+
+30
+00:02:04,317 --> 00:02:08,073
+Esta idea tiene un pariente
+famoso: el método rho de Pollard.
+
+31
+00:02:08,453 --> 00:02:13,997
+Rho busca colisiones módulo un factor
+primo desconocido p de N, así que la
+
+32
+00:02:13,997 --> 00:02:18,718
+escala es √p, es decir, del orden
+de N^(1/4) para un semiprimo,
+
+33
+00:02:19,098 --> 00:02:23,215
+y detecta la colisión con el
+máximo común divisor, sin saber p.
+
+34
+00:02:23,595 --> 00:02:27,936
+La variante de esta lección
+busca colisiones del orden r, que
+
+35
+00:02:27,936 --> 00:02:32,277
+puede ser del tamaño de N: la
+escala √r puede ser mucho peor.
+
+36
+00:02:33,383 --> 00:02:36,975
+El tratado de factorización
+por difusión lleva esta línea
+
+37
+00:02:36,975 --> 00:02:40,189
+más lejos, con detectores
+sensibles a divisores que
+
+38
+00:02:40,189 --> 00:02:43,528
+alcanzan la escala de N^(1/4)
+con garantías probadas.
+
+39
+00:02:43,908 --> 00:02:47,649
+Pero su conclusión es honesta:
+en la comparación reproducible en
+
+40
+00:02:47,649 --> 00:02:51,448
+software, Pollard con la mejora
+de Brent sigue siendo más rápido.
+
+41
+00:02:51,828 --> 00:02:54,998
+Las colisiones son una
+herramienta útil para entender la
+
+42
+00:02:54,998 --> 00:02:58,054
+estructura, no una vía nueva
+para romper criptografía.
+
+43
+00:02:59,183 --> 00:03:03,812
+El razonamiento del cumpleaños aparece
+en colisiones de funciones hash y en
+
+44
+00:03:03,812 --> 00:03:08,194
+la detección de ciclos con poca
+memoria, como los métodos de Floyd y de
+
+45
+00:03:08,194 --> 00:03:12,143
+Brent; los métodos rho y canguro
+resuelven logaritmos discretos.
+
+46
+00:03:12,523 --> 00:03:14,562
+En el laboratorio diez compararás la
+
+47
+00:03:14,562 --> 00:03:17,053
+variante por colisiones
+con Pollard y Brent.
+
+48
+00:03:18,183 --> 00:03:21,241
+Errores comunes: contar
+colisiones triviales, con
+
+49
+00:03:21,241 --> 00:03:23,987
+el mismo exponente, que
+dan diferencia cero.
+
+50
+00:03:24,367 --> 00:03:28,335
+Tomar una sola relación como el
+orden, cuando es solo un múltiplo.
+
+51
+00:03:28,715 --> 00:03:31,955
+Suponer que palabras muy
+cortas ya dan puntos uniformes.
+
+52
+00:03:32,335 --> 00:03:36,062
+Y confundir la escala raíz de
+r con la raíz de p de Pollard.
+
+53
+00:03:37,183 --> 00:03:41,911
+En resumen: dos palabras que llegan al
+mismo punto dan un múltiplo del orden.
+
+54
+00:03:42,291 --> 00:03:47,255
+La primera colisión aparece hacia raíz
+de r muestras, y el máximo común divisor
+
+55
+00:03:47,255 --> 00:03:51,465
+de unas pocas relaciones da el
+orden, con la ley de uno sobre zeta.
+
+56
+00:03:51,845 --> 00:03:54,025
+Es el mismo principio del método rho de
+
+57
+00:03:54,025 --> 00:03:56,373
+Pollard, que en la práctica sigue ganando.
+
+58
+00:03:57,483 --> 00:04:02,338
+Para practicar: demuestra que una colisión
+no trivial da un múltiplo del orden.
+
+59
+00:04:02,718 --> 00:04:05,397
+Calcula los pares esperados
+para cien muestras.
+
+60
+00:04:05,777 --> 00:04:08,911
+Calcula la probabilidad de
+acertar con tres relaciones.
+
+61
+00:04:09,291 --> 00:04:11,071
+Y explica la escala de Pollard.

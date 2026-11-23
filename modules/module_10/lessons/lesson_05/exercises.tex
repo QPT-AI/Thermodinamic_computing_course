@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.5}{Codificar números en pbits}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Muestras para pasar de $3{,}4$ a $6{,}4$ bits efectivos.
+\item (B) Varianza de la media de $n$ pbits con probabilidad $x$.
+\item (B) ¿Por qué se intercambian pbits y muestras?
+\item (B) ¿Cuándo gana un multiplicador digital al muestreo?
+\item (I) Muestras con autocorrelación $\rho$ entre consecutivas: ¿cómo cambia el número efectivo de muestras?
+\item (I) Calcule $b_{\text{eff}}$ de un pbit con una muestra a partir de $\mathrm{rms}^2=\mathbb E[x(1-x)]$ con $x$ uniforme.
+\item (A) Simule una capa tanh-lineal con entradas codificadas en pbits y mida la exactitud frente a $S$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} 3 bits: $4^3=64$ veces más muestras.
+
+\textbf{E2.} $x(1-x)/n$.
+
+\textbf{E3.} La varianza depende de $nS$: $n$ pbits en paralelo equivalen a $n$ muestras en el tiempo.
+
+\textbf{E4.} Con muchos bits: $4^b$ crece mucho más rápido que $b^2$.
+
+\textbf{E5.} $S_{\text{eff}}\approx S(1-\rho)/(1+\rho)$.
+
+\textbf{E6.} $\mathbb E[x(1-x)]=1/6$; $\mathrm{rms}=0{,}408$; $b_{\text{eff}}=-\log_2(0{,}408\sqrt{12})\approx-0{,}5$.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

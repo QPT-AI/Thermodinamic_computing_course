@@ -1,0 +1,85 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.6}{Análisis de Fourier en grupos abelianos finitos}
+
+\noindent\textbf{Unidad 0.}\quad\textbf{Objetivos:} definir caracteres de $\Z/r\Z$; probar su ortogonalidad;
+usar la DFT para diagonalizar caminatas en el ciclo. \textbf{Prerrequisitos:} números complejos; lección 0.5.
+
+\section{¿Por qué importa?}
+La Unidad 7 compara el algoritmo de Shor con un algoritmo termodinámico de búsqueda de orden por difusión
+\cite{cadavid1,cadavid2}. Ambos son, en el fondo, análisis de Fourier sobre $\Z/r\Z$: Shor amplifica picos de
+Fourier por interferencia; la difusión amortigua todos los modos excepto el trivial y lee el período en la
+\emph{probabilidad de regreso}.
+
+\section{Caracteres}
+\begin{definicion}[ (carácter)]
+Un carácter de un grupo abeliano finito $G$ es un homomorfismo $\chi:G\to\{z\in\mathbb C:|z|=1\}$,
+$\chi(x+y)=\chi(x)\chi(y)$. Para $G=\Z/r\Z$: $\chi_k(x)=e^{2\pi ikx/r}$, $k=0,\dots,r-1$.
+\end{definicion}
+Interpretación: $\chi_k$ envía la hora $x$ del reloj de $r$ horas al punto del círculo unitario a $kx/r$ vueltas;
+sumar horas es componer rotaciones. Hay exactamente $r$ caracteres (el grupo dual $\hat G\cong G$), y
+$\chi_k\chi_l=\chi_{k+l}$, $\overline{\chi_k}=\chi_{-k}$.
+
+\section{Ortogonalidad}
+\begin{lema}
+$\displaystyle\sum_{x=0}^{r-1}e^{2\pi ixk/r}=\begin{cases}r,&r\mid k\\0,&\text{si no.}\end{cases}$
+\end{lema}
+\begin{proof}
+Si $r\mid k$ cada término vale 1. Si no, $\omega=e^{2\pi ik/r}\neq1$ y la suma geométrica es
+$\frac{\omega^r-1}{\omega-1}=0$ porque $\omega^r=1$. Geométricamente: los vectores puestos punta con cola forman un
+polígono regular (recorrido $\gcd(k,r)$ veces) que se cierra.
+\end{proof}
+\begin{resultado}[ (ortogonalidad)]
+$\langle\chi_k,\chi_l\rangle=\sum_x\chi_k(x)\overline{\chi_l(x)}=\sum_x\chi_{k-l}(x)=r\,\delta_{kl}$.
+\end{resultado}
+
+\section{Transformada de Fourier discreta}
+Los $r$ caracteres son ortogonales en $\mathbb C^r$, luego forman una base:
+\begin{equation}\hat f(k)=\sum_xf(x)\overline{\chi_k(x)},\qquad f(x)=\frac1r\sum_k\hat f(k)\chi_k(x),\qquad
+\sum_x|f(x)|^2=\frac1r\sum_k|\hat f(k)|^2.\end{equation}
+\begin{ejemplo}
+$r=4$, $f=(1,2,0,1)$, $\chi_1(x)=i^x$: $\hat f(0)=4$, $\hat f(1)=1-2i+0+i=1-i$, $\hat f(2)=1-2+0-1=-2$,
+$\hat f(3)=1+i$. Parseval: $\sum|f|^2=6=\frac14(16+2+4+2)$.
+\end{ejemplo}
+Convolución: $(f*g)(x)=\sum_yf(y)g(x-y)$ cumple $\widehat{f*g}=\hat f\,\hat g$.
+
+\section{Caminatas aleatorias y núcleo de calor}
+Una caminata en $\Z/r\Z$ con distribución de paso $\mu$ (probabilidad de moverse $s$) actúa sobre distribuciones
+por convolución: $p_{n+1}=p_n*\mu$. Por tanto $\hat p_n(k)=\hat p_0(k)\,\hat\mu(k)^n$ y los caracteres son vectores
+propios con valores propios $\lambda_k=\overline{\hat\mu(k)}$ (reales si $\mu$ es simétrica). Para la caminata
+perezosa ($\mu(0)=\frac12$, $\mu(\pm1)=\frac14$): $\lambda_k=\frac12\big(1+\cos\frac{2\pi k}r\big)\in[0,1]$. Partiendo de $0$:
+\begin{equation}p_n(x)=\frac1r\sum_k\lambda_k^n\chi_k(x),\qquad p_n(0)=\frac1r\sum_{k=0}^{r-1}\lambda_k^n .\end{equation}
+Este es el \emph{núcleo de calor discreto}. Cada modo decae como $\lambda_k^n$; solo $k=0$ ($\lambda_0=1$) sobrevive y
+$p_n\to$ uniforme. La brecha espectral es $1-\lambda_1=\frac12(1-\cos\frac{2\pi}r)\approx\pi^2/r^2$.
+
+\begin{aplicacion}
+La búsqueda de orden por difusión (Unidad 7.4) usa una caminata con generadores $b^{\pm2^t}$ y valores propios
+$\lambda_k=\frac12\big(1+\frac1{M+1}\sum_t\cos\frac{2\pi k2^t}{r}\big)$; la probabilidad de regreso
+$p_n(e)=\frac1r\sum_k\lambda_k^n\to\frac1r$, de modo que $r=\mathrm{round}(1/p_n(e))$ para $n$ suficientemente grande.
+Las identidades de sumas trigonométricas de la lección 7.5 provienen de calcular $p_n$ de dos maneras \cite{cadavid3}.
+\end{aplicacion}
+
+\section{Grupos abelianos finitos en general}
+Todo grupo abeliano finito es isomorfo a $\Z/r_1\times\dots\times\Z/r_m$; sus caracteres son
+$\chi_{\mathbf k}(\mathbf x)=\prod_je^{2\pi ik_jx_j/r_j}$ y toda la teoría anterior se extiende componente a componente.
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Conjugado en el producto interno; factor $1/r$ en la inversa (o $1/\sqrt r$ en ambas, convención unitaria).
+\item Frecuencia $k$ y posición $x$ viven en copias distintas de $\Z/r\Z$.
+\item La suma de raíces vale $r$ cuando $r\mid k$, no solo para $k=0$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$\chi_k(x)=e^{2\pi ikx/r}$; ortogonalidad $r\delta_{kl}$; DFT e inversa; las caminatas se diagonalizan y
+$p_n(0)=\frac1r\sum_k\lambda_k^n$.
+
+\begin{thebibliography}{9}\small
+\bibitem[32]{cadavid1} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem[33]{cadavid2} C. A. Cadavid et al., Diffusion computation versus quantum computation, 2026.
+\bibitem[34]{cadavid3} C. A. Cadavid et al., On an approach for evaluating certain trigonometric character sums using the discrete time heat kernel, 2022.
+\bibitem[4]{nc} M. A. Nielsen e I. L. Chuang, \emph{Quantum Computation and Quantum Information}, 2010.
+\end{thebibliography}
+\end{document}

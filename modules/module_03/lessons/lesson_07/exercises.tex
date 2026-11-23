@@ -1,0 +1,34 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.7}{Termodinámica del reinicio y de la lectura sin errores}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Costo mínimo de reiniciar un bit con $p=0{,}9$ hasta un error $\varepsilon=10^{-3}$, en $\kB T$.
+\item (B) Barrera necesaria para conservar un bit una hora con $\varepsilon=10^{-6}$ y $\nu_0=10^{12}$ Hz.
+\item (B) Energía de señal para una lectura con $\varepsilon=10^{-6}$; voltaje $V$ si $C=1$ fF a 300 K.
+\item (B) ¿Por qué un chip que lee en cada barrido desperdicia energía si $\tau_{\text{int}}\gg1$ barrido?
+\item (I) Muestre que $\tfrac12Q^{-1}(\varepsilon)^2=\ln(1/\varepsilon)-\tfrac12\ln\ln(1/\varepsilon)+O(1)$ usando $Q(z)\approx e^{-z^2/2}/(z\sqrt{2\pi})$.
+\item (I) Un arreglo de $10^9$ bits debe conservarse 10 años con probabilidad 0,99 de no tener ningún error. ¿Qué barrera necesita cada bit?
+\item (A) Simule un pozo doble $V=E_b(x^2-1)^2$ con Langevin ($\mu=\kB T=1$) para $E_b\in\{4,6,8\}$, mida la tasa de saltos y verifique la
+pendiente $-1$ de $\ln\Gamma$ frente a $E_b$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $H(0{,}9)=0{,}325$, $H(10^{-3})=0{,}0079$: $W_{\min}=0{,}317\,\kB T$.
+
+\textbf{E2.} $E_b\ge\ln(10^{12}\cdot3600/10^{-6})=\ln(3{,}6\times10^{21})\approx49{,}6\,\kB T$.
+
+\textbf{E3.} $Q^{-1}(10^{-6})=4{,}75$: $E=11{,}3\,\kB T=4{,}7\times10^{-20}$ J; $\sigma=\sqrt{\kB T/C}=2{,}0$ mV, $V=4{,}75\,\sigma\approx9{,}7$ mV.
+
+\textbf{E4.} Lecturas separadas menos que el tiempo de autocorrelación son casi copias: cuestan E/S y reinicio sin aportar información nueva
+(tamaño efectivo $n/\tau_{\text{int}}$).
+
+\textbf{E5.} Tomando logaritmos, $\ln(1/\varepsilon)=z^2/2+\ln z+\tfrac12\ln2\pi$, y $\ln z=\tfrac12\ln(z^2)\approx\tfrac12\ln(2\ln(1/\varepsilon))$.
+
+\textbf{E6.} Error por bit $\varepsilon\le0{,}01/10^9=10^{-11}$; $E_b\ge\ln(10^{12}\cdot3{,}2\times10^8/10^{-11})\approx72{,}5\,\kB T$.
+
+\textbf{E7.} Kramers predice $\Gamma\propto e^{-E_b}$; el ajuste de $\ln\Gamma$ frente a $E_b$ debe dar pendiente cercana a $-1$ (con corrección
+del prefactor a barreras bajas).
+\end{solucion}
+\end{document}

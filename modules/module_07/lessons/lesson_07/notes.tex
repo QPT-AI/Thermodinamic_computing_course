@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.7}{La variante por colisiones}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} convertir una colisión en una relación $r\mid D$; cota del cumpleaños $T\approx\sqrt r$; mcd acumulado y ley
+$1/\zeta(s)$; vínculo con rho de Pollard.
+\textbf{Prerrequisitos:} 7.3; paradoja del cumpleaños.
+
+\section{Palabras y relaciones}
+Una palabra $w=((\varepsilon_1,t_1),\dots,(\varepsilon_L,t_L))$ tiene exponente $E(w)=\sum_i\varepsilon_i2^{t_i}\in\mathbb Z$ y punto final $x(w)=b^{E(w)}\bmod N$.
+Si $x(w)=x(w')$ con $E(w)\ne E(w')$, entonces $b^D\equiv1$ con $D=E(w)-E(w')\ne0$: $r\mid D$, y $|D|\le2L2^M$.
+
+\section{Cota del cumpleaños}
+Con $T$ reinicios independientes y $s_2(t)=\sum_xp_t(x)^2$: $\mathbb E[Z]=\binom T2s_2(t)\approx T(T-1)/(2r)$ si $p_t$ es casi uniforme; la primera colisión
+aparece hacia $\sqrt{\pi r/2}$ muestras.
+\evS\ $N=1\,022\,117$, $b=576$, $r=5313$, palabras de longitud 40, 1000 corridas: media $94{,}6$ frente a $\sqrt{\pi r/2}=91{,}4$.
+
+\section{Mcd acumulado y ley zeta}
+$\gcd(D_1,\dots,D_s)=r\gcd(q_1,\dots,q_s)$ es siempre múltiplo de $r$; vale $r$ si los $q_i$ son coprimos. Si los $q_i$ se comportan como enteros
+aleatorios, $\Pr(\gcd=1)\to1/\zeta(s)$: $0{,}61$, $0{,}83$, $0{,}92$ para $s=2,3,4$ (heurística, no certificado).
+\evS\ Relaciones necesarias: $\le2$: 60\,\%, $\le3$: 85\,\%, $\le4$: 94\,\%.
+
+\section{Rho de Pollard y comparación honesta}
+Rho busca colisiones módulo un primo desconocido $p\mid N$ (escala $\sqrt p\sim N^{1/4}$ para semiprimos) y las detecta con $\gcd(x_i-x_j,N)$; la variante de esta
+lección trabaja a escala $\sqrt r$, con $r$ posiblemente $\sim N$. El tratado alcanza $N^{1/4}$ con detectores sensibles a divisores y garantías probadas, pero en la
+comparación reproducible en software \emph{Pollard--Brent sigue siendo más rápido}. No es una vía nueva para romper criptografía.
+
+\begin{aplicacion}
+Colisiones de funciones hash; detección de ciclos con poca memoria (Floyd, Brent); logaritmos discretos (rho, canguro). Laboratorio L10: comparar con Pollard--Brent.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Contar colisiones triviales ($D=0$). \quad Tomar una relación como $r$.
+\item Suponer uniformidad con palabras muy cortas. \quad Confundir $\sqrt r$ con $\sqrt p$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{tratado} Cadavid et al., Tratado de factorización por difusión (data/ del curso), secciones 6--7 y 12--13, 2026.
+\bibitem{pollard} J. M. Pollard, A Monte Carlo method for factorization, \emph{BIT} 15, 331 (1975).
+\bibitem{brent} R. P. Brent, An improved Monte Carlo factorization algorithm, \emph{BIT} 20, 176 (1980).
+\end{thebibliography}
+\end{document}

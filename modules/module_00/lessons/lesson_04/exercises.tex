@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.4}{Repaso de álgebra lineal}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item (Pensum, Ap. A.2) Muestre que una matriz SPD tiene valores propios reales positivos; defina su número de condición.
+\item (Pensum, Ap. A.4) Escriba $(B\otimes C)^{-1}$ y $(B\otimes C)\mathrm{vec}(X)$ en términos de $B$, $C$, $X$.
+\item Si $A=\diag(1,100)$, escriba $e^{-At}x_0$. ¿Qué componente domina para $t=0{,}1$? ¿y para $t=1$?
+\item Use Sherman--Morrison para invertir $\lambda I+uu^\top$.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item ¿Es SPD $\begin{pmatrix}2&-1&0\\-1&2&-1\\0&-1&2\end{pmatrix}$? Calcule sus valores propios y $\kappa$.
+\item Muestre que si $A$ es SPD y $\Delta t<2/\lambda_{\max}$, la iteración de Euler $x_{k+1}=(I-\Delta tA)x_k$ converge a 0. ¿Qué $\Delta t$ minimiza el factor de contracción y cuánto vale?
+\item Verifique numéricamente (a mano, $2\times2$) que $(B\otimes C)\mathrm{vec}(X)=\mathrm{vec}(CXB^\top)$ con $B=\begin{pmatrix}1&2\\0&1\end{pmatrix}$, $C=I$, $X=\begin{pmatrix}1&0\\0&1\end{pmatrix}$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Demuestre la identidad de Woodbury multiplicando $(A+UCV)$ por el lado derecho propuesto.
+\item Pruebe que los valores propios de $B\otimes C$ son $\lambda_i\mu_j$ y deduzca $\kappa(B\otimes C)=\kappa(B)\kappa(C)$ para $B$, $C$ SPD.
+\item Sea $G=\lambda I_d+J^\top J$ con $J\in\R^{b\times d}$. Muestre que $G^{-1}g=\frac1\lambda\big(g-J^\top(\lambda I_b+JJ^\top)^{-1}Jg\big)$ y compare costos para $d=10^6$, $b=128$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} Véase la demostración en las notas. $\kappa=\lambda_{\max}/\lambda_{\min}$.
+
+\textbf{B2.} $(B\otimes C)^{-1}=B^{-1}\otimes C^{-1}$; $(B\otimes C)\mathrm{vec}(X)=\mathrm{vec}(CXB^\top)$.
+
+\textbf{B3.} $x(t)=(e^{-t}x_{0,1},\,e^{-100t}x_{0,2})$. En $t=0{,}1$: factores $0{,}905$ y $e^{-10}=4{,}5\times10^{-5}$: domina la primera. En $t=1$: $0{,}368$ frente a $e^{-100}$: solo queda la primera (lenta).
+
+\textbf{B4.} $(\lambda I+uu^\top)^{-1}=\frac1\lambda I-\frac{uu^\top}{\lambda(\lambda+u^\top u)}$.
+
+\textbf{I1.} Valores propios $2-\sqrt2,\,2,\,2+\sqrt2\approx0{,}586;2;3{,}414$: SPD; $\kappa=\frac{2+\sqrt2}{2-\sqrt2}=3+2\sqrt2\approx5{,}83$.
+
+\textbf{I2.} En la base propia, cada modo se multiplica por $1-\Delta t\lambda_i$; converge si $|1-\Delta t\lambda_i|<1\iff0<\Delta t<2/\lambda_i$ para todo $i$. El óptimo iguala $|1-\Delta t\lambda_{\min}|=|1-\Delta t\lambda_{\max}|$: $\Delta t^*=2/(\lambda_{\min}+\lambda_{\max})$, con factor $\frac{\kappa-1}{\kappa+1}$.
+
+\textbf{I3.} $B\otimes I=\begin{pmatrix}1&0&2&0\\0&1&0&2\\0&0&1&0\\0&0&0&1\end{pmatrix}$, $\mathrm{vec}(I)=(1,0,0,1)^\top$; producto $(1,2,0,1)^\top$. Y $XB^\top=B^\top=\begin{pmatrix}1&0\\2&1\end{pmatrix}$, cuyo vec es $(1,2,0,1)^\top$. Coinciden.
+
+\textbf{A1.} $(A+UCV)\big[A^{-1}-A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}\big]=I+UCVA^{-1}-U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}-UCVA^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}$
+$=I+UCVA^{-1}-UC(C^{-1}+VA^{-1}U)(C^{-1}+VA^{-1}U)^{-1}VA^{-1}=I$.
+
+\textbf{A2.} $(B\otimes C)(v\otimes w)=Bv\otimes Cw=\lambda\mu\,(v\otimes w)$; hay $n^2$ pares independientes. El máximo es $\lambda_{\max}\mu_{\max}$ y el mínimo $\lambda_{\min}\mu_{\min}$.
+
+\textbf{A3.} Woodbury con $A=\lambda I$, $U=J^\top$, $C=I$, $V=J$. Directo: $O(d^3)=10^{18}$. Woodbury: formar $JJ^\top$ cuesta $O(b^2d)\approx1{,}6\times10^{10}$, resolver $b\times b$ cuesta $O(b^3)\approx2\times10^6$.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Genere matrices de Wishart $A=GG^\top/d$ con $G\in\R^{d\times2d}$ y grafique la distribución de $\kappa$ para $d=10,100,500$ (laboratorio L3).
+\item Implemente \texttt{expm} por diagonalización y compare con \texttt{scipy.linalg.expm} para $A$ SPD.
+\item ¿Cuánta memoria ocupa $A\otimes G$ para una capa de $1024\times1024$ en fp32? ¿Y los factores?
+\end{enumerate}
+\end{document}

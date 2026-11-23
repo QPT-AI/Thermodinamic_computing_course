@@ -1,0 +1,334 @@
+1
+00:00:00,350 --> 00:00:02,058
+Lección 5.8.
+
+2
+00:00:02,438 --> 00:00:05,198
+Contabilidad energética
+en sistemas heterogéneos.
+
+3
+00:00:06,317 --> 00:00:09,925
+En la lección cinco punto tres
+calculamos que el Z1 gasta como
+
+4
+00:00:09,925 --> 00:00:13,009
+mucho setenta y cuatro
+femtojulios por actualización.
+
+5
+00:00:13,389 --> 00:00:16,959
+Pero un chip nunca trabaja solo:
+alguien tiene que enviarle los
+
+6
+00:00:16,959 --> 00:00:20,927
+parámetros, leer sus muestras y hacer
+el cómputo digital que lo rodea.
+
+7
+00:00:21,307 --> 00:00:25,160
+La energía del sistema completo puede
+ser muy distinta de la del chip.
+
+8
+00:00:25,540 --> 00:00:27,028
+Hoy aprendemos a contarla.
+
+9
+00:00:28,150 --> 00:00:30,097
+Dividimos la energía en tres partes.
+
+10
+00:00:30,477 --> 00:00:34,148
+El tejido: las actualizaciones
+de los pbits dentro del chip.
+
+11
+00:00:34,528 --> 00:00:37,831
+La entrada y salida: los bits
+que cruzan la frontera del
+
+12
+00:00:37,831 --> 00:00:40,722
+chip, como sesgos que
+entran y estados que salen.
+
+13
+00:00:41,102 --> 00:00:45,676
+Y el pegamento digital: el cómputo
+en la CPU, la GPU o la FPGA que
+
+14
+00:00:45,676 --> 00:00:50,112
+prepara los sesgos, controla el
+muestreo y procesa las muestras.
+
+15
+00:00:50,492 --> 00:00:52,800
+La energía total es la suma de las tres.
+
+16
+00:00:53,917 --> 00:00:57,989
+Necesitamos costos de referencia,
+y debemos decir de dónde salen.
+
+17
+00:00:58,369 --> 00:01:02,018
+Según las estimaciones de Horowitz
+para un proceso de cuarenta
+
+18
+00:01:02,018 --> 00:01:05,433
+y cinco nanómetros, una
+multiplicación en coma flotante de
+
+19
+00:01:05,433 --> 00:01:08,553
+treinta y dos bits cuesta
+tres coma siete picojulios,
+
+20
+00:01:08,933 --> 00:01:11,948
+una suma cero coma nueve,
+y una multiplicación
+
+21
+00:01:11,948 --> 00:01:14,636
+entera de ocho bits apenas cero coma dos.
+
+22
+00:01:15,016 --> 00:01:18,964
+Leer treinta y dos bits de la
+memoria DRAM cuesta unos seiscientos
+
+23
+00:01:18,964 --> 00:01:23,211
+cuarenta picojulios: mover datos
+cuesta mucho más que operar con ellos.
+
+24
+00:01:23,591 --> 00:01:26,421
+Para la comunicación
+fuera del chip supondremos
+
+25
+00:01:26,421 --> 00:01:28,830
+diez picojulios por bit, una estimación.
+
+26
+00:01:29,950 --> 00:01:32,794
+Contemos una muestra en
+el Z1 con mil barridos.
+
+27
+00:01:33,174 --> 00:01:37,348
+El tejido: doscientos sesenta y
+nueve mil pbits por mil barridos
+
+28
+00:01:37,348 --> 00:01:41,130
+por setenta y cuatro femtojulios,
+unos veinte microjulios.
+
+29
+00:01:41,510 --> 00:01:46,582
+La entrada y salida: ocho bits de sesgo
+que entran y un bit de estado que sale
+
+30
+00:01:46,582 --> 00:01:50,939
+por pbit, a diez picojulios por
+bit, unos veinticuatro microjulios.
+
+31
+00:01:51,319 --> 00:01:55,316
+El pegamento: si una red digital
+calcula cada sesgo con cien
+
+32
+00:01:55,316 --> 00:02:00,578
+multiplicaciones y sumas en coma flotante,
+son ciento veinticuatro microjulios.
+
+33
+00:02:00,958 --> 00:02:05,704
+El total es de ciento sesenta y ocho, y
+el tejido es apenas el doce por ciento.
+
+34
+00:02:06,817 --> 00:02:08,667
+¿Cómo se reduce lo que no es tejido?
+
+35
+00:02:09,047 --> 00:02:12,465
+Primero, con pegamento de
+baja precisión: con aritmética
+
+36
+00:02:12,465 --> 00:02:16,127
+entera de ocho bits, el pegamento
+baja a seis microjulios, y
+
+37
+00:02:16,127 --> 00:02:19,423
+el tejido pasa a ser el
+cuarenta por ciento del total.
+
+38
+00:02:19,803 --> 00:02:24,345
+Segundo, amortizando la entrada y
+salida: con más barridos por lectura, el
+
+39
+00:02:24,345 --> 00:02:28,826
+tejido iguala a la entrada y salida
+alrededor de mil doscientos barridos.
+
+40
+00:02:29,206 --> 00:02:32,549
+Tercero, leyendo resúmenes en
+lugar de estados completos.
+
+41
+00:02:32,929 --> 00:02:36,174
+Y finalmente, el objetivo
+de largo plazo: eliminar el
+
+42
+00:02:36,174 --> 00:02:39,358
+pegamento digital con más
+funciones dentro del chip.
+
+43
+00:02:40,483 --> 00:02:43,095
+Cada número de energía
+debe llevar una etiqueta.
+
+44
+00:02:43,475 --> 00:02:47,114
+Medido, si salió de un instrumento
+sobre un dispositivo real.
+
+45
+00:02:47,494 --> 00:02:49,984
+Simulado, si salió de un modelo físico.
+
+46
+00:02:50,364 --> 00:02:53,629
+Proyectado, si extrapola un
+diseño que aún no existe.
+
+47
+00:02:54,009 --> 00:02:57,778
+Y estimado, si es un cálculo de
+orden de magnitud como el de hoy.
+
+48
+00:02:58,158 --> 00:03:02,771
+En este curso, los setenta y cuatro
+femtojulios son una cota derivada de
+
+49
+00:03:02,771 --> 00:03:06,806
+especificaciones, los costos de
+Horowitz son estimaciones, y la
+
+50
+00:03:06,806 --> 00:03:11,354
+comparación final es un estimado:
+nunca lo presentes como una medición.
+
+51
+00:03:12,483 --> 00:03:15,730
+En la práctica, antes de
+cualquier afirmación se escribe la
+
+52
+00:03:15,730 --> 00:03:19,032
+suma de los tres términos, se
+reporta la energía por muestra
+
+53
+00:03:19,032 --> 00:03:22,059
+con el número de barridos y
+la precisión del pegamento,
+
+54
+00:03:22,439 --> 00:03:24,841
+y se compara con una línea base digital en
+
+55
+00:03:24,841 --> 00:03:27,013
+la misma tarea y con la misma calidad.
+
+56
+00:03:27,393 --> 00:03:30,521
+En el proyecto final, cada
+cifra llevará su etiqueta.
+
+57
+00:03:31,650 --> 00:03:36,131
+Errores comunes: citar la energía del
+tejido como si fuera la del sistema.
+
+58
+00:03:36,511 --> 00:03:39,128
+Ignorar la red digital
+que calcula los sesgos.
+
+59
+00:03:39,508 --> 00:03:42,690
+Comparar energías con
+calidades o tareas distintas.
+
+60
+00:03:43,070 --> 00:03:47,049
+Y presentar una proyección o un
+estimado como si fuera una medición.
+
+61
+00:03:48,150 --> 00:03:51,600
+En resumen: la energía de
+un sistema heterogéneo es
+
+62
+00:03:51,600 --> 00:03:54,982
+tejido más entrada y salida
+más pegamento digital.
+
+63
+00:03:55,362 --> 00:03:58,226
+En nuestro ejemplo el
+tejido era solo el doce por
+
+64
+00:03:58,226 --> 00:04:01,441
+ciento, y subía al cuarenta
+con pegamento de ocho bits.
+
+65
+00:04:01,821 --> 00:04:06,391
+Cada número debe decir si es medido,
+simulado, proyectado o estimado.
+
+66
+00:04:07,517 --> 00:04:11,615
+Para practicar: calcula la energía
+del tejido con diez mil barridos.
+
+67
+00:04:11,995 --> 00:04:15,509
+Encuentra cuántos barridos
+igualan tejido y entrada y salida.
+
+68
+00:04:15,889 --> 00:04:19,759
+Compara el pegamento con ocho
+bits enteros y con coma flotante.
+
+69
+00:04:20,139 --> 00:04:23,655
+Y etiqueta correctamente los
+setenta y cuatro femtojulios.

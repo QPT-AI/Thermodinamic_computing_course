@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.6}{No idealidades analógicas}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} cuantificar el efecto de la cuantización y del desajuste sobre la distribución muestreada; no
+linealidad y ruido de disparo; mitigación (calibración, redondeo estocástico, cuantizadores conservadores).
+\textbf{Prerrequisitos:} 4.2, 4.5, 0.3 (KL).
+
+\section{Medir el error en la distribución}
+La métrica relevante no es el error de cada acoplamiento sino $\mathrm{KL}(p_{\text{ideal}}\|p_{\text{chip}})$. Ejemplo: Ising de 10 espines con
+$J_{ij}\sim\N(0;0{,}5^2)$, $h_i\sim\N(0;0{,}3^2)$, enumerado exactamente (1024 estados) \evS.
+
+\section{Cuantización y desajuste}
+\begin{center}\begin{tabular}{lccccc}\toprule
+bits de $J$ & 2 & 3 & 4 & 6 & 8\\\midrule
+KL & 1,82 & 0,21 & 0,070 & 0,002 & $<10^{-3}$\\\bottomrule\end{tabular}\qquad
+\begin{tabular}{lcccc}\toprule
+$\sigma$ (desajuste de $h$) & 0,02 & 0,05 & 0,1 & 0,2\\\midrule
+KL & 0,001 & 0,007 & 0,030 & 0,125\\\bottomrule\end{tabular}\end{center}
+Para errores pequeños, $\mathrm{KL}\approx\tfrac{\beta^2}2\delta h^\top\mathrm{Cov}(s)\,\delta h\propto\sigma^2$: por eso se calibra cada dispositivo.
+
+\section{No linealidad y ruido de disparo}
+La suma del campo local no es perfectamente lineal y la curva de transferencia de un comparador con ruido de disparo es de tipo probit
+($\Phi(\cdot)$), cercana pero distinta de una sigmoide. El ruido de disparo ($S_I=2qI$) no es térmico y cambia la temperatura efectiva $\beta_{\text{ef}}$.
+
+\section{Mitigación}
+\begin{definicion}[ (redondeo estocástico)]
+$q(x)=\lfloor x/\Delta\rfloor\Delta+\Delta\,\mathbb 1[u<\{x/\Delta\}]$, $u\sim U(0,1)$: $\mathbb E[q(x)]=x$ (sin sesgo).
+\end{definicion}
+Promediando $K$ redondeos independientes a 3 bits, el error medio $|\hat J-J|$ baja de $0{,}10$ ($K=1$) a $0{,}04$ ($K=4$) y $0{,}023$ ($K=16$), mientras el
+redondeo determinista queda en $0{,}088$. Cuantizadores conservadores: niveles elegidos para representar bien los acoplamientos grandes. En la salida hacen
+falta $\ge8$ bits para no degradar los gradientes (Unidad 8). Diseñar un chip es un presupuesto de errores.
+
+\begin{aplicacion}
+Elegir bits desde una KL objetivo ($\ge6$ bits para KL $<10^{-2}$ aquí); calibrar; redondeo estocástico multiplexado en el tiempo; entrenamiento consciente del
+hardware (lección 8.7).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Juzgar por error de $J$ en vez de KL. \quad Suponer que el sesgo determinista se promedia.
+\item Ignorar el ruido de disparo. \quad Calibrar una sola vez (deriva con la temperatura).
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[31]{aifer} M. Aifer et al., Error mitigation for thermodynamic computing, 2024.
+\bibitem[48]{jel} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, 2026.
+\bibitem[41]{don} K. Donatella et al., Scalable thermodynamic second-order optimization, 2025.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,320 @@
+1
+00:00:00,350 --> 00:00:02,147
+Lesson 11.4.
+
+2
+00:00:02,527 --> 00:00:05,320
+Simulators and agentic research workflows.
+
+3
+00:00:06,450 --> 00:00:08,925
+So far we have written
+the programs ourselves.
+
+4
+00:00:09,305 --> 00:00:13,995
+The next idea is for an agent, a
+language model with tools, to propose
+
+5
+00:00:13,995 --> 00:00:18,820
+experiments, run them on a simulator,
+read the results and improve them.
+
+6
+00:00:19,200 --> 00:00:23,222
+That requires more than a
+simulator: each experiment must
+
+7
+00:00:23,222 --> 00:00:26,961
+be turned into a task a
+machine can grade on its own.
+
+8
+00:00:27,341 --> 00:00:28,976
+Today we build that piece.
+
+9
+00:00:30,083 --> 00:00:32,396
+The simulation layer has three levels.
+
+10
+00:00:32,776 --> 00:00:36,444
+THRML simulates block sampling on GPUs.
+
+11
+00:00:36,824 --> 00:00:39,633
+Torx describes and differentiates
+stochastic programs.
+
+12
+00:00:40,013 --> 00:00:43,629
+And Extropic offers a simulation
+interface in early access,
+
+13
+00:00:43,629 --> 00:00:47,428
+meant for agents to search for
+algorithms that compile and run
+
+14
+00:00:47,428 --> 00:00:50,736
+well on its hardware; its
+documentation is not public,
+
+15
+00:00:51,116 --> 00:00:53,756
+so here we work with the open libraries.
+
+16
+00:00:54,136 --> 00:00:59,510
+What matters is that the agent only
+sees an interface: code in, metrics out.
+
+17
+00:01:00,617 --> 00:01:03,193
+A verifiable task has four parts.
+
+18
+00:01:03,573 --> 00:01:06,725
+A statement: estimate
+the magnetizations of a
+
+19
+00:01:06,725 --> 00:01:09,947
+four-by-four Ising model
+with a block sampler.
+
+20
+00:01:10,327 --> 00:01:13,193
+An isolated execution:
+the agent's code runs
+
+21
+00:01:13,193 --> 00:01:15,865
+in a separate process, with a time limit.
+
+22
+00:01:16,245 --> 00:01:22,072
+A reference metric: maximum error
+of 0.03 against exact enumeration.
+
+23
+00:01:22,452 --> 00:01:26,569
+And a rubric: that it uses a sampler
+and that the coloring is valid.
+
+24
+00:01:26,948 --> 00:01:29,628
+The reward combines execution and rubric.
+
+25
+00:01:30,750 --> 00:01:35,403
+A scripted proposer, standing in for
+the agent, submits five solutions.
+
+26
+00:01:35,783 --> 00:01:38,574
+The executor gives fifteen
+hundredths for running
+
+27
+00:01:38,574 --> 00:01:41,023
+and eighty-five for
+reproducing the metric.
+
+28
+00:01:41,403 --> 00:01:44,742
+Chromatic Gibbs with
+thirty sweeps: reward one.
+
+29
+00:01:45,122 --> 00:01:48,753
+With three sweeps it runs
+but does not converge: 0.4.
+
+30
+00:01:49,133 --> 00:01:51,123
+A syntax error: zero.
+
+31
+00:01:51,503 --> 00:01:56,193
+And a cheat, which computes the
+answer by exact enumeration: it passes
+
+32
+00:01:56,193 --> 00:02:01,084
+execution with full marks, but the
+rubric catches it, and it ends at 0.7.
+
+33
+00:02:02,217 --> 00:02:04,608
+The fifth proposal gives
+the most useful lesson.
+
+34
+00:02:04,988 --> 00:02:09,516
+Updating all spins at once is a
+classic mistake: it is not Gibbs.
+
+35
+00:02:09,896 --> 00:02:14,095
+And yet it passes the metric,
+with an error of 0.019.
+
+36
+00:02:14,475 --> 00:02:15,007
+Why?
+
+37
+00:02:15,387 --> 00:02:19,601
+On a bipartite graph, simultaneous
+updating is equivalent to two
+
+38
+00:02:19,601 --> 00:02:24,277
+interleaved chains, each correct, so
+the magnetizations come out right.
+
+39
+00:02:24,657 --> 00:02:28,110
+But the correlations
+between neighbors have an
+
+40
+00:02:28,110 --> 00:02:31,713
+error of 0.8, against
+0.04 with chromatic Gibbs.
+
+41
+00:02:32,093 --> 00:02:35,897
+The metric was under-specified;
+only the rubric noticed.
+
+42
+00:02:37,017 --> 00:02:38,900
+Design rules follow from this.
+
+43
+00:02:39,280 --> 00:02:42,564
+Measure everything that defines
+the result, not just the
+
+44
+00:02:42,564 --> 00:02:45,321
+easiest thing: first-
+and second-order moments.
+
+45
+00:02:45,701 --> 00:02:48,671
+Run the code in an
+isolated environment with a
+
+46
+00:02:48,671 --> 00:02:51,318
+time limit, because it is untrusted code.
+
+47
+00:02:51,698 --> 00:02:54,775
+Give more weight to execution,
+which is harder to fool,
+
+48
+00:02:54,775 --> 00:02:57,628
+and use the rubric for what
+execution does not see.
+
+49
+00:02:58,008 --> 00:03:00,569
+And keep every version
+of the environment: each
+
+50
+00:03:00,569 --> 00:03:03,349
+change in the reward changes
+what the agent learns.
+
+51
+00:03:04,450 --> 00:03:09,305
+In practice, package earlier labs as
+tasks with reference metrics, grade
+
+52
+00:03:09,305 --> 00:03:14,565
+execution with fifteen hundredths for
+running and eighty-five for reproducing,
+
+53
+00:03:14,945 --> 00:03:18,189
+and add a rubric with rules
+or with a judge model.
+
+54
+00:03:18,569 --> 00:03:21,930
+In lab thirty you will
+build a small benchmark.
+
+55
+00:03:23,050 --> 00:03:26,782
+Common mistakes: checking
+only the easiest statistic.
+
+56
+00:03:27,162 --> 00:03:29,928
+Running untrusted code without isolation.
+
+57
+00:03:30,308 --> 00:03:32,751
+Rewarding the answer
+instead of the method.
+
+58
+00:03:33,131 --> 00:03:35,879
+And changing the reward without
+versioning the environment.
+
+59
+00:03:36,983 --> 00:03:42,616
+In summary, a research agent needs a
+simulator and, above all, verifiable
+
+60
+00:03:42,616 --> 00:03:47,708
+tasks: statement, isolated execution,
+reference metric and rubric.
+
+61
+00:03:48,088 --> 00:03:51,119
+In our harness, the rubric
+caught both a cheat and
+
+62
+00:03:51,119 --> 00:03:53,906
+an incorrect algorithm
+that passed the metric.
+
+63
+00:03:54,286 --> 00:03:57,688
+Designing the reward is designing
+what the agent will learn.
+
+64
+00:03:58,817 --> 00:04:03,532
+To practice: compute the reward of a
+solution that runs without reproducing.
+
+65
+00:04:03,912 --> 00:04:08,029
+Explain why simultaneous updating
+gets the magnetizations right.
+
+66
+00:04:08,409 --> 00:04:10,608
+Propose the metric that
+would have caught it.
+
+67
+00:04:10,988 --> 00:04:13,314
+And explain why execution
+must be isolated.

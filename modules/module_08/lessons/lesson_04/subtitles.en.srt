@@ -1,0 +1,263 @@
+1
+00:00:00,350 --> 00:00:02,182
+Lesson 8.4.
+
+2
+00:00:02,562 --> 00:00:03,162
+K-FAC.
+
+3
+00:00:04,283 --> 00:00:08,650
+Even with tricks, the full natural
+gradient is expensive for large networks.
+
+4
+00:00:09,030 --> 00:00:13,322
+K-FAC, proposed by Martens and Grosse
+in two thousand fifteen, makes two
+
+5
+00:00:13,322 --> 00:00:18,151
+approximations: it ignores correlations
+between different layers, and within each
+
+6
+00:00:18,151 --> 00:00:22,681
+layer it factors the curvature as a
+Kronecker product of two small matrices.
+
+7
+00:00:23,061 --> 00:00:28,093
+The result is a second-order optimizer
+almost as cheap as a first-order one.
+
+8
+00:00:29,217 --> 00:00:33,384
+In a linear layer, the gradient
+with respect to the weights is the
+
+9
+00:00:33,384 --> 00:00:37,552
+outer product of the input activation
+a and the output gradient g.
+
+10
+00:00:37,932 --> 00:00:44,476
+The layer's Fisher block is then the
+expected value of (a aᵀ) ⊗ (g gᵀ).
+
+11
+00:00:44,856 --> 00:00:47,675
+K-FAC assumes activations
+and gradients are
+
+12
+00:00:47,675 --> 00:00:50,364
+independent and approximates it by A ⊗ G,
+
+13
+00:00:50,744 --> 00:00:56,238
+with A = E[a aᵀ] and G = E[g gᵀ].
+
+14
+00:00:57,350 --> 00:00:59,105
+The advantage is in the inversion.
+
+15
+00:00:59,485 --> 00:01:05,972
+The inverse of a Kronecker product is the
+product of the inverses, and applying it
+
+16
+00:01:05,972 --> 00:01:11,588
+to a gradient is G⁻¹ ∇W A⁻¹: two
+small matrices instead of a giant one.
+
+17
+00:01:11,968 --> 00:01:16,464
+For a layer with twenty inputs and
+ten outputs, instead of inverting a
+
+18
+00:01:16,464 --> 00:01:20,639
+two-hundred-by-two-hundred matrix
+one inverts a twenty and a ten.
+
+19
+00:01:21,019 --> 00:01:23,499
+For thousand-by-thousand
+layers, one goes from a
+
+20
+00:01:23,499 --> 00:01:26,548
+million-by-million matrix to
+two thousand-by-thousand ones.
+
+21
+00:01:27,650 --> 00:01:30,922
+We measure it on a softmax layer
+with five hundred examples.
+
+22
+00:01:31,302 --> 00:01:33,878
+The Kronecker approximation
+differs from the
+
+23
+00:01:33,878 --> 00:01:36,336
+exact block by twenty-one percent in norm.
+
+24
+00:01:36,716 --> 00:01:42,962
+But what matters is the step direction:
+K-FAC's natural gradient has a cosine of
+
+25
+00:01:42,962 --> 00:01:48,428
+0.94 with the exact one, while the
+ordinary gradient only reaches 0.5.
+
+26
+00:01:48,808 --> 00:01:52,590
+The matrix is approximate;
+the direction is almost right.
+
+27
+00:01:53,717 --> 00:01:57,201
+In practice, the factors
+A and G are estimated with
+
+28
+00:01:57,201 --> 00:02:01,231
+exponential moving averages
+across iterations, and inverted
+
+29
+00:02:01,231 --> 00:02:04,852
+only every so many steps,
+because they change slowly.
+
+30
+00:02:05,232 --> 00:02:10,788
+Damping is split between the two factors,
+adding a square root of λ to each.
+
+31
+00:02:11,168 --> 00:02:15,177
+That way, the extra cost compared
+with Adam is small and amortized.
+
+32
+00:02:16,283 --> 00:02:21,453
+Modern layers share weights: a
+convolution uses the same filter at every
+
+33
+00:02:21,453 --> 00:02:25,833
+position, and a transformer,
+the same matrix for every token.
+
+34
+00:02:26,213 --> 00:02:29,590
+Eschenhagen and colleagues
+proposed two variants.
+
+35
+00:02:29,970 --> 00:02:33,684
+K-FAC expand treats each position
+as one more example in the batch.
+
+36
+00:02:34,064 --> 00:02:37,862
+K-FAC reduce first sums
+activations and gradients over the
+
+37
+00:02:37,862 --> 00:02:41,463
+positions and then forms the
+factors, which is cheaper.
+
+38
+00:02:41,843 --> 00:02:46,308
+Both are exact in particular linear
+cases and work well in practice.
+
+39
+00:02:47,417 --> 00:02:52,177
+K-FAC is used to train convolutional
+networks and transformers with second-order
+
+40
+00:02:52,177 --> 00:02:56,641
+information, and also for Laplace
+approximations that estimate uncertainty.
+
+41
+00:02:57,021 --> 00:03:00,432
+Its bottleneck is inverting the
+factors, and that is what the
+
+42
+00:03:00,432 --> 00:03:03,396
+thermodynamic version of
+the next lesson accelerates.
+
+43
+00:03:04,517 --> 00:03:08,869
+Common mistakes: forgetting that K-FAC
+ignores curvature between layers.
+
+44
+00:03:09,249 --> 00:03:11,672
+Applying the factors in the wrong order.
+
+45
+00:03:12,052 --> 00:03:13,973
+Damping only one of the two.
+
+46
+00:03:14,353 --> 00:03:17,808
+And mixing the statistics of
+the expand and reduce variants.
+
+47
+00:03:18,917 --> 00:03:22,875
+In summary: K-FAC approximates
+each curvature block by a Kronecker
+
+48
+00:03:22,875 --> 00:03:26,773
+product of the activation covariance
+and the gradient covariance,
+
+49
+00:03:26,773 --> 00:03:29,892
+which turns one giant
+inversion into two small ones.
+
+50
+00:03:30,272 --> 00:03:34,498
+In the example, the matrix has
+a twenty-one percent error, but
+
+51
+00:03:34,498 --> 00:03:38,521
+the step direction has a cosine
+of 0.94 with the exact one.
+
+52
+00:03:39,650 --> 00:03:43,280
+To practice: prove the inverse
+of the Kronecker product.
+
+53
+00:03:43,660 --> 00:03:46,092
+Verify the identity with vectorization.
+
+54
+00:03:46,472 --> 00:03:48,743
+Compute the cost of inverting the factors.
+
+55
+00:03:49,123 --> 00:03:51,431
+And explain the independence assumption.

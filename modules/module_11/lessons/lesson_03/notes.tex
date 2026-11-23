@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.3}{Termalizadores: compilar programas estocásticos}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} el núcleo termodinámico de un EBM fijado; la compilación variacional; la acumulación del error en programas
+profundos.
+\textbf{Prerrequisitos:} 4.8, 11.2.
+
+\section{Núcleo termodinámico}
+Amico et al.\ (2026): EBM $E_\phi$ sobre espines $(x,w,y)$ (entradas, ocultos, salidas). Se fijan las entradas, se termaliza y se leen las salidas:
+\[\tilde P^F(y\mid x;\phi)=\frac{\sum_we^{-E_\phi(x,w,y)}}{\sum_{w,y'}e^{-E_\phi(x,w,y')}},\]
+un núcleo de Markov válido. Calibre: $E\to E+\lambda(x)$ no cambia el núcleo.
+
+\section{Compilación variacional}
+$\min_\phi\mathbb E_x D_{\mathrm{KL}}(P(\cdot\mid x)\,\|\,\tilde P^F_\phi(\cdot\mid x))$ (KL hacia adelante, máxima verosimilitud condicional), cada compuerta por separado.
+Gradiente: $-\nabla_\phi\log\tilde P^F=\mathbb E_{w,y'\mid x}[\Phi_\phi]-\mathbb E_{w\mid x,y}[\Phi_\phi]$, $\Phi_\phi=-\nabla_\phi E_\phi$: fase negativa (solo $x$ fijado) menos
+fase positiva ($x$ e $y$ fijados), estimadas con barridos de Gibbs.
+
+\section{Un termalizador pequeño \evS}
+Núcleo objetivo aleatorio de 2 bits a 2 bits, máquina de Boltzmann con gradientes exactos por enumeración (\texttt{datos/termalizador.py}). TV media: $0{,}221$ sin ocultos,
+$0{,}012$ con 1, $\approx10^{-4}$ con 2 (con 4--6 ocultos, $\sim10^{-3}$, residuo de optimización). Con 4 ocultos y tope $|J|\le J_{\max}$: $0{,}201$ ($0{,}25$),
+$0{,}105$ ($0{,}5$), $0{,}020$ (1), $0{,}003$ (3).
+
+\section{Errores a través de la profundidad}
+Regla de la cadena: $D_{\mathrm{KL}}(P\,\|\,\tilde P_\phi)=\sum_\ell\varepsilon_\ell$ sobre trayectorias; por procesamiento de datos, cualquier lectura tiene error menor o igual. En el peor caso,
+crecimiento lineal con la profundidad. Si los núcleos contraen (coeficiente de Dobrushin $\rho\le\rho_0<1$): $\tilde\delta_L\le\max_\ell\iota_\ell/(1-\rho_0)$, independiente
+de $L$. Simulación propia (8 estados, error por paso $\eta=0{,}02$): con $\rho=0{,}99$, TV $0{,}018\to0{,}31$ en 30 pasos; con $\rho=0{,}85$, $\approx0{,}003$, bajo la cota
+$0{,}10$ \evS.
+
+\section{Resultados del artículo \evP}
+Simulaciones con THRML sobre un modelo del dispositivo Z1. Meta-EBM (Ising de tres cuerpos, 12 espines): error estacionario $0{,}46\to2{,}4\times10^{-2}$ al relajar el tope
+de acoplamiento. Diseño experimental gaussiano: RMSE $0{,}259$ (compilado), $0{,}260$ (posterior exacto), $0{,}305$ (al azar). Advertencias de los autores: todo programa
+compilado es aproximado (rangos de acoplamiento, topología, residuos de optimización, termalización finita); aún sin validación en un chip físico.
+
+\begin{aplicacion}
+Escribir en torx, compilar cada compuerta, repartir ocultos y topes, validar por compuerta y luego en la observable de la tarea; ajuste opcional sobre trayectorias con
+REINFORCE, vigilando el \emph{reward hacking}.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Esperar expresividad sin ocultos. \quad Ignorar topes y topología.
+\item Confiar solo en el error por compuerta. \quad Presentar simulación como evidencia de hardware.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{therm} M. Amico et al., Thermalizing stochastic programs, arXiv:2608.01615 (2026).
+\bibitem{psc} G. Verdon et al., A framework for stochastic differentiable programming, arXiv:2608.01612 (2026).
+\bibitem{cd} G. E. Hinton, Training products of experts by minimizing contrastive divergence, \emph{Neural Comput.} 14, 1771 (2002).
+\end{thebibliography}
+\end{document}

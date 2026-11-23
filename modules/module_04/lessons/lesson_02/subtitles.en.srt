@@ -1,0 +1,278 @@
+1
+00:00:00,350 --> 00:00:02,041
+Lesson 4.2.
+
+2
+00:00:02,421 --> 00:00:03,703
+The Ising model.
+
+3
+00:00:04,817 --> 00:00:09,154
+If we had to choose a single model for
+this course, it would be the Ising model.
+
+4
+00:00:09,534 --> 00:00:13,481
+Spins that are plus one or
+minus one, coupled in pairs.
+
+5
+00:00:13,861 --> 00:00:17,052
+It is the native program of
+a pbit chip, the heart of
+
+6
+00:00:17,052 --> 00:00:20,002
+Hopfield networks and
+Boltzmann machines, and the
+
+7
+00:00:20,002 --> 00:00:23,435
+language in which many
+optimization problems are written.
+
+8
+00:00:24,550 --> 00:00:27,298
+Think of a magnet as a
+lattice of tiny compasses.
+
+9
+00:00:27,678 --> 00:00:29,828
+Each one prefers to
+point the same way as its
+
+10
+00:00:29,828 --> 00:00:31,834
+neighbors, because that lowers the energy.
+
+11
+00:00:32,214 --> 00:00:34,327
+Temperature shakes them at random.
+
+12
+00:00:34,707 --> 00:00:37,775
+At low temperature order
+wins and large aligned
+
+13
+00:00:37,775 --> 00:00:41,039
+domains appear; at high
+temperature disorder wins.
+
+14
+00:00:41,419 --> 00:00:45,763
+Between the two regimes there is an
+abrupt change: a phase transition.
+
+15
+00:00:46,883 --> 00:00:54,771
+The energy is E = −Σ
+J_ij s_i s_j − Σ h_i s_i.
+
+16
+00:00:55,151 --> 00:00:59,770
+A positive coupling rewards
+aligned spins: it is ferromagnetic.
+
+17
+00:01:00,150 --> 00:01:03,979
+A negative one rewards opposite
+spins: it is antiferromagnetic.
+
+18
+00:01:04,359 --> 00:01:07,462
+The field h_i pushes
+each spin toward a value.
+
+19
+00:01:07,842 --> 00:01:13,729
+What each spin feels is its local
+field, u_i = Σ_j J_ij s_j + h_i, and we
+
+20
+00:01:13,729 --> 00:01:18,889
+will see that a pbit is exactly
+a spin responding to that field.
+
+21
+00:01:20,017 --> 00:01:22,618
+Let's simulate a thirty-two by thirty-two
+
+22
+00:01:22,618 --> 00:01:25,537
+square lattice with
+coupling one and no field.
+
+23
+00:01:25,917 --> 00:01:29,836
+At temperature 1.5 almost
+all spins point the same way.
+
+24
+00:01:30,216 --> 00:01:34,312
+Near 2.27 domains of all sizes appear.
+
+25
+00:01:34,691 --> 00:01:36,826
+At 3.5 the pattern is noise.
+
+26
+00:01:37,206 --> 00:01:43,150
+The mean magnetization falls from
+one to zero around the critical
+
+27
+00:01:43,150 --> 00:01:49,004
+temperature, which Onsager computed
+exactly: T_c = 2/ln(1 + √2).
+
+28
+00:01:50,117 --> 00:01:54,747
+Now let's put three spins on a triangle
+with antiferromagnetic couplings.
+
+29
+00:01:55,127 --> 00:01:58,294
+Each pair wants to be opposite,
+but with three spins it
+
+30
+00:01:58,294 --> 00:02:01,232
+is impossible: at least
+one pair stays unsatisfied.
+
+31
+00:02:01,612 --> 00:02:04,205
+That is called frustration,
+and it produces
+
+32
+00:02:04,205 --> 00:02:06,618
+many ground states with the same energy.
+
+33
+00:02:06,998 --> 00:02:11,142
+If the couplings are random
+across a whole lattice, we have a
+
+34
+00:02:11,142 --> 00:02:15,150
+spin glass: a rugged landscape
+with very many local minima.
+
+35
+00:02:15,530 --> 00:02:19,615
+Finding its global minimum is,
+in general, a hard problem.
+
+36
+00:02:20,717 --> 00:02:22,644
+Let's compare simulation and theory.
+
+37
+00:02:23,024 --> 00:02:26,679
+The exact critical temperature is 2.269.
+
+38
+00:02:27,059 --> 00:02:31,223
+At temperature two,
+Onsager's formula gives a
+
+39
+00:02:31,223 --> 00:02:36,869
+magnetization of 0.911, and the
+Gibbs simulation gives 0.913.
+
+40
+00:02:37,249 --> 00:02:42,232
+At 1.5, 0.986 versus 0.987.
+
+41
+00:02:42,612 --> 00:02:45,791
+Near the critical temperature
+the finite lattice rounds
+
+42
+00:02:45,791 --> 00:02:48,509
+off the transition: it
+is a finite-size effect.
+
+43
+00:02:49,617 --> 00:02:54,967
+The Ising model is the program of pbit
+chips, the language of many optimization
+
+44
+00:02:54,967 --> 00:02:59,572
+problems, and the basis of Hopfield
+memories and Boltzmann machines.
+
+45
+00:02:59,952 --> 00:03:03,371
+And near the critical
+temperature, as we will
+
+46
+00:03:03,371 --> 00:03:06,487
+see in lesson 4.4, sampling becomes slow.
+
+47
+00:03:07,617 --> 00:03:11,134
+Common mistakes: getting
+the coupling sign wrong.
+
+48
+00:03:11,514 --> 00:03:13,092
+Counting each pair twice.
+
+49
+00:03:13,472 --> 00:03:16,443
+Expecting an abrupt
+transition in a finite system.
+
+50
+00:03:16,823 --> 00:03:19,228
+And forgetting that the
+one-dimensional chain
+
+51
+00:03:19,228 --> 00:03:21,473
+has no transition at positive temperature.
+
+52
+00:03:22,583 --> 00:03:28,351
+In summary: the Ising model has binary
+spins, pairwise couplings and fields.
+
+53
+00:03:28,731 --> 00:03:35,409
+In two dimensions it has an
+order–disorder transition at T_c ≈ 2.27.
+
+54
+00:03:35,789 --> 00:03:39,127
+And with mixed-sign couplings
+frustration appears,
+
+55
+00:03:39,127 --> 00:03:42,130
+creating rugged landscapes
+and hard problems.
+
+56
+00:03:43,250 --> 00:03:45,751
+To practice: compute a local field.
+
+57
+00:03:46,131 --> 00:03:49,320
+Find the ground states of
+the frustrated triangle.
+
+58
+00:03:49,700 --> 00:03:51,599
+Evaluate Onsager's formula.
+
+59
+00:03:51,979 --> 00:03:55,289
+And explain why the one-dimensional
+chain does not order.

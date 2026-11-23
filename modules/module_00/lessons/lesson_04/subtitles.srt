@@ -1,0 +1,480 @@
+1
+00:00:00,350 --> 00:00:02,068
+Lección 0.4.
+
+2
+00:00:02,448 --> 00:00:04,130
+Repaso de álgebra lineal.
+
+3
+00:00:05,250 --> 00:00:09,472
+Casi todos los algoritmos termodinámicos
+de este curso terminan en una matriz.
+
+4
+00:00:09,852 --> 00:00:12,821
+El solucionador lineal
+termodinámico relaja un
+
+5
+00:00:12,821 --> 00:00:15,596
+sistema cuya dinámica
+la fija una matriz A.
+
+6
+00:00:15,976 --> 00:00:18,589
+Su velocidad la limita
+el número de condición.
+
+7
+00:00:18,969 --> 00:00:22,433
+El gradiente natural
+termodinámico usa la identidad de
+
+8
+00:00:22,433 --> 00:00:25,962
+Woodbury, y el método K-FAC
+usa productos de Kronecker.
+
+9
+00:00:26,342 --> 00:00:30,188
+En esta lección repasamos esas
+herramientas con una mirada geométrica.
+
+10
+00:00:31,317 --> 00:00:34,568
+Una matriz de dos por dos es
+una transformación del plano.
+
+11
+00:00:34,948 --> 00:00:38,826
+Mira lo que le hace al círculo
+unitario: lo convierte en una elipse.
+
+12
+00:00:39,206 --> 00:00:42,080
+Si la matriz es simétrica,
+existen dos direcciones
+
+13
+00:00:42,080 --> 00:00:44,783
+perpendiculares que solo
+se estiran, sin girar.
+
+14
+00:00:45,163 --> 00:00:48,665
+Si además es definida positiva,
+los dos estiramientos son
+
+15
+00:00:48,665 --> 00:00:51,738
+positivos: la matriz nunca
+invierte una dirección.
+
+16
+00:00:52,118 --> 00:00:55,834
+Otra forma de verlo: la
+función ½ xᵀ A x es un
+
+17
+00:00:55,834 --> 00:00:59,065
+cuenco con un único mínimo en el origen.
+
+18
+00:01:00,183 --> 00:01:06,109
+Los vectores propios son las direcciones
+que la matriz no gira: A v = λ v.
+
+19
+00:01:06,489 --> 00:01:09,058
+Una matriz simétrica
+tiene vectores propios
+
+20
+00:01:09,058 --> 00:01:11,268
+ortogonales y valores propios reales.
+
+21
+00:01:11,648 --> 00:01:16,110
+Por eso se descompone como A = Q
+Λ Qᵀ: primero rotamos para alinear
+
+22
+00:01:16,110 --> 00:01:20,572
+los ejes propios con los ejes
+coordenados, luego estiramos cada eje
+
+23
+00:01:20,572 --> 00:01:24,234
+por su valor propio, y al
+final deshacemos la rotación.
+
+24
+00:01:24,614 --> 00:01:27,805
+La animación aplica esos
+tres pasos uno por uno, y el
+
+25
+00:01:27,805 --> 00:01:30,573
+resultado coincide con
+aplicar A directamente.
+
+26
+00:01:31,683 --> 00:01:38,134
+El número de condición, κ = λ_max /
+λ_min, mide qué tan alargado es el cuenco.
+
+27
+00:01:38,514 --> 00:01:42,102
+Con κ cercano a uno, las curvas
+de nivel son casi círculos
+
+28
+00:01:42,102 --> 00:01:45,256
+y el descenso de gradiente
+llega directo al mínimo.
+
+29
+00:01:45,636 --> 00:01:49,368
+Con κ grande, el valle es
+estrecho: el descenso de gradiente
+
+30
+00:01:49,368 --> 00:01:53,223
+rebota de una pared a otra y
+avanza muy despacio por el fondo.
+
+31
+00:01:53,603 --> 00:01:57,821
+Las dos trayectorias que ves son cálculos
+reales con el mismo número de pasos.
+
+32
+00:01:58,201 --> 00:02:02,371
+En los algoritmos termodinámicos,
+κ aparece como el cociente entre la
+
+33
+00:02:02,371 --> 00:02:06,118
+escala de tiempo más lenta y la
+más rápida del sistema físico.
+
+34
+00:02:07,250 --> 00:02:11,175
+Consideremos la dinámica ẋ = −A x.
+
+35
+00:02:11,555 --> 00:02:17,687
+Su solución es x(t) = e^(−At)
+x₀, la exponencial de una matriz.
+
+36
+00:02:18,067 --> 00:02:23,897
+En la base propia es sencilla: cada
+componente decae como e^(−λᵢ t).
+
+37
+00:02:24,277 --> 00:02:27,219
+La componente con valor
+propio grande desaparece
+
+38
+00:02:27,219 --> 00:02:30,528
+rápido; la que tiene valor
+propio pequeño tarda mucho.
+
+39
+00:02:30,908 --> 00:02:33,845
+Por eso todas las trayectorias
+caen primero sobre el
+
+40
+00:02:33,845 --> 00:02:36,499
+eje lento y luego se
+arrastran hacia el origen.
+
+41
+00:02:36,879 --> 00:02:40,247
+El tiempo de relajación total
+lo fija el valor propio más
+
+42
+00:02:40,247 --> 00:02:43,675
+pequeño, y el paso de integración
+lo limita el más grande.
+
+43
+00:02:44,055 --> 00:02:45,870
+Su cociente es otra vez κ.
+
+44
+00:02:46,983 --> 00:02:50,847
+El producto de Kronecker B ⊗
+C construye una matriz grande
+
+45
+00:02:50,847 --> 00:02:54,844
+colocando una copia de C
+multiplicada por cada entrada de B.
+
+46
+00:02:55,224 --> 00:02:59,696
+Dos matrices de n por n
+producen una de n² por n².
+
+47
+00:03:00,076 --> 00:03:05,268
+Lo valioso es que nunca hace
+falta formarla: (B ⊗ C) vec(X) =
+
+48
+00:03:05,268 --> 00:03:10,204
+vec(C X Bᵀ), y la inversa es
+el Kronecker de las inversas.
+
+49
+00:03:10,584 --> 00:03:15,056
+Invertir dos matrices pequeñas cuesta
+muchísimo menos que invertir una grande.
+
+50
+00:03:15,436 --> 00:03:18,546
+Esta es la idea del método
+K-FAC de la unidad ocho.
+
+51
+00:03:19,650 --> 00:03:22,599
+La identidad de Woodbury
+dice cómo cambia la inversa
+
+52
+00:03:22,599 --> 00:03:25,094
+cuando sumamos una
+corrección de rango bajo.
+
+53
+00:03:25,474 --> 00:03:30,675
+Si conocemos la inversa de A, la inversa
+de A más U C V solo exige invertir una
+
+54
+00:03:30,675 --> 00:03:35,349
+matriz pequeña de tamaño k por k,
+donde k es el rango de la corrección.
+
+55
+00:03:35,729 --> 00:03:39,338
+Los bloques de colores muestran
+los tamaños: en lugar de
+
+56
+00:03:39,338 --> 00:03:42,754
+invertir algo de d por d,
+invertimos algo de k por k.
+
+57
+00:03:43,134 --> 00:03:46,506
+En aprendizaje automático, la
+matriz de curvatura suele ser
+
+58
+00:03:46,506 --> 00:03:49,936
+un múltiplo de la identidad más
+un término de rango igual al
+
+59
+00:03:49,936 --> 00:03:52,679
+tamaño del lote, y Woodbury
+la vuelve manejable.
+
+60
+00:03:53,783 --> 00:03:56,754
+Tomemos A con filas tres, uno y uno, dos.
+
+61
+00:03:57,134 --> 00:03:58,008
+Es simétrica.
+
+62
+00:03:58,388 --> 00:04:02,321
+Sus valores propios son cinco
+más o menos raíz de cinco, sobre
+
+63
+00:04:02,321 --> 00:04:06,126
+dos: unos tres coma sesenta y
+dos y uno coma treinta y ocho.
+
+64
+00:04:06,506 --> 00:04:09,500
+Ambos son positivos, así
+que es definida positiva.
+
+65
+00:04:09,880 --> 00:04:13,848
+Su número de condición es
+aproximadamente dos coma sesenta y dos.
+
+66
+00:04:14,228 --> 00:04:17,132
+El determinante es el
+producto de los valores
+
+67
+00:04:17,132 --> 00:04:20,551
+propios, cinco, y la traza
+es su suma, también cinco.
+
+68
+00:04:21,683 --> 00:04:24,431
+En el curso, el número
+de condición determinará
+
+69
+00:04:24,431 --> 00:04:27,354
+cuánto tarda el solucionador
+lineal termodinámico.
+
+70
+00:04:27,734 --> 00:04:29,922
+La exponencial de matrices describe la
+
+71
+00:04:29,922 --> 00:04:32,628
+relajación del proceso
+de Ornstein y Uhlenbeck.
+
+72
+00:04:33,008 --> 00:04:35,317
+Los productos de Kronecker son el corazón
+
+73
+00:04:35,317 --> 00:04:37,512
+de K-FAC y de su versión termodinámica.
+
+74
+00:04:37,892 --> 00:04:40,193
+Y Woodbury permite invertir matrices de
+
+75
+00:04:40,193 --> 00:04:43,025
+curvatura de rango bajo
+en el gradiente natural.
+
+76
+00:04:44,150 --> 00:04:47,613
+Estas ideas se conectan con lo
+que ya vimos y con lo que viene.
+
+77
+00:04:47,993 --> 00:04:52,330
+La covarianza de una gaussiana es una
+matriz simétrica definida positiva.
+
+78
+00:04:52,710 --> 00:04:56,613
+La brecha espectral de una cadena de
+Markov también es un valor propio.
+
+79
+00:04:56,993 --> 00:05:01,676
+El proceso de Ornstein y Uhlenbeck es la
+exponencial de matrices con ruido, y la
+
+80
+00:05:01,676 --> 00:05:06,066
+estabilidad de su integración numérica
+depende del valor propio más grande.
+
+81
+00:05:07,183 --> 00:05:08,758
+Atención a cuatro errores.
+
+82
+00:05:09,138 --> 00:05:12,702
+Simétrica no significa
+definida positiva: la matriz
+
+83
+00:05:12,702 --> 00:05:16,196
+uno, dos, dos, uno tiene
+un valor propio negativo.
+
+84
+00:05:16,576 --> 00:05:19,895
+Que todas las entradas sean
+positivas tampoco garantiza nada.
+
+85
+00:05:20,275 --> 00:05:23,029
+La exponencial de una
+suma no es el producto de
+
+86
+00:05:23,029 --> 00:05:25,490
+exponenciales si las matrices no conmutan.
+
+87
+00:05:25,870 --> 00:05:28,246
+Y nunca formes el producto de Kronecker
+
+88
+00:05:28,246 --> 00:05:31,475
+explícitamente: usa la
+identidad con el operador vec.
+
+89
+00:05:32,583 --> 00:05:37,265
+En resumen: una matriz simétrica
+definida positiva estira el
+
+90
+00:05:37,265 --> 00:05:41,557
+espacio a lo largo de ejes
+ortogonales, con A = Q Λ Qᵀ.
+
+91
+00:05:41,937 --> 00:05:44,238
+El número de condición mide el cociente
+
+92
+00:05:44,238 --> 00:05:46,716
+entre la escala más lenta y la más rápida.
+
+93
+00:05:47,096 --> 00:05:51,246
+La exponencial de matrices resuelve
+la relajación lineal, y Kronecker y
+
+94
+00:05:51,246 --> 00:05:55,044
+Woodbury convierten inversiones
+gigantes en inversiones pequeñas.
+
+95
+00:05:56,150 --> 00:05:59,739
+Comprueba lo aprendido: demuestra
+que una matriz simétrica
+
+96
+00:05:59,739 --> 00:06:03,390
+definida positiva tiene valores
+propios reales y positivos.
+
+97
+00:06:03,770 --> 00:06:08,108
+Escribe la inversa de un producto de
+Kronecker y su acción sobre vec de X.
+
+98
+00:06:08,488 --> 00:06:12,589
+Resuelve la relajación con una matriz
+diagonal de valores uno y cien.
+
+99
+00:06:12,969 --> 00:06:15,506
+Y usa Woodbury para invertir lambda por la
+
+100
+00:06:15,506 --> 00:06:18,043
+identidad más una corrección de rango uno.

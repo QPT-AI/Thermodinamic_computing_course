@@ -1,0 +1,289 @@
+1
+00:00:00,350 --> 00:00:01,978
+Lección 3.5.
+
+2
+00:00:02,358 --> 00:00:04,959
+Diseño de protocolos y
+aceleración de reloj.
+
+3
+00:00:06,083 --> 00:00:10,663
+Para resolver un problema con un computador
+termodinámico hay que cargarlo: llevar
+
+4
+00:00:10,663 --> 00:00:14,795
+el hardware desde un estado inicial a
+la energía que codifica el problema.
+
+5
+00:00:15,176 --> 00:00:17,322
+¿Conviene hacerlo de golpe o despacio?
+
+6
+00:00:17,702 --> 00:00:20,501
+¿Y si queremos ir más rápido,
+qué tenemos que pagar?
+
+7
+00:00:20,881 --> 00:00:23,738
+En esta lección vemos dos
+herramientas de diseño:
+
+8
+00:00:23,738 --> 00:00:26,245
+la carga gradual y la
+aceleración de reloj.
+
+9
+00:00:27,350 --> 00:00:30,925
+Endurezcamos otra vez una
+trampa de rigidez uno a cuatro.
+
+10
+00:00:31,305 --> 00:00:34,676
+Si lo hacemos de golpe, la
+partícula no tiene tiempo de
+
+11
+00:00:34,676 --> 00:00:38,107
+reaccionar y el trabajo es
+uno coma cinco k_B T, más del
+
+12
+00:00:38,107 --> 00:00:41,049
+doble de la energía libre,
+cero coma seis nueve.
+
+13
+00:00:41,429 --> 00:00:45,281
+Si lo hacemos en un tiempo τ,
+el trabajo baja: uno coma cero
+
+14
+00:00:45,281 --> 00:00:49,261
+ocho con τ igual a medio, cero
+coma ochenta y tres con τ igual
+
+15
+00:00:49,261 --> 00:00:52,535
+a dos, cero coma setenta
+y tres con τ igual a ocho.
+
+16
+00:00:52,915 --> 00:00:56,363
+Para tiempos largos, el
+trabajo disipado decae como uno
+
+17
+00:00:56,363 --> 00:00:59,373
+sobre τ, como predicen
+los límites de velocidad.
+
+18
+00:01:00,483 --> 00:01:01,929
+Ahora la pregunta inversa:
+
+19
+00:01:02,309 --> 00:01:04,829
+¿cómo acelerar un cómputo
+sin cambiar lo que hace?
+
+20
+00:01:05,209 --> 00:01:08,159
+Tomemos la ecuación de
+Langevin y multipliquemos el
+
+21
+00:01:08,159 --> 00:01:11,282
+potencial por un factor λ,
+junto con la intensidad del
+
+22
+00:01:11,282 --> 00:01:14,751
+ruido, como si subiéramos la
+temperatura en el mismo factor.
+
+23
+00:01:15,131 --> 00:01:18,981
+Si además medimos el tiempo
+con un reloj λ veces más
+
+24
+00:01:18,981 --> 00:01:23,127
+rápido, s = λ t, la ecuación
+es exactamente la original.
+
+25
+00:01:23,507 --> 00:01:27,999
+Las trayectorias son las mismas, solo
+que recorridas λ veces más deprisa.
+
+26
+00:01:29,117 --> 00:01:29,874
+¿Qué se paga?
+
+27
+00:01:30,254 --> 00:01:33,270
+Todas las energías se
+multiplican por λ, así que
+
+28
+00:01:33,270 --> 00:01:36,036
+el calor disipado por
+operación crece por λ.
+
+29
+00:01:36,416 --> 00:01:38,977
+Como además la operación dura λ veces
+
+30
+00:01:38,977 --> 00:01:41,955
+menos, la potencia
+crece por λ al cuadrado.
+
+31
+00:01:42,335 --> 00:01:45,758
+Pero la producción de entropía,
+que es calor dividido por
+
+32
+00:01:45,758 --> 00:01:48,642
+temperatura, no cambia,
+y la eficiencia tampoco.
+
+33
+00:01:49,022 --> 00:01:53,230
+Las dos trayectorias que ves son
+la misma realización de ruido: la
+
+34
+00:01:53,230 --> 00:01:57,567
+rápida, con λ = 4, llega al mismo
+resultado en un cuarto del tiempo.
+
+35
+00:01:58,683 --> 00:02:02,534
+Supongamos un cómputo que disipa
+diez k_B T en un microsegundo.
+
+36
+00:02:02,914 --> 00:02:08,732
+Con aceleración de reloj λ = 10, tarda
+cien nanosegundos y disipa cien k_B T.
+
+37
+00:02:09,112 --> 00:02:12,535
+La potencia pasa de diez
+k_B T por microsegundo a
+
+38
+00:02:12,535 --> 00:02:15,539
+mil k_B T por microsegundo:
+cien veces más.
+
+39
+00:02:15,919 --> 00:02:18,370
+La entropía producida sigue siendo diez.
+
+40
+00:02:18,750 --> 00:02:22,624
+En hardware real, la aceleración está
+limitada por el ancho de banda de
+
+41
+00:02:22,624 --> 00:02:25,898
+los componentes y por la potencia
+que el chip puede disipar.
+
+42
+00:02:27,017 --> 00:02:30,331
+En la práctica, cargar el
+problema con una rampa reduce la
+
+43
+00:02:30,331 --> 00:02:33,360
+disipación, y la aceleración
+de reloj permite cambiar
+
+44
+00:02:33,360 --> 00:02:36,846
+velocidad por potencia sin
+alterar la producción de entropía.
+
+45
+00:02:37,226 --> 00:02:40,656
+En el laboratorio cuatro
+verificarás esas leyes de escala y
+
+46
+00:02:40,656 --> 00:02:43,855
+buscarás el tiempo de carga
+que maximiza la eficiencia.
+
+47
+00:02:44,983 --> 00:02:49,390
+Cuidado: escalar solo el potencial
+sin el ruido cambia la distribución.
+
+48
+00:02:49,770 --> 00:02:52,490
+Que la entropía no cambie no significa que
+
+49
+00:02:52,490 --> 00:02:55,792
+acelerar sea gratis: el
+calor y la potencia crecen.
+
+50
+00:02:56,172 --> 00:02:58,491
+El hardware tiene un
+ancho de banda finito.
+
+51
+00:02:58,871 --> 00:03:01,347
+Y una carga gradual sigue disipando algo.
+
+52
+00:03:02,450 --> 00:03:04,944
+En resumen: cargar un problema de forma
+
+53
+00:03:04,944 --> 00:03:07,885
+gradual reduce la
+disipación como uno sobre τ.
+
+54
+00:03:08,265 --> 00:03:12,984
+La aceleración de reloj escala
+energías y ruido por λ, y recorre las
+
+55
+00:03:12,984 --> 00:03:17,217
+mismas trayectorias λ veces más
+rápido: el calor crece por λ,
+
+56
+00:03:17,597 --> 00:03:20,433
+la potencia por λ al
+cuadrado, y la producción
+
+57
+00:03:20,433 --> 00:03:22,838
+de entropía y la eficiencia no cambian.
+
+58
+00:03:23,950 --> 00:03:27,598
+Para practicar: explica la
+aceleración de reloj, demuestra el
+
+59
+00:03:27,598 --> 00:03:31,186
+cambio de variable, calcula el
+trabajo de una carga súbita y
+
+60
+00:03:31,186 --> 00:03:34,236
+aplica las leyes de escala
+con lambda igual a tres.

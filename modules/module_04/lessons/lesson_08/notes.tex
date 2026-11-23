@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.8}{RBMs y divergencia contrastiva}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} la RBM y sus condicionales factorizadas; CD-$k$ y CD persistente; redes de creencia profundas,
+vigilia--sueño y máquinas de Helmholtz.
+\textbf{Prerrequisitos:} 4.7 (regla de aprendizaje), 4.3 (Gibbs por bloques).
+
+\section{La máquina restringida}
+Visibles $v\in\{0,1\}^{n_v}$, ocultas $h\in\{0,1\}^{n_h}$, conexiones solo entre capas:
+\begin{equation}
+E(v,h)=-v^\top Wh-b^\top v-c^\top h,\qquad p(h_j=1\mid v)=\sigma(c_j+v^\top W_{:j}),\qquad p(v_i=1\mid h)=\sigma(b_i+W_{i:}h).
+\end{equation}
+El grafo es bipartito (2 colores): el Gibbs por bloques alterna capas en paralelo. Sumando las ocultas, $p(v)=e^{-F(v)}/Z$ con energía libre
+$F(v)=-b^\top v-\sum_j\ln(1+e^{c_j+v^\top W_{:j}})$; para $n_v$ pequeño, la log-verosimilitud exacta se calcula enumerando $2^{n_v}$ estados.
+
+\section{Divergencia contrastiva}
+La regla exacta es $\Delta W\propto\langle vh^\top\rangle_{\text{datos}}-\langle vh^\top\rangle_{\text{modelo}}$. CD-$k$ \cite{cd} sustituye el término del modelo por
+las estadísticas tras $k$ pasos de Gibbs iniciados en los datos ($v^{(0)}\to h^{(0)}\to v^{(1)}\to\dots$). Es sesgada para $k$ finito, con poca
+varianza y muy barata; $k\to\infty$ recupera el gradiente exacto. En CD persistente (PCD) la cadena no se reinicia: requiere tasas de aprendizaje
+pequeñas o decrecientes.
+\begin{ejemplo}
+Barras y franjas $3\times3$ (14 patrones), RBM $9\times12$, $\eta=0{,}3$, lote completo, 6000 pasos \evS. Óptimo $-\ln14=-2{,}64$.
+CD-1 alcanza $-3{,}15$ y CD-10 $-2{,}83$. Con $\eta=0{,}3$, PCD diverge: las cadenas persistentes no siguen al modelo.
+\end{ejemplo}
+\begin{ejemplo}
+Un paso de CD-1: $\langle v_ih_j\rangle_{\text{datos}}=0{,}62$, $\langle v_ih_j\rangle_1=0{,}41$, $\eta=0{,}3$: $\Delta W_{ij}=0{,}063$.
+\end{ejemplo}
+
+\section{Redes profundas y parientes}
+Apilando RBMs (las ocultas de una son las visibles de la siguiente) y entrenando capa por capa se obtiene una red de creencia profunda \cite{dbn},
+que en 2006 mostró que las redes profundas podían entrenarse. Vigilia--sueño y máquinas de Helmholtz usan una red de reconocimiento $q(h\mid v)$ y
+una generativa $p(v\mid h)$ entrenadas por turnos.
+
+\begin{aplicacion}
+Bipartito $=$ 2 colores: ideal para hardware de pbits (una capa por fase). Aprendizaje de características, filtrado colaborativo, estados cuánticos
+neuronales; RBMs gaussiano--Bernoulli y categóricas. Laboratorio L6.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Creer que CD-$k$ sigue el gradiente verdadero. \quad PCD con tasa grande: diverge.
+\item Muestrear $h$ en la fase positiva (usar probabilidades). \quad Vigilar error de reconstrucción en lugar de verosimilitud.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[16]{hinton} G. E. Hinton, A practical guide to training restricted Boltzmann machines, 2010.
+\bibitem{cd} G. E. Hinton, Training products of experts by minimizing contrastive divergence, Neural Computation 14, 1771 (2002).
+\bibitem{dbn} G. E. Hinton, S. Osindero y Y.-W. Teh, A fast learning algorithm for deep belief nets, Neural Computation 18, 1527 (2006).
+\end{thebibliography}
+\end{document}

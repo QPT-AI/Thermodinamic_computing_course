@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{11.2}{Torx: programación estocástica diferenciable}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba $\mathrm{PNOT}(p)$ y su acción sobre $(\alpha,\beta)^\top$.
+\item (B) Demuestre que $\sigma(\theta^-)=\sigma(\theta)^2$ para $\theta^-=-\ln((1+e^{-\theta})^2-1)$.
+\item (B) ¿Por qué el desplazamiento de parámetro conviene al hardware?
+\item (B) ¿Por qué PIsing por aristas no es Gibbs?
+\item (I) Demuestre $G(\theta)-G(\theta^-)=\sigma(1-\sigma)(B-I)$.
+\item (I) Calcule la distribución estacionaria de PIsing con $J=1$, $h=0$, $\beta=2$ y compárela con $0{,}491$.
+\item (A) Ejecute \texttt{psc\_minimo.py} variando $S$ y compare la varianza de ambos estimadores; ¿escala como $1/S$?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\left(\begin{smallmatrix}1-p&p\\p&1-p\end{smallmatrix}\right)$; $((1-p)\alpha+p\beta,\ p\alpha+(1-p)\beta)$.
+
+\textbf{E2.} $e^{-\theta^-}=(1+e^{-\theta})^2-1\Rightarrow\sigma(\theta^-)=1/(1+e^{-\theta})^2=\sigma(\theta)^2$.
+
+\textbf{E3.} Solo requiere ejecutar el circuito y leer la salida, sin observar estados intermedios.
+
+\textbf{E4.} Cada compuerta equilibra un par ignorando a los demás vecinos; la composición tiene otra distribución estacionaria.
+
+\textbf{E5.} $G(\theta)-G(\theta^-)=(\sigma-\sigma^2)(B-I)$.
+
+\textbf{E6.} $e^{2}/(2e^{2}+2e^{-2})=0{,}4910$.
+
+\textbf{E7.} Sí: la varianza de un promedio de $S$ muestras independientes escala como $1/S$.
+\end{solucion}
+\end{document}

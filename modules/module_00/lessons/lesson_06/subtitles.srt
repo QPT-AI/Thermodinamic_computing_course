@@ -1,0 +1,403 @@
+1
+00:00:00,350 --> 00:00:01,956
+Lección 0.6.
+
+2
+00:00:02,336 --> 00:00:05,193
+Análisis de Fourier en
+grupos abelianos finitos.
+
+3
+00:00:06,317 --> 00:00:10,505
+El algoritmo de Shor y el algoritmo
+termodinámico de búsqueda de orden
+
+4
+00:00:10,505 --> 00:00:14,633
+por difusión, que estudiaremos en
+la unidad siete, comparten un mismo
+
+5
+00:00:14,633 --> 00:00:18,223
+lenguaje: el análisis de Fourier
+sobre los enteros módulo r.
+
+6
+00:00:18,603 --> 00:00:22,313
+Shor amplifica picos de Fourier
+con interferencia cuántica; la
+
+7
+00:00:22,313 --> 00:00:25,664
+difusión amortigua todos los
+modos de Fourier salvo uno.
+
+8
+00:00:26,044 --> 00:00:29,220
+Para entender ambos necesitamos
+los caracteres de un
+
+9
+00:00:29,220 --> 00:00:32,397
+grupo finito y su propiedad
+clave, la ortogonalidad.
+
+10
+00:00:33,517 --> 00:00:37,005
+Los enteros módulo r son la
+aritmética de un reloj de
+
+11
+00:00:37,005 --> 00:00:40,033
+r horas: después de r
+menos uno viene el cero.
+
+12
+00:00:40,413 --> 00:00:44,471
+Pongamos esas r posiciones sobre el
+círculo unitario del plano complejo.
+
+13
+00:00:44,851 --> 00:00:49,094
+Elegimos una frecuencia k: la
+posición x se envía al punto que
+
+14
+00:00:49,094 --> 00:00:52,791
+está k por x pasos de r más
+allá en la circunferencia.
+
+15
+00:00:53,171 --> 00:00:56,795
+Con frecuencia uno, damos una
+vuelta completa al recorrer
+
+16
+00:00:56,795 --> 00:00:59,847
+el reloj; con frecuencia
+dos, damos dos vueltas.
+
+17
+00:01:00,227 --> 00:01:02,812
+Cada frecuencia es una
+onda que vive en el reloj.
+
+18
+00:01:03,917 --> 00:01:09,665
+Esa onda es un carácter:
+χ_k(x) = e^(2πikx/r).
+
+19
+00:01:10,045 --> 00:01:13,669
+Su propiedad esencial
+es que convierte sumas
+
+20
+00:01:13,669 --> 00:01:17,046
+en productos: χ_k(x + y) = χ_k(x) χ_k(y).
+
+21
+00:01:17,426 --> 00:01:21,060
+Sumar en el reloj equivale a
+componer rotaciones en el círculo.
+
+22
+00:01:21,440 --> 00:01:24,303
+Hay exactamente r
+caracteres distintos, uno
+
+23
+00:01:24,303 --> 00:01:27,100
+por cada frecuencia de cero a r menos uno.
+
+24
+00:01:27,480 --> 00:01:30,941
+El carácter de frecuencia cero
+es constante e igual a uno.
+
+25
+00:01:32,050 --> 00:01:34,477
+Ahora sumemos todos los
+valores de un carácter.
+
+26
+00:01:34,857 --> 00:01:36,730
+Cada valor es un vector unitario.
+
+27
+00:01:37,110 --> 00:01:40,563
+Si los ponemos uno tras otro,
+punta con cola, forman un
+
+28
+00:01:40,563 --> 00:01:43,576
+polígono regular que se
+cierra: la suma es cero.
+
+29
+00:01:43,956 --> 00:01:47,444
+Solo cuando la frecuencia es
+un múltiplo de r todos los
+
+30
+00:01:47,444 --> 00:01:50,995
+vectores apuntan en la misma
+dirección y la suma vale r.
+
+31
+00:01:51,375 --> 00:01:55,698
+De aquí sale la ortogonalidad: el
+producto interno de dos caracteres
+
+32
+00:01:55,698 --> 00:01:59,385
+distintos es cero, y el de un
+carácter consigo mismo es r.
+
+33
+00:02:00,517 --> 00:02:03,713
+Como los caracteres son
+r vectores ortogonales en
+
+34
+00:02:03,713 --> 00:02:06,519
+un espacio de dimensión
+r, forman una base.
+
+35
+00:02:06,899 --> 00:02:10,757
+Cualquier función sobre el reloj se
+escribe como combinación de ondas.
+
+36
+00:02:11,137 --> 00:02:15,397
+Los coeficientes son la transformada de
+
+37
+00:02:15,397 --> 00:02:19,877
+Fourier discreta, f̂(k) = Σ f(x) χ̄_k(x),
+
+38
+00:02:20,257 --> 00:02:24,944
+y la función se recupera sumando las
+ondas con esos pesos y dividiendo por r.
+
+39
+00:02:25,324 --> 00:02:29,341
+La animación construye la función
+de barras sumando una onda a la vez.
+
+40
+00:02:30,617 --> 00:02:33,352
+¿Por qué esto importa para
+el cómputo termodinámico?
+
+41
+00:02:33,732 --> 00:02:37,021
+Una caminata aleatoria en el
+ciclo es una convolución, y
+
+42
+00:02:37,021 --> 00:02:39,959
+los caracteres diagonalizan
+cualquier convolución.
+
+43
+00:02:40,339 --> 00:02:46,432
+Para la caminata perezosa, que se queda
+con probabilidad un medio y se mueve a cada
+
+44
+00:02:46,432 --> 00:02:51,645
+vecino con un cuarto, el valor propio
+del modo k es ½ (1 + cos(2πk/r)).
+
+45
+00:02:52,025 --> 00:02:54,566
+Observa la probabilidad
+de un caminante que
+
+46
+00:02:54,566 --> 00:02:56,990
+parte del cero: se difunde por el anillo.
+
+47
+00:02:57,370 --> 00:03:00,527
+En la representación de
+Fourier, cada modo decae con
+
+48
+00:03:00,527 --> 00:03:03,441
+su propio factor, y solo
+el modo cero sobrevive.
+
+49
+00:03:03,821 --> 00:03:08,305
+Esta distribución es el núcleo de calor
+discreto, y su valor en el origen, la
+
+50
+00:03:08,305 --> 00:03:12,964
+probabilidad de regreso, es el promedio
+de las potencias de los valores propios.
+
+51
+00:03:14,083 --> 00:03:20,307
+Calculemos una transformada pequeña con
+r = 4 y la función uno, dos, cero, uno.
+
+52
+00:03:20,687 --> 00:03:26,013
+Los caracteres de cuatro valores toman
+los valores uno, i, menos uno y menos i.
+
+53
+00:03:26,393 --> 00:03:29,798
+El coeficiente de frecuencia
+cero es la suma, cuatro.
+
+54
+00:03:30,178 --> 00:03:32,565
+El de frecuencia uno es uno menos i.
+
+55
+00:03:32,945 --> 00:03:37,377
+El de frecuencia dos es menos dos,
+y el de frecuencia tres, uno más i.
+
+56
+00:03:37,757 --> 00:03:42,846
+Comprobemos la igualdad de Parseval: la
+suma de cuadrados de la función es seis, y
+
+57
+00:03:42,846 --> 00:03:47,252
+la de la transformada es veinticuatro,
+que dividido por cuatro da seis.
+
+58
+00:03:48,383 --> 00:03:50,832
+En la unidad siete usaremos todo esto.
+
+59
+00:03:51,212 --> 00:03:53,995
+Shor usa una transformada
+cuántica de Fourier para
+
+60
+00:03:53,995 --> 00:03:56,332
+revelar el período de una función modular.
+
+61
+00:03:56,712 --> 00:04:00,415
+El algoritmo de difusión obtiene
+el mismo período a partir de la
+
+62
+00:04:00,415 --> 00:04:03,713
+probabilidad de regreso de
+una caminata aleatoria, que es
+
+63
+00:04:03,713 --> 00:04:07,589
+exactamente un promedio de potencias
+de valores propios de Fourier.
+
+64
+00:04:08,717 --> 00:04:12,209
+Todo grupo abeliano finito es
+un producto de grupos cíclicos,
+
+65
+00:04:12,209 --> 00:04:15,186
+y sus caracteres son productos
+de los que vimos hoy.
+
+66
+00:04:15,566 --> 00:04:19,004
+En la unidad siete aplicaremos
+esta maquinaria a grafos de
+
+67
+00:04:19,004 --> 00:04:22,739
+Cayley, y en los modelos de
+difusión de la unidad nueve veremos
+
+68
+00:04:22,739 --> 00:04:25,822
+que la difusión borra primero
+las frecuencias altas.
+
+69
+00:04:26,950 --> 00:04:30,344
+Errores frecuentes: olvidar
+el conjugado en el producto
+
+70
+00:04:30,344 --> 00:04:33,862
+interno, olvidar el factor
+uno sobre r en la transformada
+
+71
+00:04:33,862 --> 00:04:37,009
+inversa, y confundir la
+frecuencia con la posición.
+
+72
+00:04:37,389 --> 00:04:41,476
+Recuerda también que la suma
+de las raíces de la unidad vale
+
+73
+00:04:41,476 --> 00:04:45,086
+r siempre que r divida a k,
+no solo cuando k es cero.
+
+74
+00:04:46,217 --> 00:04:49,446
+En resumen: los caracteres
+de los enteros módulo r
+
+75
+00:04:49,446 --> 00:04:52,288
+son ondas que convierten
+sumas en productos.
+
+76
+00:04:52,668 --> 00:04:56,029
+Son ortogonales porque las
+raíces de la unidad suman cero.
+
+77
+00:04:56,409 --> 00:05:00,953
+Forman una base, la transformada de
+Fourier, y diagonalizan las caminatas
+
+78
+00:05:00,953 --> 00:05:05,124
+aleatorias en el ciclo, cuyos modos
+decaen con sus valores propios.
+
+79
+00:05:06,250 --> 00:05:10,960
+Para practicar: calcula la suma de las
+raíces de la unidad para cualquier k.
+
+80
+00:05:11,340 --> 00:05:13,448
+Verifica la propiedad de homomorfismo.
+
+81
+00:05:13,828 --> 00:05:16,807
+Calcula dos transformadas
+de Fourier de cuatro puntos.
+
+82
+00:05:17,187 --> 00:05:20,026
+Y encuentra los valores
+propios y la brecha de la
+
+83
+00:05:20,026 --> 00:05:22,692
+caminata perezosa en un
+ciclo de ocho estados.

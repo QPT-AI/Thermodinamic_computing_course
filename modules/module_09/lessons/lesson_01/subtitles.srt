@@ -1,0 +1,316 @@
+1
+00:00:00,350 --> 00:00:02,034
+Lección 9.1.
+
+2
+00:00:02,414 --> 00:00:03,743
+Modelos de difusión.
+
+3
+00:00:04,850 --> 00:00:09,074
+Los modelos de difusión generan
+imágenes, audio y video destruyendo los
+
+4
+00:00:09,074 --> 00:00:12,941
+datos con ruido poco a poco y
+aprendiendo a deshacer ese proceso.
+
+5
+00:00:13,321 --> 00:00:17,947
+Son, en el fondo, dinámica de Langevin
+dirigida por una red neuronal.
+
+6
+00:00:18,327 --> 00:00:21,458
+Por eso encajan tan bien con
+el cómputo termodinámico:
+
+7
+00:00:21,458 --> 00:00:24,184
+el hardware ya sabe hacer
+dinámica estocástica.
+
+8
+00:00:24,564 --> 00:00:26,644
+Hoy vemos la teoría y medimos cuánto
+
+9
+00:00:26,644 --> 00:00:29,245
+importan el muestreador
+y el número de pasos.
+
+10
+00:00:30,350 --> 00:00:34,601
+El proceso hacia adelante es un proceso de
+
+11
+00:00:34,601 --> 00:00:38,548
+Ornstein-Uhlenbeck: dx = −x dt + √2 dW.
+
+12
+00:00:38,928 --> 00:00:43,643
+Partiendo de un dato x₀, en el tiempo t la
+
+13
+00:00:43,643 --> 00:00:48,134
+muestra es e^(−t) x₀ + √(1 − e^(−2t)) ε.
+
+14
+00:00:48,514 --> 00:00:51,015
+Con tiempo suficiente,
+toda la estructura se
+
+15
+00:00:51,015 --> 00:00:53,118
+borra y queda una gaussiana estándar.
+
+16
+00:00:53,498 --> 00:00:58,488
+En nuestro ejemplo, dos modos en más y
+menos dos se funden en una sola campana.
+
+17
+00:00:59,617 --> 00:01:03,256
+Anderson demostró en mil novecientos
+ochenta y dos que el proceso
+
+18
+00:01:03,256 --> 00:01:06,671
+tiene un reverso en el tiempo,
+otra ecuación estocástica cuya
+
+19
+00:01:06,671 --> 00:01:09,862
+deriva incluye el gradiente
+del logaritmo de la densidad,
+
+20
+00:01:10,242 --> 00:01:13,418
+∇ log p_t, llamado score.
+
+21
+00:01:13,798 --> 00:01:16,866
+Si conocemos el score en cada
+tiempo, podemos partir de
+
+22
+00:01:16,866 --> 00:01:19,990
+ruido y correr el tiempo hacia
+atrás para obtener datos.
+
+23
+00:01:20,370 --> 00:01:23,143
+Todo el aprendizaje consiste
+en estimar ese campo.
+
+24
+00:01:24,250 --> 00:01:29,669
+El DDPM entrena una red que predice
+el ruido ε añadido a un dato ruidoso.
+
+25
+00:01:30,049 --> 00:01:38,013
+Resulta que predecir el ruido equivale
+a estimar el score: ∇ log p_t ≈ −ε̂/σ_t.
+
+26
+00:01:38,393 --> 00:01:41,465
+Eso es el emparejamiento de
+score con eliminación de ruido.
+
+27
+00:01:41,845 --> 00:01:45,450
+La pérdida es un simple error
+cuadrático, estable y fácil de
+
+28
+00:01:45,450 --> 00:01:48,754
+escalar, una de las razones
+del éxito de estos modelos.
+
+29
+00:01:49,883 --> 00:01:51,351
+Hay dos formas de muestrear.
+
+30
+00:01:51,732 --> 00:01:55,211
+La ecuación estocástica inversa
+añade ruido en cada paso.
+
+31
+00:01:55,591 --> 00:01:58,382
+La ecuación diferencial
+ordinaria de flujo de
+
+32
+00:01:58,382 --> 00:02:02,040
+probabilidad es determinista
+y tiene las mismas marginales.
+
+33
+00:02:02,420 --> 00:02:05,890
+En nuestro ejemplo, con el score
+exacto de una mezcla de dos
+
+34
+00:02:05,890 --> 00:02:09,995
+gaussianas, medimos la distancia de
+Wasserstein a los datos verdaderos.
+
+35
+00:02:10,375 --> 00:02:14,235
+Con cinco pasos ambas fallan,
+cerca de cero coma ocho siete.
+
+36
+00:02:14,615 --> 00:02:17,554
+Con cincuenta, la
+estocástica llega a cero coma
+
+37
+00:02:17,554 --> 00:02:20,305
+uno seis y la ordinaria
+a cero coma uno uno.
+
+38
+00:02:20,685 --> 00:02:24,374
+Con doscientos, cero coma cero
+siete y cero coma cero tres.
+
+39
+00:02:25,483 --> 00:02:29,010
+Cada paso cuesta una evaluación
+de la red: en una GPU, el
+
+40
+00:02:29,010 --> 00:02:32,599
+costo de generar crece linealmente
+con el número de pasos.
+
+41
+00:02:32,979 --> 00:02:36,310
+Por eso tanta investigación
+busca muestreadores de pocos
+
+42
+00:02:36,310 --> 00:02:39,342
+pasos, mejores calendarios
+de tiempo y destilación.
+
+43
+00:02:39,722 --> 00:02:44,076
+Para el hardware termodinámico la
+pregunta cambia: si cada paso es una
+
+44
+00:02:44,076 --> 00:02:47,745
+dinámica física barata, ¿cuántos
+pasos podemos permitirnos?
+
+45
+00:02:48,125 --> 00:02:51,383
+Esa es la idea que desarrollarán
+los modelos termodinámicos de
+
+46
+00:02:51,383 --> 00:02:54,114
+eliminación de ruido de la
+lección nueve punto tres.
+
+47
+00:02:55,217 --> 00:02:57,950
+Los modelos de difusión
+dominan la generación
+
+48
+00:02:57,950 --> 00:03:00,258
+de imágenes, video, audio y moléculas.
+
+49
+00:03:00,638 --> 00:03:05,544
+En la práctica se combinan con
+muestreadores como DDIM y DPM-Solver,
+
+50
+00:03:05,544 --> 00:03:09,730
+calendarios cuidados, destilación
+y guía sin clasificador.
+
+51
+00:03:10,110 --> 00:03:13,620
+En el laboratorio doce
+entrenarás un DDPM pequeño.
+
+52
+00:03:14,750 --> 00:03:17,453
+Errores comunes:
+confundir el proceso hacia
+
+53
+00:03:17,453 --> 00:03:20,848
+adelante, que es fijo, con
+el inverso, que se aprende.
+
+54
+00:03:21,228 --> 00:03:23,931
+Olvidar el factor que
+relaciona ruido y score.
+
+55
+00:03:24,311 --> 00:03:28,992
+Usar una malla de tiempo uniforme, cuando
+el error se concentra cerca del final.
+
+56
+00:03:29,372 --> 00:03:32,537
+Y comparar muestreadores con
+distinto número de evaluaciones.
+
+57
+00:03:33,650 --> 00:03:37,739
+En resumen: un modelo de difusión
+destruye los datos con un proceso
+
+58
+00:03:37,739 --> 00:03:41,218
+de Ornstein-Uhlenbeck y aprende
+el score para invertirlo.
+
+59
+00:03:41,599 --> 00:03:43,813
+Predecir el ruido es estimar el score.
+
+60
+00:03:44,193 --> 00:03:47,709
+Se muestrea con la ecuación
+estocástica inversa o con la
+
+61
+00:03:47,709 --> 00:03:51,224
+ordinaria de flujo de
+probabilidad, y la calidad depende
+
+62
+00:03:51,224 --> 00:03:54,614
+mucho del número de pasos,
+que en una GPU es el costo.
+
+63
+00:03:55,717 --> 00:03:59,451
+Para practicar: escribe la marginal
+del proceso hacia adelante.
+
+64
+00:03:59,831 --> 00:04:02,346
+Demuestra la relación entre ruido y score.
+
+65
+00:04:02,726 --> 00:04:05,915
+Escribe la ecuación inversa y
+la de flujo de probabilidad.
+
+66
+00:04:06,295 --> 00:04:09,375
+Y explica por qué una malla
+uniforme desperdicia pasos.

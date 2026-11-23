@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.1}{El muro energético de la IA}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Un capacitor de 100 fF se carga a 1 V a través de 1 k$\Omega$ y, en otro experimento, de 1 M$\Omega$. Calcule el calor disipado y la constante de tiempo en cada caso.
+\item Un chip tiene $C=50$ nF de capacidad conmutable total, $V=0{,}9$ V, $f=2$ GHz y $\alpha=0{,}1$. Calcule $P_{\text{din}}$.
+\item Con escalado de Dennard ideal y $k=1{,}4$, ¿cómo cambian la potencia por transistor y la densidad de potencia?
+\item Repita B3 con el voltaje fijo.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Un procesador de 100 TFLOP/s pico tiene 1 TB/s de ancho de banda. Encuentre el codo del roofline y el rendimiento alcanzable para $I=1$ y $I=300$ FLOP/B.
+\item Estime la energía para leer de DRAM los pesos de un modelo de $7\times10^9$ parámetros en fp16 una vez (una ficha decodificada con lote 1), suponiendo 20 pJ/byte (valor supuesto, del orden de memorias HBM). ¿Cuántas fichas por segundo permite 300 W si solo contara esta energía?
+\item Muestre que si la capacidad del cable es proporcional a su longitud $\ell$, la energía de enviar un bit a distancia $\ell$ es lineal en $\ell$. ¿Qué implica para arquitecturas con conectividad local?
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item \emph{Carga adiabática.} Si la fuente sube su voltaje en rampa lineal de 0 a $V$ en un tiempo $T\gg RC$, muestre que la energía disipada es aproximadamente $\frac{RC}{T}CV^2$. Interprete el resultado como un compromiso energía--tiempo (anticipo de la Unidad 3).
+\item Suponga que la corriente de fuga escala como $I_{\text{fuga}}\propto e^{-V_{th}/(n\,\kB T/q)}$ con $n=1{,}5$ y $\kB T/q=26$ mV. ¿En qué factor crece la fuga si $V_{th}$ baja 100 mV? Relacione con el final de Dennard.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} En ambos casos $E_{\text{dis}}=\tfrac12CV^2=\tfrac12(10^{-13})(1)^2=5\times10^{-14}$ J $=50$ fJ. Constantes de tiempo: $RC=10^{-10}$ s $=0{,}1$ ns y $10^{-7}$ s $=100$ ns.
+
+\textbf{B2.} $P=0{,}1\cdot5\times10^{-8}\cdot0{,}81\cdot2\times10^9=8{,}1$ W.
+
+\textbf{B3.} $P_{\text{transistor}}\to P/k^2=P/1{,}96$; densidad de transistores $\times1{,}96$; densidad de potencia constante.
+
+\textbf{B4.} $P_{\text{transistor}}\to(C/k)V^2(kf)=P$ (sin cambio); densidad de potencia $\times k^2=1{,}96$ por generación.
+
+\textbf{I1.} $I^*=10^{14}/10^{12}=100$ FLOP/B. Para $I=1$: rend. $=10^{12}$ FLOP/s $=1$ TFLOP/s (1\,\% del pico). Para $I=300$: limitado por cómputo, 100 TFLOP/s.
+
+\textbf{I2.} Bytes $=1{,}4\times10^{10}$; energía $=1{,}4\times10^{10}\cdot2\times10^{-11}=0{,}28$ J por ficha. Con 300 W: $\approx1070$ fichas/s como cota superior por energía (el ancho de banda suele limitar antes).
+
+\textbf{I3.} $C=C'\ell$ y $E=\tfrac12C'\ell V^2\propto\ell$. Arquitecturas con comunicación local (vecinos cercanos, grado fijo) evitan cables largos: es una motivación de los TSU con conectividad de grado 16 (Unidad 5).
+
+\textbf{A1.} Con $v_s(t)=Vt/T$ y $T\gg RC$, el capacitor sigue a la fuente con retraso, $i\approx C\,\dot v_s=CV/T$ constante. Disipación $E=\int_0^TRi^2\dd t=R(CV/T)^2T=\frac{RC}{T}CV^2$. Cuanto más lento ($T$ grande), menor disipación: el límite cuasiestático es reversible. Es el mismo $\propto1/\tau$ del borrado de Landauer (lección 1.5).
+
+\textbf{A2.} Factor $e^{0{,}1/(1{,}5\cdot0{,}026)}=e^{2{,}56}\approx13$. Bajar $V_{th}$ para poder bajar $V$ multiplica la fuga: por eso el voltaje dejó de escalar.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Mida con \texttt{nvidia-smi} o NVML la potencia de su GPU durante una multiplicación de matrices grande y durante una suma vectorial grande. Compare J/FLOP.
+\item ¿Qué intensidad aritmética tiene la multiplicación de matrices $n\times n$ en fp16 (lectura de $A$, $B$ y escritura de $C$)? ¿A partir de qué $n$ queda limitada por cómputo en el chip de I1?
+\item Explique con sus palabras por qué fabricar números aleatorios con un PRNG cuesta energía en un chip digital.
+\end{enumerate}
+\end{document}

@@ -1,0 +1,401 @@
+1
+00:00:00,350 --> 00:00:02,044
+Lesson 0.7.
+
+2
+00:00:02,424 --> 00:00:03,838
+JAX essentials.
+
+3
+00:00:04,950 --> 00:00:10,028
+Every lab in the course is programmed
+in JAX, and the thermodynamic
+
+4
+00:00:10,028 --> 00:00:14,652
+hardware simulators, such as
+THRML and Torx, are built on it.
+
+5
+00:00:15,032 --> 00:00:18,788
+JAX is NumPy with three superpowers:
+function transformations
+
+6
+00:00:18,788 --> 00:00:22,236
+that vectorize, compile and
+differentiate automatically.
+
+7
+00:00:22,616 --> 00:00:26,706
+Its functional style fits
+physics: a simulation step takes a
+
+8
+00:00:26,706 --> 00:00:30,455
+state and returns the next
+one, with no hidden effects.
+
+9
+00:00:31,583 --> 00:00:34,298
+A pure function is a
+box that depends only on
+
+10
+00:00:34,298 --> 00:00:36,710
+its inputs and only produces its output.
+
+11
+00:00:37,090 --> 00:00:39,660
+It does not read changing
+global variables, does
+
+12
+00:00:39,660 --> 00:00:42,015
+not print, does not
+modify anything outside.
+
+13
+00:00:42,395 --> 00:00:45,428
+Call it twice with the same
+thing and you get the same thing.
+
+14
+00:00:45,808 --> 00:00:49,185
+That discipline is what lets
+JAX transform your functions
+
+15
+00:00:49,185 --> 00:00:52,739
+safely: it can trace, compile
+and differentiate them because
+
+16
+00:00:52,739 --> 00:00:55,641
+it knows exactly what goes
+in and what comes out.
+
+17
+00:00:56,750 --> 00:00:57,858
+And randomness?
+
+18
+00:00:58,238 --> 00:01:01,094
+In NumPy, the generator
+keeps a hidden state
+
+19
+00:01:01,094 --> 00:01:04,015
+that changes on every
+call: that is not pure.
+
+20
+00:01:04,395 --> 00:01:07,191
+JAX makes that state explicit: a key.
+
+21
+00:01:07,571 --> 00:01:10,359
+The same key always
+produces the same numbers.
+
+22
+00:01:10,739 --> 00:01:14,158
+To get new numbers, you
+split the key, which
+
+23
+00:01:14,158 --> 00:01:17,810
+creates independent child
+keys, forming a tree.
+
+24
+00:01:18,190 --> 00:01:21,275
+Each branch of the tree feeds
+one part of the program.
+
+25
+00:01:21,655 --> 00:01:24,352
+Golden rule: never reuse a key.
+
+26
+00:01:25,483 --> 00:01:30,103
+Write a function for a single particle,
+for example one Langevin step.
+
+27
+00:01:30,483 --> 00:01:33,893
+With vmap, JAX applies it to
+a thousand particles at once,
+
+28
+00:01:33,893 --> 00:01:37,126
+adding a batch axis, without
+you writing a single loop.
+
+29
+00:01:37,506 --> 00:01:40,403
+The result is the same
+as calling the function a
+
+30
+00:01:40,403 --> 00:01:43,782
+thousand times, but it runs
+as one vectorized operation.
+
+31
+00:01:44,162 --> 00:01:49,877
+They can be nested: vmap over particles
+and, on top, vmap over temperatures.
+
+32
+00:01:50,983 --> 00:01:55,539
+The first time you call a jit-decorated
+function, JAX runs it with
+
+33
+00:01:55,539 --> 00:01:59,680
+abstract values, records every
+operation and builds a graph.
+
+34
+00:02:00,060 --> 00:02:04,162
+That graph is handed to the
+XLA compiler, which fuses
+
+35
+00:02:04,162 --> 00:02:09,115
+operations and generates optimized
+code for the CPU, GPU or TPU.
+
+36
+00:02:09,495 --> 00:02:14,194
+Later calls with the same input
+shape reuse the compiled code.
+
+37
+00:02:14,574 --> 00:02:19,593
+The cost is an initial compilation;
+the payoff, much faster executions.
+
+38
+00:02:20,717 --> 00:02:23,827
+Simulations are loops:
+today's state produces
+
+39
+00:02:23,827 --> 00:02:27,766
+tomorrow's. scan expresses
+that loop in a compilable way.
+
+40
+00:02:28,146 --> 00:02:31,923
+It takes a function that receives
+a carry, the state, and a
+
+41
+00:02:31,923 --> 00:02:35,508
+per-step input, and returns
+the new carry and an output.
+
+42
+00:02:35,888 --> 00:02:40,470
+Here the carry is a particle's
+position and the input is one key per
+
+43
+00:02:40,470 --> 00:02:44,716
+step: it is the Euler–Maruyama
+method for an Ornstein–Uhlenbeck
+
+44
+00:02:44,716 --> 00:02:49,097
+process. scan stacks the outputs
+and returns the full trajectory.
+
+45
+00:02:50,217 --> 00:02:53,708
+For a function with n
+inputs and m outputs, the
+
+46
+00:02:53,708 --> 00:02:56,754
+derivative is the m-by-n Jacobian matrix.
+
+47
+00:02:57,134 --> 00:02:58,536
+We almost never form it.
+
+48
+00:02:58,916 --> 00:03:04,454
+The Jacobian–vector product, jvp,
+pushes an input direction forward and
+
+49
+00:03:04,454 --> 00:03:09,680
+gives a combination of columns: it
+is forward-mode differentiation.
+
+50
+00:03:10,060 --> 00:03:15,539
+The vector–Jacobian product, vjp,
+pulls an output direction backward and
+
+51
+00:03:15,539 --> 00:03:20,486
+gives a combination of rows: it
+is reverse mode, backpropagation.
+
+52
+00:03:20,866 --> 00:03:25,316
+For a scalar loss, the gradient is a
+single vjp, which is why training networks
+
+53
+00:03:25,316 --> 00:03:29,203
+with millions of parameters costs
+almost the same as evaluating them.
+
+54
+00:03:30,317 --> 00:03:31,829
+Let's check with an example.
+
+55
+00:03:32,209 --> 00:03:36,028
+Let f(x) = sin(x) x².
+
+56
+00:03:36,408 --> 00:03:41,426
+Its derivative is cosine of x times
+x², plus two x times sine of x.
+
+57
+00:03:41,806 --> 00:03:48,020
+At x = 1 it equals cosine of
+one plus two times sine of one,
+
+58
+00:03:48,020 --> 00:03:53,923
+about 2.22. jax.grad returns
+exactly that number, 2.2232,
+
+59
+00:03:54,303 --> 00:03:57,165
+with no finite differences
+or truncation errors.
+
+60
+00:03:58,283 --> 00:04:01,307
+In lab one you will
+generate a million Bernoulli
+
+61
+00:04:01,307 --> 00:04:04,078
+samples with vmap and
+measure their entropy.
+
+62
+00:04:04,458 --> 00:04:08,999
+From lab three on you will simulate
+stochastic dynamics with scan and jit.
+
+63
+00:04:09,379 --> 00:04:13,064
+In labs ten and eleven you
+will use jvp and vjp to
+
+64
+00:04:13,064 --> 00:04:16,896
+multiply by curvature
+matrices without forming them.
+
+65
+00:04:17,276 --> 00:04:23,100
+And in unit eleven you will work with
+THRML and Torx, which are written in JAX.
+
+66
+00:04:24,217 --> 00:04:26,514
+These pieces reappear
+throughout the course:
+
+67
+00:04:26,894 --> 00:04:32,544
+Euler–Maruyama in unit two, chromatic
+Gibbs sampling as a vmap over
+
+68
+00:04:32,544 --> 00:04:38,785
+same-color nodes in unit four,
+Gauss–Newton–vector products in unit eight,
+
+69
+00:04:39,165 --> 00:04:44,314
+and the simulation of thermodynamic
+chips with THRML in unit eleven.
+
+70
+00:04:45,417 --> 00:04:49,692
+Classic mistakes: reusing a key
+and getting repeated numbers.
+
+71
+00:04:50,072 --> 00:04:54,201
+Putting side effects inside jit,
+which only happen while tracing.
+
+72
+00:04:54,581 --> 00:04:58,007
+Using a Python if that
+depends on an array value,
+
+73
+00:04:58,007 --> 00:05:00,874
+instead of JAX's control-flow primitives.
+
+74
+00:05:01,254 --> 00:05:04,017
+And mixing NumPy's generator with JAX's.
+
+75
+00:05:05,117 --> 00:05:10,346
+In summary: in JAX functions are
+pure and randomness travels in
+
+76
+00:05:10,346 --> 00:05:15,575
+explicit keys. vmap vectorizes,
+jit compiles and scan iterates.
+
+77
+00:05:15,575 --> 00:05:20,224
+jvp pushes derivatives forward,
+vjp pulls them backward,
+
+78
+00:05:20,604 --> 00:05:24,567
+and the gradient of a
+scalar loss is a single vjp.
+
+79
+00:05:25,683 --> 00:05:29,470
+To close unit zero: write a
+function that reproducibly
+
+80
+00:05:29,470 --> 00:05:33,747
+generates a million normals and
+computes their mean with jit.
+
+81
+00:05:34,127 --> 00:05:38,225
+Explain the difference between a
+gradient and a Jacobian–vector product.
+
+82
+00:05:38,605 --> 00:05:40,970
+Predict the output shape of a vmap.
+
+83
+00:05:41,350 --> 00:05:46,878
+And count how many jvps or vjps
+are needed to form a full Jacobian.

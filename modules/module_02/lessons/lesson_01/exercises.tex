@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.1}{Movimiento browniano, proceso de Wiener y cálculo de Itô}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item ¿Cuál es la distribución de $W(3)-W(1)$? Calcule $\E[W(s)W(t)]$.
+\item Use Itô para calcular $d(e^{W})$ y $\E[e^{W(t)}]$.
+\item ¿Cuánto tarda la esfera de 1 $\mu$m (lección) en desplazarse 10 $\mu$m (rms, 1D)?
+\item ¿Por qué $\sum(\Delta W)^2\to T$ pero $\sum|\Delta W|\to\infty$?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Calcule $d(W^3)$ y $\E[W(t)^4]$ con el lema de Itô.
+\item Muestre que $M(t)=W(t)^2-t$ es una martingala (su incremento esperado es nulo).
+\item Para $dX=-\gamma X\,dt+\sigma\,dW$, use Itô con $f=X^2$ para obtener $\frac{d}{dt}\E[X^2]=-2\gamma\E[X^2]+\sigma^2$ y la varianza estacionaria.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Calcule $\int_0^TW\,dW$ con sumas izquierdas (Itô) y con sumas en el punto medio (Stratonovich). Muestre que difieren en $T/2$.
+\item Demuestre que $\Var\big[\sum_k(\Delta W_k)^2\big]=2\sum_k\Delta t_k^2$ y concluya la convergencia en media cuadrática.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $\N(0,2)$; $\min(s,t)$.
+
+\textbf{B2.} $d(e^W)=e^WdW+\frac12e^Wdt$; $m(t)=\E e^{W}$ cumple $m'=\frac12m$, $m(t)=e^{t/2}$.
+
+\textbf{B3.} $t=x^2/(2D)=10^{-10}/(4{,}4\times10^{-13})\approx228$ s $\approx3{,}8$ min.
+
+\textbf{B4.} $\E\sum(\Delta W)^2=T$ con varianza $\to0$; $\E\sum|\Delta W|=\sum\sqrt{2\Delta t/\pi}=\sqrt{2nT/\pi}\to\infty$.
+
+\textbf{I1.} $d(W^3)=3W^2dW+3W\,dt$; con $f=W^4$: $d\E W^4=6\E W^2dt=6t\,dt\Rightarrow\E W^4=3t^2$.
+
+\textbf{I2.} $d(W^2-t)=2W\,dW+dt-dt=2W\,dW$: sin término $dt$, es martingala.
+
+\textbf{I3.} $d(X^2)=2X\,dX+\sigma^2dt=(-2\gamma X^2+\sigma^2)dt+2\sigma X\,dW$; estacionario: $\E X^2=\sigma^2/(2\gamma)$.
+
+\textbf{A1.} Itô: $\sum W_k\Delta W_k=\frac12W_T^2-\frac12\sum(\Delta W_k)^2\to\frac12W_T^2-\frac T2$. Stratonovich: $\frac12W_T^2$. Diferencia $T/2$.
+
+\textbf{A2.} $(\Delta W_k)^2=\Delta t_kZ_k^2$ con $Z_k\sim\N(0,1)$ independientes y $\Var Z^2=2$.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Simule 1000 trayectorias de $W$ con JAX y verifique $\Var W(t)=t$ y la autosemejanza.
+\item Grafique $\sum(\Delta W)^2$ y $\sum|\Delta W|$ frente al número de subdivisiones para una misma trayectoria fina.
+\end{enumerate}
+\end{document}

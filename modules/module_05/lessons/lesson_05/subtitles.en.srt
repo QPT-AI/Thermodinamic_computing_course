@@ -1,0 +1,305 @@
+1
+00:00:00,350 --> 00:00:02,106
+Lesson 5.5.
+
+2
+00:00:02,486 --> 00:00:04,015
+Other physical substrates.
+
+3
+00:00:05,117 --> 00:00:07,855
+Silicon pbits and coupled oscillators are
+
+4
+00:00:07,855 --> 00:00:10,527
+not the only ways to compute with noise.
+
+5
+00:00:10,907 --> 00:00:14,667
+There are circuits where information
+is carried by particles that
+
+6
+00:00:14,667 --> 00:00:18,660
+diffuse at random, superconducting
+neurons, networks of resistors and
+
+7
+00:00:18,660 --> 00:00:21,900
+capacitors that diffuse
+voltage, and chemical reactions.
+
+8
+00:00:22,280 --> 00:00:26,777
+In this lesson we tour that zoo
+and what each substrate brings.
+
+9
+00:00:27,883 --> 00:00:31,954
+In a Brownian circuit, a token,
+for example an isolated electron
+
+10
+00:00:31,954 --> 00:00:35,516
+or a magnetic skyrmion,
+diffuses at random along a wire.
+
+11
+00:00:35,896 --> 00:00:38,244
+Three pieces suffice to build logic.
+
+12
+00:00:38,624 --> 00:00:42,262
+A Hub, where the token can exit
+through any of three wires.
+
+13
+00:00:42,642 --> 00:00:45,545
+A CJoin, which only
+lets tokens through when
+
+14
+00:00:45,545 --> 00:00:48,117
+two arrive together, one on each input.
+
+15
+00:00:48,497 --> 00:00:51,331
+And a Ratchet, which
+prevents going backward.
+
+16
+00:00:51,711 --> 00:00:54,165
+With them one builds any circuit, and the
+
+17
+00:00:54,165 --> 00:00:57,517
+computation advances by itself,
+driven by thermal noise.
+
+18
+00:00:58,650 --> 00:00:59,435
+How long does it take?
+
+19
+00:00:59,815 --> 00:01:04,160
+Without ratchets, a token crossing
+twenty sites by free diffusion takes
+
+20
+00:01:04,160 --> 00:01:08,505
+on average about two hundred ten time
+units, with huge variability: the
+
+21
+00:01:08,505 --> 00:01:11,809
+standard deviation is
+eighty-four percent of the mean.
+
+22
+00:01:12,189 --> 00:01:16,397
+With a bias that doubles the forward
+rate, the time drops to about
+
+23
+00:01:16,397 --> 00:01:20,159
+nineteen units and the variability
+to thirty-eight percent.
+
+24
+00:01:20,539 --> 00:01:25,270
+The price is dissipating log
+two, in k_B T, per step: exactly
+
+25
+00:01:25,270 --> 00:01:29,381
+the trade-off of thermodynamic
+uncertainty relations.
+
+26
+00:01:30,483 --> 00:01:36,638
+An rf-SQUID, a superconducting loop with
+a Josephson junction, has a double-well
+
+27
+00:01:36,638 --> 00:01:42,176
+potential in magnetic flux, with
+barrier and tilt tunable by bias lines.
+
+28
+00:01:42,556 --> 00:01:45,981
+At millikelvin temperatures,
+thermal noise makes it
+
+29
+00:01:45,981 --> 00:01:49,204
+hop between wells: it is
+a thermodynamic neuron.
+
+30
+00:01:49,584 --> 00:01:54,255
+Its advantage is speed and low
+dissipation; its cost, cryogenics.
+
+31
+00:01:54,635 --> 00:01:57,527
+Below a certain temperature, hopping stops
+
+32
+00:01:57,527 --> 00:02:00,556
+being thermal and becomes
+quantum tunneling.
+
+33
+00:02:00,936 --> 00:02:06,165
+Microscopic mechanical oscillators have
+also been proposed as Langevin devices.
+
+34
+00:02:07,283 --> 00:02:12,174
+A network of resistors and
+capacitors satisfies C V̇ = −L V,
+
+35
+00:02:12,174 --> 00:02:16,982
+where L is the graph Laplacian:
+voltage diffuses like heat.
+
+36
+00:02:17,362 --> 00:02:21,514
+If the graph is the Cayley graph
+of a group, that diffusion computes
+
+37
+00:02:21,514 --> 00:02:25,727
+the return probability of a random
+walk, and it is the physical basis
+
+38
+00:02:25,727 --> 00:02:29,024
+of the factoring-by-diffusion
+algorithm of unit seven.
+
+39
+00:02:29,404 --> 00:02:33,147
+Chemical reaction networks,
+for their part, compute with
+
+40
+00:02:33,147 --> 00:02:37,824
+concentrations and are analyzed with
+the circuit theory of lesson 3.9.
+
+41
+00:02:38,950 --> 00:02:39,760
+Let's compare.
+
+42
+00:02:40,140 --> 00:02:45,216
+CMOS and magnetic pbits work at
+room temperature and in nanoseconds.
+
+43
+00:02:45,596 --> 00:02:48,820
+Coupled oscillators solve
+continuous problems.
+
+44
+00:02:49,200 --> 00:02:52,977
+Brownian circuits compute
+without a clock, but slowly.
+
+45
+00:02:53,357 --> 00:02:56,566
+SQUIDs are fast, but need cryogenics.
+
+46
+00:02:56,946 --> 00:03:00,065
+RC networks diffuse
+without useful noise, and
+
+47
+00:03:00,065 --> 00:03:03,599
+chemical reactions are slow
+but massively parallel.
+
+48
+00:03:03,979 --> 00:03:05,770
+No substrate wins at everything.
+
+49
+00:03:06,883 --> 00:03:11,403
+In the lab seven challenge you will
+simulate a Brownian adder with Gillespie.
+
+50
+00:03:11,783 --> 00:03:15,925
+In unit seven we will use RC
+networks for order finding.
+
+51
+00:03:16,305 --> 00:03:22,292
+And the conductance theory of lesson
+3.9 serves to design chemical computers.
+
+52
+00:03:23,417 --> 00:03:27,946
+Common mistakes: believing clockless
+Brownian computation is free.
+
+53
+00:03:28,326 --> 00:03:32,291
+Ignoring the cooling power
+of cryogenic devices.
+
+54
+00:03:32,671 --> 00:03:37,461
+Confusing the deterministic diffusion of
+an RC network with stochastic sampling.
+
+55
+00:03:37,841 --> 00:03:40,951
+And comparing substrates without
+fixing the task and the precision.
+
+56
+00:03:42,083 --> 00:03:45,478
+In summary: Brownian circuits
+compute with diffusing
+
+57
+00:03:45,478 --> 00:03:48,612
+tokens and pay for their
+speed with dissipation.
+
+58
+00:03:48,992 --> 00:03:54,094
+SQUIDs are cryogenic thermodynamic
+neurons, RC networks diffuse voltage
+
+59
+00:03:54,094 --> 00:03:58,765
+over a graph, and chemical reactions
+compute with concentrations.
+
+60
+00:03:59,145 --> 00:04:02,307
+Each substrate has its own
+primitive and its own limit.
+
+61
+00:04:03,417 --> 00:04:07,606
+To practice: compute the
+first-passage time of a free walk.
+
+62
+00:04:07,986 --> 00:04:11,361
+Compute the entropy dissipated
+per step with a bias of two.
+
+63
+00:04:11,741 --> 00:04:13,889
+Explain why ratchets are needed.
+
+64
+00:04:14,269 --> 00:04:16,756
+And write the dynamics of an RC network.

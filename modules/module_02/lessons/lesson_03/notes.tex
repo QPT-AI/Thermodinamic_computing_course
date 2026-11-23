@@ -1,0 +1,69 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.3}{La ecuación de Fokker--Planck}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} evolución de la densidad; corriente de probabilidad; soluciones
+estacionarias de equilibrio y fuera del equilibrio. \textbf{Prerrequisitos:} 2.2.
+
+\section{De trayectorias a densidades}
+Para $dx=\mu f(x)\,dt+\sqrt{2D}\,dW$, la densidad $p(x,t)$ del ensamble obedece
+\begin{resultado}[ (Fokker--Planck)]
+\begin{equation}\partial_tp=-\partial_xJ,\qquad J(x,t)=\mu f(x)\,p-D\,\partial_xp .\end{equation}
+\end{resultado}
+\begin{proof}[Derivación]
+Para $g$ suave, Itô da $d\E g(x)=\E[g'\mu f+Dg'']\,dt$. Escribiendo $\E g=\int gp$ e integrando por partes:
+$\int g\,\partial_tp=\int g\,[-\partial_x(\mu fp)+D\partial_x^2p]$ para toda $g$.
+\end{proof}
+Es una ecuación de continuidad: arrastre (velocidad $\mu f$) más difusión (de mayor a menor densidad). La animación
+compara el histograma de 4000 trayectorias de Langevin \evS{} con la solución numérica de la ecuación (volúmenes
+finitos, $\Delta x=0{,}01$, $\Delta t=10^{-4}$) en un pozo doble con $\kB T=0{,}35$.
+
+\section{Estado estacionario y equilibrio}
+Si $\partial_tp=0$, $J$ es constante. En 1D con $p\to0$ en los extremos (o fronteras reflectantes), $J=0$:
+$\mu fp=D\partial_xp$. Con $f=-V'$ y $D=\mu\kB T$:
+\begin{equation}p_{\text{eq}}(x)=\frac{e^{-V(x)/\kB T}}{Z}.\end{equation}
+Esta es la demostración de que Langevin con la relación de Einstein muestrea Boltzmann (lección 2.2). En varias
+dimensiones, el equilibrio exige $\mathbf J=0$ en todas partes (balance detallado).
+
+\section{Estados estacionarios fuera del equilibrio (NESS)}
+En un anillo con potencial periódico $U(\theta)=A\cos\theta$ y una fuerza constante $F$ (no derivable de un potencial
+periódico), el estado estacionario tiene $J\neq0$: hay circulación neta. Con $A=1$, $F=0{,}8$, $D=0{,}5$ se obtiene
+numéricamente $J\approx0{,}067$ \evS. La densidad no es Boltzmann y el sistema disipa $FJ\cdot2\pi$ por unidad de tiempo
+(Unidad 3).
+
+\section{Caso exacto: potencial cuadrático}
+Para $V=\frac12\kappa x^2$ y $x(0)=x_0$:
+\begin{equation}p(x,t)=\N\Big(x_0e^{-t/\tau},\ \tfrac{\kB T}{\kappa}(1-e^{-2t/\tau})\Big),\qquad\tau=\frac1{\mu\kappa}.\end{equation}
+\begin{ejemplo}
+$x_0=2$, $\kappa=1$, $\kB T=0{,}25$, $t=\tau$: $\langle x\rangle=2e^{-1}\approx0{,}74$, $\sigma^2=0{,}25(1-e^{-2})\approx0{,}22$.
+\end{ejemplo}
+
+\section{Espectro y mezcla}
+El operador de Fokker--Planck $\mathcal L$ con $\partial_tp=\mathcal Lp$ tiene, en equilibrio, autovalores reales
+$0=-\lambda_0>-\lambda_1\ge\dots$; la brecha $\lambda_1$ fija el tiempo de relajación (como $1-|\lambda_2|$ en la lección 0.5).
+En el pozo doble, $\lambda_1$ es la suma de las tasas de Kramers de salto entre pozos.
+
+\begin{aplicacion}
+Corrección (Boltzmann como estacionaria), velocidad (brecha espectral), modelos de difusión (procesos directo e inverso
+con score $\nabla\ln p$, Unidad 9) y producción de entropía $\dot\Sigma=\int J^2/(Dp)\,dx\ge0$ (Unidad 3).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Estacionario $\neq$ equilibrio (NESS: $J\neq0$).
+\item Condiciones de frontera (reflectantes, periódicas, absorbentes).
+\item Ruido multiplicativo: la forma de Fokker--Planck depende de Itô/Stratonovich.
+\item La ecuación describe la densidad, no una trayectoria.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$\partial_tp=-\partial_xJ$, $J=\mu fp-D\partial_xp$; $J=0\Rightarrow$ Boltzmann; NESS con $J\neq0$; OU: solución gaussiana.
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}; H. Risken, \emph{The Fokker--Planck Equation}, 1996.
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\bibitem[45]{song} Y. Song et al., Score-based generative modeling through SDEs, ICLR 2021.
+\end{thebibliography}
+\end{document}

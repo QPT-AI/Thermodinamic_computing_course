@@ -1,0 +1,375 @@
+1
+00:00:00,350 --> 00:00:02,124
+Lesson 2.5.
+
+2
+00:00:02,504 --> 00:00:04,750
+The fluctuation–dissipation theorem.
+
+3
+00:00:05,883 --> 00:00:10,939
+We have seen the same idea three times:
+a resistor's noise is proportional to
+
+4
+00:00:10,939 --> 00:00:15,798
+its resistance; the diffusion coefficient
+is proportional to the mobility;
+
+5
+00:00:15,798 --> 00:00:19,803
+Langevin friction and noise are
+tied together by temperature.
+
+6
+00:00:20,183 --> 00:00:21,266
+It is no coincidence.
+
+7
+00:00:21,646 --> 00:00:26,409
+They are all cases of a single principle:
+the fluctuation–dissipation theorem.
+
+8
+00:00:26,789 --> 00:00:29,990
+It says that the way a system
+responds when we push it is
+
+9
+00:00:29,990 --> 00:00:32,909
+written in how it fluctuates
+when we leave it alone.
+
+10
+00:00:34,017 --> 00:00:36,698
+Imagine a swing in a very windy park.
+
+11
+00:00:37,078 --> 00:00:39,558
+You can learn how it responds in two ways.
+
+12
+00:00:39,938 --> 00:00:44,400
+One: push it gently and measure
+how it moves and how it comes back.
+
+13
+00:00:44,780 --> 00:00:49,071
+Two: don't touch it and just watch
+how the wind moves it, how its
+
+14
+00:00:49,071 --> 00:00:52,769
+position now correlates with
+its position a while later.
+
+15
+00:00:53,149 --> 00:00:55,822
+The theorem says that,
+at thermal equilibrium,
+
+16
+00:00:55,822 --> 00:00:58,553
+both measurements contain
+the same information.
+
+17
+00:00:58,933 --> 00:01:02,087
+The friction that slows your
+push is the same one that,
+
+18
+00:01:02,087 --> 00:01:04,897
+with the thermal wind,
+produces the fluctuations.
+
+19
+00:01:06,017 --> 00:01:09,579
+Formally: we apply a
+small force F from time
+
+20
+00:01:09,579 --> 00:01:12,737
+zero and measure the mean displacement.
+
+21
+00:01:13,117 --> 00:01:17,228
+In the linear regime, that displacement
+is β F times the difference
+
+22
+00:01:17,228 --> 00:01:20,848
+between the autocorrelation at
+zero and the autocorrelation
+
+23
+00:01:21,228 --> 00:01:27,700
+at t of the unperturbed system:
+⟨x⟩_F(t) = β F [C(0) − C(t)].
+
+24
+00:01:28,080 --> 00:01:30,938
+Equivalently, the response
+function is minus β
+
+25
+00:01:30,938 --> 00:01:33,673
+times the derivative
+of the autocorrelation.
+
+26
+00:01:34,053 --> 00:01:38,180
+The response to a push is the
+relaxation of a spontaneous fluctuation.
+
+27
+00:01:39,283 --> 00:01:42,393
+Let's check it with the
+Ornstein–Uhlenbeck process.
+
+28
+00:01:42,773 --> 00:01:46,130
+First, unperturbed, we
+measure the autocorrelation
+
+29
+00:01:46,130 --> 00:01:49,218
+of a long trajectory:
+it decays exponentially.
+
+30
+00:01:49,598 --> 00:01:52,620
+Then we apply a small
+force to an ensemble of ten
+
+31
+00:01:52,620 --> 00:01:55,889
+thousand particles and
+measure the mean displacement.
+
+32
+00:01:56,269 --> 00:01:59,554
+The response points fall
+on the curve predicted
+
+33
+00:01:59,554 --> 00:02:02,909
+from the fluctuations,
+within statistical error.
+
+34
+00:02:03,289 --> 00:02:05,925
+Two different experiments, one law.
+
+35
+00:02:07,050 --> 00:02:11,614
+Results we already know come out
+of this theorem as special cases.
+
+36
+00:02:11,994 --> 00:02:16,213
+For a free particle, the
+response is the mobility and the
+
+37
+00:02:16,213 --> 00:02:20,729
+fluctuation is diffusion: D =
+μ k_B T, the Einstein relation.
+
+38
+00:02:21,109 --> 00:02:26,238
+For a circuit, the response is
+the impedance and the fluctuation
+
+39
+00:02:26,238 --> 00:02:30,806
+is the voltage noise: S_V =
+4 k_B T R, Nyquist's formula.
+
+40
+00:02:31,186 --> 00:02:35,623
+In the frequency domain, the fluctuation
+spectrum is proportional to the
+
+41
+00:02:35,623 --> 00:02:40,245
+dissipative part of the response, the
+imaginary part of the susceptibility.
+
+42
+00:02:41,350 --> 00:02:43,432
+The theorem holds only at equilibrium.
+
+43
+00:02:43,812 --> 00:02:47,920
+If the system is driven, like the
+ring with a current from the previous
+
+44
+00:02:47,920 --> 00:02:51,392
+lesson, or if the noise is not
+thermal, the relation breaks.
+
+45
+00:02:51,772 --> 00:02:55,300
+A practical way to measure
+the violation is to define an
+
+46
+00:02:55,300 --> 00:02:59,080
+effective temperature: the ratio
+of fluctuation to response.
+
+47
+00:02:59,460 --> 00:03:02,715
+If it matches the bath
+temperature, the system is at
+
+48
+00:03:02,715 --> 00:03:05,532
+equilibrium; if not,
+something is driving it.
+
+49
+00:03:05,912 --> 00:03:09,074
+In a thermodynamic chip,
+this comparison serves to
+
+50
+00:03:09,074 --> 00:03:11,731
+diagnose non-thermal noise and mismatches.
+
+51
+00:03:12,850 --> 00:03:15,981
+An optical tweezer traps a
+sphere with a stiffness of
+
+52
+00:03:15,981 --> 00:03:18,993
+one micronewton per meter,
+at three hundred kelvin.
+
+53
+00:03:19,373 --> 00:03:24,963
+By equipartition, the position variance
+is k_B T / κ, about four times ten to the
+
+54
+00:03:24,963 --> 00:03:30,207
+minus fifteen square meters: a typical
+fluctuation of sixty-four nanometers.
+
+55
+00:03:30,587 --> 00:03:35,420
+Without applying any force, that
+number already tells us the response: a
+
+56
+00:03:35,420 --> 00:03:40,722
+one-piconewton force will displace the
+sphere, on average, F/κ, one micrometer.
+
+57
+00:03:41,102 --> 00:03:43,292
+Measuring the noise
+calibrates the instrument.
+
+58
+00:03:44,417 --> 00:03:47,810
+In practice, the theorem lets
+us calibrate instruments by
+
+59
+00:03:47,810 --> 00:03:51,501
+measuring their noise, measure
+temperatures from fluctuations,
+
+60
+00:03:51,881 --> 00:03:55,545
+and diagnose hardware: if the
+effective temperature does not
+
+61
+00:03:55,545 --> 00:03:58,965
+match the bath's, there is
+non-thermal noise or driving.
+
+62
+00:03:59,345 --> 00:04:03,861
+And in design it imposes a trade-off:
+more dissipation means more noise.
+
+63
+00:04:04,983 --> 00:04:08,786
+This lesson ties together Nyquist
+noise and the Einstein relation.
+
+64
+00:04:09,166 --> 00:04:13,330
+In the next lesson we will use the
+autocorrelation to put error bars.
+
+65
+00:04:13,710 --> 00:04:16,049
+And in unit three we will see fluctuation
+
+66
+00:04:16,049 --> 00:04:18,673
+relations that hold even
+far from equilibrium.
+
+67
+00:04:19,783 --> 00:04:24,274
+Frequent mistakes: using the theorem
+with large forces or out of equilibrium.
+
+68
+00:04:24,654 --> 00:04:28,281
+Confusing the response function
+with the step response.
+
+69
+00:04:28,661 --> 00:04:30,065
+Forgetting the factor beta.
+
+70
+00:04:30,445 --> 00:04:33,556
+And using the classical
+version at quantum frequencies.
+
+71
+00:04:34,683 --> 00:04:40,441
+In summary: at equilibrium, the linear
+response to a push is determined
+
+72
+00:04:40,441 --> 00:04:45,468
+by the spontaneous fluctuations:
+⟨x⟩_F(t) = β F [C(0) − C(t)].
+
+73
+00:04:45,848 --> 00:04:48,489
+Einstein and Nyquist are special cases.
+
+74
+00:04:48,869 --> 00:04:53,772
+Out of equilibrium, the theorem fails,
+and that failure is a diagnostic tool.
+
+75
+00:04:54,883 --> 00:04:59,559
+To practice: compute the autocorrelation
+and the response of a concrete OU.
+
+76
+00:04:59,939 --> 00:05:01,823
+Derive the Einstein relation.
+
+77
+00:05:02,203 --> 00:05:05,323
+Compute a trap's stiffness from its noise.
+
+78
+00:05:05,703 --> 00:05:09,716
+And explain what an effective
+temperature above the bath's indicates.

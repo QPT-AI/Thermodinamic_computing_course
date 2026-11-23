@@ -1,0 +1,339 @@
+1
+00:00:00,350 --> 00:00:02,171
+Lección 8.3.
+
+2
+00:00:02,551 --> 00:00:05,165
+Descenso de gradiente
+natural termodinámico.
+
+3
+00:00:06,283 --> 00:00:11,002
+El gradiente natural necesita resolver
+un sistema lineal en cada paso, y en la
+
+4
+00:00:11,002 --> 00:00:15,478
+unidad seis vimos que un procesador
+estocástico, un SPU, resuelve sistemas
+
+5
+00:00:15,478 --> 00:00:19,531
+lineales dejando que un proceso de
+Ornstein-Uhlenbeck se equilibre.
+
+6
+00:00:19,911 --> 00:00:24,076
+Donatella y colaboradores unieron
+ambas ideas en el descenso
+
+7
+00:00:24,076 --> 00:00:28,102
+de gradiente natural termodinámico,
+o TNGD: la GPU calcula
+
+8
+00:00:28,102 --> 00:00:31,781
+gradientes y curvatura, y
+el SPU resuelve el sistema.
+
+9
+00:00:32,883 --> 00:00:37,382
+En cada iteración, la GPU usa
+diferenciación automática para obtener el
+
+10
+00:00:37,382 --> 00:00:41,500
+gradiente, el jacobiano de la
+salida y el hessiano de la pérdida.
+
+11
+00:00:41,880 --> 00:00:45,391
+Esos factores se cargan en el
+SPU a través de convertidores.
+
+12
+00:00:45,771 --> 00:00:51,358
+El SPU evoluciona según dg̃
+= −((G + λI) g̃ − ∇ℓ) dt más
+
+13
+00:00:51,358 --> 00:00:56,944
+ruido, cuya media de equilibrio
+es el gradiente natural.
+
+14
+00:00:57,324 --> 00:01:00,857
+Tras un tiempo analógico
+t, se lee el estado, la GPU
+
+15
+00:01:00,857 --> 00:01:03,981
+actualiza los parámetros
+y el ciclo se repite.
+
+16
+00:01:04,361 --> 00:01:08,176
+Los dos lados pueden trabajar
+en paralelo, de forma asíncrona.
+
+17
+00:01:09,283 --> 00:01:13,643
+Si el SPU empieza en el gradiente
+ordinario, su media en el tiempo
+
+18
+00:01:13,643 --> 00:01:18,003
+t es una mezcla: en t = 0 es el
+gradiente, el descenso estocástico
+
+19
+00:01:18,003 --> 00:01:21,305
+de siempre; para t grande
+es el gradiente natural.
+
+20
+00:01:21,685 --> 00:01:26,315
+El tiempo analógico es una perilla
+continua entre primer y segundo orden.
+
+21
+00:01:26,695 --> 00:01:31,045
+En una regresión logística con
+cincuenta parámetros, la pérdida tras
+
+22
+00:01:31,045 --> 00:01:35,266
+treinta iteraciones baja de cero
+coma cuatro cero siete con t = 0,
+
+23
+00:01:35,646 --> 00:01:40,186
+a cero coma tres ocho nueve con cinco
+tiempos de relajación, cero coma
+
+24
+00:01:40,186 --> 00:01:44,725
+tres siete ocho con veinte, cero
+coma tres siete tres con cincuenta, y
+
+25
+00:01:44,725 --> 00:01:48,421
+cero coma tres seis ocho con
+el gradiente natural exacto.
+
+26
+00:01:49,550 --> 00:01:54,435
+Una sorpresa del artículo: no reiniciar
+el SPU entre iteraciones, o aceptar un
+
+27
+00:01:54,435 --> 00:01:58,569
+retardo entre la medición y la
+actualización, mejora el resultado.
+
+28
+00:01:58,949 --> 00:02:02,437
+El estado conserva información
+de la curvatura anterior mientras
+
+29
+00:02:02,437 --> 00:02:05,653
+se adapta a la nueva, como el
+momento en los optimizadores.
+
+30
+00:02:06,033 --> 00:02:11,187
+En nuestra simulación, con cinco tiempos
+de relajación y arranque en caliente, la
+
+31
+00:02:11,187 --> 00:02:15,960
+pérdida final baja de cero coma tres
+ocho nueve a cero coma tres ocho tres.
+
+32
+00:02:16,340 --> 00:02:19,682
+En los experimentos de
+MNIST de Donatella, ciertos
+
+33
+00:02:19,682 --> 00:02:23,224
+retardos incluso superan al
+gradiente natural exacto.
+
+34
+00:02:24,350 --> 00:02:27,964
+El costo por iteración es
+O(b d_z N + t): construir el
+
+35
+00:02:27,964 --> 00:02:32,113
+jacobiano y el hessiano, más el
+tiempo analógico, que se puede
+
+36
+00:02:32,113 --> 00:02:35,860
+hacer muy corto diseñando
+constantes de tiempo pequeñas.
+
+37
+00:02:36,240 --> 00:02:39,840
+En MNIST, los autores estiman
+unas dos veces el costo por
+
+38
+00:02:39,840 --> 00:02:43,188
+iteración de Adam, pero con
+muchas menos iteraciones.
+
+39
+00:02:43,568 --> 00:02:47,569
+En el ajuste fino de DistilBERT,
+el TNGD puro fue peor que
+
+40
+00:02:47,569 --> 00:02:51,364
+Adam, pero la variante
+TNGD-Adam, que pasa el gradiente
+
+41
+00:02:51,364 --> 00:02:55,020
+natural por la regla de
+Adam, dio el mejor resultado.
+
+42
+00:02:56,150 --> 00:02:57,301
+Dos ventajas más.
+
+43
+00:02:57,681 --> 00:03:00,765
+El gradiente conjugado puede
+divergir en sistemas mal
+
+44
+00:03:00,765 --> 00:03:04,083
+condicionados; la dinámica de
+Ornstein-Uhlenbeck converge
+
+45
+00:03:04,083 --> 00:03:07,109
+en promedio para cualquier
+matriz definida positiva.
+
+46
+00:03:07,489 --> 00:03:10,812
+Y el ruido no es un enemigo:
+es parte del algoritmo.
+
+47
+00:03:11,192 --> 00:03:13,228
+El hardware propuesto usa arreglos de
+
+48
+00:03:13,228 --> 00:03:15,924
+resistencias para los
+productos con el jacobiano.
+
+49
+00:03:16,304 --> 00:03:19,838
+La limitación honesta: los
+resultados son simulaciones,
+
+50
+00:03:19,838 --> 00:03:22,922
+y su impacto depende de
+que existan SPU grandes.
+
+51
+00:03:24,050 --> 00:03:27,752
+Usa el tiempo analógico como un
+hiperparámetro entre primer y
+
+52
+00:03:27,752 --> 00:03:31,393
+segundo orden, arranca el SPU
+en caliente para aprovechar el
+
+53
+00:03:31,393 --> 00:03:34,974
+efecto de momento, y combínalo
+con Adam en modelos grandes.
+
+54
+00:03:35,354 --> 00:03:39,844
+En el laboratorio once
+simularás TNGD en MNIST.
+
+55
+00:03:40,950 --> 00:03:44,141
+Errores comunes: esperar
+el equilibrio completo en
+
+56
+00:03:44,141 --> 00:03:46,886
+cada paso, cuando
+tiempos cortos ya ayudan.
+
+57
+00:03:47,266 --> 00:03:48,921
+Olvidar el amortiguamiento.
+
+58
+00:03:49,301 --> 00:03:53,777
+Contar solo el tiempo analógico, cuando
+construir el jacobiano también cuesta.
+
+59
+00:03:54,157 --> 00:03:58,305
+Y presentar aceleraciones simuladas
+como resultados medidos en hardware.
+
+60
+00:03:59,417 --> 00:04:03,387
+En resumen, TNGD reparte el
+trabajo entre una GPU, que calcula
+
+61
+00:04:03,387 --> 00:04:07,294
+gradientes y curvatura, y un
+SPU, que resuelve el sistema del
+
+62
+00:04:07,294 --> 00:04:10,689
+gradiente natural con dinámica
+de Ornstein-Uhlenbeck.
+
+63
+00:04:11,069 --> 00:04:14,575
+El tiempo analógico interpola
+entre descenso de gradiente y
+
+64
+00:04:14,575 --> 00:04:18,140
+gradiente natural, el retardo
+actúa como momento, y el costo
+
+65
+00:04:18,140 --> 00:04:21,468
+por iteración se acerca al
+de un método de primer orden.
+
+66
+00:04:22,583 --> 00:04:26,219
+Para practicar: escribe la media
+del estado en función del tiempo.
+
+67
+00:04:26,599 --> 00:04:29,774
+Explica por qué el tiempo
+cero es descenso de gradiente.
+
+68
+00:04:30,154 --> 00:04:32,436
+Da una explicación del efecto de momento.
+
+69
+00:04:32,816 --> 00:04:35,428
+Y di qué término domina
+el costo por iteración.

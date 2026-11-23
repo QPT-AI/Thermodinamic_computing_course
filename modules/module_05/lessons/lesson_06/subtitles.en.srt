@@ -1,0 +1,289 @@
+1
+00:00:00,350 --> 00:00:02,023
+Lesson 5.6.
+
+2
+00:00:02,403 --> 00:00:04,207
+Analog non-idealities.
+
+3
+00:00:05,317 --> 00:00:09,504
+On the blackboard, a
+coupling is exactly 0.37.
+
+4
+00:00:09,884 --> 00:00:13,633
+On an analog chip, that number
+is stored with few bits, each
+
+5
+00:00:13,633 --> 00:00:17,633
+transistor is slightly different
+from its neighbor, the circuits
+
+6
+00:00:17,633 --> 00:00:21,195
+are not perfectly linear and
+the current itself is noisy.
+
+7
+00:00:21,575 --> 00:00:25,143
+The practical question is how
+much these imperfections distort
+
+8
+00:00:25,143 --> 00:00:28,309
+the distribution we sample,
+and how they are corrected.
+
+9
+00:00:29,417 --> 00:00:32,415
+Take a ten-spin Ising model with random
+
+10
+00:00:32,415 --> 00:00:35,645
+couplings, which we can enumerate exactly.
+
+11
+00:00:36,025 --> 00:00:39,514
+Let's quantize the couplings
+to b bits and measure the KL
+
+12
+00:00:39,514 --> 00:00:43,126
+divergence between the true
+and the quantized distribution.
+
+13
+00:00:43,506 --> 00:00:47,644
+With two bits, the KL is
+1.8: it is a different model.
+
+14
+00:00:48,024 --> 00:00:49,875
+With three, 0.21.
+
+15
+00:00:50,255 --> 00:00:52,384
+With four, 0.07.
+
+16
+00:00:52,764 --> 00:00:56,620
+With six bits it drops to two thousandths,
+and with eight it is negligible.
+
+17
+00:00:57,000 --> 00:00:59,907
+Each additional bit reduces
+the error to a fraction.
+
+18
+00:01:01,017 --> 00:01:05,473
+Mismatch between devices acts
+as a random error in each field.
+
+19
+00:01:05,853 --> 00:01:10,304
+If each pbit has a Gaussian
+offset in its field with standard
+
+20
+00:01:10,304 --> 00:01:14,537
+deviation 0.05, the average
+KL is about eight thousandths.
+
+21
+00:01:14,917 --> 00:01:18,790
+With 0.1 it rises to
+0.03, and with 0.2, to
+
+22
+00:01:18,790 --> 00:01:22,843
+0.13: it grows as the
+square of the mismatch.
+
+23
+00:01:23,223 --> 00:01:27,348
+That is why each pbit is calibrated
+individually, as we saw in X0.
+
+24
+00:01:28,450 --> 00:01:29,897
+Two more error sources.
+
+25
+00:01:30,277 --> 00:01:35,880
+Nonlinearity: the circuit that sums the
+local field is not perfectly linear, and the
+
+26
+00:01:35,880 --> 00:01:40,682
+pbit transfer curve is not exactly a
+sigmoid; according to the syllabus,
+
+27
+00:01:41,062 --> 00:01:46,719
+a comparator with shot noise produces a
+probit-like curve, close but different.
+
+28
+00:01:47,099 --> 00:01:51,693
+And shot noise, due to the discrete
+nature of charge, adds fluctuations
+
+29
+00:01:51,693 --> 00:01:55,769
+that are not thermal and that
+change the effective temperature.
+
+30
+00:01:56,149 --> 00:01:58,906
+All of this is modeled,
+measured and compensated.
+
+31
+00:02:00,017 --> 00:02:03,183
+An elegant mitigation
+is stochastic rounding.
+
+32
+00:02:03,563 --> 00:02:07,787
+Instead of rounding a value to
+the nearest level, it is rounded
+
+33
+00:02:07,787 --> 00:02:11,610
+up or down with probability
+proportional to the distance.
+
+34
+00:02:11,990 --> 00:02:15,932
+Each rounding is noisy, but
+its expected value is exact.
+
+35
+00:02:16,312 --> 00:02:21,364
+If we average several independent
+roundings, the mean coupling
+
+36
+00:02:21,364 --> 00:02:25,765
+error drops from 0.1 to 0.02
+with sixteen repetitions,
+
+37
+00:02:26,145 --> 00:02:30,711
+while deterministic rounding
+stays at 0.09 forever.
+
+38
+00:02:31,817 --> 00:02:36,350
+Another idea is the conservative
+quantizer: choosing the range and scale of
+
+39
+00:02:36,350 --> 00:02:41,004
+the levels so that the large couplings,
+which weigh most in the distribution,
+
+40
+00:02:41,004 --> 00:02:44,691
+are represented well, even if
+the small ones lose resolution.
+
+41
+00:02:45,071 --> 00:02:48,446
+And at the output, as we will
+see in unit eight, at least
+
+42
+00:02:48,446 --> 00:02:51,704
+eight bits are needed so that
+gradients do not degrade.
+
+43
+00:02:52,084 --> 00:02:57,094
+Designing a thermodynamic chip is,
+to a large extent, an error budget.
+
+44
+00:02:58,217 --> 00:03:04,698
+In practice one chooses the number of bits
+from a target KL, calibrates each device,
+
+45
+00:03:04,698 --> 00:03:10,408
+uses stochastic rounding to remove
+bias and, as we will see in lesson 8.7,
+
+46
+00:03:10,788 --> 00:03:13,902
+trains the model knowing
+the hardware is imperfect.
+
+47
+00:03:15,017 --> 00:03:17,995
+Frequent mistakes: judging precision by
+
+48
+00:03:17,995 --> 00:03:21,431
+coupling error instead
+of distribution error.
+
+49
+00:03:21,811 --> 00:03:26,308
+Assuming errors average out,
+when deterministic bias does not.
+
+50
+00:03:26,688 --> 00:03:28,381
+Ignoring shot noise.
+
+51
+00:03:28,761 --> 00:03:33,450
+And calibrating only once, when drift
+with temperature requires recalibration.
+
+52
+00:03:34,550 --> 00:03:38,551
+In summary: quantization,
+mismatch, nonlinearity and
+
+53
+00:03:38,551 --> 00:03:41,936
+shot noise distort the
+sampled distribution.
+
+54
+00:03:42,316 --> 00:03:46,636
+The KL falls quickly with bits and
+grows as the square of the mismatch.
+
+55
+00:03:47,016 --> 00:03:50,798
+Calibrating, rounding
+stochastically and quantizing wisely
+
+56
+00:03:50,798 --> 00:03:53,994
+make up the error budget
+of a thermodynamic chip.
+
+57
+00:03:55,117 --> 00:03:59,238
+To practice: prove that
+stochastic rounding is unbiased.
+
+58
+00:03:59,618 --> 00:04:03,180
+Explain why the KL grows as
+the square of the mismatch.
+
+59
+00:04:03,560 --> 00:04:06,620
+Choose the number of bits for a target KL.
+
+60
+00:04:07,000 --> 00:04:10,614
+And explain how shot noise
+changes the effective temperature.

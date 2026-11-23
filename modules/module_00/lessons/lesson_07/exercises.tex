@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\small,columns=fullflexible,keepspaces=true,frame=single,rulecolor=\color{navy!40},backgroundcolor=\color{sky},literate={á}{{\'a}}1{é}{{\'e}}1{í}{{\'i}}1{ó}{{\'o}}1{ú}{{\'u}}1{ñ}{{\~n}}1}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.7}{Lo esencial de JAX}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item (Pensum, Ap. A.7) Escriba una función JAX que genere $10^6$ normales estándar de forma reproducible y calcule su media con \texttt{jit}.
+\item (Pensum, Ap. A.8) Explique la diferencia entre un gradiente y un producto jacobiano--vector.
+\item ¿Qué forma tiene \texttt{jax.vmap(f)(xs)} si $f:\R^3\to\R$ y \texttt{xs} tiene forma \texttt{(1000, 3)}?
+\item ¿Cuántos \texttt{jvp} hacen falta para formar el jacobiano de $f:\R^n\to\R^m$? ¿Cuántos \texttt{vjp}?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Escriba con \texttt{scan} la cadena de Markov de 3 estados de la lección 0.5 y estime las frecuencias de visita con $10^5$ pasos.
+\item Use \texttt{vmap} para simular 1000 trayectorias independientes del OU del ejemplo y verifique que la varianza tiende a 1.
+\item Implemente el producto Gauss--Newton--vector $J^\top Jv$ para $f(w)=Xw$ (regresión lineal) con \texttt{jvp} y \texttt{vjp}, y compare con $X^\top Xv$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Explique por qué \texttt{jax.random.split(key, T)} dentro de \texttt{scan} es preferible a dividir la clave en cada paso dentro del acarreo, en términos de paralelismo y reproducibilidad. ¿Son equivalentes estadísticamente?
+\item Mida el tiempo de la primera y de la segunda llamada de una función \texttt{jit} que hace \texttt{x @ x.T} para $x\in\R^{2000\times2000}$. Explique la diferencia y el papel de \texttt{block\_until\_ready}.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.}
+\begin{lstlisting}[language=Python]
+@jax.jit
+def media(key):
+    return jnp.mean(jax.random.normal(key, (10**6,)))
+print(media(jax.random.PRNGKey(0)))   # mismo valor en cada ejecución
+\end{lstlisting}
+\textbf{B2.} El gradiente $\nabla\ell(x)\in\R^n$ de una función escalar es el vector de derivadas parciales (un vjp con $u=1$). Un producto jacobiano--vector $Jv\in\R^m$ es la derivada direccional de una función vectorial en la dirección $v$, calculada en modo directo sin formar $J$.
+
+\textbf{B3.} \texttt{(1000,)}.
+
+\textbf{B4.} $n$ jvp (una columna cada uno) o $m$ vjp (una fila cada uno).
+
+\textbf{I1.} \texttt{paso(s, k) = (jax.random.choice(k, 3, p=P[s]), s)}; con $10^5$ pasos las frecuencias se acercan a $(0{,}3;0{,}4;0{,}3)$ con error $\sim\sqrt{0{,}24/10^5}\approx0{,}0015$ (corregido por autocorrelación, lección 2.6).
+
+\textbf{I2.} \texttt{jax.vmap(simular)(jax.random.split(key, 1000))}; la varianza estacionaria del OU $\dd x=-x\dd t+\sqrt2\dd W$ es $1$ (con un sesgo $O(\Delta t)$ de Euler--Maruyama).
+
+\textbf{I3.} \texttt{\_, Jv = jax.jvp(f, (w,), (v,))}; \texttt{\_, vjp\_fn = jax.vjp(f, w)}; \texttt{(JtJv,) = vjp\_fn(Jv)}. Para $f=Xw$, $J=X$ y el resultado es $X^\top Xv$.
+
+\textbf{A1.} Dividir en $T$ claves de una vez permite generar todo el ruido en paralelo y deja el acarreo libre de la clave; ambas estrategias producen secuencias estadísticamente independientes (las claves hijas son independientes), pero los valores concretos difieren: la reproducibilidad se mantiene siempre que la estrategia sea fija.
+
+\textbf{A2.} La primera llamada incluye rastreo y compilación XLA; las siguientes reutilizan el binario. JAX despacha de forma asíncrona: sin \texttt{block\_until\_ready()} se mide solo el lanzamiento.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Laboratorio L1, tarea 1: $10^6$ Bernoulli con \texttt{jax.random} y \texttt{vmap}; estime la entropía y mida el tiempo del muestreador.
+\item Implemente un paso de Langevin para el pozo doble de la lección 1.5 y use \texttt{vmap} sobre 2000 partículas y \texttt{scan} sobre el tiempo.
+\item Compare \texttt{jax.jacfwd} y \texttt{jax.jacrev} para $f:\R^{1000}\to\R^{10}$ y para $f:\R^{10}\to\R^{1000}$. Explique los tiempos.
+\end{enumerate}
+\end{document}

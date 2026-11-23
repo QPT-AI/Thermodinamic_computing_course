@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.2}{La ecuación de Langevin}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} ecuación de Langevin sub- y sobreamortiguada; relación de Einstein;
+escalas de tiempo de dispositivos. \textbf{Prerrequisitos:} 2.1 y 1.2.
+
+\section{Ecuación subamortiguada}
+Una partícula de masa $m$ en un potencial $V$, con fricción $\gamma$ y en contacto con un baño a $T$:
+\begin{equation}m\ddot x=-V'(x)-\gamma\dot x+\sqrt{2\gamma\kB T}\,\xi(t),\qquad\langle\xi(t)\xi(t')\rangle=\delta(t-t').\end{equation}
+Su distribución estacionaria es Boltzmann en el espacio de fases, $p(x,v)\propto e^{-\beta(\frac12mv^2+V(x))}$
+(la animación muestra la nube $(x,v)$ de una simulación \evS).
+
+\section{Límite sobreamortiguado}
+Si el tiempo inercial $\tau_{\text{in}}=m/\gamma$ es mucho menor que las escalas de interés, la velocidad sigue
+instantáneamente a la fuerza y
+\begin{resultado}[ (Langevin sobreamortiguada)]
+\begin{equation}\dot x=\mu f(x)+\sqrt{2\mu\kB T}\,\xi(t),\qquad\mu=1/\gamma,\ f=-V'.\end{equation}
+En forma de Itô: $dx=\mu f\,dt+\sqrt{2D}\,dW$ con $D=\mu\kB T$.
+\end{resultado}
+
+\section{Relación de Einstein}
+La intensidad del ruido no es libre: $D=\mu\kB T$ es la única elección cuyo estado estacionario es $p\propto e^{-V/\kB T}$
+(lo demostraremos con Fokker--Planck en la lección 2.3). Si $D\neq\mu\kB T$, el sistema equilibra a la temperatura
+efectiva $T_{\text{ef}}=D/(\mu\kB)$; la animación lo muestra con un ruido 3 veces más intenso. Fricción y ruido son dos
+caras del mismo baño (fluctuación--disipación, lección 2.5).
+
+\section{Escalas de tiempo}
+\begin{itemize}[nosep]
+\item Inercial: $\tau_{\text{in}}=m/\gamma$. Esfera de radio $a$ en agua: $m=\frac43\pi a^3\rho$, $\gamma=6\pi\eta a$; $a=1\ \mu$m: $\tau_{\text{in}}\approx0{,}22\ \mu$s; $a=100$ nm: $2{,}2$ ns.
+\item Relajación en un potencial de rigidez $\kappa$: $\tau_{\text{rel}}=\gamma/\kappa$.
+\item Circuito RC: $\tau=RC$ (1 k$\Omega$, 1 pF $\Rightarrow$ 1 ns). Un circuito RLC tiene un análogo de inercia ($L$).
+\end{itemize}
+
+\begin{ejemplo}
+Para $V=\frac12\kappa x^2$: $\dot x=-\mu\kappa x+\sqrt{2\mu\kB T}\xi$, un OU con $\langle x^2\rangle=\kB T/\kappa$ (equipartición) y
+tiempo de correlación $1/(\mu\kappa)=\tau_{\text{rel}}$.
+\end{ejemplo}
+
+\begin{aplicacion}
+L2 (pozo doble), L3 (solucionador OU $dx=-(Ax-b)dt+\sqrt{2\beta^{-1}}dW$), osciladores RC/LC acoplados (Unidad 5.4). Como
+algoritmo, Langevin muestrea $e^{-\beta V}$ usando solo $\nabla V$ (base de los muestreadores de difusión, Unidad 9).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Ruido no calibrado con la fricción $\Rightarrow$ otra temperatura.
+\item Usar la forma sobreamortiguada cuando la inercia importa.
+\item El factor 2 en $\sqrt{2\mu\kB T}$. \quad Movilidad $\mu$ $\neq$ difusión $D$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Fuerza + fricción + ruido; $\dot x=\mu f+\sqrt{2\mu\kB T}\xi$; $D=\mu\kB T$; escalas $m/\gamma$, $\gamma/\kappa$, $RC$.
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}.
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\bibitem[25]{melanson} D. Melanson et al., Thermodynamic computing system for AI applications, 2025.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,270 @@
+1
+00:00:00,350 --> 00:00:02,011
+Lesson 10.5.
+
+2
+00:00:02,391 --> 00:00:04,235
+Encoding numbers in pbits.
+
+3
+00:00:05,350 --> 00:00:08,623
+A digital chip stores numbers
+with a fixed width of bits.
+
+4
+00:00:09,003 --> 00:00:12,407
+A pbit chip only produces
+random ones and zeros.
+
+5
+00:00:12,787 --> 00:00:17,117
+How, then, does it represent
+an activation with value 0.37?
+
+6
+00:00:17,497 --> 00:00:20,046
+The idea is to use probability: the number
+
+7
+00:00:20,046 --> 00:00:22,474
+is the frequency with which ones appear.
+
+8
+00:00:22,854 --> 00:00:27,076
+Today we see how many effective bits
+this yields and how much they cost.
+
+9
+00:00:28,183 --> 00:00:30,955
+A probabilistic integer
+is a random integer
+
+10
+00:00:30,955 --> 00:00:33,598
+variable whose mean is the value we want.
+
+11
+00:00:33,978 --> 00:00:37,998
+The simplest case is one pbit
+with probability x of being one.
+
+12
+00:00:38,378 --> 00:00:41,255
+With a group of n pbits, the sum takes
+
+13
+00:00:41,255 --> 00:00:44,434
+values from zero to n and its mean is n x.
+
+14
+00:00:44,814 --> 00:00:48,438
+In the syllabus, this family
+of encodings appears as dy4p;
+
+15
+00:00:48,438 --> 00:00:52,061
+here we study the general
+principle, which does not depend
+
+16
+00:00:52,061 --> 00:00:54,810
+on the details of a
+specific implementation.
+
+17
+00:00:55,917 --> 00:01:00,080
+We define effective bits by
+comparing the mean squared error
+
+18
+00:01:00,080 --> 00:01:04,313
+with that of a uniform quantizer:
+an error of one half to the
+
+19
+00:01:04,313 --> 00:01:07,713
+power b, divided by root
+twelve, is worth b bits.
+
+20
+00:01:08,093 --> 00:01:12,916
+If one sample gives b₁ effective
+bits, averaging S samples divides the
+
+21
+00:01:12,916 --> 00:01:17,464
+noise by root S, and that adds one
+half of log base two of S bits.
+
+22
+00:01:18,583 --> 00:01:21,634
+We verify it with twenty
+thousand random values,
+
+23
+00:01:21,634 --> 00:01:24,875
+encoded with stochastic
+rounding to sixteen levels.
+
+24
+00:01:25,255 --> 00:01:31,166
+One sample gives 3.42
+effective bits; four samples,
+
+25
+00:01:31,166 --> 00:01:36,844
+4.41; sixteen, 5.41; two
+hundred fifty-six, 7.41.
+
+26
+00:01:37,224 --> 00:01:42,070
+Each factor of four in samples adds
+exactly one bit, just as the law predicts.
+
+27
+00:01:43,183 --> 00:01:46,484
+With a group of n binary
+pbits the same happens: what
+
+28
+00:01:46,484 --> 00:01:49,286
+counts is the total
+number of samples, n · S.
+
+29
+00:01:49,666 --> 00:01:53,184
+A single pbit with one
+sample gives less than zero
+
+30
+00:01:53,184 --> 00:01:56,139
+effective bits; with sixteen samples, 1.5.
+
+31
+00:01:56,519 --> 00:02:00,130
+Sixteen pbits with
+sixteen samples give 3.5.
+
+32
+00:02:00,510 --> 00:02:05,139
+One can spend in space, with more
+pbits, or in time, with more samples.
+
+33
+00:02:06,250 --> 00:02:09,412
+This enables precision
+on demand: each layer, or
+
+34
+00:02:09,412 --> 00:02:12,178
+each token, can ask for the bits it needs.
+
+35
+00:02:12,558 --> 00:02:14,053
+But the cost grows fast.
+
+36
+00:02:14,433 --> 00:02:17,972
+Each additional bit requires
+four times more samples, so
+
+37
+00:02:17,972 --> 00:02:21,512
+energy grows as four to the
+power of the number of bits.
+
+38
+00:02:21,892 --> 00:02:24,808
+With few bits, probabilistic encoding is
+
+39
+00:02:24,808 --> 00:02:28,016
+cheap; with many, a
+digital multiplier wins.
+
+40
+00:02:28,396 --> 00:02:33,296
+That is why TSU models are trained
+to work with very few effective bits.
+
+41
+00:02:34,417 --> 00:02:37,797
+In practice: encode activations
+as pbit frequencies,
+
+42
+00:02:37,797 --> 00:02:41,697
+distribute samples per layer
+according to how much the error
+
+43
+00:02:41,697 --> 00:02:45,597
+hurts, and train with the noise
+included to need fewer bits.
+
+44
+00:02:45,977 --> 00:02:49,918
+In lab twenty-nine you will
+measure accuracy against samples.
+
+45
+00:02:51,050 --> 00:02:54,934
+Common mistakes: counting levels
+as if they were effective bits.
+
+46
+00:02:55,314 --> 00:03:00,035
+Expecting linear gains, when one more
+bit costs four times more samples.
+
+47
+00:03:00,415 --> 00:03:04,210
+Ignoring correlations between
+samples, which reduce the gain.
+
+48
+00:03:04,590 --> 00:03:07,617
+And reporting bits without
+saying how the error is defined.
+
+49
+00:03:08,750 --> 00:03:13,041
+In summary, a number is encoded
+as the mean of pbit samples.
+
+50
+00:03:13,421 --> 00:03:17,796
+Effective bits follow the
+law b₁ + ½ log₂ S, which we
+
+51
+00:03:17,796 --> 00:03:21,759
+verified: four times more
+samples, one more bit.
+
+52
+00:03:22,139 --> 00:03:25,083
+Precision can be requested
+on demand, but its
+
+53
+00:03:25,083 --> 00:03:27,635
+cost grows exponentially with the bits.
+
+54
+00:03:28,750 --> 00:03:32,398
+To practice: compute the
+samples to gain three bits.
+
+55
+00:03:32,778 --> 00:03:35,880
+Compute the variance of the
+mean of a group of pbits.
+
+56
+00:03:36,260 --> 00:03:39,047
+Explain why pbits and samples trade off.
+
+57
+00:03:39,427 --> 00:03:41,790
+And say when a digital multiplier wins.

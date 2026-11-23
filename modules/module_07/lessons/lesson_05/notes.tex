@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.5}{Identidades de sumas trigonométricas}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} calcular la probabilidad de retorno de dos formas (combinatoria y espectral); deducir identidades
+trigonométricas de la unicidad del núcleo de calor; usarlas como verificación exacta.
+\textbf{Prerrequisitos:} 7.3, 7.4; coeficientes binomiales.
+
+\section{Dos formas de la misma probabilidad}
+\textbf{Combinatoria.} En coordenadas de exponente cada paso suma $\xi\in\{0\ (1/2),\ \pm2^t\ (1/(4(M+1)))\}$. Tras $\ell$ pasos, el exponente entero
+$E_\ell=\sum_i\xi_i$ (sin reducir) tiene una ley que \emph{no depende de $r$}; la caminata está en $e$ si y solo si $r\mid E_\ell$:
+\[p_\ell(e)=\sum_{j\in\mathbb Z}\Pr(E_\ell=jr).\]
+\textbf{Espectral.} $p_\ell(e)=\frac1r\sum_k\lambda_k^\ell$ (lección 7.3). El núcleo de calor es único: ambas coinciden para todo $r$ y $\ell$.
+
+\section{Identidad clásica: el ciclo}
+Con pasos $0\ (1/2)$, $\pm1\ (1/4)$: $\lambda_k=\cos^2(\pi k/r)$, y un paso perezoso es la suma de dos medios pasos $\pm\frac12$ independientes, así que el
+desplazamiento es $B-\ell$ con $B\sim\mathrm{Bin}(2\ell,\frac12)$:
+\[\frac1r\sum_{k=0}^{r-1}\cos^{2\ell}\frac{\pi k}r=4^{-\ell}\sum_{j\in\mathbb Z}\binom{2\ell}{\ell+jr}.\]
+Ejemplo: $r=5$, $\ell=3$: ambos lados valen $20/64=0{,}3125$ (multisección de binomiales).
+
+\section{Identidad diádica (lacunaria)}
+\[\frac1r\sum_k\Big[\tfrac12\Big(1+\tfrac1{M+1}\sum_{t=0}^M\cos\tfrac{2\pi k2^t}r\Big)\Big]^\ell=\Pr\Big(\sum_{i\le\ell}\xi_i\equiv0\pmod r\Big).\]
+\evS\ $r=33$, $M=9$, $\ell=10$: el lado combinatorio, calculado como fracción exacta sobre 7737 exponentes posibles, vale $0{,}035836548780$; el espectral coincide a
+precisión de máquina.
+
+\section{Usos}
+Prueba (valor racional con denominador que divide a $(4(M+1))^\ell$; límite $1/r$ visible en la forma espectral); verificación exacta de simuladores y hardware
+(lección 7.6); herramienta para acotar sumas lacunarias con tiempos de mezcla.
+
+\begin{aplicacion}
+Pruebas unitarias de simuladores de difusión y prototipos RC. Laboratorio L10: verificar ambas formas para $r=33$, $\ell=1,\dots,30$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Reducir módulo $r$ en cada paso (exige conocer $r$). \quad Olvidar el peso perezoso $1/2$.
+\item Mezclar espectros de $P$ y $W$. \quad Verificar solo en coma flotante.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem{tratado} Cadavid et al., Tratado de factorización por difusión (data/ del curso), secciones 2 y 4, 2026.
+\bibitem{gkp} R. L. Graham, D. E. Knuth y O. Patashnik, \emph{Concrete Mathematics}, Addison-Wesley (1994).
+\end{thebibliography}
+\end{document}

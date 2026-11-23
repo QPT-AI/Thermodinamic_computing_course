@@ -1,0 +1,397 @@
+1
+00:00:00,350 --> 00:00:02,129
+Lesson 1.4.
+
+2
+00:00:02,509 --> 00:00:05,110
+Maxwell's demon and the Szilard engine.
+
+3
+00:00:06,217 --> 00:00:10,313
+In 1867 James Clerk Maxwell
+imagined a tiny being
+
+4
+00:00:10,313 --> 00:00:13,991
+guarding a door between
+two chambers of gas.
+
+5
+00:00:14,371 --> 00:00:17,830
+Without doing work, just watching
+and opening the door at the
+
+6
+00:00:17,830 --> 00:00:21,460
+right moment, it seems able to
+separate fast molecules from slow
+
+7
+00:00:21,460 --> 00:00:24,637
+ones and create a temperature
+difference out of nothing.
+
+8
+00:00:25,017 --> 00:00:28,342
+That paradox took more than
+a century to resolve, and its
+
+9
+00:00:28,342 --> 00:00:31,784
+solution is the heart of the
+thermodynamics of information.
+
+10
+00:00:32,917 --> 00:00:34,577
+Watch the demon in action.
+
+11
+00:00:34,957 --> 00:00:37,762
+When a fast molecule
+approaches from the left, it
+
+12
+00:00:37,762 --> 00:00:40,510
+opens the door and lets
+it through to the right.
+
+13
+00:00:40,890 --> 00:00:44,893
+When a slow one approaches from the
+right, it lets it through to the left.
+
+14
+00:00:45,273 --> 00:00:49,037
+Over time, the right chamber heats
+up and the left one cools down.
+
+15
+00:00:49,417 --> 00:00:52,611
+With that temperature difference
+we could drive an engine.
+
+16
+00:00:52,991 --> 00:00:55,967
+If the demon spends no
+energy, we have built a
+
+17
+00:00:55,967 --> 00:00:58,814
+perpetual motion machine
+of the second kind.
+
+18
+00:00:59,194 --> 00:01:00,348
+Something has to give.
+
+19
+00:01:01,450 --> 00:01:05,247
+Leó Szilard simplified the
+problem to the extreme in
+
+20
+00:01:05,247 --> 00:01:08,898
+1929: a single molecule
+in a box at temperature T.
+
+21
+00:01:09,278 --> 00:01:11,467
+First a wall is inserted in the middle.
+
+22
+00:01:11,847 --> 00:01:14,442
+Then the demon looks at
+which side the molecule
+
+23
+00:01:14,442 --> 00:01:16,761
+is on: it acquires one bit of information.
+
+24
+00:01:17,141 --> 00:01:21,071
+With that bit, it places a piston
+on the correct side and lets the
+
+25
+00:01:21,071 --> 00:01:25,121
+molecule push it while it expands
+slowly, taking heat from the bath.
+
+26
+00:01:25,501 --> 00:01:28,375
+At the end the molecule
+occupies the whole box again.
+
+27
+00:01:28,755 --> 00:01:31,764
+Work has been extracted,
+and the cycle can repeat.
+
+28
+00:01:32,883 --> 00:01:34,191
+Let's compute the work.
+
+29
+00:01:34,571 --> 00:01:39,857
+For a one-molecule gas, the
+equation of state is p V = k_B T.
+
+30
+00:01:40,237 --> 00:01:45,715
+In the isothermal expansion from half
+the volume to the full volume, the
+
+31
+00:01:45,715 --> 00:01:50,584
+extracted work is the integral
+of p dV, which equals k_B T ln 2.
+
+32
+00:01:50,964 --> 00:01:54,932
+That work comes from the bath's heat:
+the internal energy does not change.
+
+33
+00:01:55,312 --> 00:02:00,146
+One bit of information
+became k_B T ln 2 of work.
+
+34
+00:02:00,526 --> 00:02:04,162
+At one cycle per second, this
+seems to violate the second law.
+
+35
+00:02:05,283 --> 00:02:09,422
+For decades it was thought the
+cost lay in measuring: that
+
+36
+00:02:09,422 --> 00:02:13,275
+observing the molecule
+dissipated at least k_B T ln 2.
+
+37
+00:02:13,655 --> 00:02:19,623
+In 1982 Charles Bennett showed that
+measurement can be done reversibly.
+
+38
+00:02:20,003 --> 00:02:23,663
+The unavoidable cost is
+elsewhere: the demon's memory.
+
+39
+00:02:24,043 --> 00:02:28,977
+To repeat the cycle, the demon must
+erase the bit it stored, and by
+
+40
+00:02:28,977 --> 00:02:33,321
+Landauer's principle, erasing
+it costs at least k_B T ln 2.
+
+41
+00:02:33,701 --> 00:02:37,184
+The balance over the full
+cycle is zero at best.
+
+42
+00:02:37,564 --> 00:02:40,034
+The second law survives, but only if we
+
+43
+00:02:40,034 --> 00:02:42,630
+count information as a physical quantity.
+
+44
+00:02:43,750 --> 00:02:46,073
+Let's do the entropy balance of one cycle.
+
+45
+00:02:46,453 --> 00:02:50,986
+On measuring, the demon's memory
+goes from a known state to a bit
+
+46
+00:02:50,986 --> 00:02:55,588
+correlated with the molecule: the
+memory's entropy rises by k_B ln
+
+47
+00:02:55,588 --> 00:02:59,493
+2, while the gas's uncertainty
+drops by the same amount.
+
+48
+00:02:59,873 --> 00:03:05,712
+During the expansion, the bath delivers
+heat and loses k_B ln 2 of entropy.
+
+49
+00:03:06,092 --> 00:03:12,306
+On erasing, the memory returns to zero
+and the bath regains at least k_B ln 2.
+
+50
+00:03:12,686 --> 00:03:15,538
+Adding everything up, the total
+entropy does not decrease.
+
+51
+00:03:16,650 --> 00:03:23,227
+At three hundred kelvin, each cycle
+extracts at most 2.87 × 10⁻²¹ J.
+
+52
+00:03:23,607 --> 00:03:26,173
+If the measurement has
+errors and the demon gets
+
+53
+00:03:26,173 --> 00:03:28,685
+the side right with ninety
+percent probability,
+
+54
+00:03:29,065 --> 00:03:34,494
+the useful information is only the
+mutual information between measurement
+
+55
+00:03:34,494 --> 00:03:39,476
+and position: one minus the binary
+entropy of 0.1, about 0.53 bits.
+
+56
+00:03:39,856 --> 00:03:45,060
+The maximum extractable work drops to 0.53
+
+57
+00:03:45,060 --> 00:03:49,768
+times k_B T ln 2, about 1.5 × 10⁻²¹ J.
+
+58
+00:03:50,883 --> 00:03:54,976
+Real demons exist today:
+information engines that use
+
+59
+00:03:54,976 --> 00:03:59,222
+feedback on colloidal particles
+or on single electrons.
+
+60
+00:03:59,602 --> 00:04:02,210
+With imperfect measurements,
+the maximum work
+
+61
+00:04:02,210 --> 00:04:04,411
+is k_B T times the mutual information.
+
+62
+00:04:04,791 --> 00:04:07,758
+For computing, the lesson
+is clear: measuring and
+
+63
+00:04:07,758 --> 00:04:11,511
+controlling can be almost free,
+but resetting memories is not.
+
+64
+00:04:11,891 --> 00:04:16,914
+In the lab two challenge you will simulate
+a Szilard engine and close the cycle.
+
+65
+00:04:18,017 --> 00:04:21,148
+The demon connects what we
+saw about Shannon entropy
+
+66
+00:04:21,148 --> 00:04:23,859
+with Landauer's principle
+in the next lesson.
+
+67
+00:04:24,239 --> 00:04:28,146
+In unit three we will see the
+generalization of the Jarzynski
+
+68
+00:04:28,146 --> 00:04:31,669
+equality with feedback and
+the thermodynamics of reset.
+
+69
+00:04:32,783 --> 00:04:37,148
+Frequent mistakes: believing the cost
+is in measuring, when it is in erasing.
+
+70
+00:04:37,528 --> 00:04:40,221
+Thinking the demon violates
+the second law, when
+
+71
+00:04:40,221 --> 00:04:42,577
+what happens is that we forgot its memory.
+
+72
+00:04:42,957 --> 00:04:45,265
+Forgetting that the
+expansion must be slow.
+
+73
+00:04:45,645 --> 00:04:48,920
+And assuming the full work
+when the measurement is noisy.
+
+74
+00:04:50,050 --> 00:04:54,322
+In summary: Maxwell's demon uses
+information to extract work.
+
+75
+00:04:54,702 --> 00:04:59,969
+The Szilard engine turns one
+bit into k_B T ln 2 of work.
+
+76
+00:05:00,349 --> 00:05:03,780
+The second law survives because
+the demon's memory must be
+
+77
+00:05:03,780 --> 00:05:06,679
+erased, and erasing a bit
+costs at least as much.
+
+78
+00:05:07,059 --> 00:05:09,482
+Information is a thermodynamic resource.
+
+79
+00:05:10,583 --> 00:05:13,595
+To practice: derive the
+work of the expansion.
+
+80
+00:05:13,975 --> 00:05:18,077
+Compute the average work if the wall
+is placed at one third of the volume.
+
+81
+00:05:18,457 --> 00:05:20,502
+Find the maximum work with a measurement
+
+82
+00:05:20,502 --> 00:05:22,597
+that is right eighty percent of the time.
+
+83
+00:05:22,977 --> 00:05:25,206
+And identify the step
+where the cost is paid.

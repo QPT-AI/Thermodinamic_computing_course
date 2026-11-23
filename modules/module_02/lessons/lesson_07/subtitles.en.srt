@@ -1,0 +1,322 @@
+1
+00:00:00,350 --> 00:00:01,985
+Lesson 2.7.
+
+2
+00:00:02,365 --> 00:00:03,556
+Numerical SDEs.
+
+3
+00:00:04,683 --> 00:00:08,855
+Almost no stochastic differential equation
+can be solved with pencil and paper.
+
+4
+00:00:09,235 --> 00:00:13,331
+To simulate a double well, a
+continuous Ising model or a
+
+5
+00:00:13,331 --> 00:00:17,354
+thermodynamic linear solver
+we need to discretize time.
+
+6
+00:00:17,734 --> 00:00:22,262
+This lesson presents the most used
+method, Euler–Maruyama, and its
+
+7
+00:00:22,262 --> 00:00:26,447
+two risks: instability, if the
+step is large, and bias, which
+
+8
+00:00:26,447 --> 00:00:30,906
+contaminates the statistics even
+when the simulation looks right.
+
+9
+00:00:32,017 --> 00:00:34,390
+The idea is Euler's, plus noise.
+
+10
+00:00:34,770 --> 00:00:40,054
+At each step, we advance with the force
+evaluated at the current point for
+
+11
+00:00:40,054 --> 00:00:44,696
+a time Δt, and add a Wiener
+increment, a Gaussian of variance Δt.
+
+12
+00:00:45,076 --> 00:00:48,934
+Notice the scales: the
+deterministic term is of
+
+13
+00:00:48,934 --> 00:00:52,547
+order Δt, but the noise
+is of order root Δt.
+
+14
+00:00:52,927 --> 00:00:56,057
+That is why, for small
+steps, noise dominates each
+
+15
+00:00:56,057 --> 00:00:59,751
+individual step, while the
+force dominates over long times.
+
+16
+00:01:00,883 --> 00:01:06,878
+Let's apply the method to ẋ = −λ
+x, the deterministic part of an OU.
+
+17
+00:01:07,258 --> 00:01:10,855
+Each step multiplies x by 1 − λ Δt.
+
+18
+00:01:11,235 --> 00:01:14,432
+If that factor has absolute
+value less than one,
+
+19
+00:01:14,432 --> 00:01:17,496
+the simulation decays;
+if larger, it blows up.
+
+20
+00:01:17,876 --> 00:01:20,906
+The condition is Δt < 2/λ.
+
+21
+00:01:21,286 --> 00:01:28,047
+With λ = 10, a step of 0.15 oscillates
+but converges; one of 0.21 blows up.
+
+22
+00:01:28,427 --> 00:01:34,644
+In several dimensions the largest
+eigenvalue rules: Δt < 2/λ_max.
+
+23
+00:01:35,024 --> 00:01:38,232
+And since slow relaxation
+takes 1/λ_min, the
+
+24
+00:01:38,232 --> 00:01:41,586
+number of steps grows
+as the condition number.
+
+25
+00:01:42,717 --> 00:01:47,613
+Even when stable, the method does not
+sample exactly the right distribution.
+
+26
+00:01:47,993 --> 00:01:52,928
+For the OU, the stationary
+variance of the discrete chain is
+
+27
+00:01:52,928 --> 00:01:57,288
+1/(β λ (1 − λ Δt/2)), a bit
+larger than the true one.
+
+28
+00:01:57,668 --> 00:02:03,962
+The curve shows the relative bias as a
+function of the step: it is about λ Δt/2.
+
+29
+00:02:04,342 --> 00:02:08,810
+With a step equal to half the
+stability limit, the variance doubles.
+
+30
+00:02:09,190 --> 00:02:13,541
+For the OU there is an exact
+alternative: use the factor
+
+31
+00:02:13,541 --> 00:02:17,193
+e^(−λ Δt) and noise with
+the matching variance.
+
+32
+00:02:18,317 --> 00:02:21,456
+How fast does the simulation
+improve as the step shrinks?
+
+33
+00:02:21,836 --> 00:02:25,429
+We measure the strong error,
+the average distance between the
+
+34
+00:02:25,429 --> 00:02:28,904
+simulated and the exact trajectory
+with the same noise, for
+
+35
+00:02:28,904 --> 00:02:32,144
+geometric Brownian motion,
+which has an exact solution.
+
+36
+00:02:32,523 --> 00:02:37,017
+On a log scale, Euler–Maruyama
+drops with slope one half:
+
+37
+00:02:37,017 --> 00:02:41,118
+you must divide the step
+by four to halve the error.
+
+38
+00:02:41,498 --> 00:02:45,617
+The Milstein method,
+which adds an Itô term
+
+39
+00:02:45,617 --> 00:02:49,258
+with (ΔW)² − Δt, drops with slope one.
+
+40
+00:02:49,638 --> 00:02:53,256
+For additive noise, as in
+Langevin, that term vanishes
+
+41
+00:02:53,256 --> 00:02:56,472
+and Euler–Maruyama already
+has strong order one.
+
+42
+00:02:57,583 --> 00:03:00,419
+In lab three you will
+use Wishart matrices.
+
+43
+00:03:00,799 --> 00:03:06,140
+If the largest eigenvalue is forty,
+the step must be below two over
+
+44
+00:03:06,140 --> 00:03:10,842
+forty, 0.05; to keep the
+covariance bias under one percent,
+
+45
+00:03:11,222 --> 00:03:18,168
+λ Δt/2 must be below 0.01,
+that is, a step of 0.0005.
+
+46
+00:03:18,548 --> 00:03:24,278
+If the smallest eigenvalue is 0.4,
+relaxing takes about 5/λ_min, 12.5
+
+47
+00:03:24,278 --> 00:03:29,426
+time units: twenty-five thousand
+steps just for the transient.
+
+48
+00:03:30,550 --> 00:03:33,619
+In the labs you will
+simulate all these dynamics
+
+49
+00:03:33,619 --> 00:03:36,176
+with Euler–Maruyama inside scan and jit.
+
+50
+00:03:36,556 --> 00:03:39,919
+The practical rule: a step
+well below the stability
+
+51
+00:03:39,919 --> 00:03:42,952
+limit, and check the
+bias by varying the step.
+
+52
+00:03:43,332 --> 00:03:46,092
+For the OU, use the exact discretization.
+
+53
+00:03:46,472 --> 00:03:50,956
+And remember an advantage of analog
+hardware: it integrates in continuous
+
+54
+00:03:50,956 --> 00:03:54,888
+time, without Euler's constraint,
+though with its own bandwidth.
+
+55
+00:03:56,017 --> 00:04:00,409
+Frequent mistakes: scaling the noise
+with the step instead of its square root.
+
+56
+00:04:00,789 --> 00:04:04,463
+Ignoring the stability limit
+in ill-conditioned systems.
+
+57
+00:04:04,843 --> 00:04:08,033
+Confusing strong convergence
+with weak convergence.
+
+58
+00:04:08,413 --> 00:04:10,316
+And reusing random numbers.
+
+59
+00:04:11,417 --> 00:04:12,250
+In summary:
+
+60
+00:04:12,630 --> 00:04:18,667
+Euler–Maruyama advances with the force
+times Δt plus noise of size root Δt.
+
+61
+00:04:19,047 --> 00:04:22,985
+It is stable if Δt <
+2/λ_max, has a bias of
+
+62
+00:04:22,985 --> 00:04:26,649
+order λ Δt in the stationary statistics,
+
+63
+00:04:27,029 --> 00:04:29,724
+and converges strongly
+with order one half, or
+
+64
+00:04:29,724 --> 00:04:32,127
+one with additive noise or with Milstein.
+
+65
+00:04:33,250 --> 00:04:36,957
+To practice: compute a maximum
+stable step, the biased
+
+66
+00:04:36,957 --> 00:04:41,008
+variance of a discretized OU,
+the exact discretization, and
+
+67
+00:04:41,008 --> 00:04:45,059
+explain why the Milstein term
+vanishes with additive noise.

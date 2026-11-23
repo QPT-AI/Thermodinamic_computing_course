@@ -1,0 +1,12 @@
+*.mp4
+*.wav
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+build/
+*.aux
+*.log
+*.out
+*.toc
+.venv*/

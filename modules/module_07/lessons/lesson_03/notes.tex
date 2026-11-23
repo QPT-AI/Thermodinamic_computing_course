@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.3}{Caminatas aleatorias en grafos de Cayley}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} construir el grafo de Cayley de $\langle b\rangle$ con generadores diádicos; definir la caminata
+semi-perezosa y su núcleo de calor; diagonalizarla con caracteres.
+\textbf{Prerrequisitos:} 0.6, 2.4.
+
+\section{El grafo}
+$N=299$, $b=3$, $r=\mathrm{ord}_{299}(3)=33$, $M=\lfloor\log_2N\rfloor+1=9$. Vértices: $\langle b\rangle=\{3^j\bmod299\}$. Aristas: $x\mapsto x\,b^{\pm2^t}$,
+$0\le t\le M$. En coordenadas de exponente, $j\mapsto j\pm2^t\pmod{r}$. Los vecinos se calculan con multiplicación modular, \emph{sin conocer} $r$.
+
+\section{Caminata semi-perezosa y núcleo de calor}
+\[(Pp)(j)=\frac1{2(M+1)}\sum_{t=0}^M\big[p(j+2^t)+p(j-2^t)\big],\qquad W=\tfrac12(I+P),\qquad p_\ell=W^\ell\delta_e.\]
+Con probabilidad $1/2$ se queda; si no, salta por una de las $2(M+1)=20$ aristas. $p_{\ell+1}-p_\ell=(W-I)p_\ell$: ecuación del calor discreta.
+
+\section{Caracteres}
+$\chi_k(j)=e^{2\pi ikj/r}$ es vector propio: $P\chi_k=\mu_k\chi_k$ con
+\[\mu_k=\frac1{M+1}\sum_{t=0}^M\cos\frac{2\pi k2^t}r,\qquad\lambda_k=\frac{1+\mu_k}2\in[0,1],\quad\lambda_0=1.\]
+Expandiendo $\delta_0=\frac1r\sum_k\chi_k$:
+\[p_\ell(e)=\frac1r\sum_{k=0}^{r-1}\lambda_k^\ell\ \longrightarrow\ \frac1r.\]
+
+\section{Ejemplo \evS}
+$p_5(e)=0{,}0789$, $p_{10}(e)=0{,}0358$, $p_{20}(e)=0{,}0304$ ($1/33=0{,}0303$); matriz y fórmula espectral coinciden a precisión de máquina.
+$\mathrm{round}(1/p_\ell(e))=33$ desde $\ell=17$.
+
+\section{Por qué potencias de dos}
+\begin{center}\begin{tabular}{lcc}\toprule
+generadores & $\max_{k\ne0}\lambda_k$ & pasos hasta $10^{-3}$\\\midrule
+$\pm1$ (ciclo) & 0,991 & 762\\
+$\pm2^t$, $0\le t\le9$ & 0,669 & 18\\\bottomrule\end{tabular}\end{center}
+Las potencias de dos dispersan cualquier frecuencia (lema de duplicación, 7.4).
+
+\begin{aplicacion}
+Tiempos de mezcla (barajar cartas), mapas de difusión y redes neuronales sobre grafos, grafos expansores. Laboratorio L10: la caminata para $N=299$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Olvidar la pereza (valor propio $-1$). \quad Creer que hace falta $r$ para construir el grafo.
+\item Confundir espectros de $P$ y $W$. \quad Simular el vector completo en digital (cuesta $r$ por paso).
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem{lpw} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS (2009).
+\bibitem{diaconis} P. Diaconis, \emph{Group Representations in Probability and Statistics}, IMS (1988).
+\end{thebibliography}
+\end{document}

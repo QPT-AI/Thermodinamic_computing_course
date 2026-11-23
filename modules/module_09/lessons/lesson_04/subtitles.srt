@@ -1,0 +1,319 @@
+1
+00:00:00,350 --> 00:00:02,050
+Lección 9.4.
+
+2
+00:00:02,430 --> 00:00:04,340
+Modelo de costo de la difusión.
+
+3
+00:00:05,450 --> 00:00:08,362
+Para decidir si la difusión
+conviene en un hardware
+
+4
+00:00:08,362 --> 00:00:10,989
+dado, hace falta un
+modelo de costo explícito.
+
+5
+00:00:11,369 --> 00:00:15,329
+La idea central es simple: un
+modelo de difusión hace T pasos,
+
+6
+00:00:15,329 --> 00:00:18,651
+y en cada uno procesa cada
+posición de la secuencia.
+
+7
+00:00:19,031 --> 00:00:21,628
+La energía por token es entonces T por la
+
+8
+00:00:21,628 --> 00:00:24,414
+energía de procesar una
+posición en un paso.
+
+9
+00:00:24,794 --> 00:00:27,792
+Hoy ponemos números para una GPU y para un
+
+10
+00:00:27,792 --> 00:00:30,576
+TSU espacial, con supuestos declarados.
+
+11
+00:00:31,683 --> 00:00:34,873
+En una GPU, procesar una
+posición con un modelo
+
+12
+00:00:34,873 --> 00:00:37,791
+de N parámetros cuesta
+unas 2N operaciones.
+
+13
+00:00:38,171 --> 00:00:41,701
+Con la especificación de una
+GPU moderna, unos cero coma
+
+14
+00:00:41,701 --> 00:00:44,915
+siete picojulios por
+operación a pleno rendimiento.
+
+15
+00:00:45,295 --> 00:00:49,400
+Pero la GPU rara vez trabaja
+a pleno: la fracción útil es
+
+16
+00:00:49,400 --> 00:00:52,928
+el MFU, la utilización de
+operaciones del modelo.
+
+17
+00:00:53,308 --> 00:00:59,209
+La energía por posición y paso
+es e_pos = 2N e_FLOP / MFU.
+
+18
+00:01:00,317 --> 00:01:05,432
+La generación autorregresiva produce un
+token por pasada y está limitada por la
+
+19
+00:01:05,432 --> 00:01:09,901
+memoria: con lotes pequeños, el MFU
+puede ser de un cinco por ciento.
+
+20
+00:01:10,281 --> 00:01:14,762
+La difusión procesa todas las
+posiciones en paralelo y puede alcanzar
+
+21
+00:01:14,762 --> 00:01:18,660
+un MFU cercano al cincuenta por
+ciento, pero repite T veces.
+
+22
+00:01:19,040 --> 00:01:23,089
+Para un modelo de mil millones de
+parámetros, con estos supuestos, la
+
+23
+00:01:23,089 --> 00:01:27,433
+decodificación autorregresiva cuesta
+unos veintiocho milijulios por token.
+
+24
+00:01:27,813 --> 00:01:31,554
+La difusión cuesta veintitrés
+con ocho pasos, noventa y uno con
+
+25
+00:01:31,554 --> 00:01:35,415
+treinta y dos, y trescientos
+sesenta y dos con ciento veintiocho.
+
+26
+00:01:36,517 --> 00:01:42,611
+El punto de equilibrio es T* = MFU_dif
+/ MFU_AR: con estos números, diez pasos.
+
+27
+00:01:42,991 --> 00:01:46,816
+Por debajo, la difusión gana
+en energía; por encima, pierde.
+
+28
+00:01:47,196 --> 00:01:49,656
+Por eso en GPU todo se
+juega en reducir los
+
+29
+00:01:49,656 --> 00:01:52,232
+pasos con buenos
+muestreadores y destilación.
+
+30
+00:01:52,612 --> 00:01:57,045
+El número es tan bueno como los
+supuestos: el MFU real depende del
+
+31
+00:01:57,045 --> 00:02:00,875
+lote, la longitud y la
+implementación, y hay que medirlo.
+
+32
+00:02:01,983 --> 00:02:06,828
+En un TSU espacial, cada variable tiene
+su propio circuito, así que no hay
+
+33
+00:02:06,828 --> 00:02:11,607
+MFU que perder: la energía por posición
+y paso es el número de celdas por
+
+34
+00:02:11,607 --> 00:02:15,338
+posición, por los barridos,
+por la energía de cada celda.
+
+35
+00:02:15,718 --> 00:02:19,793
+En la DTM de la lección anterior,
+unos veinte nanojulios por imagen
+
+36
+00:02:19,793 --> 00:02:23,441
+de setecientos ochenta y cuatro
+píxeles son unos veinticinco
+
+37
+00:02:23,441 --> 00:02:27,211
+picojulios por píxel, o unos
+tres picojulios por píxel y paso.
+
+38
+00:02:27,591 --> 00:02:30,594
+La difusión deja de
+penalizar tanto los pasos,
+
+39
+00:02:30,594 --> 00:02:33,400
+porque cada paso es
+dinámica física barata.
+
+40
+00:02:34,517 --> 00:02:38,699
+Una última palanca: no todos los
+pasos necesitan la misma precisión.
+
+41
+00:02:39,079 --> 00:02:42,977
+Los primeros, cuando la muestra
+es casi puro ruido, toleran menos
+
+42
+00:02:42,977 --> 00:02:46,396
+bits; los últimos, que fijan
+los detalles, necesitan más.
+
+43
+00:02:46,776 --> 00:02:50,611
+Si el costo por paso crece con los
+bits, ejecutar la primera mitad de
+
+44
+00:02:50,611 --> 00:02:54,614
+treinta y dos pasos a la mitad de
+bits ahorra un veinticinco por ciento.
+
+45
+00:02:54,994 --> 00:02:57,741
+Es un supuesto a validar con
+la calidad de las muestras.
+
+46
+00:02:58,850 --> 00:03:02,601
+Usa este modelo para reportar
+julios por token con todos los
+
+47
+00:03:02,601 --> 00:03:06,539
+supuestos explícitos, calcular
+el número de pasos de equilibrio
+
+48
+00:03:06,539 --> 00:03:10,352
+antes de elegir difusión en GPU,
+y estimar la energía en TSU.
+
+49
+00:03:10,732 --> 00:03:13,417
+En el laboratorio trece
+barrerás el número de
+
+50
+00:03:13,417 --> 00:03:16,281
+pasos y reportarás calidad
+y energía proyectada.
+
+51
+00:03:17,383 --> 00:03:21,171
+Errores comunes: suponer el
+rendimiento pico de la GPU.
+
+52
+00:03:21,551 --> 00:03:25,124
+Comparar difusión y autorregresión
+con calidades distintas.
+
+53
+00:03:25,504 --> 00:03:28,597
+Olvidar que la difusión
+repite cada posición T veces.
+
+54
+00:03:28,977 --> 00:03:33,402
+Y mezclar energías estimadas de
+TSU con energías medidas de GPU.
+
+55
+00:03:34,517 --> 00:03:37,510
+En resumen: la energía
+por token de la difusión
+
+56
+00:03:37,510 --> 00:03:40,057
+es T por la energía por posición y paso.
+
+57
+00:03:40,437 --> 00:03:45,116
+En GPU, la difusión gana utilización
+frente a la autorregresión pero paga por
+
+58
+00:03:45,116 --> 00:03:49,491
+cada paso, con un equilibrio cerca
+de diez pasos con nuestros supuestos.
+
+59
+00:03:49,871 --> 00:03:52,537
+En un TSU espacial la energía por paso es
+
+60
+00:03:52,537 --> 00:03:55,073
+pequeña y no depende de la utilización.
+
+61
+00:03:55,453 --> 00:03:58,947
+Y los calendarios de precisión
+ahorran en los pasos ruidosos.
+
+62
+00:04:00,050 --> 00:04:02,301
+Para practicar: calcula la energía por
+
+63
+00:04:02,301 --> 00:04:05,026
+posición para un modelo
+de siete mil millones.
+
+64
+00:04:05,406 --> 00:04:07,682
+Calcula el equilibrio
+con otra utilización.
+
+65
+00:04:08,062 --> 00:04:10,906
+Calcula la energía por posición en un TSU.
+
+66
+00:04:11,286 --> 00:04:14,596
+Y explica por qué los primeros
+pasos toleran menos bits.

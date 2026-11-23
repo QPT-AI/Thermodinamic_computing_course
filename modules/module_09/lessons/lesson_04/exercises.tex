@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{9.4}{Modelo de costo de la difusión}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule $e_{\text{pos}}$ para $N=7\times10^9$, MFU $=40\,\%$, $e_{\text{FLOP}}=0{,}7$ pJ.
+\item (B) Equilibrio $T^\ast$ si la decodificación AR alcanza MFU $=20\,\%$ y la difusión $50\,\%$.
+\item (B) TSU: $e_{\text{pos}}$ para 64 celdas, 100 barridos, 2 fJ por celda.
+\item (B) ¿Por qué los primeros pasos toleran menos bits?
+\item (I) Con lotes grandes, la decodificación AR puede llegar a MFU alto. ¿Cómo cambia $T^\ast$? ¿Qué se pierde (latencia)?
+\item (I) Escriba la energía total de un calendario con $b_t$ bits en el paso $t$ si el costo es proporcional a $b_t$.
+\item (A) Mida el MFU real de un modelo pequeño en su GPU en decodificación AR y en un paso de difusión, y recalcule $T^\ast$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $2\cdot7\times10^9\cdot0{,}7\,\text{pJ}/0{,}4=24{,}5$ mJ.
+
+\textbf{E2.} $T^\ast=0{,}5/0{,}2=2{,}5$.
+
+\textbf{E3.} $64\cdot100\cdot2\ \text{fJ}=12{,}8$ pJ.
+
+\textbf{E4.} La señal es casi puro ruido: los errores de redondeo quedan por debajo del ruido del proceso.
+
+\textbf{E5.} $T^\ast$ baja hacia 1: la ventaja energética de la difusión desaparece, aunque la latencia por usuario de AR crece con el lote.
+
+\textbf{E6.} $E=\sum_te_{\text{pos}}(b_{\max})\,b_t/b_{\max}$.
+
+\textbf{E7.} Depende del hardware; el ejercicio enseña a no usar el pico.
+\end{solucion}
+\end{document}

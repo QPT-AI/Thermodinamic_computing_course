@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{0}{Quiz: orientación y nivelación matemática}
+\noindent\textbf{Duración:} 10 minutos (sesión A, pensum §5.2) + versión extendida para estudio.
+\textbf{Resultados evaluados:} prerrequisitos de RA1--RA2. Las preguntas 1--8 son de opción múltiple; 9--12, problemas cortos.
+
+\section*{Parte A — Opción múltiple}
+\begin{enumerate}
+\item Al cargar un capacitor $C$ hasta $V$ desde una fuente fija a través de $R$, el calor disipado es:
+ (a) $CV^2$ \quad (b) $\tfrac12CV^2$ \quad (c) $\tfrac12CV^2\cdot R$ \quad (d) depende de la rapidez de la carga.
+\item Con escalado de Dennard ideal (factor $k$), la densidad de potencia:
+ (a) crece como $k^2$ \quad (b) decrece como $1/k^2$ \quad (c) permanece constante \quad (d) crece como $k$.
+\item La decodificación de un LLM con lote 1 suele estar limitada por:
+ (a) el pico de FLOP/s \quad (b) el ancho de banda de memoria \quad (c) la latencia de red \quad (d) la precisión numérica.
+\item Un bit con barrera $E_b\approx\kB T$ se comporta como:
+ (a) bit digital confiable \quad (b) bit probabilístico \quad (c) cúbit \quad (d) memoria no volátil.
+\item Si $y\sim\N(0,I)$ y $x=Ay+b$, la covarianza de $x$ es:
+ (a) $A^2$ \quad (b) $A^\top A$ \quad (c) $AA^\top$ \quad (d) $A+b$.
+\item ¿Cuál afirmación sobre $\KL(p\|q)$ es correcta?
+ (a) es simétrica \quad (b) puede ser negativa \quad (c) vale 0 solo si $p=q$ \quad (d) cumple la desigualdad triangular.
+\item En una cadena de Markov reversible, la velocidad de convergencia a $\pi$ la controla:
+ (a) $\lambda_1$ \quad (b) $\max_{i\ge2}|\lambda_i|$ \quad (c) $\det P$ \quad (d) el número de estados.
+\item En JAX, el gradiente de una pérdida escalar se calcula con:
+ (a) $n$ jvp \quad (b) un vjp \quad (c) diferencias finitas \quad (d) \texttt{vmap}.
+\end{enumerate}
+
+\section*{Parte B — Problemas cortos}
+\begin{enumerate}\setcounter{enumi}{8}
+\item Calcule $\kappa$ para $A=\begin{pmatrix}4&0\\0&1\end{pmatrix}$ y el paso máximo estable de Euler para $\dot x=-Ax$.
+\item Calcule $h(0{,}25)$ en bits.
+\item Encuentre $\pi$ para $P=\begin{pmatrix}0{,}9&0{,}1\\0{,}3&0{,}7\end{pmatrix}$ y su segundo valor propio.
+\item Calcule $\sum_{j=0}^{5}e^{2\pi ij\cdot 3/6}$ y $\sum_{j=0}^{5}e^{2\pi ij\cdot 6/6}$.
+\end{enumerate}
+
+\newpage
+\section*{Clave de respuestas con explicación}
+\begin{enumerate}
+\item \textbf{(b)}. La fuente entrega $CV^2$; la mitad se almacena y la mitad se disipa para cualquier $R$ (lección 0.1). (d) es el error típico: $R$ cambia el tiempo, no la energía.
+\item \textbf{(c)}. $C/k$, $V/k$, $kf$ dan $P/k^2$ por transistor y $k^2$ transistores por área.
+\item \textbf{(b)}. Intensidad aritmética $\approx1$ FLOP/byte, muy a la izquierda del codo del roofline.
+\item \textbf{(b)}. Saltos térmicos frecuentes ($P\propto e^{-1}$): fuente de aleatoriedad (lección 0.2).
+\item \textbf{(c)}. $\mathrm{Cov}(Ay)=A\,I\,A^\top$.
+\item \textbf{(c)}. Gibbs: $\KL\ge0$ con igualdad sii $p=q$; no es simétrica ni métrica.
+\item \textbf{(b)}. $\|p_n-\pi\|\lesssim C\lambda_*^n$ con $\lambda_*=\max_{i\ge2}|\lambda_i|$.
+\item \textbf{(b)}. Modo inverso con cotangente 1.
+\item $\kappa=4$; estable si $\Delta t<2/\lambda_{\max}=0{,}5$.
+\item $h(0{,}25)=0{,}25\cdot2+0{,}75\cdot0{,}415=0{,}811$ bits.
+\item $\pi=(b,a)/(a+b)$ con $a=0{,}1$, $b=0{,}3$: $\pi=(0{,}75;0{,}25)$; $\lambda_2=1-a-b=0{,}6$.
+\item $k=3$: $6\nmid3$, suma $=0$ (de hecho $1-1+1-1+1-1$). $k=6$: $6\mid6$, suma $=6$.
+\end{enumerate}
+\noindent\textbf{Rúbrica:} 1 punto por pregunta; aprobación con 8/12. Fallos en 5, 7 o 9 $\Rightarrow$ repasar lecciones 0.3--0.5 (nivelación, pensum §5.5).
+\end{document}

@@ -1,0 +1,294 @@
+1
+00:00:00,350 --> 00:00:02,089
+Lesson 10.7.
+
+2
+00:00:02,469 --> 00:00:03,984
+The Z1T architecture.
+
+3
+00:00:05,117 --> 00:00:09,551
+In September twenty twenty-six,
+Extropic published Z1T, a
+
+4
+00:00:09,551 --> 00:00:14,375
+transformer-like language model
+designed for its Z1 pbit chip.
+
+5
+00:00:14,755 --> 00:00:16,952
+It brings together everything
+we saw in this unit.
+
+6
+00:00:17,332 --> 00:00:22,016
+Today we take it apart: its architecture,
+how the work is split between the
+
+7
+00:00:22,016 --> 00:00:26,264
+chip and an FPGA, and what its
+energy and latency tables really say.
+
+8
+00:00:27,383 --> 00:00:30,591
+Z1T is small: four layers,
+dimension five hundred
+
+9
+00:00:30,591 --> 00:00:34,061
+twelve, a context of one
+thousand twenty-four tokens.
+
+10
+00:00:34,441 --> 00:00:39,898
+Attention is replaced by gated convolutional
+attention, from the AFT family.
+
+11
+00:00:40,278 --> 00:00:42,265
+Normalization is DyT.
+
+12
+00:00:42,645 --> 00:00:45,489
+The MLP uses tanh-linear units.
+
+13
+00:00:45,869 --> 00:00:49,051
+All projections are
+sparse, with four inputs
+
+14
+00:00:49,051 --> 00:00:52,088
+per output, and the weights use four bits.
+
+15
+00:00:53,217 --> 00:00:57,940
+Each output pbit spends its
+sixteen couplings on four input
+
+16
+00:00:57,940 --> 00:01:02,904
+values times four pbits, with a
+four-bit encoding called dy4p.
+
+17
+00:01:03,284 --> 00:01:07,919
+The Z1 chip has eight cores and two
+hundred sixty-nine thousand five hundred
+
+18
+00:01:07,919 --> 00:01:12,554
+sixty-eight pbits, sampling at more
+than fifty megahertz and under one watt.
+
+19
+00:01:12,934 --> 00:01:16,167
+The sampled projections
+and DyT run on the chip.
+
+20
+00:01:17,283 --> 00:01:21,259
+The rest runs on an FPGA: the
+embedding, the arithmetic of
+
+21
+00:01:21,259 --> 00:01:25,304
+convolutional attention, the
+residuals, positional encoding
+
+22
+00:01:25,304 --> 00:01:28,663
+and the vocabulary head
+that produces the logits.
+
+23
+00:01:29,043 --> 00:01:31,587
+It is disaggregated
+inference: each operation
+
+24
+00:01:31,587 --> 00:01:33,734
+goes to the device where it is native.
+
+25
+00:01:34,114 --> 00:01:37,871
+The article mentions that the
+FPGA could be swapped for a GPU
+
+26
+00:01:37,871 --> 00:01:41,134
+or another accelerator,
+though that was not measured.
+
+27
+00:01:42,250 --> 00:01:48,711
+The energy estimate is
+294.52 nanojoules per token:
+
+28
+00:01:48,711 --> 00:01:54,791
+8.74 for sampling on Z1
+and 285.78 for the FPGA.
+
+29
+00:01:55,171 --> 00:01:57,972
+The thermodynamic chip is
+less than three percent.
+
+30
+00:01:58,352 --> 00:02:02,028
+Against an H100 at ten percent
+utilization, the reported
+
+31
+00:02:02,028 --> 00:02:05,834
+advantage is about one hundred
+thirty-nine times; at fifty
+
+32
+00:02:05,834 --> 00:02:09,510
+percent, twenty-eight; at one
+hundred percent, fourteen.
+
+33
+00:02:09,890 --> 00:02:15,101
+The Z1 layers on their own would be
+hundreds or thousands of times more
+
+34
+00:02:15,101 --> 00:02:20,459
+efficient: the bottleneck is the FPGA,
+as Amdahl predicted in lesson 9.5.
+
+35
+00:02:21,583 --> 00:02:22,876
+Now the fine print.
+
+36
+00:02:23,255 --> 00:02:28,009
+The vocabulary head, the last dense layer
+that produces the logits, is excluded
+
+37
+00:02:28,009 --> 00:02:32,462
+from the headline figures; included,
+the energy rises to about one hundred
+
+38
+00:02:32,462 --> 00:02:36,614
+thirty-six microjoules per token,
+some four hundred sixty times more.
+
+39
+00:02:36,994 --> 00:02:39,752
+Data movement between
+chip and FPGA and the
+
+40
+00:02:39,752 --> 00:02:42,252
+number of chips are not counted either.
+
+41
+00:02:42,632 --> 00:02:47,933
+The estimated latency is 58.8
+microseconds per token, against one
+
+42
+00:02:47,933 --> 00:02:53,559
+hundred two on a compiled H100, and
+FPGA orchestration is most of it.
+
+43
+00:02:53,939 --> 00:02:57,974
+All are batch-one projections, not
+measurements of the complete system.
+
+44
+00:02:59,083 --> 00:03:05,244
+From Z1T we learn a design recipe, the need
+to count energy per device including the
+
+45
+00:03:05,244 --> 00:03:10,670
+vocabulary head, and that the next
+gain lies in reducing the digital glue.
+
+46
+00:03:11,050 --> 00:03:15,336
+In lab twenty-nine you will make
+your own energy-per-token projection.
+
+47
+00:03:16,450 --> 00:03:19,655
+Common mistakes: quoting one
+hundred thirty-nine times
+
+48
+00:03:19,655 --> 00:03:22,623
+without saying it assumes
+ten percent utilization.
+
+49
+00:03:23,003 --> 00:03:25,593
+Ignoring the excluded vocabulary head.
+
+50
+00:03:25,973 --> 00:03:29,863
+Confusing the advantage of the Z1
+layers with that of the complete system.
+
+51
+00:03:30,243 --> 00:03:32,875
+And treating projections as
+if they were measurements.
+
+52
+00:03:33,983 --> 00:03:38,877
+In summary, Z1T combines gated
+convolutional attention, DyT,
+
+53
+00:03:38,877 --> 00:03:43,933
+tanh-linear units and degree-four
+projections with dy4p pbits.
+
+54
+00:03:44,313 --> 00:03:48,067
+The chip does the sampling; the
+FPGA, everything else, and it
+
+55
+00:03:48,067 --> 00:03:51,205
+takes ninety-seven percent
+of the estimated energy.
+
+56
+00:03:51,585 --> 00:03:54,798
+The figures are promising
+projections with important
+
+57
+00:03:54,798 --> 00:03:57,825
+exclusions, the vocabulary
+head first among them.
+
+58
+00:03:58,950 --> 00:04:02,362
+To practice: compute the FPGA share.
+
+59
+00:04:02,742 --> 00:04:05,764
+Recompute the one hundred
+thirty-nine times advantage.
+
+60
+00:04:06,144 --> 00:04:09,070
+Compute the factor the
+vocabulary head adds.
+
+61
+00:04:09,450 --> 00:04:12,034
+And explain which component
+dominates latency.

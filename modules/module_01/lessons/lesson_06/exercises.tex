@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.6}{Ruido térmico}
+$\kB=1{,}380649\times10^{-23}$ J/K, $T=300$ K salvo indicación.
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule $V_{\text{rms}}$ de una resistencia de 50 $\Omega$ con ancho de banda de 1 GHz.
+\item ¿Qué capacidad da un ruido $\sqrt{kT/C}=1$ mV?
+\item Muestre que $\int_0^\infty\frac{4\kB TR}{1+(2\pi fRC)^2}\dd f=\kB T/C$.
+\item ¿Cuántas veces $\kB T$ es la energía $\frac12CV^2$ de un nodo de 0,5 fF a 0,7 V?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Para el OU $\tau\dot V=-V+\sqrt{2\tau\kB T/C}\,\xi$, calcule la autocorrelación $\langle V(t)V(t+s)\rangle$ en estado estacionario.
+\item Un convertidor muestrea un capacitor de 100 fF. ¿Cuántos bits efectivos permite el ruido $kT/C$ si el rango es 1 V? (Use $\text{SNR}=V_{\text{rango}}/(2\sqrt{kT/C})$ y bits $\approx\log_2\text{SNR}$.)
+\item Un pbit basado en un nodo capacitivo debe fluctuar entre 0 y 1 con energía de barrera $\sim\kB T$. Estime la capacidad del nodo si la señal lógica es de 50 mV.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Derive $S_V=4\kB TR$ con el argumento original de Nyquist (línea de transmisión terminada en resistencias, equipartición por modo).
+\item Muestre que para $hf\sim\kB T$ la fórmula pasa a $S_V=4R\frac{hf}{e^{hf/\kB T}-1}$ (más el término de punto cero). ¿A qué frecuencia la corrección es del 10\,\% a 300 K?
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $\sqrt{4\cdot1{,}38\times10^{-23}\cdot300\cdot50\cdot10^9}\approx28{,}8\ \mu$V.
+
+\textbf{B2.} $C=\kB T/(10^{-3})^2=4{,}14\times10^{-15}$ F $\approx4{,}1$ fF.
+
+\textbf{B3.} Con $u=2\pi fRC$: $\int_0^\infty\frac{\dd f}{1+(2\pi fRC)^2}=\frac{1}{2\pi RC}\cdot\frac\pi2=\frac1{4RC}$.
+
+\textbf{B4.} $\frac12\cdot0{,}5\times10^{-15}\cdot0{,}49=1{,}2\times10^{-16}$ J $\approx2{,}96\times10^4\,\kB T$.
+
+\textbf{I1.} $\langle V(t)V(t+s)\rangle=\frac{\kB T}{C}e^{-|s|/\tau}$.
+
+\textbf{I2.} $\sqrt{kT/C}=\sqrt{4{,}14\times10^{-21}/10^{-13}}\approx0{,}20$ mV; SNR $=1/(4\times10^{-4})=2500$; $\approx11{,}3$ bits.
+
+\textbf{I3.} Pedir $\frac12CV^2\sim\kB T$: $C\sim2\kB T/V^2=8{,}3\times10^{-21}/2{,}5\times10^{-3}\approx3{,}3$ aF: un nodo diminuto; en la práctica los pbits usan otros mecanismos (MTJ, amplificación de ruido; Unidad 5.2).
+
+\textbf{A1.} Modos de la línea de longitud $L$: densidad $2L/v$ por Hz; cada modo tiene $\kB T$ (dos grados cuadráticos); la potencia que cada resistencia entrega a la otra es $\kB T\Delta f$, y con resistencias adaptadas $P=\langle V^2\rangle/(4R)$, de donde $\langle V^2\rangle=4\kB TR\Delta f$.
+
+\textbf{A2.} El factor $\frac{x}{e^x-1}$ con $x=hf/\kB T$ vale $0{,}9$ para $x\approx0{,}21$: $f\approx0{,}21\cdot6{,}25$ THz $\approx1{,}3$ THz.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Simule el OU del RC con Euler--Maruyama para $\tau\in\{0{,}1;1;10\}$ y verifique que la varianza es la misma.
+\item Con ngspice, haga un análisis de ruido de un RC y compare la integral del espectro con $kT/C$.
+\end{enumerate}
+\end{document}

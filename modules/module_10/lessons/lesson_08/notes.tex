@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.8}{Métricas de energía para modelos de lenguaje}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} J/token, J/FLOP y MFU; titular frente a ganancia neta; el impuesto de la dispersión; cómo escribir una comparación justa.
+\textbf{Prerrequisitos:} 10.1, 10.7.
+
+\section{Métricas}
+\[E_{\text{token}}=\frac{2P\,e_{\text{FLOP}}}{\text{MFU}}.\]
+Con $P=11{,}55$M y $e_{\text{FLOP}}=0{,}177$ pJ (cifras del artículo de Z1T): $4{,}09\ \mu$J con MFU 100\,\%, $40{,}9\ \mu$J con 10\,\%: reconstruye exactamente la referencia
+H100 de la tabla de Z1T.
+
+\section{El titular \evP}
+$139\times$ supone MFU 10\,\% (decode con lote 1). El propio artículo cita MFU $\approx40\,\%$ en modelos tipo Llama 3: con ese valor la razón es $\approx35\times$.
+
+\section{Mismo alcance \evE}
+El titular excluye la cabeza de vocabulario. Con $D=512$ y un vocabulario \emph{supuesto} de $V=50\,257$ (GPT-2; el artículo no lo da), la cabeza en la H100 cuesta
+$2DV\,e_{\text{FLOP}}/\text{MFU}=9{,}1\ \mu$J$/\text{MFU}$.
+\begin{center}\small\begin{tabular}{lrrr}\toprule
+$\mu$J/token & cuerpo & cabeza & total\\\midrule
+H100, MFU 10\,\% & 40{,}9 & 91 & 132\\ H100, MFU 40\,\% & 10{,}2 & 23 & 33\\ Z1T + FPGA & 0{,}29 & 136 & 137\\\bottomrule
+\end{tabular}\end{center}
+Razón con igual alcance: $\approx0{,}97$ (10\,\%) y $\approx0{,}24$ (40\,\%): empate o gana la GPU. La cabeza en la FPGA domina; moverla a un dispositivo eficiente es prioritario.
+
+\section{Impuesto de la dispersión \evP}
+A igual tamaño, el modelo disperso es peor; igualar a GPT-2 small exige $\sim10\times$ más FLOPs de entrenamiento. La penalización de tamaño en inferencia a igual calidad no se
+reporta. Ganancia neta $=$ titular $/$ (factor de MFU $\cdot$ factor de alcance $\cdot$ impuesto de calidad).
+
+\section{Comparación justa}
+Declarar: (1) MFU y lote de la GPU; (2) alcance (cabeza, movimiento de datos, número de chips); (3) punto de calidad; (4) razones del sistema y solo del tejido; (5) etiqueta de
+evidencia de cada número.
+
+\begin{aplicacion}
+Tabla titular frente a neto en el laboratorio L29.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Comparar con distinto alcance. \quad Elegir el MFU que maximiza la razón.
+\item Comparar modelos de distinta calidad. \quad Mezclar medidas y proyecciones sin etiquetas.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{z1t} Extropic, Z1T, \url{https://extropic.ai/writing/z1t} (septiembre de 2026).
+\bibitem{palm} A. Chowdhery et al., PaLM: scaling language modeling with Pathways, arXiv:2204.02311 (2022).
+\bibitem{green} R. Schwartz et al., Green AI, \emph{Commun. ACM} 63, 54 (2020).
+\end{thebibliography}
+\end{document}

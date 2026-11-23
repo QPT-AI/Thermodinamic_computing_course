@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.7}{La variante por colisiones}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre que una colisión no trivial da $r\mid D$.
+\item (B) Pares esperados que coinciden entre $T=100$ puntos uniformes en $r=5313$ casillas.
+\item (B) Probabilidad de que 3 relaciones aleatorias ya den mcd $=r$.
+\item (B) ¿Por qué rho de Pollard escala como $N^{1/4}$ para un semiprimo?
+\item (I) Demuestre $\Pr(Z\ge1)\le\mathbb E[Z]$ y úsela para acotar la probabilidad de colisión con $T=30$ y $r=5313$.
+\item (I) Con dos relaciones $D_1=12r$, $D_2=18r$, ¿qué da el mcd? ¿Cuántas relaciones más esperaría necesitar?
+\item (A) Implemente Pollard--Brent para $N=1\,022\,117$ y compare su número de multiplicaciones modulares con la variante por colisiones.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $b^{E(w)}\equiv b^{E(w')}\Rightarrow b^{D}\equiv1\Rightarrow\mathrm{ord}(b)=r\mid D$.
+
+\textbf{E2.} $100\cdot99/(2\cdot5313)\approx0{,}93$.
+
+\textbf{E3.} $1/\zeta(3)\approx0{,}83$ (heurística).
+
+\textbf{E4.} Busca colisiones módulo $p\approx\sqrt N$: cumpleaños $\sqrt p\approx N^{1/4}$.
+
+\textbf{E5.} Unión de eventos; $\mathbb E[Z]\approx30\cdot29/(2\cdot5313)\approx0{,}082$.
+
+\textbf{E6.} $\gcd=6r$; con una relación más, el mcd de los multiplicadores baja a 1 con probabilidad $\approx1-$(prob. de ser múltiplo de 2 o de 3) $=1-\tfrac23=\tfrac13$ por relación nueva, en el modelo aleatorio.
+
+\textbf{E7.} Pollard--Brent necesita del orden de $\sqrt p\approx32$ iteraciones para $p=1009$, muy por debajo de las $\approx95$ muestras de la variante, cada una con una exponenciación modular.
+\end{solucion}
+\end{document}

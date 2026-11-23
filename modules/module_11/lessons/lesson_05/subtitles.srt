@@ -1,0 +1,331 @@
+1
+00:00:00,350 --> 00:00:02,188
+Lección 11.5.
+
+2
+00:00:02,568 --> 00:00:05,131
+Agentes de investigación
+con modelos de lenguaje.
+
+3
+00:00:06,250 --> 00:00:08,918
+En la lección anterior
+calificamos propuestas.
+
+4
+00:00:09,297 --> 00:00:10,989
+Ahora entrenamos al que propone.
+
+5
+00:00:11,369 --> 00:00:14,922
+Si un modelo de lenguaje recibe
+la recompensa de cada intento,
+
+6
+00:00:14,922 --> 00:00:18,361
+puede aprender por refuerzo a
+escribir mejores experimentos.
+
+7
+00:00:18,741 --> 00:00:23,508
+Extropic, con Prime Intellect, lo intentó
+en octubre de dos mil veintiséis, y lo
+
+8
+00:00:23,508 --> 00:00:27,679
+llamó las primeras chispas de la
+inteligencia recursiva termodinámica.
+
+9
+00:00:28,059 --> 00:00:30,815
+Veamos el método, un
+experimento propio sobre
+
+10
+00:00:30,815 --> 00:00:33,265
+trampas, y lo que de verdad se demostró.
+
+11
+00:00:34,383 --> 00:00:38,110
+GRPO, la optimización de
+política relativa al grupo, fue
+
+12
+00:00:38,110 --> 00:00:41,637
+introducida con DeepSeekMath
+en dos mil veinticuatro.
+
+13
+00:00:42,017 --> 00:00:45,178
+Para cada tarea, el modelo
+genera un grupo de intentos.
+
+14
+00:00:45,558 --> 00:00:48,753
+La ventaja de cada intento
+es su recompensa menos la
+
+15
+00:00:48,753 --> 00:00:52,071
+media del grupo, dividida
+por la desviación del grupo.
+
+16
+00:00:52,451 --> 00:00:56,852
+Se refuerzan los intentos mejores que
+el promedio y se penalizan los peores,
+
+17
+00:00:56,852 --> 00:01:00,790
+sin necesidad de una red de valor
+que estime la recompensa esperada.
+
+18
+00:01:01,917 --> 00:01:04,672
+La recompensa de Extropic
+combina dos señales.
+
+19
+00:01:05,052 --> 00:01:09,184
+La ejecución, con setenta por
+ciento del peso, es determinista: el
+
+20
+00:01:09,184 --> 00:01:12,690
+código corre y reproduce la
+métrica de referencia, o no.
+
+21
+00:01:13,070 --> 00:01:16,917
+La rúbrica, con treinta por
+ciento, la califica un modelo juez,
+
+22
+00:01:16,917 --> 00:01:20,641
+Nemotron 3 Super de ciento veinte
+mil millones de parámetros,
+
+23
+00:01:20,641 --> 00:01:23,756
+con criterios escritos de
+antemano para cada tarea.
+
+24
+00:01:24,136 --> 00:01:28,169
+Los autores dan más peso a la ejecución
+porque es más difícil de engañar.
+
+25
+00:01:29,283 --> 00:01:31,765
+Lo probamos con un GRPO de juguete.
+
+26
+00:01:32,145 --> 00:01:36,271
+La política elige entre las cinco
+propuestas de la lección anterior, con
+
+27
+00:01:36,271 --> 00:01:40,454
+grupos de ocho y trescientos pasos,
+promediado sobre doscientas semillas.
+
+28
+00:01:40,834 --> 00:01:44,485
+Con la recompensa completa, la
+política termina eligiendo el método
+
+29
+00:01:44,485 --> 00:01:47,863
+correcto el noventa y nueve coma
+ocho por ciento de las veces.
+
+30
+00:01:48,243 --> 00:01:51,536
+Con solo la ejecución, el método
+correcto baja al treinta y
+
+31
+00:01:51,536 --> 00:01:54,495
+dos por ciento: el sampler
+incorrecto se queda con el
+
+32
+00:01:54,495 --> 00:01:57,285
+treinta y tres y la trampa
+con el treinta y cinco.
+
+33
+00:01:57,665 --> 00:02:00,890
+El agente aprende exactamente
+lo que la recompensa premia.
+
+34
+00:02:02,017 --> 00:02:06,068
+El experimento real entrenó Qwen
+tres punto seis, con treinta y
+
+35
+00:02:06,068 --> 00:02:09,991
+cinco mil millones de parámetros
+y tres mil millones activos,
+
+36
+00:02:09,991 --> 00:02:13,271
+durante cien pasos de GRPO,
+unas veinticinco horas,
+
+37
+00:02:13,651 --> 00:02:17,268
+sobre unas cincuenta tareas que
+reproducen experimentos clásicos
+
+38
+00:02:17,268 --> 00:02:20,717
+como máquinas de Boltzmann y el
+algoritmo de vigilia y sueño.
+
+39
+00:02:21,097 --> 00:02:24,868
+La recompensa en tareas no
+vistas subió de cero coma uno
+
+40
+00:02:24,868 --> 00:02:28,371
+dos siete a cero coma tres
+seis uno, casi el triple.
+
+41
+00:02:28,751 --> 00:02:34,238
+Como referencia, en el mismo
+conjunto, Claude Opus 4.8 obtuvo cero
+
+42
+00:02:34,238 --> 00:02:39,559
+coma cuatro seis cuatro y GPT
+5.5, cero coma siete cuatro siete.
+
+43
+00:02:40,683 --> 00:02:41,937
+Leamos con cuidado.
+
+44
+00:02:42,317 --> 00:02:44,907
+Lo demostrado es que un
+modelo pequeño mejora
+
+45
+00:02:44,907 --> 00:02:47,381
+mucho al reproducir
+experimentos conocidos.
+
+46
+00:02:47,761 --> 00:02:51,067
+Lo que el nombre promete,
+agentes que descubren algoritmos
+
+47
+00:02:51,067 --> 00:02:54,430
+nuevos para el hardware y lo
+mejoran en un ciclo recursivo,
+
+48
+00:02:54,810 --> 00:02:59,440
+es por ahora un objetivo: los autores
+dicen que el siguiente paso es pasar de
+
+49
+00:02:59,440 --> 00:03:03,888
+reproducir a descubrir, y que las
+tareas aún no corren sobre su simulador.
+
+50
+00:03:04,268 --> 00:03:06,463
+Tampoco reportan observaciones de trampas.
+
+51
+00:03:06,843 --> 00:03:09,260
+Son primeras chispas, como dice el título.
+
+52
+00:03:10,383 --> 00:03:14,142
+En la práctica, GRPO sobre
+tareas verificables, recompensa
+
+53
+00:03:14,142 --> 00:03:17,772
+dominada por la ejecución con
+un juez para la rúbrica, y
+
+54
+00:03:17,772 --> 00:03:20,947
+auditoría de las ejecuciones
+en busca de trampas.
+
+55
+00:03:21,327 --> 00:03:25,251
+En el laboratorio treinta evaluarás
+modelos de lenguaje sobre tus tareas.
+
+56
+00:03:26,383 --> 00:03:29,141
+Errores comunes: premiar solo la métrica.
+
+57
+00:03:29,521 --> 00:03:32,339
+Confiar en un juez sin
+criterios fijados de antemano.
+
+58
+00:03:32,719 --> 00:03:35,777
+Leer la automejora recursiva
+como algo demostrado.
+
+59
+00:03:36,157 --> 00:03:39,549
+Y comparar puntuaciones sobre
+conjuntos de tareas distintos.
+
+60
+00:03:40,650 --> 00:03:45,445
+En resumen, GRPO refuerza los intentos
+mejores que el promedio de su grupo.
+
+61
+00:03:45,825 --> 00:03:50,119
+La recompensa mezcla ejecución y
+rúbrica, y nuestro experimento muestra
+
+62
+00:03:50,119 --> 00:03:53,989
+que sin rúbrica el agente aprende
+trampas y métodos incorrectos.
+
+63
+00:03:54,369 --> 00:03:59,001
+Thermo-RSI casi triplicó la recompensa
+de un modelo pequeño al reproducir
+
+64
+00:03:59,001 --> 00:04:02,999
+experimentos; descubrir algoritmos
+nuevos sigue siendo la meta.
+
+65
+00:04:04,117 --> 00:04:07,226
+Para practicar: calcula
+las ventajas de un grupo.
+
+66
+00:04:07,606 --> 00:04:10,927
+Explica por qué GRPO no
+necesita red de valor.
+
+67
+00:04:11,307 --> 00:04:14,581
+Explica por qué la política
+sin rúbrica eligió la trampa.
+
+68
+00:04:14,961 --> 00:04:18,152
+Y di qué demostraría de verdad
+la automejora recursiva.

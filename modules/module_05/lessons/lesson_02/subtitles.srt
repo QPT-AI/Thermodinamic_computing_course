@@ -1,0 +1,329 @@
+1
+00:00:00,350 --> 00:00:02,903
+Lección 5.2. p-bits:
+
+2
+00:00:03,283 --> 00:00:04,949
+MTJ y CMOS.
+
+3
+00:00:06,050 --> 00:00:09,284
+En la unidad cuatro el pbit
+fue una abstracción: un
+
+4
+00:00:09,284 --> 00:00:12,392
+espín que vale más uno
+con probabilidad sigmoide.
+
+5
+00:00:12,772 --> 00:00:14,576
+Ahora veamos cómo se construye.
+
+6
+00:00:14,956 --> 00:00:15,918
+Hay dos caminos.
+
+7
+00:00:16,298 --> 00:00:21,023
+Uno es físico: un imán diminuto tan
+inestable que el calor lo voltea solo.
+
+8
+00:00:21,403 --> 00:00:24,357
+El otro es digital: un
+generador aleatorio,
+
+9
+00:00:24,357 --> 00:00:26,898
+una tabla y un comparador en un FPGA.
+
+10
+00:00:27,278 --> 00:00:29,240
+Ambos llevan a los p-computadores.
+
+11
+00:00:30,350 --> 00:00:34,936
+Una unión túnel magnética tiene dos capas
+magnéticas separadas por un aislante.
+
+12
+00:00:35,316 --> 00:00:37,886
+Si las magnetizaciones son paralelas, la
+
+13
+00:00:37,886 --> 00:00:40,969
+resistencia es baja; si
+son antiparalelas, alta.
+
+14
+00:00:41,349 --> 00:00:44,862
+En una memoria magnética, la
+capa libre tiene una barrera
+
+15
+00:00:44,862 --> 00:00:48,128
+de unas cuarenta k_B T para
+que no se voltee en años.
+
+16
+00:00:48,508 --> 00:00:52,584
+En un pbit hacemos lo contrario:
+una capa libre con barrera del
+
+17
+00:00:52,584 --> 00:00:56,466
+orden de k_B T, que el ruido
+térmico voltea en nanosegundos.
+
+18
+00:00:56,846 --> 00:01:00,660
+Leemos la resistencia, y su
+voltaje es un bit aleatorio.
+
+19
+00:01:01,783 --> 00:01:07,192
+El tiempo medio entre volteos
+sigue la ley de Néel y Arrhenius,
+
+20
+00:01:07,192 --> 00:01:11,913
+τ = τ₀ e^(Δ/k_B T), con τ₀
+del orden de un nanosegundo.
+
+21
+00:01:12,293 --> 00:01:15,146
+Con una barrera de
+cuarenta k_B T, el imán se
+
+22
+00:01:15,146 --> 00:01:17,998
+queda quieto unos siete
+años: es una memoria.
+
+23
+00:01:18,378 --> 00:01:20,082
+Con veinte, medio segundo.
+
+24
+00:01:20,462 --> 00:01:24,424
+Con una sola k_B T, menos de
+tres nanosegundos: es un pbit.
+
+25
+00:01:24,804 --> 00:01:27,533
+El mismo dispositivo pasa
+de memoria a generador
+
+26
+00:01:27,533 --> 00:01:30,318
+aleatorio cambiando solo
+la altura de la barrera.
+
+27
+00:01:31,450 --> 00:01:35,147
+Para que sea un pbit, la entrada
+debe controlar la probabilidad.
+
+28
+00:01:35,527 --> 00:01:38,190
+Una corriente o un voltaje inclina el pozo
+
+29
+00:01:38,190 --> 00:01:40,726
+doble: favorece un estado sobre el otro.
+
+30
+00:01:41,106 --> 00:01:45,078
+La fracción de tiempo en el estado
+alto sigue una sigmoide de la entrada.
+
+31
+00:01:45,458 --> 00:01:49,067
+En el circuito típico, la unión
+se conecta a un transistor y a
+
+32
+00:01:49,067 --> 00:01:52,676
+un inversor: la entrada es el
+voltaje de compuerta y la salida
+
+33
+00:01:52,676 --> 00:01:55,586
+es un bit que fluctúa con
+la probabilidad deseada.
+
+34
+00:01:55,967 --> 00:02:00,723
+Las tasas de salto, y por lo tanto la
+velocidad, se mantienen en nanosegundos.
+
+35
+00:02:01,850 --> 00:02:05,926
+El camino digital emula el mismo
+comportamiento con circuitos estándar.
+
+36
+00:02:06,306 --> 00:02:10,356
+Un generador pseudoaleatorio produce
+un número, una tabla guarda la
+
+37
+00:02:10,356 --> 00:02:14,345
+tangente hiperbólica, y un comparador
+decide el signo, exactamente
+
+38
+00:02:14,345 --> 00:02:17,488
+la regla que vimos en la
+lección cuatro punto cinco.
+
+39
+00:02:17,868 --> 00:02:22,410
+No ahorra la energía de la aleatoriedad,
+pero se puede construir hoy en un
+
+40
+00:02:22,410 --> 00:02:26,523
+FPGA, con cientos de miles de pbits
+y la conectividad que queramos.
+
+41
+00:02:26,903 --> 00:02:30,191
+Es la plataforma con la que se
+desarrollaron los p-computadores.
+
+42
+00:02:31,317 --> 00:02:34,179
+Un p-computador conecta
+muchos pbits según un
+
+43
+00:02:34,179 --> 00:02:36,850
+grafo y los actualiza con Gibbs cromático.
+
+44
+00:02:37,230 --> 00:02:41,471
+La clave de su velocidad es la
+dispersión: si cada pbit tiene pocos
+
+45
+00:02:41,471 --> 00:02:45,586
+vecinos, el grafo se colorea con
+pocos colores, y en cada fase de
+
+46
+00:02:45,586 --> 00:02:49,385
+reloj se actualizan en paralelo
+todos los pbits de un color.
+
+47
+00:02:49,765 --> 00:02:53,438
+Las máquinas de Ising dispersas
+en FPGA alcanzan miles de
+
+48
+00:02:53,438 --> 00:02:57,240
+millones de volteos por segundo,
+varios órdenes de magnitud
+
+49
+00:02:57,240 --> 00:03:00,591
+más que una CPU recorriendo
+los espines uno por uno.
+
+50
+00:03:01,717 --> 00:03:06,248
+Las uniones túnel estocásticas dan
+volteos en nanosegundos y probabilidad
+
+51
+00:03:06,248 --> 00:03:10,841
+ajustable, aunque cada dispositivo es
+algo distinto y hay que calibrarlos.
+
+52
+00:03:11,221 --> 00:03:14,669
+Los p-computadores en FPGA
+ya resuelven problemas de
+
+53
+00:03:14,669 --> 00:03:17,919
+optimización, de muestreo
+y de lógica invertible.
+
+54
+00:03:18,298 --> 00:03:20,944
+En el laboratorio ocho
+simularás circuitos de
+
+55
+00:03:20,944 --> 00:03:23,414
+pbits y medirás su curva de transferencia.
+
+56
+00:03:24,517 --> 00:03:28,484
+Errores comunes: usar una unión
+de memoria, que nunca se voltea.
+
+57
+00:03:28,864 --> 00:03:31,413
+Ignorar la variabilidad
+entre dispositivos.
+
+58
+00:03:31,793 --> 00:03:33,903
+Actualizar vecinos en la misma fase.
+
+59
+00:03:34,284 --> 00:03:36,790
+Y contar volteos por
+segundo sin comprobar que
+
+60
+00:03:36,790 --> 00:03:39,079
+la distribución muestreada es la correcta.
+
+61
+00:03:40,183 --> 00:03:44,223
+En resumen: una unión túnel
+magnética con barrera del orden de
+
+62
+00:03:44,223 --> 00:03:48,003
+k_B T es un pbit físico que
+fluctúa en nanosegundos, y una
+
+63
+00:03:48,003 --> 00:03:51,326
+entrada que inclina su pozo
+ajusta la probabilidad.
+
+64
+00:03:51,706 --> 00:03:55,229
+Un pbit digital combina
+generador, tabla y comparador.
+
+65
+00:03:55,609 --> 00:04:00,081
+Conectados en grafos dispersos y
+coloreados, forman p-computadores rápidos.
+
+66
+00:04:01,183 --> 00:04:05,019
+Para practicar: calcula la barrera
+para un tiempo de volteo dado.
+
+67
+00:04:05,399 --> 00:04:08,320
+Compara las barreras de
+un pbit y de una memoria.
+
+68
+00:04:08,700 --> 00:04:10,671
+Cuenta los colores de una red cuadrada.
+
+69
+00:04:11,051 --> 00:04:15,169
+Y explica en qué gasta energía un
+pbit digital que uno magnético no.

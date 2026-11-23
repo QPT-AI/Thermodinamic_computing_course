@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.8}{Complejidad comparada}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Qué recurso físico consume cada clase de paso?
+\item (B) Calcule $\ell_0$ para $n=2048$ bits.
+\item (B) ¿Por qué leer la salida de HHL anula su ventaja para el vector completo?
+\item (B) Escriba las cuatro preguntas para una afirmación de ventaja.
+\item (I) Estime la exponencial de la criba de cuerpos de números para $n=1024$ y compárela con $n=2048$.
+\item (I) Si cada nodo de difusión ocupa $1\ \mu\text{m}^2$, ¿qué área necesita una red de $2^{64}$ nodos? Compárela con la superficie terrestre ($5{,}1\times10^{14}$ m$^2$).
+\item (A) Haga una tabla de recursos (tiempo, área, energía, precisión, etiqueta de evidencia) para factorizar $N=299$ con los cuatro métodos de la unidad.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Cuántico: coherencia y corrección de errores; difusión: área/nodos y precisión analógica; digital: tiempo.
+
+\textbf{E2.} $M=2049$: $4\cdot2050\cdot2050\approx1{,}68\times10^7$.
+
+\textbf{E3.} Estimar las $d$ amplitudes exige del orden de $d$ repeticiones o más: se pierde el factor $\log d$.
+
+\textbf{E4.} Paso y costo; crecimiento de área, energía y precisión; salida y costo de lectura; línea base y condiciones.
+
+\textbf{E5.} $n=1024$: $\approx2^{87}$; $n=2048$: $\approx2^{117}$ (sin $o(1)$).
+
+\textbf{E6.} $2^{64}\cdot10^{-12}\ \text{m}^2\approx1{,}8\times10^7\ \text{m}^2$ ($18\ \text{km}^2$); con $2^{100}$ nodos, $\approx1{,}3\times10^{18}$ m$^2$, miles de veces la superficie terrestre.
+
+\textbf{E7.} Para $N=299$ todos son triviales; el valor del ejercicio es escribir explícitamente cada columna y su etiqueta.
+\end{solucion}
+\end{document}

@@ -1,0 +1,271 @@
+1
+00:00:00,350 --> 00:00:01,940
+Lección 6.2.
+
+2
+00:00:02,320 --> 00:00:04,974
+Inversa de matrices y
+ecuaciones de Lyapunov.
+
+3
+00:00:06,083 --> 00:00:10,257
+En la lección anterior usamos solo la
+media de la distribución de equilibrio.
+
+4
+00:00:10,637 --> 00:00:13,426
+Pero las fluctuaciones
+también contienen información.
+
+5
+00:00:13,806 --> 00:00:18,330
+La covarianza de equilibrio es
+β⁻¹ A⁻¹: si medimos cómo fluctúan
+
+6
+00:00:18,330 --> 00:00:22,429
+las variables, obtenemos la
+inversa de la matriz completa.
+
+7
+00:00:22,809 --> 00:00:26,411
+Y con un pequeño cambio, también
+resolvemos ecuaciones de Lyapunov.
+
+8
+00:00:27,517 --> 00:00:32,292
+El protocolo de la inversa pone b
+= 0, de modo que la media es cero.
+
+9
+00:00:32,672 --> 00:00:37,197
+Tras equilibrar, multiplicadores
+analógicos calculan cada producto
+
+10
+00:00:37,197 --> 00:00:41,380
+x_i x_j, e integradores analógicos
+lo promedian en el tiempo.
+
+11
+00:00:41,760 --> 00:00:44,466
+Son d² multiplicadores e integradores.
+
+12
+00:00:44,846 --> 00:00:48,002
+Al final, A⁻¹ es β por
+la matriz de promedios.
+
+13
+00:00:49,117 --> 00:00:50,652
+Aquí aparece una sorpresa.
+
+14
+00:00:51,032 --> 00:00:53,861
+En el sistema lineal,
+enfriar reducía el error.
+
+15
+00:00:54,241 --> 00:00:58,794
+En la inversa no: si la temperatura
+baja, las fluctuaciones se encogen en
+
+16
+00:00:58,794 --> 00:01:03,347
+proporción, y el error relativo de la
+covarianza es exactamente el mismo.
+
+17
+00:01:03,727 --> 00:01:07,112
+Lo que importa es cuántas
+fluctuaciones independientes
+
+18
+00:01:07,112 --> 00:01:11,376
+promediamos, es decir, la ventana
+τ medida en tiempos de relajación.
+
+19
+00:01:12,483 --> 00:01:15,098
+Simulamos una matriz
+de Wishart de dimensión
+
+20
+00:01:15,098 --> 00:01:17,475
+diez, con número de condición veintidós.
+
+21
+00:01:17,855 --> 00:01:20,890
+El error relativo de la
+inversa es del cincuenta por
+
+22
+00:01:20,890 --> 00:01:24,100
+ciento con una ventana de
+cien unidades, del veintiséis
+
+23
+00:01:24,100 --> 00:01:27,193
+con trescientas, y del siete
+por ciento con tres mil.
+
+24
+00:01:27,573 --> 00:01:30,946
+Los segundos momentos convergen
+mucho más lento que la media.
+
+25
+00:01:31,326 --> 00:01:37,187
+La ventana necesaria es τ = 4κ
+d(d + 1) τ_r / ((1 − P) ε²),
+
+26
+00:01:37,567 --> 00:01:44,248
+así que la complejidad es de orden
+d² κ ε⁻², frente a d^ω digital.
+
+27
+00:01:45,350 --> 00:01:46,613
+Ahora generalicemos.
+
+28
+00:01:46,993 --> 00:01:49,892
+Si la deriva es una matriz estable M, no
+
+29
+00:01:49,892 --> 00:01:53,951
+necesariamente simétrica, y
+el ruido tiene covarianza C,
+
+30
+00:01:54,331 --> 00:02:01,325
+la covarianza estacionaria cumple la
+ecuación de Lyapunov M Σ + Σ Mᵀ = C.
+
+31
+00:02:01,705 --> 00:02:04,273
+La inversa es el caso
+particular simétrico.
+
+32
+00:02:04,653 --> 00:02:09,096
+Con dimensión diez, el error de la
+solución de Lyapunov es del veinticuatro
+
+33
+00:02:09,096 --> 00:02:13,005
+por ciento con cien unidades y del
+cuatro por ciento con tres mil.
+
+34
+00:02:13,385 --> 00:02:17,393
+Digitalmente, el algoritmo de
+Bartels y Stewart cuesta d³.
+
+35
+00:02:18,517 --> 00:02:23,098
+Las ecuaciones de Lyapunov aparecen en
+teoría de control, donde los gramianos
+
+36
+00:02:23,098 --> 00:02:27,739
+de controlabilidad dicen qué estados
+puede alcanzar un sistema; en el análisis
+
+37
+00:02:27,739 --> 00:02:31,428
+de estabilidad; y en filtros de
+Kalman en estado estacionario.
+
+38
+00:02:31,808 --> 00:02:35,459
+Un dispositivo de osciladores
+acoplados las resuelve simplemente
+
+39
+00:02:35,459 --> 00:02:39,225
+dejando que el ruido haga su trabajo
+y midiendo las correlaciones.
+
+40
+00:02:40,350 --> 00:02:44,499
+Los segundos momentos sirven para
+precondicionadores aproximados, para
+
+41
+00:02:44,499 --> 00:02:48,412
+la covarianza posterior en inferencia
+bayesiana, que veremos en la
+
+42
+00:02:48,412 --> 00:02:52,087
+lección seis punto seis, y para
+gramianos y filtros de Kalman.
+
+43
+00:02:52,467 --> 00:02:55,938
+En el laboratorio nueve lo
+compararás con los métodos digitales.
+
+44
+00:02:57,050 --> 00:03:01,775
+Errores comunes: bajar la temperatura
+para mejorar la inversa, que no ayuda.
+
+45
+00:03:02,155 --> 00:03:05,077
+Olvidar poner b en cero o restar la media.
+
+46
+00:03:05,457 --> 00:03:09,155
+Subestimar el hardware, que
+requiere d² multiplicadores.
+
+47
+00:03:09,535 --> 00:03:13,980
+Y usar una deriva inestable, para la
+que no existe covarianza estacionaria.
+
+48
+00:03:15,083 --> 00:03:18,998
+En resumen: la covarianza de
+equilibrio es β⁻¹ A⁻¹, así
+
+49
+00:03:18,998 --> 00:03:22,912
+que medir correlaciones da
+la inversa, y con una deriva
+
+50
+00:03:22,912 --> 00:03:26,541
+general da la solución de
+una ecuación de Lyapunov.
+
+51
+00:03:26,921 --> 00:03:30,504
+La temperatura no cambia el
+error relativo; la ventana sí.
+
+52
+00:03:30,884 --> 00:03:35,051
+La complejidad es de orden d² κ ε⁻².
+
+53
+00:03:36,183 --> 00:03:40,436
+Para practicar: deduce la covarianza
+a partir de la ecuación de Lyapunov.
+
+54
+00:03:40,815 --> 00:03:44,345
+Explica por qué el error relativo
+no depende de la temperatura.
+
+55
+00:03:44,725 --> 00:03:47,290
+Cuenta los multiplicadores
+para dimensión cien.
+
+56
+00:03:47,670 --> 00:03:51,788
+Y di qué ruido se necesita para resolver
+una ecuación de Lyapunov general.

@@ -1,0 +1,307 @@
+1
+00:00:00,350 --> 00:00:02,099
+Lección 6.6.
+
+2
+00:00:02,479 --> 00:00:04,814
+Panorama: inferencia y más allá.
+
+3
+00:00:05,917 --> 00:00:07,921
+Cerramos la unidad con un panorama.
+
+4
+00:00:08,301 --> 00:00:11,068
+El mismo dispositivo de
+osciladores acoplados
+
+5
+00:00:11,068 --> 00:00:13,712
+sirve para mucho más
+que sistemas lineales.
+
+6
+00:00:14,092 --> 00:00:18,937
+Veremos tres ejemplos: muestrear
+distribuciones posteriores bayesianas, resolver
+
+7
+00:00:18,937 --> 00:00:23,600
+programas cuadráticos con restricciones
+y calcular exponenciales de matrices.
+
+8
+00:00:23,980 --> 00:00:26,597
+Y terminaremos con una
+idea que intenta explicar
+
+9
+00:00:26,597 --> 00:00:28,778
+de dónde viene la ventaja termodinámica.
+
+10
+00:00:29,883 --> 00:00:35,941
+Con un prior gaussiano y observaciones
+lineales con ruido gaussiano, la
+
+11
+00:00:35,941 --> 00:00:41,402
+posterior también es gaussiana,
+con precisión Λ = I + Hᵀ H / σ².
+
+12
+00:00:41,782 --> 00:00:45,561
+Si cargamos Λ como matriz de
+acoplamientos, el equilibrio del
+
+13
+00:00:45,561 --> 00:00:49,277
+dispositivo es exactamente la
+posterior: no hay que resolver
+
+14
+00:00:49,277 --> 00:00:52,188
+nada, cada instante del
+sistema es una muestra.
+
+15
+00:00:52,568 --> 00:00:56,240
+Aifer y colaboradores proponen
+circuitos para este modelo y para
+
+16
+00:00:56,240 --> 00:00:59,681
+regresión logística bayesiana,
+y argumentan que el tiempo de
+
+17
+00:00:59,681 --> 00:01:02,836
+muestreo escala solo como el
+logaritmo de la dimensión.
+
+18
+00:01:03,950 --> 00:01:07,030
+Lo simulamos en dos dimensiones
+con tres observaciones.
+
+19
+00:01:07,410 --> 00:01:11,543
+Las muestras del dispositivo
+reproducen la posterior exacta: las
+
+20
+00:01:11,543 --> 00:01:15,676
+varianzas son cero coma dos siete
+y cero coma seis cuatro, y las
+
+21
+00:01:15,676 --> 00:01:19,099
+estimadas, cero coma dos
+ocho y cero coma seis siete.
+
+22
+00:01:19,479 --> 00:01:23,633
+La incertidumbre no se calcula aparte:
+sale gratis de las fluctuaciones.
+
+23
+00:01:24,750 --> 00:01:29,723
+Si además hay restricciones de caja, del
+tipo cada variable entre cero y uno, basta
+
+24
+00:01:29,723 --> 00:01:34,097
+con poner paredes: cuando el sistema
+choca con una, se queda en el borde.
+
+25
+00:01:34,477 --> 00:01:38,817
+A baja temperatura, el promedio converge
+al óptimo del programa cuadrático.
+
+26
+00:01:39,197 --> 00:01:44,308
+En nuestro ejemplo, el óptimo es
+cero coma seis y uno; con k_B T =
+
+27
+00:01:44,308 --> 00:01:48,955
+0,001 obtenemos cero coma seis
+cero y cero coma nueve nueve.
+
+28
+00:01:49,335 --> 00:01:52,839
+A temperatura más alta la pared
+sesga el promedio hacia adentro.
+
+29
+00:01:53,950 --> 00:01:57,377
+El tercer ejemplo usa la
+dinámica, no solo el equilibrio.
+
+30
+00:01:57,757 --> 00:02:00,836
+En un proceso de Ornstein-Uhlenbeck, la
+
+31
+00:02:00,836 --> 00:02:04,309
+autocorrelación con
+retardo s es e^(−A s) Σ.
+
+32
+00:02:04,689 --> 00:02:09,382
+Midiendo correlaciones entre el estado
+actual y el de hace s unidades, y
+
+33
+00:02:09,382 --> 00:02:13,358
+multiplicando por β A, obtenemos
+la exponencial de la matriz.
+
+34
+00:02:13,738 --> 00:02:16,789
+Con dimensión cinco y una
+trayectoria de veinte mil
+
+35
+00:02:16,789 --> 00:02:19,899
+unidades, el error relativo
+es del cinco por ciento.
+
+36
+00:02:20,279 --> 00:02:23,910
+Duffield y colaboradores muestran
+que esto da una ventaja lineal
+
+37
+00:02:23,910 --> 00:02:27,143
+en la dimensión para simular
+sistemas dinámicos lineales.
+
+38
+00:02:28,250 --> 00:02:31,761
+¿Por qué aparece siempre una
+ganancia proporcional a la dimensión?
+
+39
+00:02:32,141 --> 00:02:37,133
+Duffield y colaboradores proponen una
+hipótesis: el paralelismo termodinámico.
+
+40
+00:02:37,513 --> 00:02:41,088
+El ruido empuja al sistema en
+todas las direcciones a la vez,
+
+41
+00:02:41,088 --> 00:02:44,135
+así que una sola trayectoria
+explora todos los modos
+
+42
+00:02:44,135 --> 00:02:47,358
+simultáneamente y estima
+muchas cantidades en paralelo.
+
+43
+00:02:47,738 --> 00:02:50,415
+El ruido, que en un
+computador digital es un
+
+44
+00:02:50,415 --> 00:02:53,032
+enemigo, aquí es el
+recurso que paraleliza.
+
+45
+00:02:53,412 --> 00:02:56,255
+Es una hipótesis, no un
+teorema, y está entre
+
+46
+00:02:56,255 --> 00:02:58,846
+los problemas abiertos de la unidad once.
+
+47
+00:02:59,950 --> 00:03:03,224
+Estas primitivas tocan la
+inteligencia artificial en el
+
+48
+00:03:03,224 --> 00:03:06,439
+aprendizaje profundo bayesiano,
+en la optimización con
+
+49
+00:03:06,439 --> 00:03:10,785
+restricciones, en los modelos de
+espacio de estados, y en la unidad ocho,
+
+50
+00:03:11,165 --> 00:03:15,063
+donde el gradiente natural usará
+el mismo núcleo de álgebra lineal.
+
+51
+00:03:16,183 --> 00:03:20,867
+Errores comunes: muestrear la posterior
+a una temperatura distinta de uno.
+
+52
+00:03:21,247 --> 00:03:24,147
+Resolver un programa
+cuadrático a temperatura alta.
+
+53
+00:03:24,527 --> 00:03:26,845
+Estimar la exponencial con retardos muy
+
+54
+00:03:26,845 --> 00:03:29,519
+largos, donde la señal
+se pierde en el ruido.
+
+55
+00:03:29,899 --> 00:03:33,100
+Y tratar el paralelismo
+termodinámico como un teorema.
+
+56
+00:03:34,217 --> 00:03:38,823
+En resumen: el equilibrio de un
+dispositivo de osciladores es una posterior
+
+57
+00:03:38,823 --> 00:03:43,613
+bayesiana exacta en el caso gaussiano;
+con paredes y baja temperatura resuelve
+
+58
+00:03:43,613 --> 00:03:48,096
+programas cuadráticos; y su autocorrelación
+da exponenciales de matrices.
+
+59
+00:03:48,476 --> 00:03:52,383
+El paralelismo termodinámico es la
+hipótesis que une estas ventajas.
+
+60
+00:03:53,483 --> 00:03:56,554
+Para practicar: deduce
+la posterior gaussiana.
+
+61
+00:03:56,934 --> 00:03:59,399
+Explica por qué la
+temperatura debe ser uno.
+
+62
+00:03:59,779 --> 00:04:02,151
+Demuestra la fórmula
+de la autocorrelación.
+
+63
+00:04:02,531 --> 00:04:06,959
+Y explica qué sesga la solución del
+programa cuadrático a temperatura finita.

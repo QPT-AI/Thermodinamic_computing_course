@@ -1,0 +1,35 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.3}{MCMC: Metropolis--Hastings y Gibbs}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre el balance detallado de Metropolis con propuesta simétrica.
+\item (B) Derive $P(s_i=+1\mid s_{-i})=\sigma(2\beta u_i)$ desde la energía de Ising.
+\item (B) ¿Cuántos colores necesita una red triangular? ¿Un grafo de grado 16?
+\item (B) ¿Por qué falla la actualización totalmente paralela aunque cada condicional sea correcta?
+\item (I) Muestre que Gibbs es Metropolis--Hastings con propuesta $q=p(x_i\mid x_{-i})$ y aceptación 1.
+\item (I) Para dos espines acoplados ($J=1$, $\beta=1$), escriba la matriz de transición de la actualización síncrona y compruebe que su
+estacionaria no es Boltzmann.
+\item (A) Implemente los tres muestreadores de la lección y reproduzca la tabla de energías a $T=3$ y $T=1{,}8$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Si $E(s')>E(s)$: $\pi(s)\,q\,e^{-\beta\Delta E}=\pi(s')\,q\cdot1$ porque $\pi(s')/\pi(s)=e^{-\beta\Delta E}$; simétrico en el otro caso.
+
+\textbf{E2.} Los términos con $s_i$ son $-s_iu_i$; $P(+1)/P(-1)=e^{2\beta u_i}$.
+
+\textbf{E3.} Triangular: 3 colores. Grado 16: a lo sumo 17 (Brooks: 16 si no es completo ni ciclo impar).
+
+\textbf{E4.} La actualización conjunta no es una composición de pasos de Gibbs individuales: usa estados viejos de variables que cambian a la vez.
+
+\textbf{E5.} Con $q(s\to s')=p(s_i'\mid s_{-i})$, el cociente de MH vale exactamente 1.
+
+\textbf{E6.} Estados $(++),(+-),(-+),(--)$; cada espín se actualiza con $\sigma(\pm2)$ según el valor \emph{viejo} del otro. La matriz
+resultante es doblemente estocástica y su estacionaria es uniforme, $P=\tfrac14$ para cada estado, mientras que Boltzmann da
+$P(++)=P(--)=0{,}440$ y $P(+-)=P(-+)=0{,}060$.
+
+\textbf{E7.} $T=3$: $-0{,}82$, $-0{,}79$, $+0{,}02$. A $T=1{,}8$ desde el estado ordenado las tres coinciden ($\approx-1{,}85$): el fallo síncrono
+aparece al desordenarse.
+\end{solucion}
+\end{document}

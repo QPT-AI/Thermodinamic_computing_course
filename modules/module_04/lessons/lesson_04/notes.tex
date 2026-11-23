@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.4}{Diagnósticos de muestreo}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} calentamiento, $\tau_{\text{int}}$ y tamaño efectivo de muestra; desaceleración crítica;
+recocido simulado y tempering paralelo.
+\textbf{Prerrequisitos:} 2.6 (ergodicidad), 4.2--4.3.
+
+\section{Calentamiento}
+Las primeras muestras recuerdan el estado inicial; se descartan. Diagnóstico práctico: varias cadenas desde inicios distintos (todo arriba, todo
+abajo, aleatorio) cuyas trayectorias de $E/N$ se superponen al terminar el calentamiento (estadístico $\hat R$ de Gelman--Rubin en la práctica).
+
+\section{Autocorrelación y tamaño efectivo}
+Con la autocorrelación normalizada $\rho_k$ de un observable,
+\begin{equation}
+\tau_{\text{int}}=1+2\sum_{k\ge1}\rho_k,\qquad \mathrm{ESS}=\frac{n}{\tau_{\text{int}}},\qquad \sigma_{\bar x}\approx\sqrt{\frac{\mathrm{Var}(x)\,\tau_{\text{int}}}{n}},
+\end{equation}
+truncando la suma con una ventana autoconsistente ($k\ge5\tau_{\text{int}}$).
+\begin{ejemplo}
+Ising $16\times16$, Gibbs cromático, $n=38\,000$ barridos tras 2000 de calentamiento, observable $m$ \evS:
+\begin{center}\begin{tabular}{lccc}\toprule
+$T$ & 3,5 & 2,8 & 2,27\\\midrule
+$\tau_{\text{int}}$ (barridos) & 8,5 & 33 & $\approx2200$\\
+ESS & 4481 & 1163 & 17\\\bottomrule\end{tabular}\end{center}
+\end{ejemplo}
+\begin{intuicion}
+Desaceleración crítica: cerca de $T_c$ los dominios crecen hasta el tamaño del sistema y las actualizaciones locales tardan $\sim L^z$ barridos
+($z\approx2{,}17$ para Gibbs/Metropolis en 2D) en reorganizarlos. Algoritmos de clúster (Swendsen--Wang, Wolff) reducen $z$.
+\end{intuicion}
+
+\section{Recocido simulado}
+Para minimizar $E$, se muestrea con $T(t)$ decreciente: caliente para explorar, frío para concentrarse en mínimos. En un vidrio de espín $\pm J$
+$16\times16$ con rampa lineal $T:3\to0{,}05$ \evS: $E/N=-1{,}25$ (10 barridos), $-1{,}33$ (100), $-1{,}36$ (1000), $-1{,}37$ ($10^4$). Mejor con
+enfriamientos más lentos, con rendimientos decrecientes; la longitud termodinámica (3.8) sugiere ir despacio cerca de $T_c$.
+
+\section{Tempering paralelo}
+$K$ réplicas a temperaturas $T_1<\dots<T_K$; tras barridos de Gibbs se propone intercambiar réplicas vecinas con
+\begin{equation}
+A_{ij}=\min\big(1,\ e^{(\beta_i-\beta_j)(E_i-E_j)}\big),
+\end{equation}
+que cumple balance detallado en el espacio producto $\prod_k e^{-\beta_kE(s_k)}$. Ejemplo: $\beta_i=0{,}5$, $\beta_j=0{,}6$, $E_i-E_j=20$:
+$A=e^{-2}=0{,}135$. Escalera geométrica $T_k=T_{\min}(T_{\max}/T_{\min})^{k/(K-1)}$ como punto de partida.
+
+\begin{aplicacion}
+Energía de un TSU por muestra independiente $=E_{\text{barrido}}\times\tau_{\text{int}}$. Laboratorio L6: calentamiento, $\tau_{\text{int}}$, ESS, recocido y
+tempering paralelo en vidrios de espín.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Medir $\tau_{\text{int}}$ en un observable rápido. \quad Corridas cortas que subestiman $\tau_{\text{int}}$.
+\item Enfriar demasiado rápido. \quad Temperaturas muy separadas en el tempering: no hay intercambios.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[3]{lpw} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS, 2009.
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, 2022.
+\end{thebibliography}
+\end{document}

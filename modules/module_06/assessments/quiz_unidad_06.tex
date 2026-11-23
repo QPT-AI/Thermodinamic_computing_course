@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{6}{Quiz: álgebra lineal termodinámica}
+\noindent Preguntas guía: ¿qué momento de la distribución de equilibrio resuelve cada problema? ¿Cuándo hay ventaja y qué la limita?
+\section*{Preguntas}
+\begin{enumerate}
+\item El equilibrio de $dx=-(Ax-b)dt+\sqrt{2/\beta}\,dW$ es: (a) $\N(b,A)$ (b) $\N(A^{-1}b,\beta^{-1}A^{-1})$ (c) $\N(0,I)$ (d) $\N(A b,\beta A)$.
+\item Para el sistema lineal, el error del promedio temporal escala como: (a) $1/\tau$ (b) $1/\sqrt{\beta\tau}$ (c) $e^{-\tau}$ (d) no depende de $\tau$.
+\item El error relativo de la inversa estimada desde la covarianza: (a) baja al enfriar (b) no depende de $\beta$ (c) sube con $\tau$ (d) es cero.
+\item El determinante se obtiene de: (a) la media (b) la covarianza (c) estadísticas de trabajo vía Jarzynski (d) la moda.
+\item El tiempo de equilibración sobreamortiguado escala con: (a) $\sqrt\kappa$ (b) $\kappa$ (c) $\kappa^3$ (d) $\log\kappa$.
+\item La compilación de $A$ en el dispositivo cuesta: (a) $O(d)$ (b) $O(d^2)$ (c) $O(d^3)$ (d) nada.
+\item Para muestrear una posterior gaussiana con el dispositivo se necesita: (a) $\beta=1$ (b) $\beta\to\infty$ (c) $b=0$ (d) paredes.
+\item La autocorrelación del OU a retardo $s$ es: (a) $e^{As}$ (b) $e^{-As}\Sigma$ (c) $\Sigma^s$ (d) $A^{-1}s$.
+\item (Problema) Si la ventana $\tau$ se multiplica por 9, ¿cuánto baja el error del sistema lineal?
+\item (Problema) Con $d=1$, $W$ de un cambio instantáneo de $a_0=1$ a $a=4$ con $x\sim\N(0,1)$: calcule $-2\ln\langle e^{-W}\rangle$.
+\item (Problema) Modelo de tiempo $T=d^2/B+c\,d\,\tau_r$ con $B=10^9$/s, $c=20$, $\tau_r=100$ ns: halle $d^\ast$.
+\item (Problema) Amortiguamiento óptimo para el modo lento $\lambda_{\min}=0{,}01$ en $\ddot x=-\lambda x-\gamma\dot x$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (c) · 5 (b) · 6 (b) · 7 (a) · 8 (b).
+\begin{enumerate}\setcounter{enumi}{8}
+\item Por 3 ($\varepsilon\propto\tau^{-1/2}$).
+\item $\langle e^{-W}\rangle=a^{-1/2}=1/2$; $-2\ln(1/2)=\ln4=\ln\det A$.
+\item $d^\ast=c\,\tau_rB=20\times10^{-7}\times10^9=2000$.
+\item $\gamma=2\sqrt{0{,}01}=0{,}2$.
+\end{enumerate}
+Aprobación 8/12; fallos en 3, 4 o 6 $\Rightarrow$ repasar 6.2, 6.3, 6.5.
+\end{document}

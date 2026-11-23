@@ -1,0 +1,112 @@
+%% curso.sty — estilo común de apuntes, ejercicios, evaluaciones y proyectos.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{curso}[2026/11/09 Curso Computacion Termodinamica]
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[scaled=0.95]{helvet}
+\RequirePackage[expansion=false,letterspace=120]{microtype}
+\RequirePackage[margin=2.3cm,headheight=22pt]{geometry}
+\RequirePackage{amsmath,amssymb,amsthm,bm}
+\RequirePackage[table]{xcolor}
+\RequirePackage{booktabs,array,tabularx}
+\RequirePackage{enumitem}
+\RequirePackage{siunitx}
+\RequirePackage{graphicx}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{xurl}
+%% Identidad QPT (docs/brand_manual.md) — documentos en modo claro, compilados con pdfLaTeX.
+%% Sustitutos disponibles de las tipografías de marca: Helvetica (Space Grotesk / Inter) y Latin Modern Mono (IBM Plex Mono).
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\qptdisplay}{\sffamily}
+\newcommand{\qptmono}{\ttfamily}
+\linespread{1.12}
+\definecolor{tinta}{HTML}{000000}
+\definecolor{tenue}{HTML}{58595A}
+\definecolor{lienzo}{HTML}{F5F6F4}
+\definecolor{superficie}{HTML}{E9EAE6}
+\definecolor{elevado}{HTML}{FFFFFF}
+\definecolor{hairline}{HTML}{DBDCDA}
+\definecolor{quantum}{HTML}{5BAD1E}
+\definecolor{photonic}{HTML}{F0AB00}
+\definecolor{thermo}{HTML}{E8690A}
+\definecolor{ternary}{HTML}{8A8A8A}
+\definecolor{bio}{HTML}{1AAB7C}
+%% Alias históricos (las lecciones existentes los usan): todo texto en tinta neutra
+\colorlet{navy}{tinta}\colorlet{copper}{tinta}\colorlet{gold}{quantum}
+\colorlet{paper}{elevado}\colorlet{mint}{elevado}\colorlet{sky}{elevado}\colorlet{rose}{elevado}
+\RequirePackage[colorlinks=true,linkcolor=tinta,urlcolor=tinta,citecolor=tinta]{hyperref}
+\pagecolor{lienzo}
+\sisetup{output-decimal-marker={,}, exponent-product=\times, group-separator={\,}}
+
+\titleformat{\section}{\qptdisplay\Large\bfseries\color{tinta}}{\thesection}{0.8em}{}[\vspace{-0.4em}{\color{quantum}\rule{0.18\linewidth}{1.2pt}}]
+\titleformat{\subsection}{\qptdisplay\large\bfseries\color{tinta}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\qptdisplay\normalsize\bfseries\color{tinta}}{\thesubsubsection}{0.6em}{}
+
+\renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\contentsname}{Contenido}
+\renewcommand{\refname}{Referencias}
+\renewcommand{\abstractname}{Resumen}
+
+%% Cajas planas: superficie blanca, borde hairline, una regla izquierda con color de significado.
+\tcbset{qpt/.style={enhanced,breakable,sharp corners,colback=elevado,colframe=hairline,boxrule=0.5pt,
+  leftrule=2.5pt,coltitle=tenue,colbacktitle=elevado,fonttitle=\qptmono\footnotesize\bfseries,
+  attach title to upper={\par\smallskip},titlerule=0pt,boxsep=4pt,left=8pt}}
+\newtcolorbox{intuicion}{qpt,borderline west={2.5pt}{0pt}{tinta},title={INTUICIÓN}}
+\newtcolorbox{definicion}[1][]{qpt,borderline west={2.5pt}{0pt}{ternary},title={DEFINICIÓN#1}}
+\newtcolorbox{resultado}[1][]{qpt,borderline west={2.5pt}{0pt}{quantum},title={RESULTADO#1}}
+\newtcolorbox{ejemplo}[1][]{qpt,borderline west={2.5pt}{0pt}{photonic},title={EJEMPLO RESUELTO#1}}
+\newtcolorbox{error}{qpt,borderline west={2.5pt}{0pt}{thermo},title={ERRORES COMUNES}}
+\newtcolorbox{aplicacion}{qpt,borderline west={2.5pt}{0pt}{bio},title={APLICACIÓN}}
+\newtcolorbox{solucion}{qpt,borderline west={2.5pt}{0pt}{quantum},title={SOLUCIÓN}}
+
+\newtheorem*{teorema}{Teorema}
+\newtheorem*{lema}{Lema}
+\newtheorem*{proposicion}{Proposición}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewenvironment{proof}[1][Demostración]{\par\noindent\textit{#1.}\ }{\hfill\qedsymbol\par}
+
+% Etiquetas de evidencia del pensum
+\newcommand{\evM}{\textsf{\textbf{[M]}}}
+\newcommand{\evS}{\textsf{\textbf{[S]}}}
+\newcommand{\evP}{\textsf{\textbf{[P]}}}
+\newcommand{\evT}{\textsf{\textbf{[T]}}}
+\newcommand{\evE}{\textsf{\textbf{[E]}}}
+
+\newcommand{\kB}{k_{\mathrm B}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\mathrm{d}}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\diag}{diag}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\raisebox{-0.25\height}{\includegraphics[height=14pt]{qpt_logo.png}}\enspace{\qptmono\footnotesize\color{tenue}QPT · Computación Termodinámica para IA}}
+\fancyhead[R]{{\qptmono\footnotesize\color{tenue}\@ifundefined{cursoencabezado}{}{\MakeUppercase{\cursoencabezado}}}}
+\fancyfoot[C]{{\qptmono\footnotesize\color{tenue}\thepage}}
+\renewcommand{\headrule}{{\color{hairline}\hrule height 0.4pt}}
+
+% \portada{tipo}{numero}{titulo}
+\newcommand{\portada}[3]{%
+  \gdef\cursoencabezado{#1 #2}%
+  \noindent\begin{minipage}[c]{0.14\linewidth}\includegraphics[width=\linewidth]{qpt_logo.png}\end{minipage}\hfill
+  \begin{minipage}[c]{0.83\linewidth}
+  {\qptdisplay\bfseries\large QPT}\quad{\qptmono\scriptsize\color{tenue}QUANTUM · PHOTONIC · THERMODYNAMIC}\\[6pt]
+  {\qptmono\small\color{tenue}\MakeUppercase{#1 #2}\enspace·\enspace COMPUTACIÓN TERMODINÁMICA PARA IA}\\[4pt]
+  {\qptdisplay\LARGE\bfseries #3}\\[6pt]
+  \begin{tikzpicture}
+  \shade[left color=quantum,right color=photonic] (0,0) rectangle (2.2,0.05);
+  \shade[left color=photonic,right color=thermo] (2.2,0) rectangle (4.4,0.05);
+  \shade[left color=thermo,right color=bio] (4.4,0) rectangle (6.6,0.05);\end{tikzpicture}
+  \end{minipage}\par\vspace{1.2em}}
+\endinput

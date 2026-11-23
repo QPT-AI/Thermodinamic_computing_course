@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.2}{Mapa de paradigmas de cómputo}
+
+\noindent\textbf{Unidad 0.}\quad \textbf{Objetivos:} ubicar los paradigmas clásico, termodinámico, cuántico,
+neuromórfico, analógico y reversible por su primitiva; comparar escalas de energía ($E$ frente a $\kB T$ y
+$\hbar\omega$); distinguir los tres dominios de fluctuación. \textbf{Prerrequisitos:} lección 0.1.
+
+\section{¿Por qué un mapa?}
+Todo cómputo es un proceso físico. Lo que distingue a los paradigmas es \emph{qué grado de libertad físico
+lleva la información}, \emph{qué operación primitiva ofrece el hardware} y \emph{qué hace con las
+fluctuaciones} de ese grado de libertad. Esta última pregunta organiza el curso \cite{conte,coles}.
+
+\begin{intuicion}
+Para obtener un millón de lanzamientos de moneda, un chip digital ejecuta un generador pseudoaleatorio
+(por ejemplo xorshift: tres desplazamientos y tres XOR por palabra): gasta energía primero en suprimir el
+ruido de sus transistores y después en fabricar azar determinista. Una partícula en un pozo doble con
+barrera baja ya salta al azar por el ruido térmico: leer el signo de su posición da bits aleatorios gratis.
+\end{intuicion}
+
+\section{Escala térmica y barreras}
+La escala natural de energía de las fluctuaciones térmicas es $\kB T$; a 300 K,
+$\kB T=1{,}380649\times10^{-23}\cdot300\approx\SI{4.14e-21}{J}\approx\SI{25.9}{meV}$.
+Para una partícula en un pozo doble con barrera $E_b$, la probabilidad de cruzar en un intento (y la tasa de
+Kramers, Unidad 2) escala como
+\begin{equation}P_{\text{salto}}\propto e^{-E_b/\kB T}.\end{equation}
+\begin{itemize}[nosep]
+\item $E_b\sim\kB T$: la partícula salta constantemente; es un \textbf{bit probabilístico} (pbit, Unidad 4).
+\item $E_b\approx40\,\kB T$: $e^{-40}\approx4\times10^{-18}$; es un \textbf{bit digital} confiable.
+\end{itemize}
+El \emph{mismo} dispositivo físico es aleatorio o determinista según la energía que se invierta en su barrera.
+Las trazas de la animación son simulaciones de Langevin \evS{} de $\dot x=-V'(x)+\sqrt2\,\xi$ con
+$V=E_b(x^2-1)^2$ y $\kB T=1$, para $E_b=1,4,8$.
+
+\section{Los tres dominios de fluctuación}
+Dos cocientes adimensionales sitúan a un sistema de cómputo:
+\[
+\frac{E_{\text{señal}}}{\kB T}\quad\text{(señal frente a ruido térmico)},\qquad
+\frac{\hbar\omega}{\kB T}\quad\text{(cuanto de energía frente a ruido térmico)}.
+\]
+\begin{enumerate}[nosep]
+\item $\hbar\omega\ll\kB T$, $E_{\text{señal}}\gg\kB T$: \textbf{fluctuaciones suprimidas} (lógica digital clásica).
+\item $\hbar\omega\ll\kB T$, $E_{\text{señal}}\sim\kB T$: \textbf{fluctuaciones térmicas aprovechadas} (cómputo termodinámico).
+\item $\hbar\omega\gg\kB T$: \textbf{fluctuaciones cuánticas} dominantes (cómputo cuántico, interferencia de amplitudes).
+\end{enumerate}
+\begin{ejemplo}
+Un cúbit superconductor a $f=5$ GHz tiene $hf/\kB=\frac{6{,}626\times10^{-34}\cdot5\times10^9}{1{,}381\times10^{-23}}
+\approx\SI{0.24}{K}$; por eso se opera en refrigeradores de dilución a decenas de mK. Un pbit funciona a
+temperatura ambiente: el ruido es su materia prima.
+\end{ejemplo}
+
+\section{Seis paradigmas por su primitiva}
+\begin{center}\small
+\begin{tabularx}{\linewidth}{lXX}\toprule
+Paradigma & Primitiva & Fluctuaciones\\\midrule
+Clásico (digital) & lógica booleana determinista & suprimidas (márgenes de ruido)\\
+Analógico & magnitudes continuas que evolucionan (Kirchhoff, integradores) & ruido como error a acotar\\
+Reversible & compuertas biyectivas, carga adiabática & evita el costo de Landauer (lección 1.5)\\
+Neuromórfico & eventos (espigas), memoria colocalizada & a veces aprovechadas, no esencial\\
+Cuántico & evolución unitaria de amplitudes + medición & cuánticas; las térmicas se suprimen (criogenia)\\
+Termodinámico & relajación a una distribución de Boltzmann y lectura de muestras & térmicas, como recurso\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{aplicacion}
+Digital: aritmética exacta y control. Termodinámico: muestreo de modelos basados en energía, difusión,
+álgebra lineal por equilibración, optimización estocástica. Cuántico: problemas con estructura de
+interferencia (factorización, simulación cuántica). Neuromórfico/analógico: inferencia de bajo consumo.
+Los sistemas reales serán heterogéneos (TSU + GPU + FPGA, Unidad 5).
+\end{aplicacion}
+
+\section{Conexiones}
+Unidad 1: termodinámica de la información. Unidad 4: el pbit como neurona estocástica. Unidad 5: hardware
+(TSU, SPU, p-computadores). Unidad 7: algoritmo de difusión frente a Shor.
+
+\begin{error}
+\begin{itemize}[nosep]
+\item El cómputo termodinámico no es «cuántico a temperatura ambiente»: no hay superposición ni interferencia.
+\item Analógico $\neq$ termodinámico: un circuito analógico puede ser determinista.
+\item Reversible $\neq$ termodinámico: uno evita borrar; el otro muestrea con ruido.
+\item El ruido no siempre es un defecto: para muestrear es el recurso.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Un paradigma $=$ primitiva $+$ tratamiento de las fluctuaciones. Digital: $E_b\gtrsim40\kB T$.
+Termodinámico: $E_b\sim\kB T$ a temperatura ambiente. Cuántico: $\hbar\omega\gg\kB T$.
+
+\begin{thebibliography}{9}\small
+\bibitem[6]{conte} T. Conte et al., \emph{Thermodynamic Computing} (CCC workshop report), 2019.
+\bibitem[28]{coles} P. J. Coles et al., Thermodynamic AI and the fluctuation frontier, 2023. \url{https://arxiv.org/abs/2302.06584}
+\bibitem[4]{nielsen} M. A. Nielsen e I. L. Chuang, \emph{Quantum Computation and Quantum Information}, CUP, 2010.
+\bibitem[18]{kaiser} J. Kaiser y S. Datta, Probabilistic computing with p-bits, \emph{Appl. Phys. Lett.} 119, 150503 (2021).
+\end{thebibliography}
+\end{document}

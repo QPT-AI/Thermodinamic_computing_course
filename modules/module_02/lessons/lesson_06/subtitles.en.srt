@@ -1,0 +1,335 @@
+1
+00:00:00,350 --> 00:00:02,002
+Lesson 2.6.
+
+2
+00:00:02,382 --> 00:00:03,327
+Ergodicity.
+
+3
+00:00:04,450 --> 00:00:08,636
+A thermodynamic computer almost
+never returns an isolated sample: it
+
+4
+00:00:08,636 --> 00:00:12,761
+returns an average of many consecutive
+readings of the same system.
+
+5
+00:00:13,141 --> 00:00:15,540
+Does that time average
+give the same as the
+
+6
+00:00:15,540 --> 00:00:17,605
+average over many independent copies?
+
+7
+00:00:17,985 --> 00:00:19,438
+And how much do we trust it?
+
+8
+00:00:19,818 --> 00:00:24,606
+The answer has two parts: ergodicity
+and the autocorrelation time.
+
+9
+00:00:24,986 --> 00:00:27,527
+Without them, our error bars lie.
+
+10
+00:00:28,650 --> 00:00:30,876
+Look at two particles in a double well.
+
+11
+00:00:31,256 --> 00:00:36,052
+The left one has a low barrier: it
+hops between wells many times, and its
+
+12
+00:00:36,052 --> 00:00:40,716
+fraction of time in each well converges
+to one half, like the ensemble.
+
+13
+00:00:41,096 --> 00:00:46,387
+The right one has a huge barrier: in all
+the time we watch it, it never crosses.
+
+14
+00:00:46,767 --> 00:00:49,922
+Its time average says the
+system is always in the
+
+15
+00:00:49,922 --> 00:00:52,755
+right well, which is
+false for the ensemble.
+
+16
+00:00:53,135 --> 00:00:55,694
+In practice, a system is ergodic if we
+
+17
+00:00:55,694 --> 00:00:58,590
+observe it for longer
+than its mixing time.
+
+18
+00:00:59,717 --> 00:01:04,216
+Even if the system is ergodic,
+consecutive samples are not independent.
+
+19
+00:01:04,596 --> 00:01:09,165
+The autocorrelation measures
+how much the current value
+
+20
+00:01:09,165 --> 00:01:13,486
+resembles the value a while
+later: ρ(τ) = C(τ)/C(0).
+
+21
+00:01:13,866 --> 00:01:17,834
+For the Ornstein–Uhlenbeck process
+it decays as an exponential.
+
+22
+00:01:18,214 --> 00:01:20,753
+The curve measured in the
+simulation follows the
+
+23
+00:01:20,753 --> 00:01:23,293
+theoretical exponential,
+with noise in the tail.
+
+24
+00:01:23,673 --> 00:01:28,546
+The area under the curve, times two,
+is the integrated autocorrelation
+
+25
+00:01:28,546 --> 00:01:32,863
+time: how long you must wait to
+get an effectively new sample.
+
+26
+00:01:33,983 --> 00:01:37,814
+If we take n samples spaced
+by a step Δt, and the
+
+27
+00:01:37,814 --> 00:01:41,879
+integrated autocorrelation
+time, in steps, is τ_int,
+
+28
+00:01:42,259 --> 00:01:48,328
+we only have about n/τ_int independent
+samples: the effective sample size.
+
+29
+00:01:48,708 --> 00:01:53,725
+Sampling faster than the autocorrelation
+adds no new information, only copies.
+
+30
+00:01:54,105 --> 00:01:58,041
+The variance of the average
+is the variance of one
+
+31
+00:01:58,041 --> 00:02:01,425
+sample times τ_int/n,
+not times one over n.
+
+32
+00:02:02,550 --> 00:02:05,663
+Let's check by repeating the
+experiment two hundred times.
+
+33
+00:02:06,043 --> 00:02:09,541
+Each point is the average of
+one run, with its error bar.
+
+34
+00:02:09,921 --> 00:02:13,304
+If we ignore the correlation,
+the orange bars are
+
+35
+00:02:13,304 --> 00:02:16,479
+too short: many do not
+contain the true value.
+
+36
+00:02:16,859 --> 00:02:22,167
+With the autocorrelation-time correction,
+the green bars contain the true value
+
+37
+00:02:22,167 --> 00:02:26,804
+in the expected proportion, about
+ninety-five percent for two sigmas.
+
+38
+00:02:27,184 --> 00:02:31,912
+A practical tool to estimate them is
+the blocking method: average over blocks
+
+39
+00:02:31,912 --> 00:02:35,903
+longer than the autocorrelation
+and use the spread of the blocks.
+
+40
+00:02:37,017 --> 00:02:43,710
+An Ornstein–Uhlenbeck process with
+rate 0.1, read every 0.1 time units,
+
+41
+00:02:43,710 --> 00:02:49,649
+has autocorrelation e^(−0.01 k)
+between readings k steps apart.
+
+42
+00:02:50,029 --> 00:02:53,048
+Its integrated time is
+one plus that number over
+
+43
+00:02:53,048 --> 00:02:56,004
+one minus that number:
+about two hundred steps.
+
+44
+00:02:56,384 --> 00:03:00,662
+With ten thousand readings, the effective
+sample size is only about fifty.
+
+45
+00:03:01,043 --> 00:03:04,770
+The real error bar is about fourteen
+times larger than the naive one.
+
+46
+00:03:05,883 --> 00:03:08,354
+In hardware this has direct consequences.
+
+47
+00:03:08,734 --> 00:03:12,211
+The time the linear solver
+must integrate grows with the
+
+48
+00:03:12,211 --> 00:03:16,309
+correlation time, which is the
+inverse of the smallest eigenvalue.
+
+49
+00:03:16,689 --> 00:03:19,168
+Reading a pbit chip faster than its
+
+50
+00:03:19,168 --> 00:03:22,567
+correlation time wastes
+input and output energy.
+
+51
+00:03:22,947 --> 00:03:27,429
+Near a phase transition, the
+Gibbs correlation time blows up.
+
+52
+00:03:27,809 --> 00:03:32,431
+And in every lab, error bars
+must include the autocorrelation.
+
+53
+00:03:33,550 --> 00:03:38,893
+The autocorrelation time is bounded
+by the spectral gap from lesson 0.5.
+
+54
+00:03:39,273 --> 00:03:41,882
+The autocorrelation is also the response,
+
+55
+00:03:41,882 --> 00:03:44,364
+by the fluctuation–dissipation theorem.
+
+56
+00:03:44,744 --> 00:03:48,701
+And in unit four we will use it
+as a diagnostic for samplers.
+
+57
+00:03:49,817 --> 00:03:54,803
+Frequent mistakes: using the independent-sample
+formula with correlated data.
+
+58
+00:03:55,183 --> 00:03:56,879
+Not discarding the transient.
+
+59
+00:03:57,259 --> 00:04:00,060
+Confusing theoretical ergodicity
+with practical ergodicity.
+
+60
+00:04:00,440 --> 00:04:02,574
+And estimating the
+integrated time by summing
+
+61
+00:04:02,574 --> 00:04:04,614
+the whole noisy tail
+without truncating it.
+
+62
+00:04:05,717 --> 00:04:08,754
+In summary: a system is
+ergodic in practice if we
+
+63
+00:04:08,754 --> 00:04:11,420
+observe it for longer
+than its mixing time.
+
+64
+00:04:11,800 --> 00:04:15,494
+Consecutive samples are
+correlated, and the integrated
+
+65
+00:04:15,494 --> 00:04:19,394
+autocorrelation time says how
+many are truly independent.
+
+66
+00:04:19,774 --> 00:04:24,495
+The correct error bar is the square
+root of the variance times τ_int over n.
+
+67
+00:04:25,617 --> 00:04:30,204
+To practice: compute the integrated
+time of a geometric autocorrelation.
+
+68
+00:04:30,584 --> 00:04:32,623
+Get an effective sample size.
+
+69
+00:04:33,003 --> 00:04:37,552
+Explain why a well with a forty k_B
+T barrier is not ergodic in practice.
+
+70
+00:04:37,932 --> 00:04:39,774
+And describe the blocking method.

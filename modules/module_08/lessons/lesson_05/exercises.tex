@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.5}{K-FAC termodinámico}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Razón entre el costo de inversión digital y termodinámico para $n=4096$, $\kappa=10$.
+\item (B) Si la inversión es el 27\,\% del tiempo, ¿cuál es la aceleración máxima con el mismo número de pasos?
+\item (B) ¿Por qué un cuantizador uniforme puede romper la semidefinición positiva?
+\item (B) ¿Por qué los errores de salida pueden pesar más en entrenamiento que en un paso?
+\item (I) Proponga un cuantizador que preserve la positividad (pista: aumente la diagonal en la cota del error de redondeo de cada fila).
+\item (I) ¿Para qué $n$ el término $n^2\kappa^2$ es menor que $n^3$ con $\kappa=30$?
+\item (A) Simule el entrenamiento de un perceptrón con K-FAC cuantizado y reproduzca la asimetría entrada/salida.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $n^3/(n^2\kappa^2)=n/\kappa^2=40{,}96$.
+
+\textbf{E2.} $1/(1-0{,}27)\approx1{,}37$.
+
+\textbf{E3.} Redondear cada entrada puede volver negativo un valor propio pequeño: la matriz deja de ser SPD y la dinámica OU no converge.
+
+\textbf{E4.} El error de salida entra en cada actualización y se acumula a lo largo de miles de pasos; un solo coseno no lo refleja.
+
+\textbf{E5.} Sumar a cada diagonal la suma de los errores de redondeo máximos de su fila: por Gershgorin, la perturbación no hace negativo ningún valor propio.
+
+\textbf{E6.} $n>\kappa^2=900$.
+
+\textbf{E7.} Debe observarse que la salida requiere más bits cuando el cuantizador de entrada es conservador.
+\end{solucion}
+\end{document}

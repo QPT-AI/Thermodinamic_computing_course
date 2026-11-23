@@ -1,0 +1,500 @@
+1
+00:00:00,350 --> 00:00:01,971
+Lesson 0.1.
+
+2
+00:00:02,351 --> 00:00:04,035
+AI's energy wall.
+
+3
+00:00:05,150 --> 00:00:08,310
+Artificial intelligence
+is hitting a wall, and it
+
+4
+00:00:08,310 --> 00:00:11,018
+is not a wall of algorithms but of energy.
+
+5
+00:00:11,398 --> 00:00:17,022
+Today grid capacity is one of the main
+obstacles to building data centers.
+
+6
+00:00:17,402 --> 00:00:20,828
+In this first lesson we
+answer a concrete question:
+
+7
+00:00:21,208 --> 00:00:23,793
+where does a GPU's energy actually go?
+
+8
+00:00:24,173 --> 00:00:26,957
+The answer will tell us
+why it makes sense to look
+
+9
+00:00:26,957 --> 00:00:29,351
+for a radically different
+way of computing.
+
+10
+00:00:30,483 --> 00:00:34,907
+Think of a very efficient factory whose
+warehouse is on the other side of town.
+
+11
+00:00:35,287 --> 00:00:38,303
+Making a part is cheap; what
+is expensive is the truck that
+
+12
+00:00:38,303 --> 00:00:40,910
+brings the raw material
+and takes the product away.
+
+13
+00:00:41,290 --> 00:00:44,139
+A modern chip works the
+same way: the arithmetic
+
+14
+00:00:44,139 --> 00:00:46,987
+core is the factory and
+memory is the warehouse.
+
+15
+00:00:47,367 --> 00:00:50,242
+Every datum travels along
+wires, and every wire is a
+
+16
+00:00:50,242 --> 00:00:53,117
+small capacitor that must
+be charged and discharged.
+
+17
+00:00:53,497 --> 00:00:55,860
+The longer the wire,
+the more charge must be
+
+18
+00:00:55,860 --> 00:00:58,114
+moved and the more energy is lost as heat.
+
+19
+00:00:59,217 --> 00:01:02,337
+Let's see what happens when a
+wire switches from zero to one.
+
+20
+00:01:02,717 --> 00:01:08,051
+A voltage source V pushes charge
+through a resistor into a capacitor C.
+
+21
+00:01:08,431 --> 00:01:13,079
+The green curve shows the capacitor
+voltage, which rises exponentially.
+
+22
+00:01:13,459 --> 00:01:16,732
+The source delivers an
+energy equal to C V².
+
+23
+00:01:17,112 --> 00:01:19,847
+Half is stored in the
+capacitor, and the other
+
+24
+00:01:19,847 --> 00:01:22,404
+half is dissipated in
+the resistor as heat.
+
+25
+00:01:22,784 --> 00:01:28,223
+The surprise is that this half does not
+depend on the resistance: a small resistor
+
+26
+00:01:28,223 --> 00:01:33,199
+gives a large, brief current, a large
+resistor gives a small, long current,
+
+27
+00:01:33,579 --> 00:01:36,413
+but the area under the
+power curve is the same.
+
+28
+00:01:36,793 --> 00:01:40,614
+When the wire returns to zero, the
+stored energy is dissipated too.
+
+29
+00:01:40,994 --> 00:01:43,498
+Each full cycle costs C V².
+
+30
+00:01:44,617 --> 00:01:49,511
+If a chip has a total switched
+capacitance C, runs at voltage V and
+
+31
+00:01:49,511 --> 00:01:54,551
+frequency f, and in each cycle only
+a fraction α of the nodes switch,
+
+32
+00:01:54,931 --> 00:01:59,243
+the dynamic power is P = α C V² f.
+
+33
+00:01:59,623 --> 00:02:01,868
+Each factor has a physical meaning.
+
+34
+00:02:02,248 --> 00:02:06,460
+Capacitance grows with the number
+of transistors and with wire length.
+
+35
+00:02:06,840 --> 00:02:11,330
+Voltage enters squared, which is why
+lowering it was the most powerful lever.
+
+36
+00:02:11,710 --> 00:02:15,480
+And frequency measures how many
+times per second we pay that price.
+
+37
+00:02:16,583 --> 00:02:19,953
+For decades, the industry
+lived off Dennard scaling.
+
+38
+00:02:20,332 --> 00:02:25,089
+If we shrink all dimensions of
+a transistor by a factor k, its
+
+39
+00:02:25,089 --> 00:02:30,535
+capacitance drops by k, voltage drops
+by k and frequency can rise by k.
+
+40
+00:02:30,915 --> 00:02:34,542
+Power per transistor then falls by k².
+
+41
+00:02:34,922 --> 00:02:39,906
+But k² more transistors fit in
+the same area, so power density
+
+42
+00:02:39,906 --> 00:02:44,649
+stays constant: faster, denser
+chips that don't run hotter.
+
+43
+00:02:45,029 --> 00:02:49,989
+Around the mid-2000s, voltage stopped
+dropping, because below a certain
+
+44
+00:02:49,989 --> 00:02:54,669
+threshold leakage and thermal noise
+make the transistor unreliable.
+
+45
+00:02:55,049 --> 00:02:58,489
+With voltage fixed,
+power density starts to
+
+46
+00:02:58,489 --> 00:03:01,688
+grow as k², and clock frequencies stall.
+
+47
+00:03:02,817 --> 00:03:07,073
+Let's run the numbers with typical
+values, as an order-of-magnitude estimate.
+
+48
+00:03:07,453 --> 00:03:13,078
+An on-chip wire has a capacitance
+of about 0.2 fF per micrometer.
+
+49
+00:03:13,458 --> 00:03:17,557
+A one-millimeter wire then has
+about two hundred femtofarads.
+
+50
+00:03:17,937 --> 00:03:22,186
+At 0.8 volts, one
+transition dissipates half
+
+51
+00:03:22,186 --> 00:03:25,857
+of C V², about sixty-four femtojoules.
+
+52
+00:03:26,237 --> 00:03:31,383
+A local logic gate, at one femtofarad,
+costs about two hundred times less.
+
+53
+00:03:31,763 --> 00:03:36,690
+Classic measurements in 45-nanometer
+technology confirm it: a
+
+54
+00:03:36,690 --> 00:03:41,213
+32-bit floating-point add
+costs less than one picojoule,
+
+55
+00:03:41,593 --> 00:03:45,126
+but reading those 32 bits
+from external DRAM costs
+
+56
+00:03:45,126 --> 00:03:48,307
+on the order of six
+hundred forty picojoules.
+
+57
+00:03:48,688 --> 00:03:52,033
+Moving the datum costs hundreds of
+times more than operating on it.
+
+58
+00:03:53,150 --> 00:03:56,017
+In the von Neumann
+architecture, memory and
+
+59
+00:03:56,017 --> 00:03:59,350
+processor are separate and
+communicate over a bus.
+
+60
+00:03:59,730 --> 00:04:02,350
+The roofline model sums it up in one plot.
+
+61
+00:04:02,730 --> 00:04:06,111
+The horizontal axis is
+arithmetic intensity: how many
+
+62
+00:04:06,111 --> 00:04:09,365
+operations we perform per
+byte fetched from memory.
+
+63
+00:04:09,745 --> 00:04:13,037
+Attainable performance
+is the minimum of the
+
+64
+00:04:13,037 --> 00:04:16,254
+compute peak and
+bandwidth times intensity.
+
+65
+00:04:16,634 --> 00:04:19,511
+Left of the knee, the
+chip waits for memory.
+
+66
+00:04:19,891 --> 00:04:23,716
+Batch-one decoding of a
+language model lives there:
+
+67
+00:04:23,716 --> 00:04:27,542
+each weight is read once
+to do just two operations.
+
+68
+00:04:28,650 --> 00:04:30,345
+Back to the opening question.
+
+69
+00:04:30,725 --> 00:04:34,788
+In a GPU, much of the energy
+goes into moving data between
+
+70
+00:04:34,788 --> 00:04:38,922
+registers, on-chip memory,
+external memory and the network.
+
+71
+00:04:39,302 --> 00:04:42,294
+Another part goes into
+guaranteeing voltage margins
+
+72
+00:04:42,294 --> 00:04:44,875
+so every bit is
+deterministic against noise.
+
+73
+00:04:45,255 --> 00:04:50,124
+And when the algorithm is probabilistic,
+like diffusion or token sampling, we
+
+74
+00:04:50,124 --> 00:04:54,677
+also spend energy manufacturing
+randomness with pseudorandom generators.
+
+75
+00:04:55,057 --> 00:04:57,873
+In the lab one challenge
+you will measure the
+
+76
+00:04:57,873 --> 00:05:00,439
+energy per random sample on your own GPU.
+
+77
+00:05:01,550 --> 00:05:03,847
+This lesson states the
+thesis of the course.
+
+78
+00:05:04,227 --> 00:05:07,986
+If randomness is so expensive
+to manufacture and noise so
+
+79
+00:05:07,986 --> 00:05:11,613
+expensive to suppress, why
+not use thermal fluctuations
+
+80
+00:05:11,613 --> 00:05:15,438
+directly to compute, and do
+it locally, where the data is?
+
+81
+00:05:15,818 --> 00:05:20,061
+In unit one we will see the
+fundamental energy limit per bit, and
+
+82
+00:05:20,061 --> 00:05:24,239
+in unit five we will learn to
+separate the energy of the compute
+
+83
+00:05:24,239 --> 00:05:27,699
+fabric, of input and output,
+and of the digital glue.
+
+84
+00:05:28,817 --> 00:05:30,537
+Four frequent confusions.
+
+85
+00:05:30,917 --> 00:05:33,891
+Dissipation per transition
+does not depend on
+
+86
+00:05:33,891 --> 00:05:36,668
+the resistance: it is always half of C V².
+
+87
+00:05:37,048 --> 00:05:41,575
+Counting operations is not enough,
+because data movement often dominates.
+
+88
+00:05:41,955 --> 00:05:46,039
+Moore's law and Dennard scaling
+are not the same: density
+
+89
+00:05:46,039 --> 00:05:50,053
+kept growing, but power per
+area stopped being constant.
+
+90
+00:05:50,433 --> 00:05:54,228
+And don't confuse power with
+energy: the fair metric is
+
+91
+00:05:54,228 --> 00:05:57,402
+energy per task, for
+example joules per token.
+
+92
+00:05:58,517 --> 00:06:02,924
+In summary: each node
+transition costs C V²
+
+93
+00:06:02,924 --> 00:06:07,126
+per cycle, and dynamic power is α C V² f.
+
+94
+00:06:07,506 --> 00:06:13,342
+The end of Dennard scaling made power,
+not transistors, the scarce resource.
+
+95
+00:06:13,722 --> 00:06:17,302
+Moving data costs hundreds of
+times more than operating on it,
+
+96
+00:06:17,302 --> 00:06:20,363
+and memory separated from
+compute limits performance.
+
+97
+00:06:20,743 --> 00:06:24,641
+That is the energy wall that thermodynamic
+computing tries to get around.
+
+98
+00:06:25,750 --> 00:06:28,259
+Check your understanding
+with four questions.
+
+99
+00:06:28,639 --> 00:06:30,885
+Compute the heat
+dissipated when charging a
+
+100
+00:06:30,885 --> 00:06:33,079
+capacitor through two different resistors.
+
+101
+00:06:33,459 --> 00:06:36,917
+Apply Dennard scaling
+with a factor of 1.4.
+
+102
+00:06:37,297 --> 00:06:39,528
+Repeat the calculation with voltage fixed.
+
+103
+00:06:39,908 --> 00:06:42,975
+And find the roofline knee
+for a hundred-teraflop
+
+104
+00:06:42,975 --> 00:06:45,917
+chip with one terabyte
+per second of bandwidth.

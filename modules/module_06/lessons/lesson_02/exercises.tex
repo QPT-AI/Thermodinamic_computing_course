@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.2}{Inversa de matrices y ecuaciones de Lyapunov}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca $\Sigma=\beta^{-1}A^{-1}$ a partir de $A\Sigma+\Sigma A=2\beta^{-1}I$ con $A$ simétrica.
+\item (B) ¿Por qué el error relativo de $\beta\hat\Sigma$ no depende de $\beta$?
+\item (B) ¿Cuántos multiplicadores analógicos hacen falta para $d=100$? ¿Y aprovechando la simetría?
+\item (B) ¿Qué ruido hay que inyectar para resolver $M\Sigma+\Sigma M^\top=C$?
+\item (I) Para $d=1$, $dx=-ax\,dt+\sqrt{2/\beta}\,dW$, calcule la varianza del estimador $\overline{x^2}$ para $\tau\gg1/a$ y compárela con la de $\bar x$ (lección 6.1).
+\item (I) Según la fórmula de $\tau$, ¿cuánto más tarda la inversa que el sistema lineal al pasar de $d=10$ a $d=100$?
+\item (A) Implemente el protocolo de Lyapunov para un sistema de control $\dot x=-Mx+Bu$ y compare el gramiano estimado con \texttt{solve\_continuous\_lyapunov}.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Si $\Sigma=cA^{-1}$: $A\Sigma+\Sigma A=2cI=2\beta^{-1}I\Rightarrow c=\beta^{-1}$; la solución es única porque $A\succ0$.
+
+\textbf{E2.} $x\propto\sqrt{k_BT}$ trayectoria a trayectoria: $\beta\hat\Sigma$ es invariante.
+
+\textbf{E3.} $d^2=10\,000$; con simetría $d(d+1)/2=5\,050$.
+
+\textbf{E4.} Ruido gaussiano con covarianza $C$: $C^{1/2}dW$.
+
+\textbf{E5.} $x^2$ tiene media $\sigma^2=1/(\beta a)$, varianza $2\sigma^4$ y autocorrelación $2\sigma^4e^{-2a|s|}$: $\mathrm{Var}(\overline{x^2})\approx2\sigma^4/(a\tau)$; su error relativo es
+$\sqrt{2/(a\tau)}$, independiente de $\beta$, mientras el de $\bar x$ depende de $\beta$ a través de $|b|$.
+
+\textbf{E6.} El sistema lineal crece $\propto d$ y la inversa $\propto d(d+1)$: la razón crece de $11$ a $101$, unas 9 veces más.
+
+\textbf{E7.} Con $C=BB^\top$, el gramiano de controlabilidad cumple $M W+WM^\top=BB^\top$; el error baja como $\tau^{-1/2}$.
+\end{solucion}
+\end{document}

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.3}{Normalización DyT}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre $2\sigma(2z)-1=\tanh z$.
+\item (B) Varianza de una muestra de pbit con media $m$.
+\item (B) Muestras necesarias para error rms $0{,}05$ en $u=0$.
+\item (B) ¿Por qué DyT es más barata que LayerNorm en hardware local?
+\item (I) Si la capa siguiente suma $n$ entradas de pbit independientes con pesos $J$, ¿cómo escala la varianza de la suma? ¿Qué implica para $S$?
+\item (I) ¿Para qué entradas el error de una muestra es menor? Interprete.
+\item (A) Reemplace LN por DyT en un transformer pequeño y compare la pérdida; luego simule DyT con $S\in\{1,4,16\}$ pbits.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\frac{2}{1+e^{-2z}}-1=\frac{1-e^{-2z}}{1+e^{-2z}}=\tanh z$.
+
+\textbf{E2.} $1-m^2$ (variable $\pm1$).
+
+\textbf{E3.} $1/S\le0{,}05^2\Rightarrow S\ge400$.
+
+\textbf{E4.} No necesita reducciones ni comunicación entre componentes; la tangente la hace el pbit.
+
+\textbf{E5.} $\sum_jJ_{ij}^2(1-m_j^2)$: el ruido relativo cae como $1/\sqrt n$ si los $J$ son comparables; con $n$ grande basta $S$ pequeño.
+
+\textbf{E6.} En la saturación ($|\beta u|$ grande) la varianza $1-\tanh^2$ es casi cero: la salida es casi determinista.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

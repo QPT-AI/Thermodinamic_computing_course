@@ -1,0 +1,197 @@
+{
+  "curso": "Computación Termodinámica para Inteligencia Artificial",
+  "subtitulo": "Física, hardware probabilístico, algoritmos y modelos de lenguaje termodinámicos",
+  "nivel": "Maestría (MSc / MEng), curso electivo de especialización",
+  "duracion": "16 semanas · 64 h de contacto · 128 h de trabajo independiente · 4 créditos",
+  "fuente": "syllabus/original_syllabus.pdf (versión 1.0, octubre 2026)",
+  "pregunta_central": "¿Cuándo, por qué y en cuánto puede el hardware probabilístico basado en la física hacer la IA más eficiente energéticamente, y qué debe cambiar en nuestros algoritmos para que eso ocurra?",
+  "etiquetas_evidencia": {"M": "medido en hardware", "S": "simulado", "P": "proyección del fabricante", "T": "teorema", "E": "estimación propia"},
+  "unidades": [
+    {
+      "id": 0, "semanas": "1", "titulo": "Orientación y nivelación matemática",
+      "preguntas_guia": ["¿A dónde va realmente la energía de una GPU?", "¿Por qué la aleatoriedad sería un recurso y no una molestia?"],
+      "prerrequisitos": [],
+      "laboratorios": ["L1"], "videos": ["V2", "V6", "V10"], "lecturas": [6, 21, 7],
+      "lecciones": [
+        {"id": "0.1", "titulo": "El muro energético de la IA", "temas": "potencia de centros de datos, fin del escalado de Dennard, energía de comunicación (∝ CV²), cuello de botella de von Neumann"},
+        {"id": "0.2", "titulo": "Mapa de paradigmas de cómputo", "temas": "clásico, termodinámico, cuántico, neuromórfico, analógico, reversible; los tres dominios de fluctuación"},
+        {"id": "0.3", "titulo": "Repaso de probabilidad", "temas": "variables de Bernoulli, categóricas y gaussianas; gaussianas multivariadas; momentos; entropía de Shannon; divergencia KL"},
+        {"id": "0.4", "titulo": "Repaso de álgebra lineal", "temas": "matrices SPD, descomposición espectral, número de condición κ, productos de Kronecker, exponencial de matrices, identidad de Woodbury"},
+        {"id": "0.5", "titulo": "Cadenas de Markov", "temas": "matrices de transición, distribuciones estacionarias, balance detallado, brecha espectral, tiempo de mezcla"},
+        {"id": "0.6", "titulo": "Análisis de Fourier en grupos abelianos finitos", "temas": "caracteres de Z/rZ, ortogonalidad"},
+        {"id": "0.7", "titulo": "Lo esencial de JAX", "temas": "funciones puras, claves PRNG, vmap, jit, scan, jvp/vjp"}
+      ]
+    },
+    {
+      "id": 1, "semanas": "2", "titulo": "Termodinámica e información",
+      "preguntas_guia": ["¿Cuánto cuesta borrar un bit y cuándo se paga ese costo?", "¿Por qué los computadores digitales operan millones de veces por encima del límite de Landauer?"],
+      "prerrequisitos": [0],
+      "laboratorios": ["L2"], "videos": ["V7"], "lecturas": [8, 9, 10],
+      "lecciones": [
+        {"id": "1.1", "titulo": "Leyes de la termodinámica y energía libre", "temas": "equilibrio, energía interna, entropía, energía libre F = U − TS"},
+        {"id": "1.2", "titulo": "Mecánica estadística y la distribución de Boltzmann", "temas": "microestados, ensamble canónico, p(x) = e^{−βE(x)}/Z, función de partición"},
+        {"id": "1.3", "titulo": "Entropía de Shannon y entropía de Gibbs", "temas": "Shannon vs Gibbs; la información es física"},
+        {"id": "1.4", "titulo": "El demonio de Maxwell y la máquina de Szilard", "temas": "medición, memoria, trabajo extraído kT ln 2"},
+        {"id": "1.5", "titulo": "El principio de Landauer", "temas": "k_B T ln 2 ≈ 2.87×10⁻²¹ J a 300 K; reversibilidad lógica vs termodinámica; cómputo reversible de Bennett"},
+        {"id": "1.6", "titulo": "Ruido térmico", "temas": "ruido de Johnson–Nyquist y kT/C; escalas de fluctuación de dispositivos"},
+        {"id": "1.7", "titulo": "Arco histórico", "temas": "Carnot, Boltzmann, Gibbs, Shannon, Landauer, Hopfield, Hinton, Jarzynski, Crooks"}
+      ]
+    },
+    {
+      "id": 2, "semanas": "3", "titulo": "Dinámica estocástica",
+      "preguntas_guia": ["¿Cómo puede la media de un proceso ruidoso resolver una ecuación determinista?", "¿Qué limita la rapidez con que converge?"],
+      "prerrequisitos": [0, 1],
+      "laboratorios": ["L3"], "videos": ["V12"], "lecturas": [1, 46],
+      "lecciones": [
+        {"id": "2.1", "titulo": "Movimiento browniano, proceso de Wiener y cálculo de Itô", "temas": "proceso de Wiener, incrementos independientes, lema de Itô"},
+        {"id": "2.2", "titulo": "La ecuación de Langevin", "temas": "sobreamortiguada y subamortiguada: ẋ = μf(x) + √(2μk_BT) ξ(t); movilidad y escalas de tiempo de dispositivos"},
+        {"id": "2.3", "titulo": "La ecuación de Fokker–Planck", "temas": "corrientes de probabilidad, soluciones estacionarias"},
+        {"id": "2.4", "titulo": "El proceso de Ornstein–Uhlenbeck", "temas": "solución cerrada; x∞ ~ N(A⁻¹b, β⁻¹A⁻¹)"},
+        {"id": "2.5", "titulo": "El teorema de fluctuación–disipación", "temas": "relación entre fricción y ruido; respuesta lineal"},
+        {"id": "2.6", "titulo": "Ergodicidad", "temas": "promedios temporales vs de ensamble, autocorrelación, tiempo de integración, barras de error"},
+        {"id": "2.7", "titulo": "EDEs numéricas", "temas": "Euler–Maruyama, estabilidad Δt < 2/λ_max, esquemas de orden superior"},
+        {"id": "2.8", "titulo": "Procesos de saltos de Markov en tiempo continuo", "temas": "ecuación maestra, algoritmo de Gillespie, tiempos de primer paso"}
+      ]
+    },
+    {
+      "id": 3, "semanas": "4", "titulo": "Termodinámica estocástica",
+      "preguntas_guia": ["¿Puede un computador ser rápido y eficiente a la vez?", "¿Qué pagamos exactamente cuando lo aceleramos?"],
+      "prerrequisitos": [1, 2],
+      "laboratorios": ["L4"], "videos": ["V8"], "lecturas": [11, 2, 42],
+      "lecciones": [
+        {"id": "3.1", "titulo": "Calor, trabajo y entropía a nivel de trayectoria", "temas": "energética estocástica de Sekimoto y Seifert"},
+        {"id": "3.2", "titulo": "Producción de entropía y la segunda ley para trayectorias", "temas": "Σ ≥ 0 en promedio; trayectorias individuales"},
+        {"id": "3.3", "titulo": "Teoremas de fluctuación: Crooks y Jarzynski", "temas": "⟨e^{−βW}⟩ = e^{−βΔF}; estimadores de energía libre y su sesgo"},
+        {"id": "3.4", "titulo": "Límites termodinámicos de velocidad", "temas": "τ ≥ W₂²/(μk_BTΣ); distancia de Wasserstein, transporte óptimo, cota de Gelbrich; eficiencia η ≤ 1"},
+        {"id": "3.5", "titulo": "Diseño de protocolos y aceleración de reloj", "temas": "carga gradual; aceleración de reloj: calor ×λ, potencia ×λ², misma Σ"},
+        {"id": "3.6", "titulo": "Relaciones de incertidumbre termodinámica", "temas": "cotas cinética y mixta para el tiempo de cómputo"},
+        {"id": "3.7", "titulo": "Termodinámica del reinicio y de la lectura sin errores", "temas": "costo de reset, lectura confiable"},
+        {"id": "3.8", "titulo": "Longitud termodinámica y compromisos energía–tiempo", "temas": "métrica de fricción, disipación mínima ∝ L²/τ"},
+        {"id": "3.9", "titulo": "Matrices de conductancia de no equilibrio", "temas": "teoría de circuitos de redes de reacciones químicas (suma de resistencias)"}
+      ]
+    },
+    {
+      "id": 4, "semanas": "5–6", "titulo": "Modelos basados en energía, modelos de Ising y redes neuronales",
+      "preguntas_guia": ["¿En qué sentido preciso un pbit es una neurona?", "¿Por qué el campo abandonó las máquinas de Boltzmann y por qué el hardware podría traerlas de vuelta?"],
+      "prerrequisitos": [0, 1, 2],
+      "laboratorios": ["L5", "L6"], "videos": ["V4", "V9"], "lecturas": [13, 3, 14, 16, 15],
+      "lecciones": [
+        {"id": "4.1", "titulo": "Modelos basados en energía y modelos gráficos", "temas": "EBMs, modelos gráficos probabilísticos, grafos de factores e hipergrafos"},
+        {"id": "4.2", "titulo": "El modelo de Ising", "temas": "E(s) = −Σ J_ij s_i s_j − Σ h_i s_i; ferromagnetos, vidrios de espín, transiciones de fase (intuición)"},
+        {"id": "4.3", "titulo": "MCMC: Metropolis–Hastings y Gibbs", "temas": "Gibbs por bloques y cromático, coloreo de grafos"},
+        {"id": "4.4", "titulo": "Diagnósticos de muestreo", "temas": "burn-in, tiempo de autocorrelación, tamaño efectivo de muestra; recocido simulado; tempering paralelo"},
+        {"id": "4.5", "titulo": "El pbit como neurona estocástica", "temas": "P(s_i=+1) = σ(2βu_i), E[s_i] = tanh(βu_i)"},
+        {"id": "4.6", "titulo": "Redes de Hopfield y memoria asociativa", "temas": "el modelo de Ising con T → 0; capacidad ≈ 0.14N"},
+        {"id": "4.7", "titulo": "Máquinas de Boltzmann y su regla de aprendizaje", "temas": "ΔJ_ij ∝ ⟨s_i s_j⟩_data − ⟨s_i s_j⟩_model"},
+        {"id": "4.8", "titulo": "RBMs y divergencia contrastiva", "temas": "CD-k, CD persistente; redes de creencia profundas; wake–sleep y máquinas de Helmholtz"},
+        {"id": "4.9", "titulo": "Teoría de campo medio", "temas": "del muestreo a capas deterministas tanh"},
+        {"id": "4.10", "titulo": "Optimización con Ising y lógica probabilística invertible", "temas": "Max-Cut, SAT; factorización fijando un multiplicador"}
+      ]
+    },
+    {
+      "id": 5, "semanas": "7", "titulo": "Hardware probabilístico y termodinámico",
+      "preguntas_guia": ["Si actualizar un pbit cuesta decenas de femtojulios, ¿por qué el sistema completo gasta la mayor parte de su energía en otro lugar?", "¿Qué implica un grado fijo de 16 para los algoritmos?"],
+      "prerrequisitos": [1, 4],
+      "laboratorios": ["L7"], "videos": ["V1", "V3", "V5"], "lecturas": [17, 18, 22, 25, 26],
+      "lecciones": [
+        {"id": "5.1", "titulo": "Por qué el hardware digital es ineficiente para la IA probabilística", "temas": "movimiento de datos, jerarquía de memoria, costo de PRNG, márgenes de ruido"},
+        {"id": "5.2", "titulo": "p-bits: MTJ y CMOS", "temas": "uniones túnel magnéticas, implementaciones CMOS, p-computadores, máquinas de Ising dispersas"},
+        {"id": "5.3", "titulo": "Los TSU de Extropic", "temas": "X0 y XTR-0; Z1 (269.568 pbits, 16 acoplamientos por pbit, >50 MHz, <1 W); M.2, PCIe y clústeres; primitivas pbit, pdit, pmode, pmog"},
+        {"id": "5.4", "titulo": "Unidades de procesamiento estocástico continuo", "temas": "Normal Computing: osciladores RC/LC acoplados; prototipo PCB de 8 celdas; primer chip"},
+        {"id": "5.5", "titulo": "Otros sustratos físicos", "temas": "circuitos brownianos de tokens (Hub, CJoin, Ratchet; skyrmiones, electrones individuales); dispositivos Josephson y Langevin mecánicos; redes de difusión RC; redes de reacciones químicas"},
+        {"id": "5.6", "titulo": "No idealidades analógicas", "temas": "desajuste de componentes, cuantización de E/S, no linealidad, ruido de disparo; mitigación (redondeo estocástico, cuantizadores conservadores)"},
+        {"id": "5.7", "titulo": "Abstracciones de hardware", "temas": "grafo padre fijo, embebido de programas en grafos de grado limitado, el problema de conectividad N²"},
+        {"id": "5.8", "titulo": "Contabilidad energética en sistemas heterogéneos", "temas": "TSU + GPU/XPU + FPGA: tejido vs E/S vs pegamento digital"}
+      ]
+    },
+    {
+      "id": 6, "semanas": "8", "titulo": "Algoritmos termodinámicos I: álgebra lineal e inferencia",
+      "preguntas_guia": ["¿De dónde viene la aceleración lineal en d?", "¿Qué supuestos fallan primero en un dispositivo real?"],
+      "prerrequisitos": [2, 3, 5],
+      "laboratorios": ["L8"], "videos": ["V3"], "lecturas": [30, 31],
+      "lecciones": [
+        {"id": "6.1", "titulo": "Sistemas lineales desde el primer momento de un OU", "temas": "Ax = b por equilibración"},
+        {"id": "6.2", "titulo": "Inversa de matrices y ecuaciones de Lyapunov", "temas": "segundos momentos"},
+        {"id": "6.3", "titulo": "Determinantes desde estadísticas de trabajo", "temas": "algoritmos 'de todos los momentos' vía Jarzynski; jerarquía de momentos"},
+        {"id": "6.4", "titulo": "Complejidad de los algoritmos termodinámicos", "temas": "O(dκ²ε⁻²) vs O(min{d^ω, d²√κ}); regímenes sobre y subamortiguado; cota energía–tiempo"},
+        {"id": "6.5", "titulo": "Modelos de tiempo", "temas": "DAC/ADC, costo de compilación O(d²), constantes RC; por qué la compilación suele dominar"},
+        {"id": "6.6", "titulo": "Panorama: inferencia y más allá", "temas": "inferencia bayesiana termodinámica, programación cuadrática, exponenciales de matrices, paralelismo termodinámico"}
+      ]
+    },
+    {
+      "id": 7, "semanas": "9", "titulo": "Algoritmos termodinámicos II: cómputo por difusión y la analogía con Shor",
+      "preguntas_guia": ["Shor amplifica picos de Fourier con interferencia; la difusión amortigua todos los modos de Fourier no nulos. ¿Qué cuesta cada uno en recursos físicos?"],
+      "prerrequisitos": [0, 2],
+      "laboratorios": ["L9"], "videos": ["V11", "V10"], "lecturas": [32, 33, 34, 35],
+      "lecciones": [
+        {"id": "7.1", "titulo": "De la factorización a la búsqueda de orden", "temas": "reducción; teorema chino del resto; probabilidad de éxito 1 − (m+1)/2^m"},
+        {"id": "7.2", "titulo": "El algoritmo de Shor", "temas": "exponenciación modular, transformada cuántica de Fourier, búsqueda de período, fracciones continuas"},
+        {"id": "7.3", "titulo": "Caminatas aleatorias en grafos de Cayley", "temas": "núcleo de calor en tiempo discreto; expansión espectral mediante caracteres"},
+        {"id": "7.4", "titulo": "El teorema de búsqueda de orden por difusión", "temas": "caminata semi-perezosa con generadores diádicos b^{±2^t}; lema de duplicación; sumas exponenciales lacunarias; n₀ = 4(M+1)(log₂N+2); r = round(1/p_n(e))"},
+        {"id": "7.5", "titulo": "Identidades de sumas trigonométricas", "temas": "unicidad del núcleo de calor: forma combinatoria vs espectral"},
+        {"id": "7.6", "titulo": "Realización física con redes RC", "temas": "CV̇ = −LV; recursos: Ω(r) nodos y ~2 log₂N bits de precisión analógica"},
+        {"id": "7.7", "titulo": "La variante por colisiones", "temas": "cota del cumpleaños T ≈ √r; estabilización del mcd y 1/ζ(s); vínculo con rho de Pollard"},
+        {"id": "7.8", "titulo": "Complejidad comparada", "temas": "pasos cuánticos vs pasos de difusión vs pasos digitales; HHL vs álgebra lineal termodinámica"}
+      ]
+    },
+    {
+      "id": 8, "semanas": "10–11", "titulo": "Aprendizaje automático termodinámico: entrenamiento",
+      "preguntas_guia": ["¿Por qué los métodos de segundo orden rara vez se usan en GPUs?", "¿Qué partes de TNGD siguen siendo digitales y dominan?"],
+      "prerrequisitos": [0, 2, 6],
+      "laboratorios": ["L10", "L11"], "videos": [], "lecturas": [36, 37, 40, 38, 41, 42],
+      "lecciones": [
+        {"id": "8.1", "titulo": "Geometría de la información y gradiente natural", "temas": "información de Fisher, geometría KL, gradiente natural"},
+        {"id": "8.2", "titulo": "Matrices de curvatura", "temas": "Fisher empírico, Gauss–Newton generalizado (GGN); NGD-CG; NGD-Woodbury"},
+        {"id": "8.3", "titulo": "Descenso de gradiente natural termodinámico (TNGD)", "temas": "dinámica OU, interpolación SGD (t=0) – NGD (t→∞), retardo como momento, TNGD-Adam, robustez al ruido, arreglos de resistencias"},
+        {"id": "8.4", "titulo": "K-FAC", "temas": "factores de Kronecker, EMA, variantes expand y reduce para pesos compartidos"},
+        {"id": "8.5", "titulo": "K-FAC termodinámico", "temas": "solves n×n por capa, complejidad O(bn² + n²κ²), cuantización de E/S (al menos 8 bits de salida)"},
+        {"id": "8.6", "titulo": "Computadores de Langevin no lineales como clasificadores", "temas": "entrenar para un tiempo de lectura; cómputo fuera del equilibrio; eficiencia de protocolos de inferencia"},
+        {"id": "8.7", "titulo": "Entrenamiento consciente del hardware", "temas": "inyección de ruido, entrenamiento consciente de cuantización a 4 bits, dispersión fija desde el paso 0"}
+      ]
+    },
+    {
+      "id": 9, "semanas": "12", "titulo": "Modelos generativos en hardware termodinámico",
+      "preguntas_guia": ["¿Por qué la difusión es el paradigma generativo más 'nativo termodinámico'?", "¿Cuándo el número de pasos de eliminación de ruido borra la ventaja del hardware?"],
+      "prerrequisitos": [2, 4, 5],
+      "laboratorios": ["L12"], "videos": ["V12", "V13", "V18"], "lecturas": [44, 45, 47, 48],
+      "lecciones": [
+        {"id": "9.1", "titulo": "Modelos de difusión", "temas": "DDPM, score matching, visión EDE, ODE de flujo de probabilidad, muestreadores y número de pasos"},
+        {"id": "9.2", "titulo": "Difusión discreta", "temas": "difusión enmascarada (estado absorbente); ELBO (MDLM); muestreadores de pocos pasos y destilación"},
+        {"id": "9.3", "titulo": "Modelos termodinámicos de eliminación de ruido (DTM)", "temas": "cadenas de EBMs condicionales muestreadas por Gibbs"},
+        {"id": "9.4", "titulo": "Modelo de costo de la difusión", "temas": "energía por token ≈ T·e_pos; utilización GPU (MFU) vs TSU espaciales; calendarios de precisión"},
+        {"id": "9.5", "titulo": "Análisis de eficiencia: Ruta A vs Ruta B", "temas": "portar un DiT o transformer de difusión enmascarada vs eliminación de ruido termodinámica nativa"}
+      ]
+    },
+    {
+      "id": 10, "semanas": "13–14", "titulo": "Modelos de lenguaje termodinámicos",
+      "preguntas_guia": ["¿Qué operaciones de un transformer son nativas de un TSU y cuáles no?", "¿Por qué los TSU brillan en decodificación con lote 1 pero no en prefill?"],
+      "prerrequisitos": [4, 5, 8, 9],
+      "laboratorios": ["L13", "L14"], "videos": ["V14", "V15", "V16", "V17", "V1"], "lecturas": [49, 50, 51, 52, 23],
+      "lecciones": [
+        {"id": "10.1", "titulo": "Repaso de transformers", "temas": "atención, MLP, normalización, caché KV, prefill vs decode, MFU"},
+        {"id": "10.2", "titulo": "Atención libre y atención lineal", "temas": "AFT, AFT-conv, atención convolucional con compuertas (GCA)"},
+        {"id": "10.3", "titulo": "Normalización DyT", "temas": "γ tanh(αx) + β y su mapeo a unidades tanh"},
+        {"id": "10.4", "titulo": "Transformers dispersos", "temas": "conectividad fija vs porcentaje de dispersión; leyes de escala con eje de conectividad; análisis iso-FLOP; entrenamiento compute-óptimo"},
+        {"id": "10.5", "titulo": "Codificar números en pbits", "temas": "dy4p / enteros probabilísticos; bits efectivos ≈ b₁ + ½ log₂S; precisión bajo demanda"},
+        {"id": "10.6", "titulo": "Unidades tanh-lineales", "temas": "proyecciones de embedding en un grafo de grado 16 (4 entradas × 4 pbits)"},
+        {"id": "10.7", "titulo": "La arquitectura Z1T e inferencia desagregada", "temas": "Z1 + FPGA/XPU; tablas de energía y latencia; el cuello de botella FPGA; la cabeza de vocabulario"},
+        {"id": "10.8", "titulo": "Métricas de energía para LLMs", "temas": "J/token, J/FLOP, MFU, 'titular vs neto' (impuesto de dispersión)"},
+        {"id": "10.9", "titulo": "Caso de estudio: pipeline AFT-Transformer + TNGD en JAX", "temas": "autorregresivo y difusión enmascarada, con registro energético y registros de mapeo a TSU"}
+      ]
+    },
+    {
+      "id": 11, "semanas": "15", "titulo": "Pila de software, agentes de investigación y fronteras",
+      "preguntas_guia": ["¿Pueden los agentes recorrer en tiempo récord quince años de coevolución de algoritmos?", "¿Qué te convencería de que una ventaja termodinámica es real?"],
+      "prerrequisitos": [4, 5, 9, 10],
+      "laboratorios": ["L15"], "videos": ["V1"], "lecturas": [54, 55, 24, 57],
+      "lecciones": [
+        {"id": "11.1", "titulo": "THRML", "temas": "grafos de factores, Gibbs por bloques, simular TSUs en GPUs"},
+        {"id": "11.2", "titulo": "Torx", "temas": "programación diferenciable estocástica; kernels de transición estocásticos; circuitos estocásticos parametrizados"},
+        {"id": "11.3", "titulo": "Thermalizers", "temas": "compilación variacional de programas estocásticos en EBMs de hardware; error de compilación en programas profundos"},
+        {"id": "11.4", "titulo": "La API del simulador y flujos de investigación agéntica", "temas": "simulador, flujo reproducir→ablacionar→extender"},
+        {"id": "11.5", "titulo": "Agentes de investigación con LLM", "temas": "GRPO, recompensas por ejecución y rúbrica, LLM como juez, hackeo de recompensa; resultados 'Thermo-RSI'"},
+        {"id": "11.6", "titulo": "Problemas abiertos", "temas": "conectividad vs calidad, eliminar el pegamento digital, precisión, teoría de complejidad termodinámica, política energética e impacto social"}
+      ]
+    }
+  ]
+}

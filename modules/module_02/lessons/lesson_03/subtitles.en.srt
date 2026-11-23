@@ -1,0 +1,371 @@
+1
+00:00:00,350 --> 00:00:02,005
+Lesson 2.3.
+
+2
+00:00:02,385 --> 00:00:04,219
+The Fokker–Planck equation.
+
+3
+00:00:05,350 --> 00:00:08,273
+A single Langevin
+trajectory is unpredictable.
+
+4
+00:00:08,653 --> 00:00:11,492
+But if we release thousands
+of particles, their
+
+5
+00:00:11,492 --> 00:00:14,452
+density evolves in a
+perfectly deterministic way.
+
+6
+00:00:14,832 --> 00:00:18,416
+The equation governing that density
+is the Fokker–Planck equation.
+
+7
+00:00:18,796 --> 00:00:22,595
+It is the bridge between the physics
+of one noisy particle and the
+
+8
+00:00:22,595 --> 00:00:26,393
+statistics of its distribution,
+and it is the tool to prove that a
+
+9
+00:00:26,393 --> 00:00:29,789
+thermodynamic chip ends up
+sampling the right distribution.
+
+10
+00:00:30,917 --> 00:00:32,828
+Think of a drop of ink in water.
+
+11
+00:00:33,208 --> 00:00:37,518
+Each ink molecule does its
+own Brownian motion, but the
+
+12
+00:00:37,518 --> 00:00:41,358
+blot as a whole spreads
+smoothly and predictably.
+
+13
+00:00:41,738 --> 00:00:46,325
+If there is also a current in the
+water, the blot drifts while it spreads.
+
+14
+00:00:46,705 --> 00:00:50,892
+Fokker–Planck is exactly that:
+a drift term, which moves the
+
+15
+00:00:50,892 --> 00:00:55,358
+density along the force, and a
+diffusion term, which spreads it.
+
+16
+00:00:56,483 --> 00:01:06,173
+For the overdamped Langevin equation,
+the density p(x, t) obeys ∂p/∂t = −∂J/∂x,
+
+17
+00:01:06,553 --> 00:01:12,190
+where the probability current
+is J = μ f p − D ∂p/∂x.
+
+18
+00:01:12,570 --> 00:01:17,676
+The first term is drift: probability
+travels with velocity μ f.
+
+19
+00:01:18,056 --> 00:01:20,863
+The second is diffusion:
+probability flows from
+
+20
+00:01:20,863 --> 00:01:23,431
+where there is more to
+where there is less.
+
+21
+00:01:23,811 --> 00:01:26,459
+It is a continuity
+equation: probability is
+
+22
+00:01:26,459 --> 00:01:29,229
+neither created nor
+destroyed, it only moves.
+
+23
+00:01:30,350 --> 00:01:31,160
+Let's compare.
+
+24
+00:01:31,540 --> 00:01:35,320
+The green bars are the histogram
+of four thousand Langevin
+
+25
+00:01:35,320 --> 00:01:39,360
+particles that all start at the
+same point, in the right well.
+
+26
+00:01:39,740 --> 00:01:42,599
+The amber curve is the
+numerical solution of the
+
+27
+00:01:42,599 --> 00:01:45,279
+Fokker–Planck equation,
+with no noise at all.
+
+28
+00:01:45,659 --> 00:01:47,277
+They match at every moment.
+
+29
+00:01:47,657 --> 00:01:52,608
+First the density spreads within the well;
+then, slowly, probability crosses the
+
+30
+00:01:52,608 --> 00:01:57,374
+barrier and fills the other well until
+it reaches the Boltzmann distribution.
+
+31
+00:01:58,750 --> 00:02:01,154
+In the stationary state, the density does
+
+32
+00:02:01,154 --> 00:02:03,440
+not change, so the current is constant.
+
+33
+00:02:03,820 --> 00:02:06,522
+In one dimension, with
+the density going to
+
+34
+00:02:06,522 --> 00:02:09,223
+zero at the ends, the
+current must be zero.
+
+35
+00:02:09,603 --> 00:02:15,974
+Then drift exactly balances
+diffusion: μ f p = D ∂p/∂x.
+
+36
+00:02:16,354 --> 00:02:24,341
+With f = −V' and the Einstein relation,
+the solution is p ∝ e^(−V/k_B T).
+
+37
+00:02:24,721 --> 00:02:28,475
+Here is the promised proof:
+Langevin dynamics with the right
+
+38
+00:02:28,475 --> 00:02:32,292
+noise has the Boltzmann distribution
+as its stationary state.
+
+39
+00:02:33,417 --> 00:02:36,072
+But not every stationary
+state is equilibrium.
+
+40
+00:02:36,452 --> 00:02:39,580
+Put a particle on a ring with
+a wavy potential and push
+
+41
+00:02:39,580 --> 00:02:42,367
+it with a constant force
+that makes it go around.
+
+42
+00:02:42,747 --> 00:02:46,263
+The density stops changing,
+but the current is not zero:
+
+43
+00:02:46,263 --> 00:02:49,215
+there is a net flow of
+probability circulating.
+
+44
+00:02:49,595 --> 00:02:52,102
+It is a non-equilibrium steady state.
+
+45
+00:02:52,482 --> 00:02:55,057
+The distribution is no
+longer Boltzmann, and
+
+46
+00:02:55,057 --> 00:02:57,399
+the system dissipates heat continuously.
+
+47
+00:02:57,779 --> 00:03:00,737
+These states are the
+protagonists of unit three.
+
+48
+00:03:01,850 --> 00:03:05,628
+For a quadratic potential the
+equation is solved exactly.
+
+49
+00:03:06,008 --> 00:03:10,705
+If the particle starts at x₀, the
+density is Gaussian at every instant,
+
+50
+00:03:11,085 --> 00:03:21,432
+with mean x₀ e^(−t/τ) and variance (k_B
+T/κ)(1 − e^(−2t/τ)), with τ = 1/(μκ).
+
+51
+00:03:21,812 --> 00:03:25,268
+The mean relaxes with time τ and
+the variance with half of it.
+
+52
+00:03:25,648 --> 00:03:31,632
+With x₀ = 2, κ = 1 and
+k_B T = 0.25, at t = τ
+
+53
+00:03:31,632 --> 00:03:36,819
+the mean is 0.74 and the variance 0.22.
+
+54
+00:03:37,950 --> 00:03:42,286
+Fokker–Planck gives us the guarantee
+that a Langevin device samples the
+
+55
+00:03:42,286 --> 00:03:46,194
+right distribution, and its
+spectrum tells us how long it takes.
+
+56
+00:03:46,574 --> 00:03:50,502
+The diffusion models of
+unit nine are, at bottom,
+
+57
+00:03:50,502 --> 00:03:54,431
+Fokker–Planck equations
+run forward and backward.
+
+58
+00:03:54,811 --> 00:03:59,299
+And in unit three the probability
+current will give us entropy production.
+
+59
+00:04:00,417 --> 00:04:03,072
+Fokker–Planck is the
+continuous version of the
+
+60
+00:04:03,072 --> 00:04:05,669
+evolution of distributions
+in a Markov chain.
+
+61
+00:04:06,049 --> 00:04:10,303
+Its exactly solvable case is
+the Ornstein–Uhlenbeck process.
+
+62
+00:04:10,683 --> 00:04:14,084
+Its analog for discrete
+jumps is the master equation.
+
+63
+00:04:14,464 --> 00:04:17,259
+And entropy production is
+written with the current.
+
+64
+00:04:18,383 --> 00:04:21,881
+Common mistakes: confusing
+stationary with equilibrium.
+
+65
+00:04:22,261 --> 00:04:24,212
+Forgetting the boundary conditions.
+
+66
+00:04:24,592 --> 00:04:27,112
+Ignoring that with
+state-dependent noise the
+
+67
+00:04:27,112 --> 00:04:29,345
+equation depends on the interpretation.
+
+68
+00:04:29,725 --> 00:04:32,187
+And thinking a single
+trajectory follows the
+
+69
+00:04:32,187 --> 00:04:34,817
+equation, when the equation
+is for the density.
+
+70
+00:04:35,950 --> 00:04:41,164
+In summary: the density of a
+Langevin process obeys ∂p/∂t =
+
+71
+00:04:41,164 --> 00:04:45,847
+−∂J/∂x, with a current
+combining drift and diffusion.
+
+72
+00:04:46,227 --> 00:04:50,302
+At equilibrium the current is zero
+and the solution is Boltzmann.
+
+73
+00:04:50,682 --> 00:04:53,107
+If the current does not vanish, we have a
+
+74
+00:04:53,107 --> 00:04:55,768
+non-equilibrium steady
+state that dissipates.
+
+75
+00:04:56,883 --> 00:05:01,669
+To practice: write the equation for a
+quadratic potential, prove that Boltzmann
+
+76
+00:05:01,669 --> 00:05:06,212
+makes the current vanish, compute the
+Gaussian solution at another instant,
+
+77
+00:05:06,592 --> 00:05:11,072
+and explain why a constant force on
+a ring cannot lead to equilibrium.

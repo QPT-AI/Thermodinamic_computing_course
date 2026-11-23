@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.7}{EDEs numéricas}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} Euler--Maruyama; estabilidad $\Delta t<2/\lambda_{\max}$ y sesgo; órdenes de
+convergencia; discretización exacta del OU. \textbf{Prerrequisitos:} 2.1, 2.4.
+
+\section{Euler--Maruyama}
+Para $dx=f(x)\,dt+\sqrt{2D}\,dW$:
+\begin{equation}x_{k+1}=x_k+f(x_k)\Delta t+\sqrt{2D\Delta t}\,z_k,\qquad z_k\sim\N(0,1)\ \text{i.i.d.}\end{equation}
+La deriva es $O(\Delta t)$ y el ruido $O(\sqrt{\Delta t})$: en un paso domina el ruido; en tiempos largos, la deriva.
+
+\section{Estabilidad}
+Para $\dot x=-\lambda x$, cada paso multiplica por $1-\lambda\Delta t$: estable si $|1-\lambda\Delta t|<1\iff\Delta t<2/\lambda$
+(oscila si $\lambda\Delta t>1$). En $d$ dimensiones con $A$ SPD: $\Delta t<2/\lambda_{\max}$. Como la relajación lenta tarda
+$\sim1/\lambda_{\min}$, el número de pasos es $\propto\kappa$ (problemas rígidos).
+
+\section{Sesgo estacionario}
+Para el OU 1D, la cadena discreta tiene varianza estacionaria
+\begin{equation}\Var_{\text{EM}}=\frac{2\Delta t/\beta}{1-(1-\lambda\Delta t)^2}=\frac{1}{\beta\lambda(1-\lambda\Delta t/2)},\end{equation}
+con sesgo relativo $\approx\lambda\Delta t/2$; en la mitad del límite de estabilidad ($\lambda\Delta t=1$) la varianza se duplica.
+\textbf{OU exacto:} $x_{k+1}=e^{-\lambda\Delta t}x_k+\sqrt{(1-e^{-2\lambda\Delta t})/(\beta\lambda)}\,z_k$, sin sesgo para cualquier $\Delta t$.
+
+\section{Convergencia}
+Error fuerte $\E|x_N-x(T)|=O(\Delta t^{\gamma})$ con el mismo ruido; error débil $|\E g(x_N)-\E g(x(T))|=O(\Delta t^{\gamma_w})$.
+\begin{itemize}[nosep]
+\item Euler--Maruyama: $\gamma=\frac12$ en general, $\gamma=1$ con ruido aditivo; $\gamma_w=1$.
+\item Milstein ($dx=a\,dt+g\,dW$): añade $\frac12gg'\big((\Delta W)^2-\Delta t\big)$; $\gamma=1$.
+\end{itemize}
+La animación mide el error fuerte en el movimiento browniano geométrico $dX=X\,dt+X\,dW$ (2000 trayectorias,
+solución exacta conocida) \evS: pendientes ajustadas $\approx0{,}47$ (EM) y $\approx0{,}99$ (Milstein).
+
+\begin{ejemplo}
+L3 con $\lambda_{\max}=40$: estable si $\Delta t<0{,}05$; sesgo $<1\,\%$ exige $\Delta t<5\times10^{-4}$. Con $\lambda_{\min}=0{,}4$, el
+transitorio ($\approx5/\lambda_{\min}=12{,}5$) cuesta $2{,}5\times10^4$ pasos.
+\end{ejemplo}
+
+\begin{aplicacion}
+Labs L2--L5 (JAX \texttt{scan}+\texttt{jit}); verificar el sesgo variando $\Delta t$; usar el OU exacto cuando aplique. El
+hardware analógico integra en tiempo continuo: no tiene la restricción de Euler, pero sí un ancho de banda finito.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Ruido $\propto\Delta t$ (en vez de $\sqrt{\Delta t}$). \quad Ignorar $2/\lambda_{\max}$ en sistemas rígidos.
+\item Confundir orden fuerte y débil. \quad Reutilizar números aleatorios.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[5]{kp} P. E. Kloeden y E. Platen, \emph{Numerical Solution of Stochastic Differential Equations}, Springer, 1992.
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}.
+\end{thebibliography}
+\end{document}

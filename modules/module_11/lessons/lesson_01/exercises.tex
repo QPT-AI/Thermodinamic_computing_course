@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{11.1}{THRML: simular TSU en GPU}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Por qué los nodos del mismo color pueden actualizarse en paralelo?
+\item (B) Piso estadístico del error de una magnetización con 20\,000 cadenas independientes.
+\item (B) Giros/ns implicados por 269\,568 pbits a 50 MHz.
+\item (B) ¿Qué especifica un \texttt{SamplingSchedule}?
+\item (I) ¿Cuántos colores necesita una rejilla 2D con vecinos diagonales? Justifique.
+\item (I) Con 7{,}5 giros/ns, ¿cuánto tarda la GPU en 1000 barridos de 262\,144 espines? ¿Y Z1?
+\item (A) Ejecute \texttt{experimento\_thrml.py} con acoplamientos más fuertes ($\sigma_J=1{,}5$) y estudie cuántos barridos hacen falta.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Sus condicionales no dependen unos de otros: no comparten factores.
+
+\textbf{E2.} $\le1/\sqrt{20\,000}\approx0{,}007$ (desviación de una variable $\pm1$ es $\le1$).
+
+\textbf{E3.} $269\,568\cdot5\cdot10^7/10^9\approx13\,478$.
+
+\textbf{E4.} Barridos de calentamiento, número de muestras y barridos entre muestras.
+
+\textbf{E5.} Cuatro: el grafo contiene cliques de 4 (un cuadrado con diagonales).
+
+\textbf{E6.} $2{,}62\cdot10^8/7{,}5\ \text{ns}\approx35$ ms; Z1: $1000/50$ MHz $=20\ \mu$s.
+
+\textbf{E7.} Más barridos: la mezcla se vuelve lenta con acoplamientos fuertes.
+\end{solucion}
+\end{document}

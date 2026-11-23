@@ -1,0 +1,46 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{9.1}{Modelos de difusión}
+
+\noindent\textbf{Unidad 9.}\quad\textbf{Objetivos:} proceso hacia adelante y reverso con el score; DDPM como emparejamiento de score; EDE inversa y EDO de flujo
+de probabilidad; efecto del muestreador y del número de pasos.
+\textbf{Prerrequisitos:} 2.6, 6.1.
+
+\section{Proceso hacia adelante}
+Ornstein--Uhlenbeck: $dx=-x\,dt+\sqrt2\,dW$, con marginal $x_t=e^{-t}x_0+\sqrt{1-e^{-2t}}\,\varepsilon$, $\varepsilon\sim\N(0,1)$. Para $t$ grande, $x_t\sim\N(0,1)$.
+
+\section{Reverso en el tiempo}
+Anderson (1982): $dx=[-x-2\nabla\log p_t(x)]\,dt+\sqrt2\,d\bar W$ integrada de $T$ a $0$. La EDO de flujo de probabilidad $\dot x=-x-\nabla\log p_t(x)$ es
+determinista y tiene las mismas marginales. Solo hace falta el \emph{score} $\nabla\log p_t$.
+
+\section{DDPM = emparejamiento de score}
+Como $\nabla_{x_t}\log p_t(x_t\mid x_0)=-\varepsilon/\sigma_t$ con $\sigma_t=\sqrt{1-e^{-2t}}$, entrenar $\hat\varepsilon_\theta$ con la pérdida $\mathbb E\|\hat\varepsilon_\theta-\varepsilon\|^2$
+equivale a estimar el score: $\nabla\log p_t\approx-\hat\varepsilon_\theta/\sigma_t$.
+
+\section{Muestreadores y pasos \evS}
+Datos $\frac12\N(-2,0{,}3^2)+\frac12\N(2,0{,}3^2)$, score exacto, malla uniforme de $T=5$ a $10^{-3}$, $2\times10^4$ muestras; distancia $W_1$ a los datos:
+\begin{center}\begin{tabular}{lccccc}\toprule
+pasos & 5 & 10 & 20 & 50 & 200\\\midrule
+EDE inversa & 0,87 & 0,67 & 0,40 & 0,16 & 0,07\\
+EDO de flujo & 0,87 & 0,54 & 0,28 & 0,11 & 0,03\\\bottomrule\end{tabular}\end{center}
+En GPU el costo crece linealmente con los pasos; de ahí los muestreadores de pocos pasos (DDIM, DPM-Solver), calendarios y destilación. Con hardware termodinámico, cada paso es
+dinámica física barata (lección 9.3).
+
+\begin{aplicacion}
+Imágenes, video, audio, moléculas; guía sin clasificador; DiT. Laboratorio L12: DDPM pequeño, EDE frente a EDO.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Confundir el proceso fijo con el aprendido. \quad Olvidar el factor $1/\sigma_t$.
+\item Malla de tiempo uniforme. \quad Comparar muestreadores con distinto número de evaluaciones.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{ho} J. Ho, A. Jain y P. Abbeel, Denoising diffusion probabilistic models, \emph{NeurIPS} (2020).
+\bibitem{song} Y. Song et al., Score-based generative modeling through stochastic differential equations, \emph{ICLR} (2021).
+\bibitem{anderson} B. D. O. Anderson, Reverse-time diffusion equation models, \emph{Stoch. Proc. Appl.} 12, 313 (1982).
+\end{thebibliography}
+\end{document}

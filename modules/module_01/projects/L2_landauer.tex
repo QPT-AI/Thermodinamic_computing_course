@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Laboratorio}{L2}{El límite de Landauer: borrar un bit en un pozo doble (semana 2)}
+
+\section*{Enunciado del problema}
+El principio de Landauer afirma que borrar un bit desconocido exige disipar al menos $\kB T\ln2$. En este laboratorio
+lo observará en una simulación de Langevin: una partícula sobreamortiguada en un potencial de pozo doble
+$V(x)=ax^4-bx^2+cx$ actúa como memoria de un bit, y un protocolo de duración $\tau$ la reinicia al estado «0».
+
+\section*{Objetivos}
+\begin{itemize}[nosep]
+\item Simular la dinámica de Langevin y un protocolo de borrado con trabajo de Sekimoto.
+\item Medir $\langle W\rangle(\tau)$ y mostrar que tiende a $\kB T\ln2$ por arriba para protocolos lentos.
+\item Explicar la disipación en exceso de los protocolos rápidos y el papel de la tasa de fallo.
+\end{itemize}
+
+\section*{Conocimientos requeridos}
+Lecciones 1.1 ($W\ge\Delta F$), 1.5 (Landauer), 0.7 (JAX: \texttt{scan}, claves); vista previa de 2.2 y 2.7 (Langevin, Euler--Maruyama).
+
+\section*{Tareas núcleo}
+\begin{enumerate}
+\item Simule una partícula sobreamortiguada en $V(x)=ax^4-bx^2+cx$ (memoria de un bit). Verifique que en equilibrio la población de cada pozo es $\approx\frac12$.
+\item Implemente el protocolo de borrado (bajar la barrera, inclinar, subir la barrera) de duración $\tau$ y mida el trabajo medio.
+\item Grafique $\langle W\rangle(\tau)$ y muestre que se acerca a $\kB T\ln2$ para protocolos lentos; explique la disipación en exceso de los rápidos (ajuste $\ln2+a/\tau$).
+\end{enumerate}
+
+\section*{Reto}
+Simule una máquina de Szilard (lección 1.4): mida el lado, aplique una inclinación condicionada a la medición para
+extraer trabajo y cierre el ciclo información--trabajo contabilizando el costo de borrar el registro.
+
+\section*{Instrucciones de implementación}
+\begin{itemize}[nosep]
+\item Código de inicio: \texttt{L2\_inicio.py} (JAX, \texttt{lax.scan}, $\kB T=1$, $E_b=c_{\max}=8$, $\Delta t=10^{-3}$, 4000 trayectorias).
+\item Trabajo de Sekimoto: $W=\sum_t[V(x_t,t+\Delta t)-V(x_t,t)]$. Compruebe que $\Delta t$ es estable ($\Delta t<2/\max|V''|$).
+\item Reporte cada número con su etiqueta de evidencia (aquí todo es \evS).
+\end{itemize}
+
+\section*{Resultados esperados (referencia de la lección 1.5 \evS)}
+\begin{center}
+\begin{tabular}{lccccccc}\toprule
+$\tau$ & 1 & 2 & 5 & 10 & 20 & 50 & 100\\\midrule
+$\langle W\rangle/\kB T$ & $\approx4{,}3$ & $2{,}6$ & $1{,}5$ & $1{,}1$ & $0{,}9$ & $0{,}78$ & $0{,}73$\\\bottomrule
+\end{tabular}
+\end{center}
+Tendencia $\ln2+a/\tau$ con $a\approx4$; para $\tau$ muy grande, la tasa de fallo (saltos de vuelta) reduce
+ligeramente $\langle W\rangle$: la cota correcta es $\kB T\ln2\,[1-h(p_{\text{fallo}})]$.
+
+\section*{Entregable}
+Histograma de $W$, curva $\langle W\rangle$ frente a $\tau$, discusión corta (2--3 páginas), archivo de pruebas.
+
+\section*{Criterios de evaluación (pensum §10.1)}
+Corrección 40 · Análisis y gráficas 25 · Código y reproducibilidad 20 · Contabilidad energética y evidencia 15.
+\end{document}

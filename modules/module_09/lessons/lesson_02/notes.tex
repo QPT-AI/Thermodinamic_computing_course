@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{9.2}{Difusión discreta}
+
+\noindent\textbf{Unidad 9.}\quad\textbf{Objetivos:} difusión enmascarada (estado absorbente); objetivo MDLM; error de revelar tokens en paralelo y muestreadores de pocos pasos.
+\textbf{Prerrequisitos:} 4.1, 9.1.
+
+\section{Proceso enmascarado}
+Cada token se reemplaza por $[\mathrm M]$ con probabilidad $t\in[0,1]$, independientemente: $q(x_t^i\mid x_0^i)=(1-t)\delta_{x_0^i}+t\,\delta_{[\mathrm M]}$. La máscara es absorbente.
+El proceso inverso parte de todo enmascarado y revela tokens con un modelo $p_\theta(x_0^i\mid x_t)$.
+
+\section{Objetivo MDLM}
+La cota inferior de la verosimilitud se reduce a una entropía cruzada sobre las posiciones enmascaradas, ponderada en el tiempo (calendario lineal):
+\[\mathcal L=\mathbb E_{t,x_t}\Big[\tfrac1t\textstyle\sum_{i:\,x_t^i=[\mathrm M]}-\log p_\theta(x_0^i\mid x_t)\Big].\]
+Como BERT, pero sobre todas las tasas de enmascarado y con peso que la convierte en ELBO.
+
+\section{Revelar en paralelo \evS}
+Revelar un token por paso es exacto con un modelo perfecto; revelar un grupo $S$ a la vez usa $\prod_{i\in S}p(x^i\mid x_{\text{vis}})\ne p(x_S\mid x_{\text{vis}})$.
+Juguete: cadenas binarias de longitud 8 (cadena de Markov que repite el bit anterior con probabilidad 0,9; 48\,\% de cadenas constantes), condicionales exactas,
+$2\times10^4$ muestras:
+\begin{center}\begin{tabular}{lcccc}\toprule
+pasos & 8 & 4 & 2 & 1\\\midrule
+variación total & 0,03 & 0,20 & 0,46 & 0,79\\
+cadenas constantes & 47\,\% & 29\,\% & 9\,\% & 0,7\,\%\\\bottomrule\end{tabular}\end{center}
+El error proviene del muestreo en paralelo, no del modelo. Remedios: revelar por confianza, destilar a pocos pasos, o muestrear la conjunta de cada paso con un EBM
+(modelos termodinámicos de eliminación de ruido, 9.3).
+
+\begin{aplicacion}
+Modelos de lenguaje por difusión, no autorregresivos; relleno y edición. Laboratorio L13: MDLM pequeño, calidad frente a pasos.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Olvidar que la máscara es absorbente. \quad Quitar el peso $1/t$.
+\item Revelar muchos tokens correlacionados y culpar al modelo. \quad Comparar pasos sin igualar evaluaciones.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{mdlm} S. S. Sahoo et al., Simple and effective masked diffusion language models, \emph{NeurIPS} (2024).
+\bibitem{d3pm} J. Austin et al., Structured denoising diffusion models in discrete state-spaces, \emph{NeurIPS} (2021).
+\bibitem[48]{dtm} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, 2025.
+\end{thebibliography}
+\end{document}

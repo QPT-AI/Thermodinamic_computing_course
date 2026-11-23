@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.4}{Unidades de procesamiento estocástico continuo}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Frecuencia natural de una celda LC con $L=1\ \mu$H, $C=1$ nF.
+\item (B) ¿Por qué la resistencia amortigua e inyecta ruido a la vez?
+\item (B) Si el error es 8\,\% tras $T=1000$, ¿cuánto tiempo para 2\,\%?
+\item (B) ¿Qué ocurre físicamente si $A$ tiene un valor propio negativo?
+\item (I) Muestre que $p(x)\propto e^{-U(x)/\kB T}$ con $U=\tfrac12x^\top Ax-b^\top x$ es $\N(A^{-1}b,\kB TA^{-1})$.
+\item (I) ¿Cómo cambia la varianza del voltaje de una celda si se duplica $C$ (lección 1.6)?
+\item (A) Simule las 8 celdas con distintos $\gamma$ (0,3; 1; 3) y compare el tiempo para 10\,\% de error. ¿Qué amortiguamiento es óptimo?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $f_0=1/(2\pi\sqrt{10^{-15}})\approx5{,}0$ MHz.
+
+\textbf{E2.} Teorema de fluctuación--disipación: lo que disipa, fluctúa ($S_V=4\kB TR$).
+
+\textbf{E3.} Error $\propto T^{-1/2}$: $(8/2)^2=16$ veces más, $T\approx16\,000$.
+
+\textbf{E4.} El potencial no tiene mínimo en esa dirección: el voltaje crece sin límite (saturación de componentes).
+
+\textbf{E5.} Completar el cuadrado: $U=\tfrac12(x-A^{-1}b)^\top A(x-A^{-1}b)+$ cte.
+
+\textbf{E6.} $\langle V^2\rangle=\kB T/C$: se reduce a la mitad.
+
+\textbf{E7.} Amortiguamiento cercano al crítico suele minimizar el tiempo de mezcla (lección 6.4).
+\end{solucion}
+\end{document}

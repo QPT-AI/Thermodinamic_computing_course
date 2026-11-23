@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{4}{Quiz: modelos basados en energía, Ising y redes neuronales}
+\noindent Preguntas guía: ¿cómo se programa un chip de pbits? ¿Qué aprende una máquina de Boltzmann y por qué es cara en digital?
+\section*{Preguntas}
+\begin{enumerate}
+\item La condicional de un espín depende de: (a) todos los espines (b) su manta de Markov (c) solo de $h_i$ (d) de $Z$.
+\item $T_c$ exacta del Ising 2D cuadrado ($J=1$): (a) 4 (b) 2,27 (c) 1 (d) 3,64.
+\item Gibbs para Ising: $P(s_i=+1\mid\cdot)=$ (a) $\sigma(\beta u_i)$ (b) $\sigma(2\beta u_i)$ (c) $\tanh(\beta u_i)$ (d) $e^{-\beta u_i}$.
+\item Actualizar todos los espines a la vez con sus condicionales: (a) es exacto (b) cambia la estacionaria (c) acelera sin sesgo (d) equivale a Metropolis.
+\item El ESS de $n$ barridos con $\tau_{\text{int}}$ es: (a) $n\tau_{\text{int}}$ (b) $n/\tau_{\text{int}}$ (c) $\sqrt n$ (d) $n$.
+\item Capacidad de Hopfield: (a) $N$ (b) $0{,}14N$ (c) $\log N$ (d) $2^N$.
+\item La regla de Boltzmann: $\Delta J_{ij}\propto$ (a) $\langle s_is_j\rangle_{\text{datos}}$ (b) $\langle s_is_j\rangle_{\text{datos}}-\langle s_is_j\rangle_{\text{modelo}}$ (c) $\langle s_i\rangle\langle s_j\rangle$ (d) $J_{ij}$.
+\item En campo medio con $z$ vecinos, $T_c^{\text{MF}}=$ (a) $zJ$ (b) $J/z$ (c) $2,27J$ (d) $\sqrt zJ$.
+\item (Problema) Cadena $s_1-s_2-s_3$, $\beta J=1$: calcule $Z$ y $\langle s_1s_3\rangle$.
+\item (Problema) Metropolis a $T=3$ para voltear un espín con 4 vecinos alineados: probabilidad de aceptación.
+\item (Problema) Un pbit con $\beta=1$: ¿qué $u$ da $P(+1)=0{,}9$?
+\item (Problema) Verifique $P_{\text{AND}}=uv-2uz-2vz+3z$ en las 8 filas y diga cuáles son válidas.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (b) · 5 (b) · 6 (b) · 7 (b) · 8 (a).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $Z=2(2\cosh1)^2=19{,}05$; $\langle s_1s_3\rangle=\tanh^21=0{,}58$.
+\item $e^{-8/3}=0{,}069$.
+\item $u=\tfrac12\ln9=1{,}10$.
+\item $P=0$ en $(0,0,0),(0,1,0),(1,0,0),(1,1,1)$; $3,1,1,1$ en las demás.
+\end{enumerate}
+Aprobación 8/12; fallos en 4, 5 o 7 $\Rightarrow$ repasar 4.3, 4.4, 4.7.
+\end{document}

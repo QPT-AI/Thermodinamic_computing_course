@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.6}{Panorama: inferencia y más allá}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca la precisión y la media posteriores para $y=Hx+\varepsilon$, $x\sim\N(0,I)$.
+\item (B) ¿Por qué el muestreador de la posterior debe operar a $\beta=1$?
+\item (B) Demuestre $\langle x(t+s)x(t)^\top\rangle=e^{-As}\Sigma$ para el OU.
+\item (B) ¿Qué sesga la solución de un QP por Langevin proyectado a temperatura finita?
+\item (I) Con un prior $\N(\mu_0,\Sigma_0)$ general, ¿qué $A$ y $b$ hay que cargar?
+\item (I) En $d=1$, el estimador de $e^{-as}$ usa $C(s)=\beta^{-1}a^{-1}e^{-as}$. ¿Por qué el error relativo crece con $s$ para $T$ fijo?
+\item (A) Implemente regresión logística bayesiana por Langevin ($U=-\log p(x\mid\text{datos})$) y compare la incertidumbre con una aproximación de Laplace.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\log p\propto-\tfrac12x^\top x-\tfrac1{2\sigma^2}\|y-Hx\|^2$: precisión $\Lambda=I+H^\top H/\sigma^2$, media $\Lambda^{-1}H^\top y/\sigma^2$.
+
+\textbf{E2.} La covarianza de equilibrio es $\beta^{-1}A^{-1}$; solo con $\beta=1$ coincide con $\Lambda^{-1}$.
+
+\textbf{E3.} Para $s>0$: $\frac{d}{ds}C(s)=-AC(s)$ (el ruido futuro es independiente de $x(t)$), con $C(0)=\Sigma$.
+
+\textbf{E4.} La masa de probabilidad que la pared recorta: el promedio de una distribución truncada se aleja del borde, en $O(\sqrt{k_BT})$.
+
+\textbf{E5.} $A=\Sigma_0^{-1}+H^\top H/\sigma^2$, $b=\Sigma_0^{-1}\mu_0+H^\top y/\sigma^2$.
+
+\textbf{E6.} La señal $e^{-as}$ decae exponencialmente pero el ruido del estimador no: la razón señal/ruido cae como $e^{-as}$.
+
+\textbf{E7.} Laplace es gaussiana alrededor del modo; Langevin captura la asimetría de la posterior logística.
+\end{solucion}
+\end{document}

@@ -1,0 +1,291 @@
+1
+00:00:00,350 --> 00:00:01,925
+Lesson 10.2.
+
+2
+00:00:02,305 --> 00:00:04,456
+Attention-free and linear attention.
+
+3
+00:00:05,583 --> 00:00:09,932
+Attention compares each token with
+all previous ones: a cost that grows
+
+4
+00:00:09,932 --> 00:00:13,730
+with the square of the context
+and a cache that keeps growing.
+
+5
+00:00:14,110 --> 00:00:18,045
+For hardware with fixed, sparse
+connectivity, that is a problem.
+
+6
+00:00:18,425 --> 00:00:22,550
+Today we see alternatives that
+mix information across positions
+
+7
+00:00:22,550 --> 00:00:26,675
+without query-key products: the
+attention-free transformer, its
+
+8
+00:00:26,675 --> 00:00:29,883
+local variants and gated
+convolutional attention.
+
+9
+00:00:31,017 --> 00:00:35,633
+The attention-free transformer,
+AFT, proposed by Zhai and colleagues
+
+10
+00:00:35,633 --> 00:00:40,113
+in twenty twenty-one, computes
+each position's output as a sigmoid
+
+11
+00:00:40,113 --> 00:00:43,983
+gate of the query times a
+weighted average of the values.
+
+12
+00:00:44,363 --> 00:00:48,796
+The weights are exponentials of the
+keys plus a learned position bias.
+
+13
+00:00:49,176 --> 00:00:52,180
+Everything is elementwise
+in the model dimension:
+
+14
+00:00:52,180 --> 00:00:55,001
+there is no dot product
+between query and key.
+
+15
+00:00:56,117 --> 00:01:00,431
+Without position biases, the causal
+AFT-simple variant has a recurrent
+
+16
+00:01:00,431 --> 00:01:04,684
+form: it suffices to accumulate two
+sums, that of the exponentials of
+
+17
+00:01:04,684 --> 00:01:08,197
+the keys and that of those
+exponentials times the values.
+
+18
+00:01:08,577 --> 00:01:11,926
+Each new token updates the
+sums and reads the output.
+
+19
+00:01:12,306 --> 00:01:15,137
+We verify with sixty-four
+positions that the
+
+20
+00:01:15,137 --> 00:01:18,098
+parallel and recurrent
+forms coincide exactly.
+
+21
+00:01:18,478 --> 00:01:23,349
+The state is just two vectors, instead
+of a cache that grows with the context.
+
+22
+00:01:24,450 --> 00:01:26,602
+In cost, the difference is large.
+
+23
+00:01:26,982 --> 00:01:29,262
+For a context of four thousand ninety-six
+
+24
+00:01:29,262 --> 00:01:31,821
+tokens and dimension
+four thousand ninety-six,
+
+25
+00:01:32,201 --> 00:01:36,805
+the attention scores of a layer
+cost about two hundred seventy-five
+
+26
+00:01:36,805 --> 00:01:40,996
+billion operations, and AFT-simple
+about one hundred million.
+
+27
+00:01:41,376 --> 00:01:43,483
+It is a mixing that is
+linear in the context.
+
+28
+00:01:43,863 --> 00:01:47,310
+The price is expressivity,
+because AFT-simple cannot
+
+29
+00:01:47,310 --> 00:01:50,690
+focus on a specific position
+the way attention can.
+
+30
+00:01:51,817 --> 00:01:55,898
+AFT-conv recovers some
+expressivity with local position
+
+31
+00:01:55,898 --> 00:01:59,757
+biases, learned within a
+window, like a convolution.
+
+32
+00:02:00,137 --> 00:02:03,669
+Gated convolutional attention
+follows the same idea: it
+
+33
+00:02:03,669 --> 00:02:07,265
+mixes each position with its
+neighbors through a learned
+
+34
+00:02:07,265 --> 00:02:10,541
+filter and modulates it
+with a multiplicative gate.
+
+35
+00:02:10,921 --> 00:02:13,725
+The connections are
+local and fixed, exactly
+
+36
+00:02:13,725 --> 00:02:16,275
+what a fixed-degree graph can implement.
+
+37
+00:02:17,383 --> 00:02:21,063
+For thermodynamic hardware,
+these variants have three
+
+38
+00:02:21,063 --> 00:02:25,229
+virtues: they do not need dense
+query-key products, they use
+
+39
+00:02:25,229 --> 00:02:29,186
+elementwise operations such
+as exponentials and sigmoids,
+
+40
+00:02:29,566 --> 00:02:33,724
+close to a pbit's response, and their
+connectivity is local and fixed.
+
+41
+00:02:34,104 --> 00:02:37,389
+That is why they appear in
+language-model designs for
+
+42
+00:02:37,389 --> 00:02:41,728
+probabilistic chips, like the sparse
+transformers of the next lessons.
+
+43
+00:02:42,850 --> 00:02:46,673
+These models serve long contexts
+and streaming generation with
+
+44
+00:02:46,673 --> 00:02:50,372
+constant state, and belong to
+the family of efficient mixers
+
+45
+00:02:50,372 --> 00:02:53,701
+together with linear attention
+and state-space models.
+
+46
+00:02:54,081 --> 00:02:58,565
+In lab twenty-eight you will
+train a small AFT-conv model.
+
+47
+00:02:59,683 --> 00:03:02,762
+Common mistakes: assuming full AFT is
+
+48
+00:03:02,762 --> 00:03:06,422
+linear, when its full
+biases cost quadratic.
+
+49
+00:03:06,802 --> 00:03:09,805
+Forgetting the numerical
+stability of the exponentials.
+
+50
+00:03:10,185 --> 00:03:14,373
+Expecting attention's recall
+capacity from purely local mixing.
+
+51
+00:03:14,753 --> 00:03:17,569
+And comparing quality with
+different parameter counts.
+
+52
+00:03:18,683 --> 00:03:23,247
+In summary: AFT replaces
+attention with a weighted average
+
+53
+00:03:23,247 --> 00:03:27,417
+with exponential weights
+and a gate, all elementwise.
+
+54
+00:03:27,797 --> 00:03:32,436
+Its simple causal version is recurrent,
+with constant state and no cache.
+
+55
+00:03:32,816 --> 00:03:36,706
+Local variants recover expressivity
+with fixed connectivity,
+
+56
+00:03:36,706 --> 00:03:40,077
+which makes them natural
+for thermodynamic hardware.
+
+57
+00:03:41,183 --> 00:03:44,400
+To practice: write the AFT output.
+
+58
+00:03:44,780 --> 00:03:46,573
+Derive its recurrent form.
+
+59
+00:03:46,953 --> 00:03:50,023
+Compare the decode state
+size with attention.
+
+60
+00:03:50,403 --> 00:03:53,711
+And say what attention can
+do that AFT-simple cannot.

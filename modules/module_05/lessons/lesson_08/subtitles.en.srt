@@ -1,0 +1,306 @@
+1
+00:00:00,350 --> 00:00:02,058
+Lesson 5.8.
+
+2
+00:00:02,438 --> 00:00:05,198
+Energy accounting in
+heterogeneous systems.
+
+3
+00:00:06,317 --> 00:00:09,891
+In lesson 5.3 we computed
+that the Z1 spends at
+
+4
+00:00:09,891 --> 00:00:13,009
+most seventy-four femtojoules per update.
+
+5
+00:00:13,389 --> 00:00:17,457
+But a chip never works alone: someone
+has to send it the parameters,
+
+6
+00:00:17,457 --> 00:00:20,927
+read its samples and do the
+digital computation around it.
+
+7
+00:00:21,307 --> 00:00:25,160
+The energy of the full system can be
+very different from that of the chip.
+
+8
+00:00:25,540 --> 00:00:27,028
+Today we learn to count it.
+
+9
+00:00:28,150 --> 00:00:30,097
+We split the energy into three parts.
+
+10
+00:00:30,477 --> 00:00:34,148
+The fabric: the pbit
+updates inside the chip.
+
+11
+00:00:34,528 --> 00:00:37,321
+Input and output: the
+bits that cross the chip
+
+12
+00:00:37,321 --> 00:00:40,722
+boundary, such as biases going
+in and states coming out.
+
+13
+00:00:41,102 --> 00:00:45,641
+And the digital glue: the computation
+on the CPU, GPU or FPGA that
+
+14
+00:00:45,641 --> 00:00:50,112
+prepares the biases, controls
+sampling and processes the samples.
+
+15
+00:00:50,492 --> 00:00:52,800
+The total energy is the sum of the three.
+
+16
+00:00:53,917 --> 00:00:57,989
+We need reference costs, and we
+must say where they come from.
+
+17
+00:00:58,369 --> 00:01:03,888
+According to Horowitz's estimates
+for a forty-five nanometer process, a
+
+18
+00:01:03,888 --> 00:01:08,553
+thirty-two-bit floating-point
+multiply costs 3.7 picojoules,
+
+19
+00:01:08,933 --> 00:01:14,636
+an add 0.9, and an eight-bit
+integer multiply only 0.2.
+
+20
+00:01:15,016 --> 00:01:19,179
+Reading thirty-two bits from DRAM
+costs about six hundred forty
+
+21
+00:01:19,179 --> 00:01:23,211
+picojoules: moving data costs
+much more than operating on it.
+
+22
+00:01:23,591 --> 00:01:28,830
+For off-chip communication we will assume
+ten picojoules per bit, an estimate.
+
+23
+00:01:29,950 --> 00:01:32,794
+Let's count one sample on the
+Z1 with a thousand sweeps.
+
+24
+00:01:33,174 --> 00:01:37,213
+The fabric: two hundred sixty-nine
+thousand pbits times a thousand
+
+25
+00:01:37,213 --> 00:01:41,130
+sweeps times seventy-four
+femtojoules, about twenty microjoules.
+
+26
+00:01:41,510 --> 00:01:46,634
+Input and output: eight bias bits going
+in and one state bit coming out per
+
+27
+00:01:46,634 --> 00:01:50,939
+pbit, at ten picojoules per bit,
+about twenty-four microjoules.
+
+28
+00:01:51,319 --> 00:01:55,613
+The glue: if a digital network
+computes each bias with a hundred
+
+29
+00:01:55,613 --> 00:02:00,578
+floating-point multiply-adds, that is
+one hundred twenty-four microjoules.
+
+30
+00:02:00,958 --> 00:02:05,704
+The total is one hundred sixty-eight,
+and the fabric is only twelve percent.
+
+31
+00:02:06,817 --> 00:02:08,667
+How do we reduce what is not fabric?
+
+32
+00:02:09,047 --> 00:02:14,613
+First, with low-precision glue: with
+eight-bit integer arithmetic, the glue drops
+
+33
+00:02:14,613 --> 00:02:19,423
+to six microjoules, and the fabric
+becomes forty percent of the total.
+
+34
+00:02:19,803 --> 00:02:24,646
+Second, by amortizing input and output:
+with more sweeps per readout, the
+
+35
+00:02:24,646 --> 00:02:28,826
+fabric equals input and output
+at around twelve hundred sweeps.
+
+36
+00:02:29,206 --> 00:02:32,549
+Third, by reading summaries
+instead of full states.
+
+37
+00:02:32,929 --> 00:02:36,006
+And finally, the long-term
+goal: removing the
+
+38
+00:02:36,006 --> 00:02:39,358
+digital glue with more
+functions inside the chip.
+
+39
+00:02:40,483 --> 00:02:43,095
+Every energy number must carry a label.
+
+40
+00:02:43,475 --> 00:02:47,114
+Measured, if it came from an
+instrument on a real device.
+
+41
+00:02:47,494 --> 00:02:49,984
+Simulated, if it came
+from a physical model.
+
+42
+00:02:50,364 --> 00:02:53,629
+Projected, if it extrapolates a
+design that does not exist yet.
+
+43
+00:02:54,009 --> 00:02:57,778
+And estimated, if it is an
+order-of-magnitude calculation like today's.
+
+44
+00:02:58,158 --> 00:03:02,925
+In this course, the seventy-four
+femtojoules are a bound derived from
+
+45
+00:03:02,925 --> 00:03:07,140
+specifications, Horowitz's costs
+are estimates, and the final
+
+46
+00:03:07,140 --> 00:03:11,354
+comparison is an estimate: never
+present it as a measurement.
+
+47
+00:03:12,483 --> 00:03:17,434
+In practice, before any claim one writes
+the sum of the three terms, reports
+
+48
+00:03:17,434 --> 00:03:22,059
+the energy per sample with the number
+of sweeps and the glue precision,
+
+49
+00:03:22,439 --> 00:03:27,013
+and compares with a digital baseline on
+the same task and at the same quality.
+
+50
+00:03:27,393 --> 00:03:30,521
+In the final project, every
+figure will carry its label.
+
+51
+00:03:31,650 --> 00:03:36,131
+Common mistakes: quoting the fabric
+energy as if it were the system's.
+
+52
+00:03:36,511 --> 00:03:39,128
+Ignoring the digital network
+that computes the biases.
+
+53
+00:03:39,508 --> 00:03:42,690
+Comparing energies at
+different qualities or tasks.
+
+54
+00:03:43,070 --> 00:03:47,049
+And presenting a projection or an
+estimate as if it were a measurement.
+
+55
+00:03:48,150 --> 00:03:51,705
+In summary: the energy of
+a heterogeneous system is
+
+56
+00:03:51,705 --> 00:03:54,982
+fabric plus input and
+output plus digital glue.
+
+57
+00:03:55,362 --> 00:03:58,260
+In our example the fabric was only twelve
+
+58
+00:03:58,260 --> 00:04:01,441
+percent, rising to forty
+with eight-bit glue.
+
+59
+00:04:01,821 --> 00:04:06,391
+Every number must say whether it is
+measured, simulated, projected or estimated.
+
+60
+00:04:07,517 --> 00:04:11,615
+To practice: compute the fabric
+energy with ten thousand sweeps.
+
+61
+00:04:11,995 --> 00:04:15,509
+Find how many sweeps make fabric
+equal to input and output.
+
+62
+00:04:15,889 --> 00:04:19,759
+Compare the glue with eight-bit
+integers and with floating point.
+
+63
+00:04:20,139 --> 00:04:23,655
+And correctly label the
+seventy-four femtojoules.

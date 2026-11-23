@@ -1,0 +1,65 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.5}{El teorema de fluctuación--disipación}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} enunciar el TFD; verificarlo en el OU; reconocer Einstein y Nyquist como
+casos particulares y la violación fuera del equilibrio. \textbf{Prerrequisitos:} 2.2--2.4, 1.6.
+
+\section{Enunciado}
+Sea un sistema en equilibrio a temperatura $T$ y una perturbación pequeña $-F\,x$ en la energía, encendida en $t=0$.
+Con $C(t)=\langle\delta x(0)\delta x(t)\rangle_{\text{eq}}$ la autocorrelación sin perturbar:
+\begin{resultado}[ (TFD clásico)]
+\begin{equation}\langle x\rangle_F(t)-\langle x\rangle_{\text{eq}}=\beta F\,[C(0)-C(t)]+O(F^2),\qquad\chi(t)=-\beta\,\dot C(t)\ (t>0).\end{equation}
+En frecuencia: $S_x(\omega)=\frac{2\kB T}{\omega}\mathrm{Im}\,\chi(\omega)$.
+\end{resultado}
+\textbf{Interpretación:} la respuesta a un empujón pequeño es la relajación de una fluctuación espontánea (hipótesis de
+regresión de Onsager). La misma fricción que disipa el empujón genera las fluctuaciones \cite{peliti,seifert}.
+
+\section{Verificación en el OU}
+Para $dx=(-\kappa x+F)dt+\sqrt{2\kB T}\,dW$ ($\mu=1$): $C(t)=\frac{\kB T}{\kappa}e^{-\kappa t}$ y
+$\langle x\rangle_F(t)=\frac{F}{\kappa}(1-e^{-\kappa t})=\beta F[C(0)-C(t)]$ exactamente. La animación lo comprueba
+numéricamente \evS: $C(t)$ medida en una trayectoria de longitud 4000 y $\langle x\rangle_F$ promediada sobre $10^4$
+partículas con $F=0{,}2$, $\kappa=1$, $\kB T=0{,}5$; ambas coinciden dentro del error estadístico ($\sim0{,}007$).
+
+\section{Casos particulares}
+\begin{itemize}[nosep]
+\item \textbf{Einstein:} partícula libre, respuesta $=$ movilidad $\mu$, fluctuación $=$ difusión: $D=\mu\kB T$.
+\item \textbf{Nyquist:} circuito, respuesta $=$ impedancia, fluctuación $=$ ruido de voltaje: $S_V=4\kB TR$.
+\item \textbf{Equipartición:} respuesta estática $\chi_0=1/\kappa$ y $C(0)=\kB T/\kappa$: $C(0)=\kB T\chi_0$.
+\end{itemize}
+
+\section{Fuera del equilibrio}
+En estados forzados (NESS) o con ruido no térmico, el TFD no vale. Se define una temperatura efectiva
+$\kB T_{\text{ef}}(t)=\dot C(t)/(-\chi(t))$; si $T_{\text{ef}}\neq T$, hay forzamiento o ruido de otro origen. Herramienta de
+diagnóstico para hardware termodinámico (ruido $1/f$, ruido de disparo, desajustes; Unidad 5.6).
+
+\begin{ejemplo}
+Pinza óptica: $\kappa=10^{-6}$ N/m, $T=300$ K: $\langle x^2\rangle=\kB T/\kappa\approx4{,}1\times10^{-15}$ m$^2$ ($x_{\text{rms}}\approx64$ nm).
+Sin aplicar fuerza, el TFD predice la respuesta estática a $F=1$ pN: $\langle x\rangle=\beta F\,C(0)=F/\kappa=1\ \mu$m.
+Recíprocamente, midiendo $x_{\text{rms}}$ se calibra $\kappa=\kB T/\langle x^2\rangle$.
+\end{ejemplo}
+
+\begin{aplicacion}
+Calibración de trampas y sensores; termometría de ruido $T=\langle V^2\rangle/(4\kB R\Delta f)$; diagnóstico de chips; compromiso
+de diseño: más disipación implica más ruido.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Fuera del régimen lineal o del equilibrio no aplica.
+\item $\chi(t)$ (impulso) $\neq$ respuesta a un escalón $\int_0^t\chi$.
+\item El factor $\beta$; versión cuántica si $\hbar\omega\gtrsim\kB T$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Respuesta lineal $=$ relajación de fluctuaciones; $\langle x\rangle_F=\beta F[C(0)-C(t)]$; Einstein, Nyquist y equipartición
+como casos; violación $\Rightarrow$ temperatura efectiva.
+
+\begin{thebibliography}{9}\small
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\bibitem[11]{seifert} U. Seifert, Stochastic thermodynamics, fluctuation theorems and molecular machines, \emph{Rep. Prog. Phys.} 75, 126001 (2012).
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}.
+\end{thebibliography}
+\end{document}

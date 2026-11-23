@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.4}{El teorema de búsqueda de orden por difusión}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} enunciar y demostrar el teorema; el lema de duplicación; qué dice y qué no dice sobre el costo físico.
+\textbf{Prerrequisitos:} 7.1, 7.3.
+
+\section{Enunciado}
+\begin{definicion}[ (Teorema, Cadavid et al.)]
+Sea $b\in(\mathbb Z/N\mathbb Z)^*$ de orden $r$, $M=\lfloor\log_2N\rfloor+1$ y $p_\ell=W^\ell\delta_e$ la caminata semi-perezosa diádica. Para todo
+\[\ell\ge\ell_0=4(M+1)(\log_2N+2):\qquad\Big|p_\ell(e)-\frac1r\Big|\le\frac1{4N^2},\qquad r=\mathrm{round}\big(1/p_\ell(e)\big).\]
+\end{definicion}
+Unicidad: para enteros distintos $a,b\le N$, $|1/a-1/b|=|a-b|/(ab)\ge1/N^2$. Para $N=299$: $M=9$, $\ell_0=409$.
+
+\section{Lema de duplicación}
+Si $2^M>r$ y $1\le k<r$, existe $t\le M$ con $k2^t\bmod r\in[r/4,3r/4]$. \emph{Prueba:} sea $b_t=\min(a_t,r-a_t)$ con $a_t=k2^t\bmod r$. Mientras
+$a_t\notin[r/4,3r/4]$, se verifica $b_{t+1}=2b_t$; si nunca cayera en el centro, $b_M=2^Mb_0>r/4$, contradicción. Ejemplo: $r=33$, $k=1$: $1,2,4,8,16\in[8{,}25;\,24{,}75]$.
+
+\section{Cota de los valores propios y cierre}
+En el centro, $\cos(2\pi k2^t/r)\le0$, así $\mu_k\le M/(M+1)$ y
+\[\lambda_k\le1-\frac1{2(M+1)},\qquad\Big|p_\ell(e)-\frac1r\Big|\le\max_{k\ne0}\lambda_k^\ell\le e^{-\ell/(2(M+1))}.\]
+Con $\ell\ge\ell_0$: $e^{-2(\log_2N+2)}\le e^{-4}N^{-2}<1/(4N^2)$ (usando $\log_2N\ge\ln N$). Es una suma exponencial \emph{lacunaria}: los saltos que se
+duplican impiden que el promedio de cosenos quede cerca de 1.
+
+\section{En la práctica \evS}
+\begin{center}\begin{tabular}{lccc}\toprule
+$N$ & $r$ & primer $\ell$ con redondeo correcto & cota $\ell_0$\\\midrule
+299 & 33 & 17 & 409\\
+1\,022\,117 & 5313 & 46 & 1845\\\bottomrule\end{tabular}\end{center}
+Para $N=299$ la cota da $\lambda\le0{,}95$; el máximo real es $0{,}669$.
+
+\textbf{Advertencia.} Cada paso actualiza los $r$ nodos a la vez. Simulado en digital cuesta $r$ operaciones por paso y la ventaja desaparece: el teorema traslada
+el costo del tiempo a los recursos físicos ($\Omega(r)$ nodos, $\approx2\log_2N$ bits de precisión de lectura; lección 7.6).
+
+\begin{aplicacion}
+Algoritmo completo: $a$; $\gcd(a,N)$; $b=a^{2^M}$; difundir $\ell_0$ pasos; $r_b=\mathrm{round}(1/p_\ell(e))$; $\mathrm{ord}(a)=2^kr_b$; $\gcd(a^{\mathrm{ord}/2}-1,N)$. Laboratorio L10.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Afirmar un algoritmo digital polinomial. \quad Olvidar $2^M>r$.
+\item Ignorar la precisión de lectura. \quad Leer $\ell_0$ como número típico de pasos.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem{tratado} Cadavid et al., Tratado de factorización por difusión (data/ del curso), secciones 4 y 8, 2026.
+\bibitem{lpw} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS (2009).
+\end{thebibliography}
+\end{document}

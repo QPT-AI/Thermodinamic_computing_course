@@ -1,0 +1,308 @@
+1
+00:00:00,350 --> 00:00:02,052
+Lesson 10.8.
+
+2
+00:00:02,432 --> 00:00:05,008
+Energy metrics for LLMs.
+
+3
+00:00:06,117 --> 00:00:09,277
+An energy ratio is only as
+good as its denominator.
+
+4
+00:00:09,657 --> 00:00:13,099
+One hundred times more efficient:
+against which GPU, at what
+
+5
+00:00:13,099 --> 00:00:16,943
+utilization, counting which parts
+of the model and at what quality?
+
+6
+00:00:17,323 --> 00:00:20,608
+Today we learn the metrics
+and apply them to the Z1T
+
+7
+00:00:20,608 --> 00:00:23,894
+figures, to separate the
+headline from the net gain.
+
+8
+00:00:25,017 --> 00:00:25,906
+Three metrics.
+
+9
+00:00:26,286 --> 00:00:29,432
+Joules per token: the energy
+to generate one token.
+
+10
+00:00:29,812 --> 00:00:32,113
+Joules per operation: the cost of a
+
+11
+00:00:32,113 --> 00:00:35,072
+floating-point operation
+at peak performance.
+
+12
+00:00:35,452 --> 00:00:40,247
+And utilization, MFU, the fraction
+of the peak that is actually used.
+
+13
+00:00:40,627 --> 00:00:45,018
+They are related like this: energy
+per token is twice the parameters,
+
+14
+00:00:45,018 --> 00:00:48,774
+times the energy per operation,
+divided by the utilization.
+
+15
+00:00:49,154 --> 00:00:56,006
+With 11.55 million parameters and 0.177
+picojoules per operation, we get 4.09
+
+16
+00:00:56,006 --> 00:01:02,859
+microjoules at one hundred percent,
+exactly the H100 figure in the Z1T table.
+
+17
+00:01:03,983 --> 00:01:06,804
+The Z1T headline, one hundred thirty-nine
+
+18
+00:01:06,804 --> 00:01:09,625
+times, uses a utilization of ten percent.
+
+19
+00:01:10,005 --> 00:01:14,717
+It is reasonable for batch-one decode,
+but the article itself mentions that
+
+20
+00:01:14,717 --> 00:01:18,674
+in models like Llama three
+utilization is around forty percent.
+
+21
+00:01:19,054 --> 00:01:22,604
+With that value, the advantage
+drops to about thirty-five times.
+
+22
+00:01:22,984 --> 00:01:26,246
+No number is false; what
+changes is the assumption.
+
+23
+00:01:27,350 --> 00:01:28,429
+Now the scope.
+
+24
+00:01:28,809 --> 00:01:31,441
+The headline excludes the vocabulary head.
+
+25
+00:01:31,821 --> 00:01:35,323
+Let's compare with the same
+scope on both sides, assuming a
+
+26
+00:01:35,323 --> 00:01:38,885
+vocabulary of fifty thousand
+two hundred fifty-seven tokens,
+
+27
+00:01:38,885 --> 00:01:41,972
+GPT-2's, because the article
+does not give the size.
+
+28
+00:01:42,352 --> 00:01:46,063
+On the H100, the head costs
+9.1 microjoules at one
+
+29
+00:01:46,063 --> 00:01:49,478
+hundred percent, or
+ninety-one at ten percent.
+
+30
+00:01:49,858 --> 00:01:53,809
+On Z1T, on the FPGA, about
+one hundred thirty-six.
+
+31
+00:01:54,189 --> 00:01:57,828
+With everything included, at
+ten percent there is a tie, and
+
+32
+00:01:57,828 --> 00:02:00,981
+at forty percent the GPU
+is about four times better.
+
+33
+00:02:01,361 --> 00:02:04,595
+This is our own estimate,
+with an explicit assumption.
+
+34
+00:02:05,717 --> 00:02:06,674
+Quality is missing.
+
+35
+00:02:07,054 --> 00:02:10,511
+A sparse model of equal size
+is worse than a dense one.
+
+36
+00:02:10,891 --> 00:02:15,740
+According to the article, matching the
+loss of GPT-2 small requires on the
+
+37
+00:02:15,740 --> 00:02:20,328
+order of ten times more training
+operations: that is the sparsity tax.
+
+38
+00:02:20,708 --> 00:02:24,496
+At inference, an equal-quality
+comparison could require a
+
+39
+00:02:24,496 --> 00:02:28,019
+larger sparse model, and
+that factor is not reported.
+
+40
+00:02:28,399 --> 00:02:32,254
+The net gain is the headline
+divided by all these factors.
+
+41
+00:02:33,383 --> 00:02:37,141
+A fair comparison declares
+five things: the assumed GPU
+
+42
+00:02:37,141 --> 00:02:41,309
+utilization, the scope of what
+is counted, including the head
+
+43
+00:02:41,309 --> 00:02:44,861
+and data movement, the
+quality at which it compares,
+
+44
+00:02:45,241 --> 00:02:48,600
+the ratio of the full system
+and that of the thermodynamic
+
+45
+00:02:48,600 --> 00:02:51,610
+fabric alone, and the
+evidence label of each number.
+
+46
+00:02:51,990 --> 00:02:56,530
+With that, the lesson of Z1T is clear:
+the thermodynamic layers are very
+
+47
+00:02:56,530 --> 00:03:01,195
+efficient, and the pending work is
+bringing everything else to that level.
+
+48
+00:03:02,317 --> 00:03:06,212
+When writing an energy claim:
+report joules per token with
+
+49
+00:03:06,212 --> 00:03:10,174
+utilization, batch and scope;
+give the system ratio and the
+
+50
+00:03:10,174 --> 00:03:14,136
+fabric ratio; and declare the
+quality and the sparsity tax.
+
+51
+00:03:14,516 --> 00:03:18,611
+In lab twenty-nine you will build
+your headline-versus-net table.
+
+52
+00:03:19,717 --> 00:03:22,769
+Common mistakes: comparing
+with a different scope.
+
+53
+00:03:23,149 --> 00:03:26,582
+Choosing the GPU utilization
+that maximizes the ratio.
+
+54
+00:03:26,962 --> 00:03:28,998
+Comparing models of different quality.
+
+55
+00:03:29,378 --> 00:03:32,538
+And mixing measured and
+projected numbers without labels.
+
+56
+00:03:33,650 --> 00:03:39,227
+In summary, energy per token is twice the
+parameters times the energy per operation,
+
+57
+00:03:39,227 --> 00:03:44,074
+divided by the utilization, and with
+it we reconstructed the H100 figure.
+
+58
+00:03:44,454 --> 00:03:50,077
+The Z1T headline depends on ten percent
+utilization and excludes the head; with the
+
+59
+00:03:50,077 --> 00:03:55,023
+same scope and our vocabulary assumption,
+there is a tie or the GPU wins.
+
+60
+00:03:55,402 --> 00:03:59,629
+The net gain requires declaring
+utilization, scope and quality.
+
+61
+00:04:00,750 --> 00:04:05,129
+To practice: compute the energy
+per token at twenty-five percent.
+
+62
+00:04:05,509 --> 00:04:07,663
+Compute the ratio at forty percent.
+
+63
+00:04:08,043 --> 00:04:11,111
+Compute the head operations
+with another vocabulary.
+
+64
+00:04:11,491 --> 00:04:14,561
+And list the five items
+of a fair comparison.

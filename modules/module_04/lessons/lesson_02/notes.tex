@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.2}{El modelo de Ising}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} energía de Ising, acoplamientos y campos; transición de fase 2D; frustración y vidrios de espín.
+\textbf{Prerrequisitos:} 4.1 (EBMs), 1.2 (Boltzmann).
+
+\section{La energía}
+Espines $s_i\in\{-1,+1\}$ en los nodos de un grafo, con
+\begin{equation}
+E(s)=-\sum_{i<j}J_{ij}s_is_j-\sum_ih_is_i,\qquad p(s)=e^{-\beta E(s)}/Z.
+\end{equation}
+$J_{ij}>0$ favorece espines alineados (ferromagnético); $J_{ij}<0$, opuestos (antiferromagnético); $h_i$ sesga cada espín. El \emph{campo local}
+$u_i=\sum_jJ_{ij}s_j+h_i$ determina la condicional $P(s_i=+1\mid s_{-i})=\sigma(2\beta u_i)$, que es exactamente un pbit (lección 4.5).
+
+\section{Transición de fase en 2D}
+En la red cuadrada con $J=1$, $h=0$, Onsager mostró que existe una temperatura crítica
+\begin{equation}
+T_c=\frac{2J}{\kB\ln(1+\sqrt2)}\approx2{,}269\,J/\kB,
+\end{equation}
+con magnetización espontánea $m(T)=\big(1-\sinh^{-4}(2J/\kB T)\big)^{1/8}$ para $T<T_c$ y $m=0$ para $T>T_c$.
+\begin{ejemplo}
+Red $32\times32$ con Gibbs de tablero de ajedrez \evS:
+\begin{center}\begin{tabular}{lccc}\toprule
+$T$ & 1,5 & 2,0 & 2,27\\\midrule
+Onsager & 0,986 & 0,911 & $0$ ($T_c$)\\
+Simulación & 0,987 & 0,913 & 0,697\\\bottomrule\end{tabular}\end{center}
+Cerca de $T_c$ la red finita redondea la transición (efecto de tamaño finito: $\langle|m|\rangle>0$ aún en $T_c$).
+\end{ejemplo}
+\begin{intuicion}
+A baja $T$ domina la energía (orden); a alta $T$ domina la entropía (desorden). En $T_c$ las fluctuaciones tienen todas las escalas: aparecen
+dominios de todos los tamaños y los tiempos de correlación divergen (lección 4.4).
+\end{intuicion}
+
+\section{Frustración y vidrios de espín}
+Tres espines en un triángulo con $J=-1$: ninguna configuración satisface los tres pares; la energía mínima es $-1$ y la alcanzan 6 de las 8
+configuraciones. Con acoplamientos aleatorios en una red (vidrio de espín) el paisaje es rugoso, con muchos mínimos locales; encontrar el estado
+fundamental de un vidrio de espín general es NP-difícil, y por eso muchos problemas de optimización se escriben como modelos de Ising (lección 4.10).
+
+\begin{aplicacion}
+Chips de pbits y TSUs muestrean $e^{-\beta E}$ (Unidades 4.5 y 5); optimización (4.10); memorias de Hopfield (4.6) y máquinas de Boltzmann (4.7).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Signo de $J$ (el menos de $E$). \quad Contar dos veces cada par ($\sum_{i<j}$ frente a $\sum_{i,j}$).
+\item Esperar transición abrupta en sistemas finitos. \quad La cadena 1D no tiene transición a $T>0$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, Nat. Electron. 5, 460 (2022).
+\bibitem{onsager} L. Onsager, Crystal statistics I, Phys. Rev. 65, 117 (1944).
+\end{thebibliography}
+\end{document}

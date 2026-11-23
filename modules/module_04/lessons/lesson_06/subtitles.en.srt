@@ -1,0 +1,258 @@
+1
+00:00:00,350 --> 00:00:02,093
+Lesson 4.6.
+
+2
+00:00:02,473 --> 00:00:04,842
+Hopfield networks and associative memory.
+
+3
+00:00:05,950 --> 00:00:09,557
+Your memory does not look up memories
+by address, like a hard drive.
+
+4
+00:00:09,937 --> 00:00:15,331
+A fragment, a smell or half a face
+is enough to recover the full memory.
+
+5
+00:00:15,711 --> 00:00:20,256
+In 1982, John Hopfield showed
+that an Ising model at zero
+
+6
+00:00:20,256 --> 00:00:25,519
+temperature does exactly that: it
+is a content-addressable memory.
+
+7
+00:00:26,650 --> 00:00:29,207
+The idea is to sculpt
+the energy landscape so
+
+8
+00:00:29,207 --> 00:00:31,651
+that each memory is
+the bottom of a valley.
+
+9
+00:00:32,031 --> 00:00:35,357
+An incomplete or noisy cue
+is a point on the slope.
+
+10
+00:00:35,737 --> 00:00:37,952
+Letting the system roll
+down is remembering.
+
+11
+00:00:38,332 --> 00:00:41,060
+The more memories we store,
+the more valleys there
+
+12
+00:00:41,060 --> 00:00:43,625
+are, and at some point
+they start to interfere.
+
+13
+00:00:44,750 --> 00:00:50,615
+To store the patterns ξ^μ
+we use the Hebb rule: the
+
+14
+00:00:50,615 --> 00:00:56,940
+couplings are J = (1/N) Σ
+ξ^μ ξ^μᵀ, with zero diagonal.
+
+15
+00:00:57,320 --> 00:01:00,230
+Neurons that fire together
+get wired together.
+
+16
+00:01:00,610 --> 00:01:06,111
+To recall, each spin aligns with
+its local field: s_i ← sgn(u_i).
+
+17
+00:01:06,491 --> 00:01:08,435
+It is the pbit with infinite β.
+
+18
+00:01:08,815 --> 00:01:11,966
+Each of those updates
+never increases the Ising
+
+19
+00:01:11,966 --> 00:01:15,184
+energy, so the network
+always ends in a minimum.
+
+20
+00:01:16,317 --> 00:01:20,195
+Let's store three hundred-pixel patterns
+in a network of a hundred neurons.
+
+21
+00:01:20,575 --> 00:01:24,825
+Take one of them and flip twenty
+percent of its pixels at random.
+
+22
+00:01:25,205 --> 00:01:29,207
+As the dynamics run, the pixels are
+corrected one by one, and within
+
+23
+00:01:29,207 --> 00:01:32,738
+a few sweeps the network recovers
+the full original pattern.
+
+24
+00:01:33,118 --> 00:01:36,189
+The noisy cue was in the
+right basin of attraction.
+
+25
+00:01:37,317 --> 00:01:38,620
+How many memories fit?
+
+26
+00:01:39,000 --> 00:01:43,092
+Each spin's local field has a
+signal part, from the target
+
+27
+00:01:43,092 --> 00:01:46,691
+pattern, and a crosstalk
+part, from all the others.
+
+28
+00:01:47,071 --> 00:01:51,701
+As long as the load α = P/N
+is small, the signal wins.
+
+29
+00:01:52,081 --> 00:01:56,292
+Around α ≈ 0.14 the
+crosstalk dominates and
+
+30
+00:01:56,292 --> 00:02:00,308
+the memory collapses: memories get mixed.
+
+31
+00:02:00,688 --> 00:02:04,459
+Spurious states also appear,
+minima that correspond to no
+
+32
+00:02:04,459 --> 00:02:07,833
+stored pattern, such as
+mixtures of three memories.
+
+33
+00:02:08,950 --> 00:02:14,737
+With four hundred neurons and cues with
+ten percent noise, the final overlap
+
+34
+00:02:14,737 --> 00:02:20,068
+with the correct pattern is practically
+one for loads of 0.05 and 0.1.
+
+35
+00:02:20,448 --> 00:02:26,479
+At 0.16 it falls to 0.83,
+and at 0.2, to 0.55.
+
+36
+00:02:26,859 --> 00:02:30,580
+Four hundred neurons store
+about fifty reliable memories.
+
+37
+00:02:31,683 --> 00:02:36,495
+At positive temperature, the same
+network built with pbits samples around
+
+38
+00:02:36,495 --> 00:02:40,910
+the memories, and that is the
+starting point of Boltzmann machines.
+
+39
+00:02:41,290 --> 00:02:45,305
+Modern Hopfield networks have
+exponential capacity and an
+
+40
+00:02:45,305 --> 00:02:48,755
+update rule that resembles
+transformer attention.
+
+41
+00:02:49,135 --> 00:02:53,839
+And in 2024, Hopfield received the
+Nobel Prize in Physics for these ideas.
+
+42
+00:02:54,950 --> 00:03:01,023
+Common mistakes: leaving a nonzero diagonal,
+updating all neurons at once, which
+
+43
+00:03:01,023 --> 00:03:06,413
+can cause oscillations, overloading
+the memory beyond fourteen percent,
+
+44
+00:03:06,793 --> 00:03:10,496
+and storing highly correlated
+patterns, which interfere more.
+
+45
+00:03:11,617 --> 00:03:16,445
+In summary: a Hopfield network is an
+Ising model with Hebbian couplings.
+
+46
+00:03:16,825 --> 00:03:19,626
+Its energy minima are the memories, and
+
+47
+00:03:19,626 --> 00:03:22,930
+remembering is descending
+with s_i ← sgn(u_i).
+
+48
+00:03:23,310 --> 00:03:26,968
+The capacity is about 0.14
+N patterns, and beyond
+
+49
+00:03:26,968 --> 00:03:30,328
+that interference and
+spurious states appear.
+
+50
+00:03:31,450 --> 00:03:34,583
+To practice: prove that the
+energy does not increase.
+
+51
+00:03:34,963 --> 00:03:37,787
+Compute the local field with
+a single stored pattern.
+
+52
+00:03:38,167 --> 00:03:40,947
+Estimate the capacity of
+a thousand-neuron network.
+
+53
+00:03:41,327 --> 00:03:44,475
+And explain why the inverted
+pattern is also a minimum.

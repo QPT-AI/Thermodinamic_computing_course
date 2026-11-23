@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:02,090
+Lesson 8.6.
+
+2
+00:00:02,470 --> 00:00:05,850
+Nonlinear Langevin
+computers as classifiers.
+
+3
+00:00:06,950 --> 00:00:10,731
+Until now, thermodynamic
+hardware computed at equilibrium:
+
+4
+00:00:10,731 --> 00:00:14,708
+sampling a Boltzmann distribution
+or solving a linear system.
+
+5
+00:00:15,088 --> 00:00:17,699
+But equilibrating can
+be slow, and not every
+
+6
+00:00:17,699 --> 00:00:20,726
+problem can be written as
+a Boltzmann distribution.
+
+7
+00:00:21,106 --> 00:00:24,642
+Whitelam and Casert proposed
+something else: a nonlinear
+
+8
+00:00:24,642 --> 00:00:28,116
+Langevin computer trained to
+give the right answer at a
+
+9
+00:00:28,116 --> 00:00:31,526
+fixed instant, even if it
+has not reached equilibrium.
+
+10
+00:00:32,650 --> 00:00:37,021
+The neuron is a single variable
+fluctuating in contact with a heat bath,
+
+11
+00:00:37,401 --> 00:00:42,979
+confined by the potential U(x, I) = J₂x² +
+
+12
+00:00:42,979 --> 00:00:48,292
+J₃x³ + J₄x⁴ − I x, where I is the input.
+
+13
+00:00:48,672 --> 00:00:51,204
+With only the quadratic term, the mean
+
+14
+00:00:51,204 --> 00:00:54,202
+response is linear: at
+equilibrium it is I/2.
+
+15
+00:00:54,582 --> 00:00:58,650
+The quartic term makes it
+nonlinear: the output saturates,
+
+16
+00:00:58,650 --> 00:01:02,156
+like a hyperbolic tangent,
+near plus or minus one.
+
+17
+00:01:02,536 --> 00:01:06,512
+Neurons are coupled by bilinear
+terms, and form layers.
+
+18
+00:01:07,617 --> 00:01:09,844
+The nonlinearity is not instantaneous.
+
+19
+00:01:10,224 --> 00:01:14,156
+We simulate the quartic neuron
+with β = 10 starting from zero.
+
+20
+00:01:14,536 --> 00:01:19,039
+At time 0.1, the mean
+response is still almost
+
+21
+00:01:19,039 --> 00:01:23,934
+linear: 0.18 for an input
+of two and 0.53 for six.
+
+22
+00:01:24,314 --> 00:01:31,416
+At time one it already saturates: 0.57
+and 0.99, almost the equilibrium values.
+
+23
+00:01:31,796 --> 00:01:35,010
+The only requirement on the
+readout time is that it be
+
+24
+00:01:35,010 --> 00:01:37,808
+long enough for the
+activation to be nonlinear.
+
+25
+00:01:38,917 --> 00:01:44,256
+Training fixes an observation time, t_f
+= 1 in units of the relaxation time,
+
+26
+00:01:44,256 --> 00:01:49,033
+and adjusts couplings and biases
+so that the output at that instant,
+
+27
+00:01:49,413 --> 00:01:53,486
+averaged over reset
+trajectories, minimizes the loss.
+
+28
+00:01:53,866 --> 00:01:56,261
+The authors use a genetic algorithm.
+
+29
+00:01:56,641 --> 00:02:01,047
+The result is a computer programmed
+to express the target function at
+
+30
+00:02:01,047 --> 00:02:05,389
+the readout time, not at equilibrium:
+in the cosine-fitting example,
+
+31
+00:02:05,389 --> 00:02:09,029
+the equilibrium output is very
+different from the target.
+
+32
+00:02:09,409 --> 00:02:11,051
+It operates far from equilibrium.
+
+33
+00:02:12,183 --> 00:02:12,957
+What was achieved?
+
+34
+00:02:13,337 --> 00:02:16,244
+A network of only quadratic
+neurons does not learn
+
+35
+00:02:16,244 --> 00:02:18,686
+the cosine; with the quartic term it does.
+
+36
+00:02:19,066 --> 00:02:22,504
+On MNIST, a three-layer
+network of thirty-two neurons
+
+37
+00:02:22,504 --> 00:02:26,137
+classifies with about
+ninety-three percent accuracy, not
+
+38
+00:02:26,137 --> 00:02:29,639
+state of the art, but better
+than a linear classifier,
+
+39
+00:02:30,019 --> 00:02:33,797
+and about twenty samples per
+input already reach that accuracy.
+
+40
+00:02:34,177 --> 00:02:37,654
+Trained with an energy scale
+ten times the thermal one, it
+
+41
+00:02:37,654 --> 00:02:40,591
+works almost as well with
+noise ten times larger.
+
+42
+00:02:41,717 --> 00:02:47,399
+With a relaxation time of one microsecond,
+as in circuit devices, a classification
+
+43
+00:02:47,399 --> 00:02:52,388
+would take on the order of microseconds,
+driven by thermal fluctuations.
+
+44
+00:02:52,768 --> 00:02:55,852
+But we must be honest: everything
+is simulation, training
+
+45
+00:02:55,852 --> 00:02:58,666
+was much more expensive
+than training a conventional
+
+46
+00:02:58,666 --> 00:03:01,589
+network, and the paper reports
+no energy measurements.
+
+47
+00:03:01,969 --> 00:03:06,918
+The efficiency of inference protocols,
+how much energy it costs to load the input
+
+48
+00:03:06,918 --> 00:03:11,318
+and read the output, is an open
+question we will study in project seven.
+
+49
+00:03:12,450 --> 00:03:16,674
+These ideas open the way to
+physical neural networks with RLC
+
+50
+00:03:16,674 --> 00:03:21,245
+circuits, Josephson junctions or
+mechanical oscillators, where the
+
+51
+00:03:21,245 --> 00:03:25,123
+readout time is a design
+parameter and noise a resource.
+
+52
+00:03:25,503 --> 00:03:28,952
+In project seven you will
+train a computer of this kind.
+
+53
+00:03:30,083 --> 00:03:34,721
+Common mistakes: assuming the trained
+device computes at equilibrium.
+
+54
+00:03:35,101 --> 00:03:38,332
+Reading the output before
+the activation is nonlinear.
+
+55
+00:03:38,712 --> 00:03:41,279
+Quoting an energy efficiency
+that was not measured.
+
+56
+00:03:41,659 --> 00:03:43,605
+And ignoring the cost of training.
+
+57
+00:03:44,717 --> 00:03:48,591
+In summary: a thermodynamic
+neuron with a quartic potential
+
+58
+00:03:48,591 --> 00:03:51,874
+has a nonlinear activation
+that appears over time.
+
+59
+00:03:52,254 --> 00:03:57,895
+A network of them, trained for a fixed
+readout time, classifies MNIST at about
+
+60
+00:03:57,895 --> 00:04:03,031
+ninety-three percent operating out
+of equilibrium, and tolerates noise.
+
+61
+00:04:03,411 --> 00:04:07,773
+Hardware, energy measurements and cheaper
+training methods are still missing.
+
+62
+00:04:08,883 --> 00:04:13,047
+To practice: compute the equilibrium
+mean of the quadratic neuron.
+
+63
+00:04:13,427 --> 00:04:16,577
+Explain why the quartic
+term saturates the response.
+
+64
+00:04:16,957 --> 00:04:19,943
+Say what training for a
+readout time optimizes.
+
+65
+00:04:20,323 --> 00:04:23,399
+And name two missing pieces
+before claiming efficiency.

@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.4}{Repaso de álgebra lineal}
+
+\noindent\textbf{Unidad 0.}\quad\textbf{Objetivos:} reconocer matrices SPD y su descomposición espectral;
+interpretar $\kappa$; usar $e^{-At}$; aplicar Kronecker y Woodbury. \textbf{Prerrequisitos:} álgebra de
+matrices; lección 0.3.
+
+\section{¿Por qué importa?}
+El solucionador lineal termodinámico (Unidad 6) relaja un sistema físico cuya dinámica es $\dot x=-(Ax-b)$ más
+ruido; su tiempo de convergencia depende de $\kappa(A)$. K-FAC (Unidad 8) se apoya en productos de Kronecker y
+el gradiente natural termodinámico en Woodbury. Todo se vuelve transparente con la descomposición espectral.
+
+\section{Matrices simétricas definidas positivas}
+\begin{definicion}[ (SPD)]
+$A\in\R^{d\times d}$ es SPD si $A=A^\top$ y $x^\top Ax>0$ para todo $x\neq0$.
+\end{definicion}
+\begin{teorema}[espectral]
+Si $A=A^\top$, existe $Q$ ortogonal ($Q^\top Q=I$) y $\Lambda=\diag(\lambda_i)$ real tal que $A=Q\Lambda Q^\top$.
+$A$ es SPD si y solo si todos los $\lambda_i>0$.
+\end{teorema}
+\begin{proof}[Idea]
+Para $Av=\lambda v$ con $v\neq0$ complejo: $\bar v^\top Av=\lambda\|v\|^2$ y, por simetría, $\bar v^\top Av$ es real,
+luego $\lambda\in\R$. Vectores propios de valores distintos son ortogonales: $\lambda_1v_2^\top v_1=v_2^\top Av_1=
+(Av_2)^\top v_1=\lambda_2v_2^\top v_1$. Si $A$ es SPD, $\lambda=v^\top Av/\|v\|^2>0$; recíprocamente
+$x^\top Ax=\sum_i\lambda_i(q_i^\top x)^2>0$.
+\end{proof}
+Geometría: $x\mapsto Ax$ rota a la base propia ($Q^\top$), estira cada eje por $\lambda_i$ ($\Lambda$) y deshace la
+rotación ($Q$). La forma cuadrática $f(x)=\frac12x^\top Ax$ es un cuenco con curvas de nivel elípticas de
+semiejes $\propto1/\sqrt{\lambda_i}$ (¡ojo!: la covarianza $\Sigma$ de la lección 0.3 tiene elipses de semiejes
+$\propto\sqrt{\lambda_i(\Sigma)}$, porque la densidad usa $\Sigma^{-1}$).
+
+\section{Número de condición}
+$\kappa(A)=\lambda_{\max}/\lambda_{\min}$ (para SPD; en general $\sigma_{\max}/\sigma_{\min}$). Mide (i) cuánto se
+amplifican los errores relativos al resolver $Ax=b$: $\frac{\|\delta x\|}{\|x\|}\le\kappa\frac{\|\delta b\|}{\|b\|}$;
+(ii) la lentitud del descenso de gradiente: con paso óptimo, el factor de contracción por iteración es
+$\frac{\kappa-1}{\kappa+1}$; (iii) en un sistema físico $\dot x=-Ax$, el cociente entre la escala de tiempo más
+lenta $1/\lambda_{\min}$ y la más rápida $1/\lambda_{\max}$.
+
+\section{Exponencial de matrices}
+$e^{M}=\sum_{k\ge0}M^k/k!$. La solución de $\dot x=-Ax$ es $x(t)=e^{-At}x_0$, y con $A=Q\Lambda Q^\top$:
+\begin{equation}x(t)=Q\,e^{-\Lambda t}Q^\top x_0=\sum_ie^{-\lambda_it}(q_i^\top x_0)\,q_i .\end{equation}
+Los modos rápidos mueren primero; la relajación total tarda $\sim1/\lambda_{\min}$ y la integración explícita
+(Euler) es estable solo si $\Delta t<2/\lambda_{\max}$ (lección 2.7). El número de pasos escala como $\kappa$.
+Propiedades: $e^{A+B}=e^Ae^B$ \emph{solo} si $AB=BA$; $\det e^A=e^{\Tr A}$; $(e^A)^{-1}=e^{-A}$.
+
+\section{Productos de Kronecker}
+$B\otimes C$ es la matriz por bloques $[B_{ij}C]$. Con $\mathrm{vec}$ que apila columnas:
+\begin{equation}(B\otimes C)\mathrm{vec}(X)=\mathrm{vec}(CXB^\top),\quad(B\otimes C)^{-1}=B^{-1}\otimes C^{-1},\quad
+(B\otimes C)(D\otimes E)=BD\otimes CE.\end{equation}
+Los valores propios de $B\otimes C$ son los productos $\lambda_i(B)\mu_j(C)$. Invertir una matriz $n^2\times n^2$ cuesta
+$O(n^6)$; invertir dos de $n\times n$, $O(n^3)$. K-FAC aproxima la curvatura de una capa por $A\otimes G$ (Unidad 8).
+
+\section{Identidad de Woodbury}
+\begin{resultado}
+$(A+UCV)^{-1}=A^{-1}-A^{-1}U(C^{-1}+VA^{-1}U)^{-1}VA^{-1}$, con $U\in\R^{d\times k}$, $C\in\R^{k\times k}$, $V\in\R^{k\times d}$.
+\end{resultado}
+Caso de rango uno (Sherman--Morrison): $(\lambda I+uu^\top)^{-1}=\frac1\lambda\big(I-\frac{uu^\top}{\lambda+u^\top u}\big)$.
+En aprendizaje automático la curvatura empírica $G=\lambda I+J^\top J$ con $J\in\R^{b\times d}$ y $b\ll d$ se invierte
+resolviendo un sistema $b\times b$ (NGD-Woodbury, Unidad 8).
+
+\begin{ejemplo}
+$A=\begin{pmatrix}3&1\\1&2\end{pmatrix}$: $\det(A-\lambda I)=\lambda^2-5\lambda+5=0\Rightarrow\lambda=\frac{5\pm\sqrt5}2\approx3{,}618;\,1{,}382$.
+Ambos positivos: SPD. $\kappa\approx2{,}618$, $\det A=5=\lambda_1\lambda_2$, $\Tr A=5=\lambda_1+\lambda_2$.
+\end{ejemplo}
+
+\begin{aplicacion}
+$\kappa$ fija el tiempo del solucionador lineal termodinámico ($O(d\kappa^2\varepsilon^{-2})$ en el pensum, Unidad
+6.4); $e^{-At}$ es la parte determinista del OU; Kronecker y Woodbury hacen escalable el segundo orden (Unidad 8).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Simétrica $\not\Rightarrow$ SPD: $\begin{pmatrix}1&2\\2&1\end{pmatrix}$ tiene $\lambda=3,-1$.
+\item Entradas positivas $\not\Rightarrow$ SPD (mismo ejemplo).
+\item $e^{A+B}\neq e^Ae^B$ si no conmutan.
+\item No formar $B\otimes C$ explícitamente: $O(n^4)$ de memoria.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+SPD $\Leftrightarrow\lambda_i>0$, $A=Q\Lambda Q^\top$; $\kappa=\lambda_{\max}/\lambda_{\min}$; $x(t)=e^{-At}x_0$; Kronecker y
+Woodbury reducen costos de inversión.
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem[38]{kfac} J. Martens y R. Grosse, Optimizing neural networks with Kronecker-factored approximate curvature, ICML 2015.
+\bibitem[39]{grosse} R. Grosse, CSC2541 lecture notes, \emph{Second-order optimization}, 2021.
+\end{thebibliography}
+\end{document}

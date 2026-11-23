@@ -1,0 +1,321 @@
+1
+00:00:00,350 --> 00:00:02,105
+Lesson 4.10.
+
+2
+00:00:02,485 --> 00:00:06,149
+Ising optimization and
+invertible probabilistic logic.
+
+3
+00:00:07,250 --> 00:00:12,006
+An Ising model at low temperature
+concentrates on its minimum-energy states.
+
+4
+00:00:12,386 --> 00:00:17,180
+If we manage to write a problem so
+that its solution is the minimum of an
+
+5
+00:00:17,180 --> 00:00:21,317
+Ising energy, we can solve it by
+letting a pbit chip cool down.
+
+6
+00:00:21,697 --> 00:00:25,426
+Many combinatorial optimization
+problems, like maximum
+
+7
+00:00:25,426 --> 00:00:28,602
+cut or satisfiability,
+admit that formulation.
+
+8
+00:00:28,982 --> 00:00:32,003
+And there is something
+more surprising: logic
+
+9
+00:00:32,003 --> 00:00:35,092
+circuits written this
+way can be run backward.
+
+10
+00:00:36,217 --> 00:00:40,896
+The maximum-cut problem asks to split
+the nodes of a graph into two groups so
+
+11
+00:00:40,896 --> 00:00:44,846
+that as many edges as possible
+cross from one group to the other.
+
+12
+00:00:45,226 --> 00:00:47,768
+Let's assign a spin to each node: plus one
+
+13
+00:00:47,768 --> 00:00:50,311
+for one group and minus one for the other.
+
+14
+00:00:50,691 --> 00:00:55,031
+An edge is cut if its
+endpoints have opposite
+
+15
+00:00:55,031 --> 00:00:59,276
+spins, and the cut
+equals Σ (1 − s_i s_j)/2.
+
+16
+00:00:59,655 --> 00:01:03,857
+Maximizing the cut is
+minimizing an Ising energy
+
+17
+00:01:03,857 --> 00:01:07,447
+with antiferromagnetic couplings, J = −w.
+
+18
+00:01:08,550 --> 00:01:12,254
+Let's take a random graph with
+ten nodes and eighteen edges.
+
+19
+00:01:12,634 --> 00:01:15,897
+By brute force we know the
+maximum cut is fourteen.
+
+20
+00:01:16,277 --> 00:01:19,800
+With pbits and a three-hundred-sweep
+anneal, the network
+
+21
+00:01:19,800 --> 00:01:23,135
+finds a cut of fourteen in
+all hundred runs we tried.
+
+22
+00:01:23,515 --> 00:01:26,734
+For large graphs there are
+no guarantees, but pbits
+
+23
+00:01:26,734 --> 00:01:30,142
+explore many good solutions
+in parallel and very fast.
+
+24
+00:01:31,250 --> 00:01:32,766
+Now a logic circuit.
+
+25
+00:01:33,146 --> 00:01:37,726
+For the AND gate, with variables zero or
+
+26
+00:01:37,726 --> 00:01:42,307
+one, the penalty P = uv − 2uz − 2vz + 3z
+
+27
+00:01:42,687 --> 00:01:45,924
+is exactly zero on the
+four rows of the truth
+
+28
+00:01:45,924 --> 00:01:48,658
+table, and positive on all the others.
+
+29
+00:01:49,038 --> 00:01:53,037
+At β = 2, the four valid
+rows each appear with
+
+30
+00:01:53,037 --> 00:01:57,732
+probability 0.23: the network
+samples the truth table.
+
+31
+00:01:58,112 --> 00:02:02,030
+Any circuit is built by adding
+the penalties of its gates.
+
+32
+00:02:03,150 --> 00:02:04,285
+Here is the magic.
+
+33
+00:02:04,665 --> 00:02:08,522
+Let's clamp the output z =
+1 and leave the inputs free.
+
+34
+00:02:08,902 --> 00:02:15,063
+The network finds the only compatible
+input, one and one, with probability 0.79.
+
+35
+00:02:15,443 --> 00:02:17,604
+If we clamp z = 0, it spreads the
+
+36
+00:02:17,604 --> 00:02:20,812
+probability over the three
+inputs that give zero.
+
+37
+00:02:21,192 --> 00:02:25,034
+It is invertible logic: the same
+circuit computes forward, by
+
+38
+00:02:25,034 --> 00:02:28,750
+clamping the inputs, and
+backward, by clamping the outputs.
+
+39
+00:02:29,850 --> 00:02:33,991
+If we invert a multiplier,
+clamping its output to a number N,
+
+40
+00:02:33,991 --> 00:02:37,588
+the inputs search for two
+factors whose product is N.
+
+41
+00:02:37,968 --> 00:02:40,847
+It is factoring without
+a factoring algorithm.
+
+42
+00:02:41,227 --> 00:02:46,836
+With a toy model for N = 143, with
+odd four-bit factors, annealing
+
+43
+00:02:46,836 --> 00:02:52,276
+finds eleven times thirteen in
+seventy-nine of two hundred runs.
+
+44
+00:02:52,656 --> 00:02:55,078
+Careful: this does not break cryptography.
+
+45
+00:02:55,458 --> 00:02:59,318
+The energy landscape of
+factoring is very rugged, and the
+
+46
+00:02:59,318 --> 00:03:02,704
+search time grows rapidly
+with the number of bits.
+
+47
+00:03:03,817 --> 00:03:07,505
+Any QUBO problem, of binary variables with
+
+48
+00:03:07,505 --> 00:03:11,808
+quadratic cost, becomes
+Ising with x = (1 + s)/2.
+
+49
+00:03:12,188 --> 00:03:15,484
+Satisfiability uses
+one penalty per clause.
+
+50
+00:03:15,864 --> 00:03:20,962
+P-computers on FPGA already perform
+billions of flips per second.
+
+51
+00:03:21,342 --> 00:03:23,366
+And in unit seven we will see a
+
+52
+00:03:23,366 --> 00:03:27,023
+factoring-by-diffusion algorithm
+with proven guarantees.
+
+53
+00:03:28,150 --> 00:03:34,279
+Common mistakes: penalties that are too
+weak, which make invalid states cheaper.
+
+54
+00:03:34,659 --> 00:03:37,658
+Forgetting the constant when
+going from QUBO to Ising.
+
+55
+00:03:38,038 --> 00:03:42,334
+Expecting polynomial-time
+solutions of NP-hard problems.
+
+56
+00:03:42,714 --> 00:03:45,353
+And forgetting that
+higher-order terms need
+
+57
+00:03:45,353 --> 00:03:47,623
+auxiliary spins on pairwise hardware.
+
+58
+00:03:48,750 --> 00:03:52,558
+In summary: many optimization
+problems are minima of Ising
+
+59
+00:03:52,558 --> 00:03:55,973
+energies, and pbits search
+for them by cooling down.
+
+60
+00:03:56,353 --> 00:04:00,802
+Logic gates are written as
+penalties whose minima are the truth
+
+61
+00:04:00,802 --> 00:04:04,828
+table, and by clamping the
+outputs circuits run backward.
+
+62
+00:04:05,208 --> 00:04:07,802
+It is a powerful tool,
+but it does not remove
+
+63
+00:04:07,802 --> 00:04:10,166
+the intrinsic difficulty of the problems.
+
+64
+00:04:11,283 --> 00:04:14,332
+To practice: check the AND penalty.
+
+65
+00:04:14,712 --> 00:04:17,757
+Write the Ising model for the
+maximum cut on a triangle.
+
+66
+00:04:18,137 --> 00:04:20,538
+Convert the penalty to spins.
+
+67
+00:04:20,918 --> 00:04:23,299
+And explain why the
+clamped output does not
+
+68
+00:04:23,299 --> 00:04:25,347
+give certainty at finite temperature.

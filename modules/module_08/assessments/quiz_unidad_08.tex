@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{8}{Quiz: optimización y entrenamiento termodinámicos}
+\noindent Preguntas guía: ¿por qué el gradiente natural es un sistema lineal? ¿Qué parte acelera el hardware termodinámico y cuánto se gana de verdad?
+\section*{Preguntas}
+\begin{enumerate}
+\item La información de Fisher es: (a) el hessiano de la pérdida (b) la métrica local de la KL (c) la diagonal de Adam (d) el gradiente.
+\item El gradiente natural es: (a) $F\nabla\ell$ (b) $F^{-1}\nabla\ell$ (c) $\nabla\ell/\|\nabla\ell\|$ (d) $\nabla^2\ell$.
+\item El rango del GGN con lote $b$ y salida $d_z$ es a lo sumo: (a) $N$ (b) $b\,d_z$ (c) $b^2$ (d) $d_z$.
+\item En TNGD, el tiempo analógico $t=0$ corresponde a: (a) NGD (b) descenso de gradiente (c) Adam (d) Newton.
+\item K-FAC aproxima el bloque de una capa por: (a) $A+G$ (b) $A\otimes G$ (c) $AG$ (d) $\mathrm{diag}(A)$.
+\item K-FAC termodinámico reduce el término $n^3$ a: (a) $n$ (b) $n^2\kappa^2$ (c) $\log n$ (d) $n^4$.
+\item Según Donatella et al.\ 2025, la salida del dispositivo necesita al menos: (a) 2 bits (b) 4 bits (c) 8 bits (d) 32 bits.
+\item El estimador directo trata el redondeo en el paso hacia atrás como: (a) cero (b) la identidad (c) un escalón (d) ruido.
+\item (Problema) Fisher de $\N(\mu,\sigma^2)$ en $(\mu,\sigma)$.
+\item (Problema) Si la inversión es el 11\,\% del tiempo, ¿aceleración máxima con el mismo número de pasos?
+\item (Problema) Para $A=\mathrm{diag}(1,100)$, $\nabla\ell=(1,1)$, calcule $\langle\tilde g_t\rangle$ en $t=\infty$.
+\item (Problema) Parámetros almacenados por K-FAC para una capa $1000\times1000$ frente al bloque completo.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (b) · 5 (b) · 6 (b) · 7 (c) · 8 (b).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $\mathrm{diag}(1/\sigma^2,\,2/\sigma^2)$.
+\item $1/(1-0{,}11)\approx1{,}12$.
+\item $A^{-1}\nabla\ell=(1;\,0{,}01)$.
+\item $2\times10^6$ frente a $10^{12}$.
+\end{enumerate}
+Aprobación 8/12; fallos en 3, 5 o 6 $\Rightarrow$ repasar 8.2, 8.4, 8.5.
+\end{document}

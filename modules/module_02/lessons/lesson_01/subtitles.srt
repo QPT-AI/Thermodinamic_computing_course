@@ -1,0 +1,338 @@
+1
+00:00:00,350 --> 00:00:01,998
+Lección 2.1.
+
+2
+00:00:02,378 --> 00:00:05,979
+Movimiento browniano, proceso
+de Wiener y cálculo de Itô.
+
+3
+00:00:07,083 --> 00:00:12,380
+En 1827 el botánico Robert Brown
+observó al microscopio granos de polen
+
+4
+00:00:12,380 --> 00:00:18,273
+suspendidos en agua: se movían sin cesar,
+en zigzag, sin ninguna causa visible.
+
+5
+00:00:18,653 --> 00:00:22,319
+En 1905 Einstein explicó
+el fenómeno: los granos son
+
+6
+00:00:22,319 --> 00:00:25,491
+golpeados por moléculas
+de agua que no vemos.
+
+7
+00:00:25,871 --> 00:00:29,018
+Ese movimiento, el movimiento
+browniano, es el modelo
+
+8
+00:00:29,018 --> 00:00:32,579
+matemático del ruido térmico
+que usaremos en toda la unidad.
+
+9
+00:00:33,683 --> 00:00:36,873
+Empecemos con una caminata
+aleatoria: en cada paso de
+
+10
+00:00:36,873 --> 00:00:40,122
+tiempo, la partícula salta
+hacia arriba o hacia abajo.
+
+11
+00:00:40,502 --> 00:00:42,997
+Ahora hagamos los pasos
+de tiempo más cortos
+
+12
+00:00:42,997 --> 00:00:45,095
+y, a la vez, los saltos más pequeños.
+
+13
+00:00:45,475 --> 00:00:49,359
+¿Cómo hay que reducir el salto para
+que el límite no se congele ni explote?
+
+14
+00:00:49,739 --> 00:00:51,990
+La respuesta es que el salto debe escalar
+
+15
+00:00:51,990 --> 00:00:54,240
+como la raíz cuadrada del paso de tiempo.
+
+16
+00:00:54,620 --> 00:00:57,873
+Con esa regla, las caminatas
+convergen a una curva
+
+17
+00:00:57,873 --> 00:01:01,646
+continua pero extremadamente
+rugosa: el proceso de Wiener.
+
+18
+00:01:02,750 --> 00:01:08,421
+El proceso de Wiener, W(t), empieza en
+cero, tiene incrementos independientes,
+
+19
+00:01:08,801 --> 00:01:15,894
+y cada incremento W(t) − W(s) es
+gaussiano con media cero y varianza t − s.
+
+20
+00:01:16,274 --> 00:01:20,326
+Mira muchas trayectorias a la
+vez: se abren como un abanico, y
+
+21
+00:01:20,326 --> 00:01:23,985
+el ancho del abanico crece
+como la raíz de t, no como t.
+
+22
+00:01:24,365 --> 00:01:28,210
+El histograma en un instante fijo
+es exactamente una gaussiana.
+
+23
+00:01:28,590 --> 00:01:32,509
+Y si ampliamos cualquier trozo de
+una trayectoria, se ve igual de
+
+24
+00:01:32,509 --> 00:01:36,608
+rugoso: el proceso es continuo pero
+no es derivable en ningún punto.
+
+25
+00:01:37,717 --> 00:01:40,086
+Aquí aparece la propiedad
+que lo cambia todo.
+
+26
+00:01:40,466 --> 00:01:44,264
+Dividamos el intervalo de cero
+a T en pedazos cada vez más
+
+27
+00:01:44,264 --> 00:01:47,474
+finos y sumemos los
+cuadrados de los incrementos.
+
+28
+00:01:47,854 --> 00:01:50,769
+Para una curva suave esa
+suma tendería a cero.
+
+29
+00:01:51,149 --> 00:01:55,888
+Para el proceso de Wiener tiende a
+T, exactamente, sin aleatoriedad.
+
+30
+00:01:56,268 --> 00:01:59,968
+Lo resumimos con la regla (dW)² = dt.
+
+31
+00:02:00,348 --> 00:02:03,969
+Los incrementos son del orden
+de la raíz de dt, así que sus
+
+32
+00:02:03,969 --> 00:02:07,467
+cuadrados son del orden de
+dt, y no se pueden despreciar.
+
+33
+00:02:08,583 --> 00:02:11,240
+Consecuencia: la regla
+de la cadena cambia.
+
+34
+00:02:11,620 --> 00:02:17,305
+Si f es una función suave, el
+desarrollo de Taylor de f(W + dW) tiene
+
+35
+00:02:17,305 --> 00:02:22,084
+un término de primer orden,
+f' dW, y uno de segundo orden,
+
+36
+00:02:22,464 --> 00:02:25,610
+un medio de f'' (dW)².
+
+37
+00:02:25,990 --> 00:02:31,479
+En el cálculo ordinario el segundo
+se descarta, pero aquí (dW)² es dt.
+
+38
+00:02:31,859 --> 00:02:38,945
+Así obtenemos el lema de
+Itô: df = f' dW + ½ f'' dt.
+
+39
+00:02:39,325 --> 00:02:46,007
+Por ejemplo, para W², d(W²) = 2W dW + dt:
+
+40
+00:02:46,387 --> 00:02:52,111
+el término dt extra es exactamente lo que
+hace que la media de W² crezca como t.
+
+41
+00:02:53,217 --> 00:02:54,718
+Pongamos números reales.
+
+42
+00:02:55,098 --> 00:03:01,119
+Una esfera de un micrómetro de radio en
+agua a trescientos kelvin tiene, según
+
+43
+00:03:01,119 --> 00:03:06,291
+Einstein y Stokes, un coeficiente
+de difusión D = k_B T / (6π η a),
+
+44
+00:03:06,671 --> 00:03:10,816
+unos 2,2 × 10⁻¹³ m²/s.
+
+45
+00:03:11,196 --> 00:03:16,015
+Su posición en una dirección es
+√(2D) W(t), así que en un segundo se
+
+46
+00:03:16,015 --> 00:03:20,480
+desplaza típicamente unos cero
+coma sesenta y seis micrómetros.
+
+47
+00:03:20,860 --> 00:03:25,254
+En cien segundos, solo diez veces
+más: la raíz cuadrada del tiempo.
+
+48
+00:03:26,383 --> 00:03:30,402
+El proceso de Wiener es la fuente
+de ruido de todas las ecuaciones
+
+49
+00:03:30,402 --> 00:03:34,239
+estocásticas del curso: el ruido
+térmico de los circuitos y los
+
+50
+00:03:34,239 --> 00:03:38,075
+pbits, el ruido que añaden los
+modelos de difusión a los datos,
+
+51
+00:03:38,455 --> 00:03:42,458
+y el ruido del solucionador lineal
+termodinámico del laboratorio tres.
+
+52
+00:03:43,583 --> 00:03:48,214
+En la próxima lección añadiremos fuerzas
+y obtendremos la ecuación de Langevin.
+
+53
+00:03:48,594 --> 00:03:53,259
+Después escribiremos la ecuación para la
+densidad de probabilidad, la de Fokker
+
+54
+00:03:53,259 --> 00:03:57,332
+y Planck, y aprenderemos a simular
+con el método de Euler y Maruyama.
+
+55
+00:03:58,450 --> 00:04:03,379
+Errores comunes: escalar los saltos como
+el paso de tiempo en lugar de su raíz.
+
+56
+00:04:03,759 --> 00:04:07,614
+Aplicar la regla de la cadena
+ordinaria y olvidar el término de Itô.
+
+57
+00:04:07,994 --> 00:04:10,743
+Tratar el ruido blanco
+como una función ordinaria.
+
+58
+00:04:11,123 --> 00:04:13,687
+Y confundir las
+interpretaciones de Itô y de
+
+59
+00:04:13,687 --> 00:04:16,484
+Stratonovich cuando el
+ruido depende del estado.
+
+60
+00:04:17,617 --> 00:04:20,611
+En resumen: el proceso
+de Wiener es el límite de
+
+61
+00:04:20,611 --> 00:04:23,918
+caminatas aleatorias con
+saltos de tamaño raíz de dt.
+
+62
+00:04:24,298 --> 00:04:28,461
+Tiene incrementos gaussianos
+independientes y varianza que crece como t.
+
+63
+00:04:28,841 --> 00:04:33,974
+Su variación cuadrática hace que
+(dW)² = dt, y por eso el cálculo
+
+64
+00:04:33,974 --> 00:04:38,397
+de Itô tiene un término extra
+de un medio de f'' por dt.
+
+65
+00:04:39,517 --> 00:04:42,106
+Para practicar: obtén
+la distribución de un
+
+66
+00:04:42,106 --> 00:04:44,455
+incremento y la covarianza del proceso.
+
+67
+00:04:44,835 --> 00:04:47,092
+Usa el lema de Itô con la exponencial.
+
+68
+00:04:47,472 --> 00:04:51,030
+Calcula cuánto tarda la esfera
+en desplazarse diez micrómetros.
+
+69
+00:04:51,410 --> 00:04:53,971
+Y explica por qué la suma
+de cuadrados converge
+
+70
+00:04:53,971 --> 00:04:56,479
+mientras la suma de
+valores absolutos diverge.

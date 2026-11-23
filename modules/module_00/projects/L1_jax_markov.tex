@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Laboratorio}{L1}{Calentamiento con JAX: aleatoriedad y cadenas de Markov (semana 1)}
+
+\section*{Enunciado del problema}
+Toda la semana usaremos el muestreo aleatorio como operación básica. Antes de construir hardware probabilístico,
+necesitamos (i) dominar la aleatoriedad funcional de JAX y (ii) entender la visión espectral de las cadenas de
+Markov, y (iii) medir cuánto cuesta una muestra aleatoria en una GPU: esa será la \textbf{línea base digital} de
+todo el semestre.
+
+\section*{Objetivos}
+\begin{itemize}[nosep]
+\item Generar y analizar muestras con \texttt{jax.random}, \texttt{vmap} y \texttt{jit} de forma reproducible.
+\item Calcular distribuciones estacionarias por iteración de potencias y por descomposición espectral.
+\item Verificar experimentalmente la tasa de convergencia $\|p_n-\pi\|_1\sim\lambda_*^n$.
+\end{itemize}
+
+\section*{Conocimientos requeridos}
+Lecciones 0.3 (probabilidad), 0.4 (valores propios), 0.5 (cadenas de Markov), 0.7 (JAX).
+
+\section*{Tareas núcleo (obligatorias)}
+\begin{enumerate}
+\item Genere $10^6$ muestras de Bernoulli($p$) con \texttt{jax.random} y \texttt{vmap} para $p\in\{0{,}1;0{,}5;0{,}9\}$; estime la entropía empírica y compárela con $h(p)$; mida el tiempo del muestreador (con \texttt{block\_until\_ready}).
+\item Construya una cadena de 3 estados y otra de 50 estados (pesos simétricos aleatorios $W$, $P_{ij}=W_{ij}/\sum_kW_{ik}$). Encuentre $\pi$ por iteración de potencias y por descomposición espectral; verifique balance detallado.
+\item Calcule la brecha espectral y grafique $\|p_n-\pi\|_1$ frente a $n$ en escala logarítmica junto con $\lambda_*^n$.
+\end{enumerate}
+
+\section*{Reto (opcional, bonificación)}
+Estime la energía por muestra aleatoria en su GPU con NVML (\texttt{nvidia-ml-py}): integre la potencia durante la
+generación de $10^9$ muestras y divida. Reporte J/muestra con etiqueta \evM. Esta es la línea base digital.
+
+\section*{Instrucciones de implementación}
+\begin{itemize}[nosep]
+\item Entorno: pensum Ap. D (\texttt{python -m venv}, \texttt{pip install "jax[cuda12]" numpy scipy matplotlib nvidia-ml-py}).
+\item Código de inicio: \texttt{L1\_inicio.py} (en esta carpeta). Semillas fijas; un solo comando regenera todo.
+\item Para NVML: muestree \texttt{nvmlDeviceGetPowerUsage} cada 10--50 ms en un hilo y reste la potencia en reposo.
+\end{itemize}
+
+\section*{Resultados esperados}
+\begin{itemize}[nosep]
+\item Entropías empíricas dentro de $\pm0{,}003$ bits de $h(p)$ para $10^6$ muestras (unas 3 desviaciones estándar: $\sigma_H\approx|h'(p)|\sqrt{p(1-p)/n}\approx0{,}001$ para $p=0{,}1$).
+\item $\pi$ idéntica (hasta $10^{-10}$) por ambos métodos; balance detallado verificado.
+\item Recta en escala log con pendiente $\log_{10}\lambda_*$; para la cadena de 3 estados de la lección 0.5, $\lambda_*=2/3$.
+\item Tabla J/muestra con etiqueta de evidencia.
+\end{itemize}
+
+\section*{Entregable}
+Notebook, gráfica de convergencia, tabla J/muestra, informe de 2--3 páginas con tabla de resultados etiquetada y un archivo de pruebas.
+
+\section*{Criterios de evaluación (rúbrica de laboratorio, pensum §10.1)}
+\begin{tabularx}{\linewidth}{lrX}\toprule
+Criterio & Puntos & Nivel excelente\\\midrule
+Corrección & 40 & Resultados coinciden con la teoría dentro de barras de error; las pruebas pasan.\\
+Análisis y gráficas & 25 & Figuras con unidades; interpretación correcta; limitaciones discutidas.\\
+Código y reproducibilidad & 20 & Semillas fijas, un comando, JAX funcional legible.\\
+Contabilidad energética y evidencia & 15 & Modelo de costo explícito; cada número etiquetado [M]/[S]/[P]/[T]/[E].\\\bottomrule
+\end{tabularx}
+\end{document}

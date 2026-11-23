@@ -1,0 +1,303 @@
+1
+00:00:00,350 --> 00:00:02,016
+Lesson 3.3.
+
+2
+00:00:02,396 --> 00:00:03,785
+Fluctuation theorems:
+
+3
+00:00:04,165 --> 00:00:05,460
+Crooks and Jarzynski.
+
+4
+00:00:06,583 --> 00:00:11,159
+For a century, measuring a
+free-energy difference required an
+
+5
+00:00:11,159 --> 00:00:16,185
+infinitely slow process, because
+only then is the work equal to ΔF.
+
+6
+00:00:16,565 --> 00:00:21,245
+In 1997 Christopher Jarzynski
+showed something surprising:
+
+7
+00:00:21,245 --> 00:00:25,280
+ΔF can be obtained exactly
+from fast, irreversible
+
+8
+00:00:25,280 --> 00:00:29,556
+processes, if we average
+the exponential of the work.
+
+9
+00:00:29,936 --> 00:00:32,546
+Two years later, Gavin
+Crooks gave the detailed
+
+10
+00:00:32,546 --> 00:00:35,377
+relation between the forward
+and reverse processes.
+
+11
+00:00:36,483 --> 00:00:39,211
+We stiffen a harmonic trap: the stiffness
+
+12
+00:00:39,211 --> 00:00:41,806
+goes from one to four in half a second.
+
+13
+00:00:42,186 --> 00:00:47,248
+Since the stiffer trap
+confines the particle more, the
+
+14
+00:00:47,248 --> 00:00:51,559
+free energy rises by ½
+ln 4, about 0.69 k_B T.
+
+15
+00:00:51,939 --> 00:00:56,619
+But the process is fast: the
+mean work is larger, 1.08.
+
+16
+00:00:56,999 --> 00:01:00,597
+Some trajectories, however,
+spend less than ΔF.
+
+17
+00:01:00,977 --> 00:01:03,897
+The Jarzynski equality weights those rare
+
+18
+00:01:03,897 --> 00:01:07,742
+trajectories exactly enough
+to recover the true value.
+
+19
+00:01:08,850 --> 00:01:15,182
+The equality says: ⟨e^(−βW)⟩ = e^(−βΔF).
+
+20
+00:01:15,562 --> 00:01:19,491
+The average is over trajectories
+that start at equilibrium with the
+
+21
+00:01:19,491 --> 00:01:23,126
+initial parameter; the final
+state need not be at equilibrium.
+
+22
+00:01:23,506 --> 00:01:25,263
+It is a consequence of the integral
+
+23
+00:01:25,263 --> 00:01:27,522
+fluctuation theorem from
+the previous lesson.
+
+24
+00:01:27,902 --> 00:01:34,034
+With Jensen's inequality it
+recovers the second law, ⟨W⟩ ≥ ΔF.
+
+25
+00:01:34,414 --> 00:01:39,434
+And with our simulation of a
+hundred thousand trajectories, the
+
+26
+00:01:39,434 --> 00:01:44,375
+Jarzynski estimator gives 0.693,
+versus the exact value 0.693.
+
+27
+00:01:45,483 --> 00:01:48,022
+Crooks compares the
+forward process with the
+
+28
+00:01:48,022 --> 00:01:50,618
+reverse: softening the
+trap from four to one.
+
+29
+00:01:50,998 --> 00:01:55,437
+The forward work distribution,
+divided by the reverse work
+
+30
+00:01:55,437 --> 00:01:59,187
+distribution with flipped
+sign, is e^(β(W − ΔF)).
+
+31
+00:01:59,567 --> 00:02:05,445
+Visible consequence: the two
+histograms cross exactly at W = ΔF.
+
+32
+00:02:05,825 --> 00:02:11,988
+Moreover, the free energy is bracketed
+by the mean works: between minus
+
+33
+00:02:11,988 --> 00:02:17,282
+the mean reverse work, 0.49,
+and the mean forward work, 1.08.
+
+34
+00:02:18,383 --> 00:02:19,720
+There is a practical catch.
+
+35
+00:02:20,100 --> 00:02:24,642
+The exponential average is dominated
+by rare trajectories with low work.
+
+36
+00:02:25,022 --> 00:02:27,868
+With few trajectories,
+you probably have not
+
+37
+00:02:27,868 --> 00:02:30,779
+seen any, and the
+estimator overestimates ΔF.
+
+38
+00:02:31,159 --> 00:02:35,378
+With five trajectories,
+the estimator averages
+
+39
+00:02:35,378 --> 00:02:39,779
+0.73; with twenty, 0.70;
+with a thousand, 0.693.
+
+40
+00:02:40,159 --> 00:02:43,534
+Bias and variance fall as
+the number of samples grows.
+
+41
+00:02:43,914 --> 00:02:47,093
+Bennett's estimator, which
+uses forward and reverse
+
+42
+00:02:47,093 --> 00:02:51,082
+trajectories together, has minimum
+variance and needs far fewer.
+
+43
+00:02:52,183 --> 00:02:54,056
+Let's summarize the
+numbers of the example.
+
+44
+00:02:54,436 --> 00:02:59,690
+Exact free energy: one half
+of the log of four, 0.693.
+
+45
+00:03:00,070 --> 00:03:06,320
+Mean forward work: 1.08, that
+is, 0.39 of dissipated work.
+
+46
+00:03:06,700 --> 00:03:10,302
+Minus the mean reverse work: 0.49.
+
+47
+00:03:10,682 --> 00:03:14,008
+The second law holds in both
+directions, and Jarzynski gets
+
+48
+00:03:14,008 --> 00:03:17,220
+three digits right using a
+hundred thousand trajectories.
+
+49
+00:03:18,350 --> 00:03:21,941
+Jarzynski and Crooks are
+used in biophysics to measure
+
+50
+00:03:21,941 --> 00:03:25,332
+folding free energies by
+pulling molecules quickly.
+
+51
+00:03:25,712 --> 00:03:31,281
+In this course we will use them to compute
+the log-determinant of a matrix from
+
+52
+00:03:31,281 --> 00:03:36,287
+the work between two quadratic
+potentials, in lab four and in unit six.
+
+53
+00:03:37,417 --> 00:03:40,172
+Common mistakes: not
+starting at equilibrium.
+
+54
+00:03:40,552 --> 00:03:43,500
+Using few trajectories in
+highly dissipative processes.
+
+55
+00:03:43,880 --> 00:03:47,793
+Confusing the average of the exponential
+with the exponential of the average.
+
+56
+00:03:48,173 --> 00:03:50,879
+And believing Jarzynski
+contradicts the second law.
+
+57
+00:03:51,983 --> 00:03:52,816
+In summary:
+
+58
+00:03:53,196 --> 00:04:02,558
+Jarzynski gives the exact free energy
+from fast processes, ⟨e^(−βW)⟩ = e^(−βΔF).
+
+59
+00:04:02,938 --> 00:04:08,609
+Crooks relates the forward and reverse
+works, whose distributions cross at ΔF.
+
+60
+00:04:08,989 --> 00:04:12,311
+In practice, the estimator
+has a bias that decreases with
+
+61
+00:04:12,311 --> 00:04:15,282
+the number of trajectories,
+and Bennett reduces it.
+
+62
+00:04:16,383 --> 00:04:21,990
+To practice: compute the free energy of
+stiffening a trap, prove that Crooks implies
+
+63
+00:04:21,990 --> 00:04:26,729
+Jarzynski, apply the Gaussian formula
+and explain the estimator's bias.

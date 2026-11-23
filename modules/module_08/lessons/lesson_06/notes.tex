@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.6}{Computadores de Langevin no lineales como clasificadores}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} la neurona termodinámica cuártica y su activación en tiempo finito; entrenar para un tiempo de lectura,
+fuera del equilibrio; leer la evidencia con cuidado.
+\textbf{Prerrequisitos:} 2.6, 4.7.
+
+\section{La neurona termodinámica}
+Whitelam y Casert: una variable $x$ en contacto con un baño, con potencial y dinámica
+\[U(x,I)=J_2x^2+J_3x^3+J_4x^4-Ix,\qquad\dot x=-\mu\,\partial_xV+\sqrt{2\mu k_BT}\,\eta(t),\]
+con entrada $I$; las neuronas se acoplan por términos $J_{ij}x_ix_j$ y forman capas. Con $J=(1,0,0)$ la respuesta media es lineal ($\langle x\rangle_{\text{eq}}=I/2$);
+con $J=(1,0,1)$ se satura cerca de $\pm1$, como una tangente hiperbólica.
+
+\section{La activación necesita tiempo \evS}
+$\beta=10$, $\mu=1$, $x(0)=0$, 4000 trayectorias:
+\begin{center}\begin{tabular}{lcc}\toprule
+neurona cuártica & $I=2$ & $I=6$\\\midrule
+$t=0{,}1$ & 0,18 & 0,53\\
+$t=1$ & 0,57 & 0,99\\
+equilibrio & 0,57 & 0,99\\\bottomrule\end{tabular}\end{center}
+A tiempos cortos la respuesta es casi lineal. La única exigencia sobre $t_f$ es que la activación ya sea no lineal.
+
+\section{Entrenar para un tiempo de lectura}
+Se fija $t_f=1/\mu$ y se ajustan los parámetros $\theta$ (algoritmo genético) para minimizar $\mathcal L(\langle y(t_f)\rangle_\theta,y^\ast)$, promediando sobre trayectorias
+reiniciadas. La red queda programada para expresar el objetivo en $t_f$, no en el equilibrio: en el ajuste de $\cos(2\pi z)$, la salida de equilibrio es muy distinta.
+
+\section{Evidencia (simulaciones de los autores)}
+Una red solo cuadrática no aprende el coseno; con el término cuártico sí. MNIST (tres capas de 32 neuronas): $\approx93\,\%$ de acierto, no estado del arte pero mejor
+que un clasificador lineal; $\approx20$ muestras por entrada bastan. Entrenada con escala de energía $10\,k_BT$, funciona casi igual con ruido diez veces mayor.
+Con $\mu^{-1}\sim1\ \mu$s, una clasificación tomaría microsegundos. Faltan hardware, mediciones de energía, y el entrenamiento fue mucho más caro que el de una red
+convencional.
+
+\begin{aplicacion}
+Redes neuronales físicas (RLC, uniones de Josephson, osciladores mecánicos); el tiempo de lectura como parámetro de diseño; ruido como recurso. Proyecto P7.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Suponer que calcula en el equilibrio. \quad Leer antes de que la activación sea no lineal.
+\item Citar eficiencias no medidas. \quad Ignorar el costo del entrenamiento.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{wc} S. Whitelam y C. Casert, Nonlinear thermodynamic computing out of equilibrium, arXiv:2412.17183 (2024).
+\bibitem{w26} S. Whitelam, The thermodynamic freedom of a thermodynamic computer, arXiv:2608.27938 (2026).
+\bibitem[25]{mel} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\end{thebibliography}
+\end{document}

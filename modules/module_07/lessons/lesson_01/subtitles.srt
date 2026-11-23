@@ -1,0 +1,278 @@
+1
+00:00:00,350 --> 00:00:02,027
+Lección 7.1.
+
+2
+00:00:02,407 --> 00:00:04,916
+De la factorización a
+la búsqueda de orden.
+
+3
+00:00:06,017 --> 00:00:10,207
+Factorizar un número grande es difícil
+para los computadores digitales,
+
+4
+00:00:10,207 --> 00:00:13,925
+y sobre esa dificultad descansa
+buena parte de la criptografía.
+
+5
+00:00:14,305 --> 00:00:18,598
+El algoritmo de Shor mostró que un
+computador cuántico lo haría eficientemente.
+
+6
+00:00:18,978 --> 00:00:22,479
+En esta unidad estudiamos una
+alternativa basada en difusión.
+
+7
+00:00:22,859 --> 00:00:25,889
+Pero todo empieza con un
+truco clásico: convertir la
+
+8
+00:00:25,889 --> 00:00:29,620
+factorización en un problema de
+encontrar el orden de un número.
+
+9
+00:00:30,750 --> 00:00:35,533
+Tomemos N = 299 y un
+número a coprimo con N.
+
+10
+00:00:35,913 --> 00:00:39,340
+Las potencias de a módulo
+N se repiten en un ciclo.
+
+11
+00:00:39,720 --> 00:00:46,128
+El orden r es la longitud de ese ciclo:
+el menor exponente tal que a^r ≡ 1.
+
+12
+00:00:46,508 --> 00:00:49,752
+Para a = 2, el orden es
+ciento treinta y dos.
+
+13
+00:00:50,883 --> 00:00:57,252
+Si el orden es par, x =
+a^(r/2) cumple x² ≡ 1.
+
+14
+00:00:57,632 --> 00:01:01,017
+Entonces N divide a (x − 1)(x + 1).
+
+15
+00:01:01,397 --> 00:01:06,538
+Si además x no es ± 1, N no divide
+a ninguno de los dos factores por
+
+16
+00:01:06,538 --> 00:01:12,208
+separado, así que el máximo común
+divisor de x − 1 y N es un factor propio.
+
+17
+00:01:12,588 --> 00:01:17,074
+Para a = 2: x = 116, y el
+máximo común divisor de ciento
+
+18
+00:01:17,074 --> 00:01:21,078
+quince y doscientos noventa
+y nueve es veintitrés.
+
+19
+00:01:21,458 --> 00:01:25,114
+Así, doscientos noventa y
+nueve es trece por veintitrés.
+
+20
+00:01:26,217 --> 00:01:29,300
+El teorema chino del resto
+explica cuándo funciona.
+
+21
+00:01:29,680 --> 00:01:36,437
+Módulo N = p q, cada número es un par
+de restos, uno módulo p y otro módulo q.
+
+22
+00:01:36,817 --> 00:01:39,484
+Una raíz cuadrada de
+uno es un par de signos.
+
+23
+00:01:39,864 --> 00:01:43,477
+Las raíces triviales son
+más más y menos menos; las
+
+24
+00:01:43,477 --> 00:01:47,304
+mixtas, más menos y menos
+más, son las que factorizan.
+
+25
+00:01:47,684 --> 00:01:50,581
+El truco falla solo cuando
+las partes de potencia de
+
+26
+00:01:50,581 --> 00:01:53,312
+dos del orden coinciden
+en todas las componentes.
+
+27
+00:01:54,417 --> 00:01:59,722
+Para un a al azar y m factores primos
+distintos, un patrón de paridades
+
+28
+00:01:59,722 --> 00:02:04,654
+suficiente tiene probabilidad 1 −
+(m + 1)/2^m, al menos un cuarto.
+
+29
+00:02:05,034 --> 00:02:08,837
+La ley exacta es más fuerte: al
+menos un medio para semiprimos.
+
+30
+00:02:09,217 --> 00:02:14,817
+En N = 299, contando todos los a coprimos,
+el truco funciona en ciento noventa y
+
+31
+00:02:14,817 --> 00:02:19,787
+ocho de doscientos sesenta y tres
+casos: el setenta y cinco por ciento.
+
+32
+00:02:20,167 --> 00:02:23,160
+Repetir con otro a lleva el
+fallo rápidamente a cero.
+
+33
+00:02:24,283 --> 00:02:27,092
+Todo el trabajo difícil
+está en encontrar el orden.
+
+34
+00:02:27,472 --> 00:02:31,429
+Recorrer las potencias una por
+una cuesta hasta r pasos, y r
+
+35
+00:02:31,429 --> 00:02:35,385
+puede ser del tamaño de N:
+exponencial en el número de bits.
+
+36
+00:02:35,765 --> 00:02:38,236
+Shor lo resuelve con
+interferencia cuántica,
+
+37
+00:02:38,236 --> 00:02:40,314
+como veremos en la lección siguiente.
+
+38
+00:02:40,694 --> 00:02:44,208
+La difusión lo resuelve con un
+calor que se reparte por un grafo.
+
+39
+00:02:44,588 --> 00:02:47,288
+Ambas son formas físicas
+de detectar un período.
+
+40
+00:02:48,417 --> 00:02:52,337
+Esta reducción importa porque la
+seguridad de RSA depende de la
+
+41
+00:02:52,337 --> 00:02:56,443
+dificultad de factorizar, y porque
+cualquier método de búsqueda de
+
+42
+00:02:56,443 --> 00:03:00,426
+orden, cuántico, de difusión o
+de colisiones, se conecta a ella.
+
+43
+00:03:00,806 --> 00:03:04,773
+En la lección siete punto cuatro
+usaremos una base con orden impar.
+
+44
+00:03:05,153 --> 00:03:07,381
+En el laboratorio diez la implementarás.
+
+45
+00:03:08,483 --> 00:03:12,011
+Errores comunes: no calcular
+primero el máximo común
+
+46
+00:03:12,011 --> 00:03:15,064
+divisor de a y N, que
+puede ser ya un factor.
+
+47
+00:03:15,444 --> 00:03:18,836
+Aceptar x ≡ −1, que no factoriza.
+
+48
+00:03:19,216 --> 00:03:21,549
+Aplicar el método a potencias de un primo.
+
+49
+00:03:21,929 --> 00:03:24,841
+Y confundir la cota de un
+cuarto con la ley exacta.
+
+50
+00:03:25,950 --> 00:03:30,259
+En resumen: si conocemos el orden
+par de un número al azar, su
+
+51
+00:03:30,259 --> 00:03:34,012
+raíz a^(r/2) da un factor
+con el máximo común divisor.
+
+52
+00:03:34,392 --> 00:03:38,453
+El teorema chino del resto explica por
+qué funciona la mayoría de las veces.
+
+53
+00:03:38,833 --> 00:03:41,147
+Todo lo difícil está
+en encontrar el orden.
+
+54
+00:03:42,250 --> 00:03:45,451
+Para practicar: factoriza
+quince con el orden de dos.
+
+55
+00:03:45,831 --> 00:03:48,928
+Explica por qué x no
+puede ser más o menos uno.
+
+56
+00:03:49,308 --> 00:03:52,732
+Evalúa la probabilidad para
+dos, tres y cuatro factores.
+
+57
+00:03:53,112 --> 00:03:56,799
+Y explica por qué la búsqueda
+directa del orden es exponencial.

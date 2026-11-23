@@ -1,0 +1,292 @@
+1
+00:00:00,350 --> 00:00:02,044
+Lesson 4.9.
+
+2
+00:00:02,424 --> 00:00:03,799
+Mean-field theory.
+
+3
+00:00:04,917 --> 00:00:06,119
+Sampling is expensive.
+
+4
+00:00:06,499 --> 00:00:08,448
+What if, instead of following each
+
+5
+00:00:08,448 --> 00:00:11,315
+fluctuating spin, we
+followed only its mean value?
+
+6
+00:00:11,695 --> 00:00:14,355
+That is the idea of
+mean field: replace the
+
+7
+00:00:14,355 --> 00:00:16,891
+neighbors' fluctuations by their average.
+
+8
+00:00:17,271 --> 00:00:19,791
+The result is a system of deterministic
+
+9
+00:00:19,791 --> 00:00:22,635
+equations that any
+processor solves quickly.
+
+10
+00:00:23,015 --> 00:00:27,489
+And its form is exactly that of a
+neural network with tanh activation.
+
+11
+00:00:28,617 --> 00:00:33,176
+A pbit with input u_i has mean tanh(βu_i).
+
+12
+00:00:33,556 --> 00:00:36,541
+But the input depends on the
+neighbors, which fluctuate.
+
+13
+00:00:36,921 --> 00:00:41,947
+Mean field replaces each
+neighbor by its mean, s_j → m_j,
+
+14
+00:00:42,327 --> 00:00:51,837
+and obtains the self-consistent equations
+m_i = tanh(β(Σ_j J_ij m_j + h_i)).
+
+15
+00:00:52,217 --> 00:00:55,434
+We neglect correlations
+between neighbors: it is
+
+16
+00:00:55,434 --> 00:00:58,785
+exact when each spin has
+very many weak neighbors.
+
+17
+00:00:59,917 --> 00:01:04,710
+On a uniform lattice with
+z neighbors, all spins have
+
+18
+00:01:04,710 --> 00:01:09,233
+the same mean and the
+equation is m = tanh(βzJ m).
+
+19
+00:01:09,613 --> 00:01:14,323
+The solution is the intersection of
+the line y = m with the tanh curve.
+
+20
+00:01:14,703 --> 00:01:18,094
+If the slope at the
+origin, βzJ, is less than
+
+21
+00:01:18,094 --> 00:01:21,185
+one, the only solution is zero: disorder.
+
+22
+00:01:21,565 --> 00:01:25,968
+If it is greater, two symmetric
+solutions appear: the system magnetizes.
+
+23
+00:01:26,348 --> 00:01:29,541
+The transition happens at T_c = zJ.
+
+24
+00:01:30,650 --> 00:01:35,918
+For the square lattice, with four
+neighbors, mean field predicts T_c = 4.
+
+25
+00:01:36,298 --> 00:01:39,373
+The exact Onsager value is 2.27.
+
+26
+00:01:39,753 --> 00:01:42,157
+Mean field overestimates order, because it
+
+27
+00:01:42,157 --> 00:01:44,504
+ignores the fluctuations that destroy it.
+
+28
+00:01:44,884 --> 00:01:51,587
+At temperature two it predicts a
+magnetization of 0.96, versus 0.91 exact.
+
+29
+00:01:51,967 --> 00:01:55,203
+And at temperature three
+it predicts 0.78, when
+
+30
+00:01:55,203 --> 00:01:58,232
+in reality the system
+is already disordered.
+
+31
+00:01:59,350 --> 00:02:05,907
+Let's solve the equations by
+iteration: m ← tanh(β(J m + h)).
+
+32
+00:02:06,287 --> 00:02:09,589
+Each iteration is a
+neural network layer: a
+
+33
+00:02:09,589 --> 00:02:12,431
+matrix, a bias and a tanh activation.
+
+34
+00:02:12,811 --> 00:02:16,869
+With T = 2, starting
+from 0.5, the iteration
+
+35
+00:02:16,869 --> 00:02:20,559
+converges to 0.957 in about five layers.
+
+36
+00:02:20,939 --> 00:02:25,251
+So a pbit network that samples and
+a deterministic neural network are
+
+37
+00:02:25,251 --> 00:02:29,250
+two faces of the same model: one
+fluctuates, the other averages.
+
+38
+00:02:30,350 --> 00:02:32,422
+There is a deeper justification.
+
+39
+00:02:32,802 --> 00:02:36,910
+Mean field searches, among all
+distributions that factorize spin by
+
+40
+00:02:36,910 --> 00:02:40,834
+spin, for the one that minimizes
+the variational free energy, or
+
+41
+00:02:40,834 --> 00:02:44,636
+equivalently, the KL divergence
+to the Boltzmann distribution.
+
+42
+00:02:45,016 --> 00:02:48,016
+By the Gibbs–Bogoliubov
+inequality, that free
+
+43
+00:02:48,016 --> 00:02:51,217
+energy is always an upper
+bound on the true one.
+
+44
+00:02:51,597 --> 00:02:55,601
+It is the same idea as variational
+inference in machine learning.
+
+45
+00:02:56,717 --> 00:03:02,025
+Mean field gives a fast approximation of
+the model phase for training Boltzmann
+
+46
+00:03:02,025 --> 00:03:07,065
+machines, and explains the tanh units
+we will build from pbits in unit ten.
+
+47
+00:03:07,445 --> 00:03:11,095
+Belief propagation and
+TAP corrections refine it.
+
+48
+00:03:11,475 --> 00:03:14,396
+It is exact with
+infinite-range interactions and
+
+49
+00:03:14,396 --> 00:03:17,014
+poor near the transition
+in low dimensions.
+
+50
+00:03:18,117 --> 00:03:23,270
+Common mistakes: trusting the mean-field
+critical temperature in two dimensions.
+
+51
+00:03:23,650 --> 00:03:27,602
+Taking the zero solution below
+the transition, which is unstable.
+
+52
+00:03:27,982 --> 00:03:29,985
+Forgetting that it ignores correlations.
+
+53
+00:03:30,365 --> 00:03:33,392
+And iterating without
+damping, which can oscillate.
+
+54
+00:03:34,517 --> 00:03:39,526
+In summary: mean field
+replaces the neighbors by their
+
+55
+00:03:39,526 --> 00:03:43,886
+means and gets m_i =
+tanh(β(Σ J_ij m_j + h_i)).
+
+56
+00:03:44,266 --> 00:03:48,954
+It predicts a transition at T_c
+= zJ, which overestimates order.
+
+57
+00:03:49,334 --> 00:03:52,794
+Iterating it means applying
+tanh layers: the bridge between
+
+58
+00:03:52,794 --> 00:03:56,021
+sampling with pbits and
+computing with neural networks.
+
+59
+00:03:57,150 --> 00:04:00,529
+To practice: solve the
+self-consistent equation.
+
+60
+00:04:00,909 --> 00:04:03,566
+Derive the behavior near the transition.
+
+61
+00:04:03,946 --> 00:04:06,800
+Compute the critical temperature
+of the triangular lattice.
+
+62
+00:04:07,180 --> 00:04:10,979
+And explain why mean field
+is exact with infinite range.

@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.2}{Matrices de curvatura}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} Fisher empírico y Gauss--Newton generalizado (GGN); sistemas amortiguados; NGD-CG y NGD-Woodbury.
+\textbf{Prerrequisitos:} 8.1; rango e identidad de Woodbury.
+
+\section{Dos curvaturas}
+Fisher empírico: $\bar F=JJ^\top=\frac1b\sum_i\nabla\log p_i\nabla\log p_i^\top$. GGN: $G=J_fH_LJ_f^\top$, con $J_f$ el jacobiano de la salida $f_\theta(x)$
+y $H_L$ el hessiano de la pérdida respecto de la salida. Para pérdidas de la familia exponencial, $G$ coincide con el Fisher verdadero; $\bar F$ puede diferir mucho.
+\begin{ejemplo}
+Regresión logística, $N=200$, $b=32$, pesos no nulos \evS: $\|\bar F-G\|/\|G\|=232\,\%$. (En $w=0$ coinciden por casualidad: $(p-y)^2=p(1-p)=\frac14$.)
+\end{ejemplo}
+
+\section{Rango bajo y amortiguamiento}
+$\mathrm{rank}\,G\le b\,d_z\ll N$ (en el ejemplo, rango 32): $G$ es singular y se resuelve $(G+\lambda I)\tilde g=\nabla\ell$.
+
+\section{NGD-CG}
+El gradiente conjugado usa solo productos $Gv=J_f(H_L(J_f^\top v))$, en $O(bN)$ con productos jacobiano--vector, sin formar $G$. Como $G+\lambda I$ tiene a lo sumo
+$b\,d_z+1$ valores propios distintos, CG converge en a lo sumo $b\,d_z+1$ iteraciones en aritmética exacta: en el ejemplo, 21--23 iteraciones para
+$\lambda=10^{-1},10^{-2},10^{-3}$ ($\kappa$ hasta $7{,}4\times10^3$). Las iteraciones son secuenciales.
+
+\section{NGD-Woodbury}
+Con $U=J_f$, $V=H_LJ_f^\top$: $(UV+\lambda I)^{-1}=\lambda^{-1}I-\lambda^{-2}U(I+\lambda^{-1}VU)^{-1}V$; solo se invierte una matriz $b\,d_z\times b\,d_z$. En el ejemplo
+coincide con la solución directa hasta $10^{-12}$. Costo $O(b^2d_z^2N+b^3d_z^3)$: intratable si $d_z$ es un vocabulario ($\sim10^4$).
+
+\section{Comparación (Donatella et al.)}
+\begin{center}\small\begin{tabular}{lll}\toprule
+optimizador & tiempo por iteración & memoria\\\midrule
+SGD / Adam & $O(bN)$ & $O(N)$\\
+NGD & $O(N^3+bd_zN^2)$ & $O(N^2)$\\
+NGD-CG & $O(cbN)$ & $O(N)$\\
+NGD-Woodbury & $O(b^2d_z^2N+b^3d_z^3)$ & $O(bd_zN+b^2d_z^2)$\\
+NGD termodinámico & $O(bd_zN+t)$ & $O(bd_zN+b^2d_z^2)$\\\bottomrule\end{tabular}\end{center}
+
+\begin{aplicacion}
+Preferir GGN; Woodbury si $b\,d_z$ es pequeño; CG truncado si $N$ es grande. Laboratorio L11: NGD-CG y NGD-Woodbury en MNIST.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Usar el Fisher empírico como el verdadero. \quad Formar $G$ cuando basta $Gv$.
+\item Llevar CG a convergencia total. \quad Woodbury con $d_z$ = vocabulario.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[40]{tngd} K. Donatella et al., Thermodynamic natural gradient descent, 2024.
+\bibitem[37]{martens} J. Martens, New insights and perspectives on the natural gradient method, \emph{JMLR} 21 (2020).
+\bibitem{schraudolph} N. N. Schraudolph, Fast curvature matrix-vector products for second-order gradient descent, \emph{Neural Computation} 14, 1723 (2002).
+\end{thebibliography}
+\end{document}

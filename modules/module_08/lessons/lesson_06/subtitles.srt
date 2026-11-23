@@ -1,0 +1,335 @@
+1
+00:00:00,350 --> 00:00:02,090
+Lección 8.6.
+
+2
+00:00:02,470 --> 00:00:05,850
+Computadores de Langevin no
+lineales como clasificadores.
+
+3
+00:00:06,950 --> 00:00:10,743
+Hasta ahora, el hardware termodinámico
+calculaba en el equilibrio:
+
+4
+00:00:10,743 --> 00:00:14,708
+muestrear una distribución de
+Boltzmann o resolver un sistema lineal.
+
+5
+00:00:15,088 --> 00:00:18,052
+Pero equilibrar puede ser
+lento, y no todo problema
+
+6
+00:00:18,052 --> 00:00:20,726
+se escribe como una
+distribución de Boltzmann.
+
+7
+00:00:21,106 --> 00:00:24,424
+Whitelam y Casert propusieron
+otra cosa: un computador de
+
+8
+00:00:24,424 --> 00:00:28,150
+Langevin no lineal que se entrena
+para dar la respuesta correcta
+
+9
+00:00:28,150 --> 00:00:31,526
+en un instante fijo, aunque
+no haya llegado al equilibrio.
+
+10
+00:00:32,650 --> 00:00:37,021
+La neurona es una sola variable que
+fluctúa en contacto con un baño térmico,
+
+11
+00:00:37,401 --> 00:00:42,976
+confinada por el
+potencial U(x, I) = J₂x² +
+
+12
+00:00:42,976 --> 00:00:48,292
+J₃x³ + J₄x⁴ − I x, donde I es la entrada.
+
+13
+00:00:48,672 --> 00:00:51,569
+Con solo el término
+cuadrático, la respuesta
+
+14
+00:00:51,569 --> 00:00:54,202
+media es lineal: en equilibrio vale I/2.
+
+15
+00:00:54,582 --> 00:00:58,531
+El término cuártico la vuelve
+no lineal: la salida se satura,
+
+16
+00:00:58,531 --> 00:01:02,156
+como una tangente hiperbólica,
+cerca de más o menos uno.
+
+17
+00:01:02,536 --> 00:01:06,512
+Las neuronas se acoplan por
+términos bilineales, y forman capas.
+
+18
+00:01:07,617 --> 00:01:09,844
+La no linealidad no es instantánea.
+
+19
+00:01:10,224 --> 00:01:14,156
+Simulamos la neurona cuártica
+con β = 10 partiendo de cero.
+
+20
+00:01:14,536 --> 00:01:19,332
+En un tiempo de cero coma uno, la
+respuesta media aún es casi lineal: cero
+
+21
+00:01:19,332 --> 00:01:23,934
+coma uno ocho para una entrada de
+dos y cero coma cinco tres para seis.
+
+22
+00:01:24,314 --> 00:01:28,143
+En un tiempo de uno ya se satura:
+cero coma cinco siete y cero
+
+23
+00:01:28,143 --> 00:01:31,416
+coma noventa y nueve, casi
+los valores de equilibrio.
+
+24
+00:01:31,796 --> 00:01:35,033
+La única exigencia sobre el
+tiempo de lectura es que sea
+
+25
+00:01:35,033 --> 00:01:37,808
+suficiente para que la
+activación sea no lineal.
+
+26
+00:01:38,917 --> 00:01:42,416
+El entrenamiento fija un
+tiempo de observación, t_f = 1
+
+27
+00:01:42,416 --> 00:01:45,343
+en unidades del tiempo
+de relajación, y ajusta
+
+28
+00:01:45,343 --> 00:01:49,033
+acoplamientos y sesgos para
+que la salida en ese instante,
+
+29
+00:01:49,413 --> 00:01:53,486
+promediada sobre trayectorias
+reiniciadas, minimice la pérdida.
+
+30
+00:01:53,866 --> 00:01:56,261
+Los autores usan un algoritmo genético.
+
+31
+00:01:56,641 --> 00:02:01,048
+El resultado es un computador programado
+para expresar la función objetivo
+
+32
+00:02:01,048 --> 00:02:05,396
+en el tiempo de lectura, no en el
+equilibrio: en el ejemplo de ajustar un
+
+33
+00:02:05,396 --> 00:02:09,029
+coseno, la salida en equilibrio
+es muy distinta del objetivo.
+
+34
+00:02:09,409 --> 00:02:11,051
+Opera lejos del equilibrio.
+
+35
+00:02:12,183 --> 00:02:12,957
+¿Qué se logró?
+
+36
+00:02:13,337 --> 00:02:15,792
+Una red de solo neuronas cuadráticas no
+
+37
+00:02:15,792 --> 00:02:18,686
+aprende el coseno; con
+el término cuártico sí.
+
+38
+00:02:19,066 --> 00:02:22,396
+En MNIST, una red de tres
+capas de treinta y dos neuronas
+
+39
+00:02:22,396 --> 00:02:26,076
+clasifica con cerca de un noventa
+y tres por ciento de acierto,
+
+40
+00:02:26,076 --> 00:02:29,639
+no el estado del arte, pero
+mejor que un clasificador lineal,
+
+41
+00:02:30,019 --> 00:02:33,797
+y con unas veinte muestras por
+entrada ya se alcanza esa precisión.
+
+42
+00:02:34,177 --> 00:02:37,171
+Entrenada con una escala
+de energía diez veces la
+
+43
+00:02:37,171 --> 00:02:40,591
+térmica, funciona casi igual
+con ruido diez veces mayor.
+
+44
+00:02:41,717 --> 00:02:45,214
+Con un tiempo de relajación de
+un microsegundo, como en los
+
+45
+00:02:45,214 --> 00:02:49,068
+dispositivos de circuitos, una
+clasificación tomaría del orden de
+
+46
+00:02:49,068 --> 00:02:52,388
+microsegundos, impulsada por
+las fluctuaciones térmicas.
+
+47
+00:02:52,768 --> 00:02:57,178
+Pero hay que ser honestos: todo es
+simulación, entrenar fue mucho más caro que
+
+48
+00:02:57,178 --> 00:03:01,589
+entrenar una red convencional, y el
+artículo no reporta mediciones de energía.
+
+49
+00:03:01,969 --> 00:03:04,972
+La eficiencia de los protocolos
+de inferencia, cuánta
+
+50
+00:03:04,972 --> 00:03:08,201
+energía cuesta cargar la
+entrada y leer la salida, es una
+
+51
+00:03:08,201 --> 00:03:11,318
+pregunta abierta que estudiaremos
+en el proyecto siete.
+
+52
+00:03:12,450 --> 00:03:16,915
+Estas ideas abren el camino a redes
+neuronales físicas con circuitos
+
+53
+00:03:16,915 --> 00:03:21,446
+RLC, uniones de Josephson u osciladores
+mecánicos, donde el tiempo de
+
+54
+00:03:21,446 --> 00:03:25,123
+lectura es un parámetro de
+diseño y el ruido un recurso.
+
+55
+00:03:25,503 --> 00:03:28,952
+En el proyecto siete entrenarás
+un computador de este tipo.
+
+56
+00:03:30,083 --> 00:03:34,721
+Errores comunes: suponer que el dispositivo
+entrenado calcula en el equilibrio.
+
+57
+00:03:35,101 --> 00:03:38,332
+Leer la salida antes de que
+la activación sea no lineal.
+
+58
+00:03:38,712 --> 00:03:41,279
+Citar una eficiencia
+energética que no se midió.
+
+59
+00:03:41,659 --> 00:03:43,605
+E ignorar el costo del entrenamiento.
+
+60
+00:03:44,717 --> 00:03:48,387
+En resumen: una neurona
+termodinámica con potencial cuártico
+
+61
+00:03:48,387 --> 00:03:51,874
+tiene una activación no lineal
+que aparece con el tiempo.
+
+62
+00:03:52,254 --> 00:03:56,179
+Una red de ellas, entrenada
+para un tiempo de lectura fijo,
+
+63
+00:03:56,179 --> 00:03:59,971
+clasifica MNIST con cerca de
+un noventa y tres por ciento
+
+64
+00:03:59,971 --> 00:04:03,031
+operando fuera del
+equilibrio, y tolera ruido.
+
+65
+00:04:03,411 --> 00:04:07,773
+Faltan hardware, mediciones de energía
+y métodos de entrenamiento más baratos.
+
+66
+00:04:08,883 --> 00:04:13,047
+Para practicar: calcula la media de
+equilibrio de la neurona cuadrática.
+
+67
+00:04:13,427 --> 00:04:16,577
+Explica por qué el término
+cuártico satura la respuesta.
+
+68
+00:04:16,957 --> 00:04:19,943
+Di qué optimiza el entrenamiento
+para un tiempo de lectura.
+
+69
+00:04:20,323 --> 00:04:23,399
+Y nombra dos piezas que faltan
+para afirmar eficiencia.

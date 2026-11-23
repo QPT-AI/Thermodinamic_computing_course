@@ -1,0 +1,333 @@
+1
+00:00:00,350 --> 00:00:02,108
+Lesson 7.6.
+
+2
+00:00:02,488 --> 00:00:05,084
+Physical realization with RC networks.
+
+3
+00:00:06,217 --> 00:00:09,741
+The theorem of lesson
+7.4 assumes a physical
+
+4
+00:00:09,741 --> 00:00:14,066
+diffuser: a device that
+averages at all nodes at once.
+
+5
+00:00:14,446 --> 00:00:17,350
+The most natural
+realization is a network of
+
+6
+00:00:17,350 --> 00:00:20,849
+resistors and capacitors,
+like the one in lesson 5.5.
+
+7
+00:00:21,229 --> 00:00:25,088
+Today we see how well it works and,
+above all, how much it really costs.
+
+8
+00:00:26,217 --> 00:00:29,399
+Each node of the Cayley
+graph is a capacitor C_0
+
+9
+00:00:29,399 --> 00:00:32,316
+to ground, and each
+edge is a conductance g.
+
+10
+00:00:32,696 --> 00:00:37,526
+Kirchhoff's laws give C_0
+V̇ = −L V, with L the graph
+
+11
+00:00:37,526 --> 00:00:42,812
+Laplacian: voltage diffuses
+like heat, in continuous time.
+
+12
+00:00:43,192 --> 00:00:47,895
+Injecting charge at the identity,
+the normalized voltage there
+
+13
+00:00:47,895 --> 00:00:52,598
+approaches one over r with an
+error smaller than e^(−2gt/C_0),
+
+14
+00:00:52,598 --> 00:00:56,163
+exactly, without
+discretization approximations.
+
+15
+00:00:56,543 --> 00:01:01,032
+For r = 33, after one time
+unit the actual error is
+
+16
+00:01:01,032 --> 00:01:05,170
+five ten-millionths,
+against the bound of 0.14.
+
+17
+00:01:06,283 --> 00:01:08,067
+The first cost is nodes.
+
+18
+00:01:08,447 --> 00:01:11,580
+The network needs at
+least r nodes, one per
+
+19
+00:01:11,580 --> 00:01:14,786
+group element, and r
+can be comparable to N.
+
+20
+00:01:15,166 --> 00:01:19,552
+Worse: building a cycle of
+r nodes assumes knowing r.
+
+21
+00:01:19,932 --> 00:01:24,626
+The honest solution uses one
+address per residue modulo N, that
+
+22
+00:01:24,626 --> 00:01:28,723
+is, N nodes, and lets the
+charge occupy only the orbit.
+
+23
+00:01:29,103 --> 00:01:31,968
+For a two-thousand-forty-eight-bit
+number, that is a
+
+24
+00:01:31,968 --> 00:01:34,723
+number of nodes with more
+than six hundred digits.
+
+25
+00:01:35,850 --> 00:01:37,897
+The second cost is precision.
+
+26
+00:01:38,277 --> 00:01:42,328
+The readings for neighboring
+orders, one over r
+
+27
+00:01:42,328 --> 00:01:46,035
+and one over r + 1,
+differ by 1/(r(r + 1)).
+
+28
+00:01:46,415 --> 00:01:51,225
+To distinguish orders up
+to B, absolute precision
+
+29
+00:01:51,225 --> 00:01:55,643
+of order 1/B² is needed:
+about 2 log₂ B bits.
+
+30
+00:01:56,023 --> 00:01:58,423
+For thirty-three that
+is ten bits; for five
+
+31
+00:01:58,423 --> 00:02:00,935
+thousand three hundred
+thirteen, twenty-five.
+
+32
+00:02:01,315 --> 00:02:04,429
+For a cryptographic number
+it would be thousands of
+
+33
+00:02:04,429 --> 00:02:07,176
+analog bits: something
+no voltmeter achieves.
+
+34
+00:02:08,283 --> 00:02:11,445
+Unequal conductances
+only change the speed;
+
+35
+00:02:11,445 --> 00:02:14,166
+unequal capacitors change the result.
+
+36
+00:02:14,546 --> 00:02:19,825
+At equilibrium, the voltage at
+the identity is its capacitance
+
+37
+00:02:19,825 --> 00:02:25,274
+divided by the total sum, so the
+reading is r(1 + ε̄)/(1 + ε_e).
+
+38
+00:02:25,654 --> 00:02:29,974
+To round correctly one needs
+∣ε̄ − ε_e∣ < (1 + ε_e)/(2r).
+
+39
+00:02:30,354 --> 00:02:34,309
+With r = 33 and ten thousand
+networks with random
+
+40
+00:02:34,309 --> 00:02:39,231
+mismatches, half a percent is
+right 99.6 percent of the time,
+
+41
+00:02:39,611 --> 00:02:44,092
+one percent 88 percent, and
+three percent only 40 percent.
+
+42
+00:02:45,217 --> 00:02:47,972
+Finally, the thermal noise of the readout.
+
+43
+00:02:48,352 --> 00:02:53,226
+Sampling with a capacitor C
+has a variance of k_B T/C.
+
+44
+00:02:53,606 --> 00:02:57,032
+To reach the required
+precision many samples must be
+
+45
+00:02:57,032 --> 00:03:00,986
+averaged: with one picofarad,
+one volt and room temperature,
+
+46
+00:03:01,366 --> 00:03:05,106
+for orders of a thousand about
+two hundred sixty-five thousand
+
+47
+00:03:05,106 --> 00:03:08,786
+samples are needed; for a million,
+on the order of ten to the
+
+48
+00:03:08,786 --> 00:03:11,743
+seventeen; for a billion,
+ten to the twenty-nine.
+
+49
+00:03:12,123 --> 00:03:15,820
+These are numbers from a simple
+model, not universal bounds, but they
+
+50
+00:03:15,820 --> 00:03:19,357
+show that counting cells is not
+enough to demonstrate feasibility.
+
+51
+00:03:20,483 --> 00:03:24,585
+An honest prototype must
+reproduce the exact heat kernel in
+
+52
+00:03:24,585 --> 00:03:28,965
+small cases, calibrate the
+capacitors below one over two r, and
+
+53
+00:03:28,965 --> 00:03:32,858
+report nodes, bits of precision
+and samples per readout.
+
+54
+00:03:33,238 --> 00:03:36,808
+In project five you will simulate
+the network with mismatch and noise.
+
+55
+00:03:37,917 --> 00:03:42,122
+Common mistakes: counting diffusion
+steps and ignoring the nodes.
+
+56
+00:03:42,502 --> 00:03:46,171
+Building a cycle of length
+r, which assumes the answer.
+
+57
+00:03:46,551 --> 00:03:51,333
+Believing that two log₂ B bits are
+cheap, when they are analog precision.
+
+58
+00:03:51,713 --> 00:03:55,673
+And calibrating conductances
+while ignoring capacitor mismatch.
+
+59
+00:03:56,783 --> 00:04:01,198
+In summary: an RC network
+realizes diffusion
+
+60
+00:04:01,198 --> 00:04:05,712
+exactly, with error
+decaying as e^(−2gt/C_0).
+
+61
+00:04:06,092 --> 00:04:10,264
+But it needs on the order of r
+nodes, about two log₂ B bits of
+
+62
+00:04:10,264 --> 00:04:14,503
+precision, capacitors matched
+better than one over two r, and a
+
+63
+00:04:14,503 --> 00:04:18,472
+number of samples growing as
+the fourth power of the order.
+
+64
+00:04:18,852 --> 00:04:22,045
+Time is short; the cost
+has moved to the hardware.
+
+65
+00:04:23,150 --> 00:04:27,460
+To practice: derive the equilibrium
+reading with charge conservation.
+
+66
+00:04:27,840 --> 00:04:30,472
+Compute the bits for
+orders up to a million.
+
+67
+00:04:30,852 --> 00:04:34,044
+Compute the mismatch tolerance
+for an order of a thousand.
+
+68
+00:04:34,424 --> 00:04:37,325
+And explain why one address
+per residue is needed.

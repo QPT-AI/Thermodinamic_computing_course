@@ -1,0 +1,310 @@
+1
+00:00:00,350 --> 00:00:02,050
+Lesson 9.4.
+
+2
+00:00:02,430 --> 00:00:04,340
+A cost model for diffusion.
+
+3
+00:00:05,450 --> 00:00:08,343
+To decide whether diffusion
+pays off on a given
+
+4
+00:00:08,343 --> 00:00:10,989
+hardware, an explicit
+cost model is needed.
+
+5
+00:00:11,369 --> 00:00:15,136
+The central idea is simple: a
+diffusion model takes T steps,
+
+6
+00:00:15,136 --> 00:00:18,651
+and in each it processes every
+position in the sequence.
+
+7
+00:00:19,031 --> 00:00:21,535
+The energy per token is then T times the
+
+8
+00:00:21,535 --> 00:00:24,414
+energy of processing one
+position in one step.
+
+9
+00:00:24,794 --> 00:00:30,576
+Today we put numbers for a GPU and for
+a spatial TSU, with stated assumptions.
+
+10
+00:00:31,683 --> 00:00:34,630
+On a GPU, processing one position with an
+
+11
+00:00:34,630 --> 00:00:37,791
+N-parameter model costs
+about 2N operations.
+
+12
+00:00:38,171 --> 00:00:41,725
+With the specification of
+a modern GPU, about 0.7
+
+13
+00:00:41,725 --> 00:00:44,915
+picojoules per operation
+at full throughput.
+
+14
+00:00:45,295 --> 00:00:49,297
+But the GPU rarely runs at
+full throughput: the useful
+
+15
+00:00:49,297 --> 00:00:52,928
+fraction is the MFU, the
+model FLOPs utilization.
+
+16
+00:00:53,308 --> 00:00:59,209
+The energy per position and
+step is e_pos = 2N e_FLOP / MFU.
+
+17
+00:01:00,317 --> 00:01:05,030
+Autoregressive generation
+produces one token per pass and is
+
+18
+00:01:05,030 --> 00:01:09,901
+memory-bound: with small batches,
+the MFU can be five percent.
+
+19
+00:01:10,281 --> 00:01:14,470
+Diffusion processes all
+positions in parallel and can
+
+20
+00:01:14,470 --> 00:01:18,660
+reach an MFU near fifty
+percent, but repeats T times.
+
+21
+00:01:19,040 --> 00:01:22,703
+For a billion-parameter model,
+under these assumptions,
+
+22
+00:01:22,703 --> 00:01:27,433
+autoregressive decoding costs about
+twenty-eight millijoules per token.
+
+23
+00:01:27,813 --> 00:01:31,383
+Diffusion costs twenty-three
+with eight steps, ninety-one with
+
+24
+00:01:31,383 --> 00:01:35,415
+thirty-two, and three hundred sixty-two
+with one hundred twenty-eight.
+
+25
+00:01:36,517 --> 00:01:42,611
+The break-even point is T* = MFU_dif /
+MFU_AR: with these numbers, ten steps.
+
+26
+00:01:42,991 --> 00:01:46,816
+Below it, diffusion wins in
+energy; above it, it loses.
+
+27
+00:01:47,196 --> 00:01:49,907
+That is why on GPUs
+everything hinges on reducing
+
+28
+00:01:49,907 --> 00:01:52,232
+steps with good samplers and distillation.
+
+29
+00:01:52,612 --> 00:01:57,041
+The number is only as good as the
+assumptions: the real MFU depends
+
+30
+00:01:57,041 --> 00:02:00,875
+on batch, length and implementation,
+and must be measured.
+
+31
+00:02:01,983 --> 00:02:06,797
+In a spatial TSU, each variable has
+its own circuit, so there is no MFU
+
+32
+00:02:06,797 --> 00:02:11,406
+to lose: the energy per position
+and step is the number of cells per
+
+33
+00:02:11,406 --> 00:02:15,338
+position, times the sweeps,
+times the energy of each cell.
+
+34
+00:02:15,718 --> 00:02:19,529
+In the DTM of the previous lesson,
+about twenty nanojoules per
+
+35
+00:02:19,529 --> 00:02:23,094
+seven-hundred-eighty-four-pixel
+image is about twenty-five
+
+36
+00:02:23,094 --> 00:02:27,211
+picojoules per pixel, or about
+three picojoules per pixel and step.
+
+37
+00:02:27,591 --> 00:02:30,463
+Diffusion stops penalizing
+steps so heavily,
+
+38
+00:02:30,463 --> 00:02:33,400
+because each step is
+cheap physical dynamics.
+
+39
+00:02:34,517 --> 00:02:38,699
+One last lever: not all steps
+need the same precision.
+
+40
+00:02:39,079 --> 00:02:42,797
+The first ones, when the sample
+is almost pure noise, tolerate
+
+41
+00:02:42,797 --> 00:02:46,396
+fewer bits; the last ones, which
+fix the details, need more.
+
+42
+00:02:46,776 --> 00:02:50,662
+If cost per step grows with
+bits, running the first half of
+
+43
+00:02:50,662 --> 00:02:54,614
+thirty-two steps at half the
+bits saves twenty-five percent.
+
+44
+00:02:54,994 --> 00:02:57,741
+It is an assumption to validate
+against sample quality.
+
+45
+00:02:58,850 --> 00:03:02,856
+Use this model to report joules
+per token with all assumptions
+
+46
+00:03:02,856 --> 00:03:06,992
+explicit, compute the break-even
+number of steps before choosing
+
+47
+00:03:06,992 --> 00:03:10,352
+diffusion on a GPU, and
+estimate the energy on TSUs.
+
+48
+00:03:10,732 --> 00:03:13,445
+In lab thirteen you
+will sweep the number of
+
+49
+00:03:13,445 --> 00:03:16,281
+steps and report quality
+and projected energy.
+
+50
+00:03:17,383 --> 00:03:21,171
+Common mistakes: assuming
+the GPU's peak throughput.
+
+51
+00:03:21,551 --> 00:03:25,124
+Comparing diffusion and
+autoregression at different qualities.
+
+52
+00:03:25,504 --> 00:03:28,597
+Forgetting that diffusion
+repeats each position T times.
+
+53
+00:03:28,977 --> 00:03:33,402
+And mixing estimated TSU energies
+with measured GPU energies.
+
+54
+00:03:34,517 --> 00:03:37,505
+In summary: the energy
+per token of diffusion is
+
+55
+00:03:37,505 --> 00:03:40,057
+T times the energy per position and step.
+
+56
+00:03:40,437 --> 00:03:45,097
+On a GPU, diffusion gains utilization
+over autoregression but pays for
+
+57
+00:03:45,097 --> 00:03:49,491
+each step, with a break-even near
+ten steps under our assumptions.
+
+58
+00:03:49,871 --> 00:03:52,407
+On a spatial TSU the energy per step is
+
+59
+00:03:52,407 --> 00:03:55,073
+small and does not depend on utilization.
+
+60
+00:03:55,453 --> 00:03:58,947
+And precision schedules
+save on the noisy steps.
+
+61
+00:04:00,050 --> 00:04:05,026
+To practice: compute the energy per
+position for a seven-billion model.
+
+62
+00:04:05,406 --> 00:04:07,682
+Compute the break-even
+with another utilization.
+
+63
+00:04:08,062 --> 00:04:10,906
+Compute the energy per position on a TSU.
+
+64
+00:04:11,286 --> 00:04:14,596
+And explain why the first
+steps tolerate fewer bits.

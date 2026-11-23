@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.5}{El principio de Landauer}
+Constantes: $\kB=1{,}380649\times10^{-23}$ J/K, $\ln2\approx0{,}6931$, $1\,\text{eV}=1{,}602\times10^{-19}$ J.
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule $\kB T\ln2$ en julios y en eV a $T=300$ K, $T=77$ K y $T=4$ K.
+\item ¿Cuál es el calor mínimo para borrar 1 GB ($8\times10^9$ bits) a 300 K?
+\item Un bit tiene $p(0)=0{,}9$. ¿Cuál es el costo mínimo para reiniciarlo a 0 a 300 K?
+\item Indique si cada función es lógicamente reversible: NOT, AND, XOR de dos bits, $(a,b)\mapsto(a,a\oplus b)$ (CNOT).
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Derive el trabajo de compresión isotérmica de un gas de una partícula de $V$ a $V/2$ y explique por qué $Q=W$.
+\item Con entradas uniformes e independientes, calcule la información perdida por AND, OR y XOR; ¿cuál es su costo mínimo de Landauer?
+\item Un chip realiza $10^{18}$ borrados de bit por segundo a 300 K. ¿Qué potencia mínima impone Landauer? Compárela con 1 W.
+\item Usando la tabla de simulación de las notas, ajuste $\langle W\rangle=\kB T\ln2+a/\tau$ con los puntos $\tau\ge10$ y estime $a$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Para el potencial $V=E_b(x^4-2x^2)$, use la fórmula de Kramers $k\approx\frac{\mu\sqrt{V''(x_{\min})|V''(x_{\max})|}}{2\pi}e^{-E_b/\kB T}$ para estimar la vida media de un bit con $E_b=8\kB T$ y $E_b=40\kB T$ (unidades $\mu=\kB T=1$).
+\item Si el borrado falla con probabilidad $\epsilon$ (el bit queda en 1), muestre que la cota se convierte en $Q\ge\kB T\ln2\,[1-h(\epsilon)]$. Evalúe para $\epsilon=0{,}01$.
+\item Explique, con la descomposición calcular--copiar--descalcular de Bennett, cuántos bits deben borrarse al final de un sumador completo reversible que conserva solo la suma y el acarreo.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $300$ K: $2{,}871\times10^{-21}$ J $=0{,}0179$ eV. $77$ K: $7{,}37\times10^{-22}$ J $=0{,}0046$ eV. $4$ K: $3{,}83\times10^{-23}$ J $=2{,}39\times10^{-4}$ eV.
+
+\textbf{B2.} $8\times10^9\times2{,}871\times10^{-21}=2{,}30\times10^{-11}$ J.
+
+\textbf{B3.} $h(0{,}9)=-0{,}9\log_20{,}9-0{,}1\log_20{,}1=0{,}469$ bits. $Q_{\min}=0{,}469\cdot2{,}871\times10^{-21}=1{,}35\times10^{-21}$ J.
+
+\textbf{B4.} NOT: sí (biyección). AND: no. XOR de dos entradas a una salida: no (2 bits $\to$1 bit). CNOT: sí (es su propia inversa).
+
+\textbf{I1.} $W=-\int_V^{V/2}\frac{\kB T}{V'}\dd V'=\kB T\ln2$. Para un gas ideal $U$ depende solo de $T$; a $T$ constante $\Delta U=0$ y la primera ley da $Q=W$.
+
+\textbf{I2.} AND: salida con $P(1)=1/4$, $H=0{,}811$; pérdida $1{,}189$ bits. OR: $P(1)=3/4$, misma pérdida $1{,}189$ bits. XOR: $P(1)=1/2$, $H=1$; pérdida 1 bit. Costos: $1{,}189\,\kB T\ln2$, $1{,}189\,\kB T\ln2$ y $\kB T\ln2$.
+
+\textbf{I3.} $P=10^{18}\times2{,}871\times10^{-21}=2{,}87\times10^{-3}$ W, unas 350 veces menos que 1 W.
+
+\textbf{I4.} Con $x=1/\tau$ y $y=\langle W\rangle-\ln2$: puntos $(0{,}1;0{,}42)$, $(0{,}05;0{,}21)$, $(0{,}02;0{,}09)$, $(0{,}01;0{,}04)$. Mínimos cuadrados por el origen: $a=\sum xy/\sum x^2\approx(0{,}042+0{,}0105+0{,}0018+0{,}0004)/(0{,}01+0{,}0025+0{,}0004+0{,}0001)\approx4{,}2$.
+
+\textbf{A1.} $V''(\pm1)=8E_b$, $|V''(0)|=4E_b$; prefactor $\sqrt{32}E_b/2\pi\approx0{,}90E_b$. Con $E_b=8$: $k\approx7{,}2\,e^{-8}\approx2{,}4\times10^{-3}$, vida media $\sim400$ unidades de tiempo. Con $E_b=40$: $k\approx36\,e^{-40}\approx1{,}5\times10^{-16}$, vida media $\sim7\times10^{15}$. La memoria pasa de volátil a prácticamente permanente: la confiabilidad exige barreras de decenas de $\kB T$.
+
+\textbf{A2.} La entropía final de la memoria es $\kB\ln2\,h(\epsilon)$, así que $\Delta S_{\text{mem}}=-\kB\ln2\,[1-h(\epsilon)]$ y la segunda ley da la cota. Para $\epsilon=0{,}01$: $h=0{,}0808$, $Q\ge0{,}919\,\kB T\ln2$.
+
+\textbf{A3.} El sumador completo mapea 3 bits $(a,b,c_{\text{in}})$ a 2 bits (suma, acarreo): no es inyectivo. En la versión de Bennett se calcula de forma reversible guardando una entrada (p. ej. $a$) como basura, se copian suma y acarreo, y se descalcula. Si al final se quiere conservar solo la salida, debe borrarse la información que falta para reconstruir la entrada: en promedio $3-H(\text{suma},\text{acarreo})=3-1{,}811=1{,}19$ bits con entradas uniformes (las salidas $(s,c)$ tienen probabilidades $1/8,3/8,3/8,1/8$).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Una memoria de $k$ niveles (pdit) uniformes se reinicia. ¿Cuál es su cota de Landauer?
+\item Diseñe un protocolo de borrado en el pozo doble que no use inclinación sino un desplazamiento de un pozo. ¿Cambia la cota?
+\item Implemente en Python la simulación del pozo doble y reproduzca la tabla $\langle W\rangle(\tau)$ (laboratorio L2).
+\item ¿Por qué la máquina de Szilard no viola la segunda ley? Escriba el balance completo del ciclo.
+\end{enumerate}
+\end{document}

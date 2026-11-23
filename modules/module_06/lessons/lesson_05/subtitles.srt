@@ -1,0 +1,309 @@
+1
+00:00:00,350 --> 00:00:02,041
+Lección 6.5.
+
+2
+00:00:02,421 --> 00:00:03,600
+Modelos de tiempo.
+
+3
+00:00:04,717 --> 00:00:08,901
+La complejidad de la lección anterior
+contaba solo la evolución analógica.
+
+4
+00:00:09,281 --> 00:00:13,861
+Pero la matriz vive en un computador
+digital, y la solución debe volver a él.
+
+5
+00:00:14,241 --> 00:00:17,757
+Un modelo de tiempo honesto
+suma tres partes: cargar el
+
+6
+00:00:17,757 --> 00:00:21,530
+problema, dejar evolucionar al
+sistema y leer el resultado.
+
+7
+00:00:21,910 --> 00:00:26,090
+Hoy veremos que la primera parte, la
+compilación, suele ser la más cara.
+
+8
+00:00:27,217 --> 00:00:32,225
+Primero, la compilación: cada uno
+de los d² elementos de A pasa por un
+
+9
+00:00:32,225 --> 00:00:36,948
+convertidor digital analógico, un
+DAC, para fijar un acoplamiento.
+
+10
+00:00:37,328 --> 00:00:41,153
+Segundo, la dinámica analógica:
+equilibrar y promediar, un
+
+11
+00:00:41,153 --> 00:00:44,583
+tiempo proporcional a d por
+el tiempo de relajación.
+
+12
+00:00:44,963 --> 00:00:48,372
+Tercero, la lectura: los
+d valores de la solución
+
+13
+00:00:48,372 --> 00:00:51,920
+pasan por un convertidor
+analógico digital, un ADC.
+
+14
+00:00:52,300 --> 00:00:55,841
+La compilación crece como d²;
+los métodos digitales no la
+
+15
+00:00:55,841 --> 00:00:58,948
+necesitan, porque la matriz
+ya está en su memoria.
+
+16
+00:01:00,050 --> 00:01:02,657
+¿Qué fija el tiempo de
+relajación en un circuito?
+
+17
+00:01:03,037 --> 00:01:06,810
+La constante RC, resistencia
+por capacitancia.
+
+18
+00:01:07,190 --> 00:01:11,301
+Con un microsegundo, el núcleo analógico
+es lento comparado con la carga.
+
+19
+00:01:11,681 --> 00:01:14,960
+Con diez nanosegundos, típico
+de un circuito integrado
+
+20
+00:01:14,960 --> 00:01:17,754
+pequeño, la dinámica es
+cien veces más rápida.
+
+21
+00:01:18,134 --> 00:01:20,693
+Paradójicamente, cuanto más rápido es el
+
+22
+00:01:20,693 --> 00:01:23,508
+núcleo analógico, más
+pesa la parte digital.
+
+23
+00:01:24,617 --> 00:01:29,211
+Hagamos números con supuestos explícitos:
+mil millones de valores por segundo en
+
+24
+00:01:29,211 --> 00:01:33,804
+los convertidores, y una dinámica de
+veinte tiempos de relajación por dimensión,
+
+25
+00:01:33,804 --> 00:01:37,365
+escala que sale de la simulación
+de la lección seis punto uno.
+
+26
+00:01:37,745 --> 00:01:41,625
+Con dimensión mil y RC de un
+microsegundo, cargar toma un
+
+27
+00:01:41,625 --> 00:01:46,118
+milisegundo y la dinámica veinte:
+la carga es el cinco por ciento.
+
+28
+00:01:46,497 --> 00:01:49,725
+Con diez nanosegundos, la
+dinámica baja a dos décimas de
+
+29
+00:01:49,725 --> 00:01:53,357
+milisegundo y la carga pasa a
+ser el ochenta y tres por ciento.
+
+30
+00:01:53,737 --> 00:01:56,703
+El cruce ocurre en una
+dimensión de veinte mil en el
+
+31
+00:01:56,703 --> 00:01:59,442
+primer caso, y de solo
+doscientos en el segundo.
+
+32
+00:02:00,550 --> 00:02:02,708
+La solución clásica es amortizar.
+
+33
+00:02:03,088 --> 00:02:06,428
+Si la matriz no cambia y hay
+que resolver muchos sistemas
+
+34
+00:02:06,428 --> 00:02:09,885
+con distintos lados derechos,
+se carga una sola vez y luego
+
+35
+00:02:09,885 --> 00:02:12,874
+cada solución cuesta solo
+la dinámica y la lectura.
+
+36
+00:02:13,253 --> 00:02:16,784
+Con cien lados derechos, en
+el caso rápido, el tiempo por
+
+37
+00:02:16,784 --> 00:02:20,378
+solución baja de uno coma dos
+milisegundos a cero coma dos
+
+38
+00:02:20,378 --> 00:02:23,723
+uno, y la carga pasa a ser
+menos del cinco por ciento.
+
+39
+00:02:24,103 --> 00:02:27,002
+Al revés, en un método
+de Newton donde la matriz
+
+40
+00:02:27,002 --> 00:02:30,143
+cambia en cada paso, la
+compilación se paga siempre.
+
+41
+00:02:31,250 --> 00:02:35,472
+Aifer y colaboradores construyeron
+un modelo de tiempo completo, con
+
+42
+00:02:35,472 --> 00:02:39,509
+todas las operaciones digitales,
+de conversión y analógicas, y lo
+
+43
+00:02:39,509 --> 00:02:43,048
+compararon con gradiente
+conjugado y Cholesky en una GPU.
+
+44
+00:02:43,428 --> 00:02:46,722
+En dimensión cien, el
+método termodinámico pierde.
+
+45
+00:02:47,102 --> 00:02:50,851
+En dimensiones de mil y cinco
+mil se vuelve competitivo, sobre
+
+46
+00:02:50,851 --> 00:02:54,237
+todo al principio, cuando
+basta una solución aproximada.
+
+47
+00:02:54,617 --> 00:02:58,398
+Y advierten que su modelo aún no
+incluye la imprecisión analógica.
+
+48
+00:02:59,517 --> 00:03:04,277
+Para diseñar alrededor de la compilación:
+reutilizar la matriz con muchos lados
+
+49
+00:03:04,277 --> 00:03:08,797
+derechos, actualizar solo partes de
+baja dimensión en vez de recargar todo,
+
+50
+00:03:09,177 --> 00:03:13,365
+usar bancos paralelos de convertidores
+y memoria de acoplamientos en el chip.
+
+51
+00:03:13,745 --> 00:03:18,178
+En el laboratorio nueve añadirás un
+modelo de tiempo y encontrarás el cruce.
+
+52
+00:03:19,283 --> 00:03:22,439
+Errores comunes: reportar
+solo el tiempo analógico.
+
+53
+00:03:22,818 --> 00:03:26,624
+Suponer que un núcleo más rápido
+siempre ayuda de extremo a extremo.
+
+54
+00:03:27,004 --> 00:03:30,250
+Olvidar que la línea base
+digital no paga transferencia.
+
+55
+00:03:30,630 --> 00:03:34,154
+Y recargar toda la matriz cuando
+solo cambió el lado derecho.
+
+56
+00:03:35,283 --> 00:03:39,373
+En resumen: el tiempo total es
+carga más dinámica más lectura.
+
+57
+00:03:39,753 --> 00:03:44,604
+La carga crece como d² y domina
+cuando el núcleo analógico es
+
+58
+00:03:44,604 --> 00:03:49,216
+rápido; en nuestro modelo, el
+cruce está en d* = 20 τ_r B.
+
+59
+00:03:49,596 --> 00:03:52,427
+Amortizar sobre muchos
+lados derechos lo resuelve.
+
+60
+00:03:53,550 --> 00:03:57,512
+Para practicar: escribe el tiempo
+total en función de la dimensión.
+
+61
+00:03:57,892 --> 00:03:59,039
+Encuentra el cruce.
+
+62
+00:03:59,419 --> 00:04:02,517
+Calcula el tiempo por solución
+con varios lados derechos.
+
+63
+00:04:02,897 --> 00:04:06,863
+Y explica por qué un núcleo más
+rápido hace dominar la compilación.

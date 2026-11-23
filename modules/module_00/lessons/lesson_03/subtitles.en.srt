@@ -1,0 +1,476 @@
+1
+00:00:00,350 --> 00:00:01,995
+Lesson 0.3.
+
+2
+00:00:02,375 --> 00:00:03,826
+Probability refresher.
+
+3
+00:00:04,950 --> 00:00:08,453
+A thermodynamic computer does
+not return exact numbers:
+
+4
+00:00:08,453 --> 00:00:11,702
+it returns samples from a
+probability distribution.
+
+5
+00:00:12,082 --> 00:00:15,910
+To understand what it computes,
+how noisy its answer is and how
+
+6
+00:00:15,910 --> 00:00:19,373
+much information it contains,
+we need a precise language.
+
+7
+00:00:19,753 --> 00:00:23,854
+In this lesson we review the
+pieces we will use all semester:
+
+8
+00:00:23,854 --> 00:00:27,954
+Bernoulli, categorical and
+Gaussian variables, their moments,
+
+9
+00:00:27,954 --> 00:00:31,450
+Shannon entropy and the
+Kullback–Leibler divergence.
+
+10
+00:00:32,550 --> 00:00:37,968
+Let's start with a biased coin that
+comes up one with probability p = 0.7.
+
+11
+00:00:38,348 --> 00:00:39,914
+It is a Bernoulli variable.
+
+12
+00:00:40,294 --> 00:00:43,531
+Let's flip it many times and
+track the fraction of ones.
+
+13
+00:00:43,911 --> 00:00:47,468
+At first the curve
+swings a lot, but as the
+
+14
+00:00:47,468 --> 00:00:50,777
+number of flips grows it approaches 0.7.
+
+15
+00:00:51,157 --> 00:00:53,747
+This is the law of large
+numbers: the average of
+
+16
+00:00:53,747 --> 00:00:56,175
+many samples converges
+to the expected value.
+
+17
+00:00:56,555 --> 00:01:00,419
+If instead of two outcomes there
+are K, like a die, we have a
+
+18
+00:01:00,419 --> 00:01:05,043
+categorical variable, described by a
+probability vector that sums to one.
+
+19
+00:01:06,150 --> 00:01:08,505
+Now let's add up many Bernoulli variables.
+
+20
+00:01:08,885 --> 00:01:12,788
+If we add twenty flips and repeat
+the experiment thousands of
+
+21
+00:01:12,788 --> 00:01:16,052
+times, the histogram of
+the sum takes a bell shape.
+
+22
+00:01:16,432 --> 00:01:19,997
+The green curve is a
+Gaussian with the same
+
+23
+00:01:19,997 --> 00:01:23,810
+mean, n p, and the same
+variance, n p (1 − p).
+
+24
+00:01:24,190 --> 00:01:27,313
+This is the central limit
+theorem: sums of many
+
+25
+00:01:27,313 --> 00:01:30,303
+independent contributions
+tend to a Gaussian.
+
+26
+00:01:30,683 --> 00:01:33,096
+That is why thermal noise, the sum of
+
+27
+00:01:33,096 --> 00:01:36,096
+countless microscopic
+collisions, is Gaussian.
+
+28
+00:01:36,476 --> 00:01:46,318
+The density is p(x) =
+exp(−(x−μ)²/2σ²)/√(2πσ²).
+
+29
+00:01:47,450 --> 00:01:51,900
+In several dimensions, the point
+cloud of a standard Gaussian is
+
+30
+00:01:51,900 --> 00:01:55,794
+round: each coordinate is
+independent with variance one.
+
+31
+00:01:56,174 --> 00:02:00,585
+Let's apply a linear transformation
+A to each point and add a vector b.
+
+32
+00:02:00,965 --> 00:02:03,475
+The cloud stretches, rotates and shifts.
+
+33
+00:02:03,855 --> 00:02:08,772
+The new mean is b, and the
+new covariance matrix is A Aᵀ.
+
+34
+00:02:09,152 --> 00:02:12,519
+The drawn ellipse encloses
+the region where most of the
+
+35
+00:02:12,519 --> 00:02:15,886
+probability lives: its axes
+are the eigenvectors of the
+
+36
+00:02:15,886 --> 00:02:19,865
+covariance, and its lengths, the
+square roots of the eigenvalues.
+
+37
+00:02:20,245 --> 00:02:23,079
+This transformation
+rule is the basis of the
+
+38
+00:02:23,079 --> 00:02:26,428
+thermodynamic linear solver
+we will see in unit six.
+
+39
+00:02:27,550 --> 00:02:29,825
+Moments summarize a distribution.
+
+40
+00:02:30,205 --> 00:02:33,063
+The first moment is the
+mean, the center of mass.
+
+41
+00:02:33,443 --> 00:02:37,147
+The second central moment is the
+variance, which measures the width.
+
+42
+00:02:37,527 --> 00:02:41,112
+For a Gaussian, the mean and the
+covariance determine everything.
+
+43
+00:02:41,492 --> 00:02:45,512
+This will have a deep consequence:
+a physical system relaxing
+
+44
+00:02:45,512 --> 00:02:49,335
+toward a Gaussian stores the
+answer to a linear problem in
+
+45
+00:02:49,335 --> 00:02:52,696
+its mean, and the inverse
+matrix in its covariance.
+
+46
+00:02:53,817 --> 00:02:55,867
+How much information
+does an outcome carry?
+
+47
+00:02:56,247 --> 00:03:01,000
+Shannon proposed measuring it by surprise,
+minus the log of its probability.
+
+48
+00:03:01,380 --> 00:03:05,043
+A certain event is no surprise;
+a rare one is very surprising.
+
+49
+00:03:05,423 --> 00:03:11,459
+Entropy is the average
+surprise: H = −Σ p log p.
+
+50
+00:03:11,839 --> 00:03:15,424
+For a coin, the curve is
+zero if the outcome is
+
+51
+00:03:15,424 --> 00:03:19,314
+certain and peaks at one
+bit when the coin is fair.
+
+52
+00:03:19,694 --> 00:03:22,974
+For a Gaussian, entropy
+grows with the log of the
+
+53
+00:03:22,974 --> 00:03:26,120
+standard deviation: wider
+means more uncertain.
+
+54
+00:03:27,250 --> 00:03:31,215
+To compare two distributions
+we use the Kullback–Leibler
+
+55
+00:03:31,215 --> 00:03:35,958
+divergence: the average, under p,
+of the log of the ratio p over q.
+
+56
+00:03:36,338 --> 00:03:39,061
+It measures how many
+extra bits we pay if we
+
+57
+00:03:39,061 --> 00:03:41,970
+encode data from p using
+a code designed for q.
+
+58
+00:03:42,350 --> 00:03:44,861
+It is always greater than
+or equal to zero, and
+
+59
+00:03:44,861 --> 00:03:47,159
+is zero only if the
+distributions coincide.
+
+60
+00:03:47,539 --> 00:03:49,994
+But it is not a distance:
+it is not symmetric.
+
+61
+00:03:50,374 --> 00:03:53,214
+Watch the two numbers
+as the orange Gaussian
+
+62
+00:03:53,214 --> 00:03:55,924
+moves and widens: they change differently.
+
+63
+00:03:57,050 --> 00:03:58,316
+Let's do two calculations.
+
+64
+00:03:58,696 --> 00:04:04,586
+The entropy of a coin with
+p = 0.9 is minus 0.9 times
+
+65
+00:04:04,586 --> 00:04:09,920
+log base two of 0.9, minus
+0.1 times log of 0.1.
+
+66
+00:04:10,300 --> 00:04:13,470
+The result is 0.47 bits.
+
+67
+00:04:13,850 --> 00:04:16,939
+Second: the divergence between
+a standard normal and a
+
+68
+00:04:16,939 --> 00:04:19,684
+normal with mean one and
+standard deviation two.
+
+69
+00:04:20,064 --> 00:04:27,230
+The closed form gives log of two, plus a
+quarter, minus a half: about 0.44 nats.
+
+70
+00:04:28,350 --> 00:04:30,570
+These pieces appear throughout the course.
+
+71
+00:04:30,950 --> 00:04:33,162
+The pbit is a Bernoulli variable whose
+
+72
+00:04:33,162 --> 00:04:35,665
+probability is controlled
+by a local field.
+
+73
+00:04:36,045 --> 00:04:40,919
+The final state of the Ornstein–Uhlenbeck
+process is a multivariate Gaussian.
+
+74
+00:04:41,299 --> 00:04:43,692
+Entropy sets the Landauer cost.
+
+75
+00:04:44,072 --> 00:04:47,381
+And the KL divergence
+appears in Boltzmann machine
+
+76
+00:04:47,381 --> 00:04:51,220
+learning, in diffusion models
+and in the natural gradient.
+
+77
+00:04:52,350 --> 00:04:55,018
+In the next lesson we will see symmetric
+
+78
+00:04:55,018 --> 00:04:59,219
+positive-definite matrices, which
+shape the covariance ellipse.
+
+79
+00:04:59,599 --> 00:05:04,742
+Then we will study Markov chains,
+where distributions evolve in time.
+
+80
+00:05:05,122 --> 00:05:09,815
+In unit one we will connect Shannon
+entropy with Gibbs entropy, and in unit
+
+81
+00:05:09,815 --> 00:05:14,195
+two we will learn to put error bars
+on averages of correlated samples.
+
+82
+00:05:15,317 --> 00:05:22,137
+Frequent mistakes: the covariance of
+A y plus b is A Aᵀ, not A squared.
+
+83
+00:05:22,517 --> 00:05:26,667
+The KL divergence is not a distance,
+because it is not symmetric.
+
+84
+00:05:27,047 --> 00:05:30,198
+Watch the units: with
+log base two we measure
+
+85
+00:05:30,198 --> 00:05:32,859
+in bits, with the natural log in nats.
+
+86
+00:05:33,239 --> 00:05:37,423
+And remember that the differential
+entropy of a continuous density
+
+87
+00:05:37,423 --> 00:05:41,164
+can be negative, unlike the
+entropy of a discrete variable.
+
+88
+00:05:42,283 --> 00:05:43,116
+In summary:
+
+89
+00:05:43,496 --> 00:05:47,658
+Bernoulli, categorical and Gaussian
+are the basic variables of the course.
+
+90
+00:05:48,038 --> 00:05:51,047
+A linear transformation takes a standard
+
+91
+00:05:51,047 --> 00:05:54,657
+Gaussian to one with mean
+b and covariance A Aᵀ.
+
+92
+00:05:55,037 --> 00:05:59,437
+Entropy measures average surprise, and
+the KL divergence measures how much
+
+93
+00:05:59,437 --> 00:06:03,183
+one distribution differs from
+another, without being symmetric.
+
+94
+00:06:04,317 --> 00:06:08,774
+To practice: find the mean
+and covariance of A y plus b.
+
+95
+00:06:09,154 --> 00:06:13,391
+Compute the entropy of a Bernoulli
+and of a d-dimensional Gaussian.
+
+96
+00:06:13,771 --> 00:06:16,649
+Compare the two KL
+divergences between a normal
+
+97
+00:06:16,649 --> 00:06:19,405
+with variance one and
+one with variance four.
+
+98
+00:06:19,785 --> 00:06:22,637
+And compute how many flips
+you need to estimate a
+
+99
+00:06:22,637 --> 00:06:25,606
+probability with a standard
+error of one hundredth.

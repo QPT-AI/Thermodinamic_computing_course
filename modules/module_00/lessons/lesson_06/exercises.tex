@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.6}{Análisis de Fourier en grupos abelianos finitos}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item (Pensum, Ap. A.6) Calcule $\sum_{j=0}^{r-1}e^{2\pi ijk/r}$ para $k$ entero.
+\item Verifique $\chi_k(x+y)=\chi_k(x)\chi_k(y)$ y $\chi_k\chi_l=\chi_{k+l}$.
+\item Calcule la DFT de $f=(1,0,0,0)$ y de $f=(1,1,1,1)$ con $r=4$.
+\item Para la caminata perezosa en $\Z/8$, calcule los $\lambda_k$ y la brecha espectral.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Demuestre $\widehat{f*g}=\hat f\hat g$ para la convolución en $\Z/r\Z$.
+\item Calcule $p_n(0)$ para la caminata perezosa en $\Z/4$ en forma cerrada y verifique $p_n(0)\to1/4$.
+\item Describa los caracteres de $\Z/2\times\Z/2$ y escriba su tabla de valores.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Combinatoriamente, la caminata perezosa da $p_n(0)=\frac1{4^n}\sum_{m\equiv0\,(r)}\binom{2n}{n+m}$. Comparando con la forma espectral, deduzca una identidad para $\sum_k\cos^{2n}(\pi k/r)$. (Anticipo de la lección 7.5 y del ejercicio 5 de L9.)
+\item Para la caminata con generadores $\pm2^t$, $t=0,\dots,M$, muestre que $\lambda_k=\frac12\big(1+\frac1{M+1}\sum_t\cos\frac{2\pi k2^t}{r}\big)$ si se usa una caminata semiperezosa que elige $t$ uniforme y luego $\pm$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $r$ si $r\mid k$; $0$ en otro caso (suma geométrica).
+
+\textbf{B2.} $e^{2\pi ik(x+y)/r}=e^{2\pi ikx/r}e^{2\pi iky/r}$; $e^{2\pi ikx/r}e^{2\pi ilx/r}=e^{2\pi i(k+l)x/r}$.
+
+\textbf{B3.} $(1,0,0,0)\mapsto(1,1,1,1)$; $(1,1,1,1)\mapsto(4,0,0,0)$.
+
+\textbf{B4.} $\lambda_k=\frac12(1+\cos\frac{\pi k}{4})$: $1;\ 0{,}854;\ 0{,}5;\ 0{,}146;\ 0;\ 0{,}146;\ 0{,}5;\ 0{,}854$. Brecha $1-0{,}854=0{,}146$.
+
+\textbf{I1.} $\widehat{f*g}(k)=\sum_x\sum_yf(y)g(x-y)\overline{\chi_k(x)}=\sum_yf(y)\overline{\chi_k(y)}\sum_zg(z)\overline{\chi_k(z)}$ con $z=x-y$, usando $\chi_k(y+z)=\chi_k(y)\chi_k(z)$.
+
+\textbf{I2.} $\lambda=(1,\frac12,0,\frac12)$: $p_n(0)=\frac14(1+2\cdot2^{-n}+0^n)$; para $n\ge1$, $p_n(0)=\frac14+\frac12\,2^{-n}\to\frac14$.
+
+\textbf{I3.} Cuatro caracteres $\chi_{(a,b)}(x,y)=(-1)^{ax+by}$:
+$\begin{array}{c|cccc}&(0,0)&(1,0)&(0,1)&(1,1)\\\hline\chi_{00}&1&1&1&1\\\chi_{10}&1&-1&1&-1\\\chi_{01}&1&1&-1&-1\\\chi_{11}&1&-1&-1&1\end{array}$
+
+\textbf{A1.} $\lambda_k=\cos^2(\pi k/r)$, así $\frac1r\sum_k\cos^{2n}(\pi k/r)=\frac1{4^n}\sum_{m\equiv0\,(r)}\binom{2n}{n+m}$, con $m$ recorriendo los enteros con $|m|\le n$. Es un caso de la identidad del pensum $\sum_j\cos^n(2\pi j/m)=\frac m{2^n}\sum_k\binom{n}{(km+n)/2}$.
+
+\textbf{A2.} Con probabilidad $\frac12$ se queda; si no, elige $t$ uniforme en $\{0,\dots,M\}$ y un signo uniforme, de modo que cada paso $\pm2^t$ tiene probabilidad $\frac1{4(M+1)}$. Entonces $\hat\mu(k)=\frac12+\sum_t\frac{2\cos(2\pi k2^t/r)}{4(M+1)}=\frac12\big(1+\frac1{M+1}\sum_t\cos\frac{2\pi k2^t}{r}\big)$.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Implemente la DFT por definición y compare con \texttt{numpy.fft.fft} (convención de signos).
+\item Simule la caminata perezosa en $\Z/33$ y verifique numéricamente $p_n(0)=\frac1{33}\sum_k\lambda_k^n$.
+\item Calcule numéricamente $1/p_n(e)$ para la caminata de A2 con $r=33$, $M=4$ y observe desde qué $n$ el redondeo da 33.
+\end{enumerate}
+\end{document}

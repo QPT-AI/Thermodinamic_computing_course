@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.2}{Inversa de matrices y ecuaciones de Lyapunov}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} estimar $A^{-1}$ desde la covarianza de equilibrio; resolver ecuaciones de Lyapunov con deriva no simétrica y ruido
+con forma; entender por qué los segundos momentos convergen lento y por qué la temperatura no influye en el error relativo.
+\textbf{Prerrequisitos:} 2.6, 6.1.
+
+\section{Inversa desde la covarianza}
+Con $b=0$, el proceso $dx=-Ax\,dt+\sqrt{2/\beta}\,dW$ tiene media cero y covarianza estacionaria $\Sigma_s=\beta^{-1}A^{-1}$. Protocolo: equilibrar, calcular
+cada producto $x_ix_j$ con multiplicadores analógicos y promediarlo con integradores ($d^2$ de cada uno):
+\[A^{-1}\approx\frac\beta\tau\int_{t_0}^{t_0+\tau}x(t)x(t)^\top dt.\]
+
+\section{La temperatura no influye}
+Si $x$ es solución a temperatura $T$, $\sqrt{T'/T}\,x$ lo es a $T'$ (con el mismo ruido): $\hat\Sigma$ escala por $T'/T$ y $\beta\hat\Sigma$ no cambia. El error
+relativo depende solo de $\tau/\tau_r$. Ventana necesaria (sobreamortiguado):
+\[\tau=\frac{4\kappa\,d(d+1)}{(1-P_\varepsilon)\,\varepsilon^2}\,\tau_r\quad\Rightarrow\quad O(d^2\kappa\varepsilon^{-2})\ \text{frente a}\ O(d^\omega).\]
+
+\section{Simulación \evS}
+$d=10$, Wishart (semilla 0, $\kappa\approx22$), $dt=0{,}01$, $t_0=50$. Error relativo de Frobenius de $\beta\hat\Sigma$:
+\begin{center}\begin{tabular}{lcccc}\toprule
+$\tau$ & 100 & 300 & 1000 & 3000\\\midrule
+inversa ($k_BT=1$ y $0{,}1$, idénticos) & 50\,\% & 26\,\% & 24\,\% & 7\,\%\\
+Lyapunov ($C=I$) & 24\,\% & 13\,\% & 9\,\% & 4\,\%\\\bottomrule\end{tabular}\end{center}
+Una sola trayectoria: la curva es ruidosa y no monótona; la tendencia es $\propto\tau^{-1/2}$.
+
+\section{Ecuaciones de Lyapunov}
+\begin{definicion}[ (Lyapunov)]
+Si $M$ es estable (autovalores con parte real positiva en esta convención) y $dx=-Mx\,dt+C^{1/2}dW$, la covarianza estacionaria cumple
+\[M\Sigma+\Sigma M^\top=C.\]
+La inversa es el caso $M=A=A^\top$, $C=2\beta^{-1}I$.
+\end{definicion}
+Digital: Bartels--Stewart, $O(d^3)$; termodinámico: $O(d^2\kappa\varepsilon^{-2})$. Aparecen en control (gramianos de controlabilidad), análisis de estabilidad y
+filtros de Kalman estacionarios.
+
+\begin{aplicacion}
+Precondicionadores aproximados; covarianza posterior en inferencia bayesiana (6.6); gramianos. Laboratorio L9: inversa y Lyapunov frente a Cholesky y Bartels--Stewart.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Bajar la temperatura para mejorar la inversa. \quad Olvidar $b=0$ o no restar la media.
+\item Subestimar el hardware ($d^2$ multiplicadores). \quad Usar una deriva inestable.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem[25]{mel} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\bibitem{bs} R. H. Bartels y G. W. Stewart, Solution of the matrix equation $AX+XB=C$, \emph{Commun. ACM} 15, 820 (1972).
+\end{thebibliography}
+\end{document}

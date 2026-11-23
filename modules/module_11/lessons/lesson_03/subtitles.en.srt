@@ -1,0 +1,307 @@
+1
+00:00:00,350 --> 00:00:02,072
+Lesson 11.3.
+
+2
+00:00:02,452 --> 00:00:05,559
+Thermalizers: compiling
+stochastic programs.
+
+3
+00:00:06,683 --> 00:00:10,518
+Torx describes a stochastic
+program as a circuit of gates.
+
+4
+00:00:10,898 --> 00:00:14,213
+But the Z1 chip does not
+execute arbitrary gates: it only
+
+5
+00:00:14,213 --> 00:00:17,470
+knows how to sample Ising
+models with local connections.
+
+6
+00:00:17,850 --> 00:00:20,570
+How is a program translated
+into what the chip can do?
+
+7
+00:00:20,950 --> 00:00:25,123
+Extropic's companion paper,
+thermalizing stochastic programs,
+
+8
+00:00:25,123 --> 00:00:29,296
+proposes compiling each gate
+into a small energy-based model.
+
+9
+00:00:30,417 --> 00:00:31,593
+The idea is clamping.
+
+10
+00:00:31,973 --> 00:00:36,497
+We take an energy-based model with
+input, hidden and output spins.
+
+11
+00:00:36,877 --> 00:00:41,958
+We clamp the inputs to x, let the
+rest thermalize and read the outputs.
+
+12
+00:00:42,338 --> 00:00:46,205
+The distribution of the outputs
+given the input is a transition
+
+13
+00:00:46,205 --> 00:00:49,521
+kernel: the hidden spins are
+marginalized, never read.
+
+14
+00:00:49,901 --> 00:00:53,331
+If we add to the energy any
+function of the input alone,
+
+15
+00:00:53,331 --> 00:00:56,394
+the kernel does not change:
+it is a gauge freedom.
+
+16
+00:00:57,517 --> 00:01:03,118
+To compile, we minimize the Kullback-Leibler
+divergence from the target kernel to the
+
+17
+00:01:03,118 --> 00:01:07,928
+model kernel, averaged over inputs:
+it is conditional maximum likelihood.
+
+18
+00:01:08,308 --> 00:01:12,060
+The gradient has two phases,
+as in contrastive divergence.
+
+19
+00:01:12,440 --> 00:01:16,652
+In the positive phase we clamp input
+and output and sample the hidden spins.
+
+20
+00:01:17,032 --> 00:01:19,651
+In the negative phase
+we clamp only the input.
+
+21
+00:01:20,031 --> 00:01:22,181
+Each gate is trained separately.
+
+22
+00:01:23,283 --> 00:01:27,928
+We test it ourselves: a random target
+kernel from two bits to two bits,
+
+23
+00:01:27,928 --> 00:01:32,506
+compiled into a Boltzmann machine
+with exact gradients by enumeration.
+
+24
+00:01:32,886 --> 00:01:36,719
+Without hidden spins, the total
+variation distance stays at
+
+25
+00:01:36,719 --> 00:01:40,292
+0.22: a pairwise Ising model
+cannot express the kernel.
+
+26
+00:01:40,672 --> 00:01:45,358
+With one hidden spin, 0.012;
+with two, practically zero.
+
+27
+00:01:45,738 --> 00:01:51,750
+And if we cap the strength of the
+couplings, as in a real chip, the
+
+28
+00:01:51,750 --> 00:01:57,403
+error rises: 0.2 with a cap of
+0.25, 0.003 with a cap of three.
+
+29
+00:01:58,517 --> 00:02:01,960
+A deep program chains
+many compiled kernels.
+
+30
+00:02:02,340 --> 00:02:06,884
+By the chain rule, the divergence
+over trajectories is the sum of the
+
+31
+00:02:06,884 --> 00:02:11,494
+errors of each kernel, and any final
+readout has an error less than or
+
+32
+00:02:11,494 --> 00:02:15,050
+equal: in the worst case it
+grows linearly with depth.
+
+33
+00:02:15,430 --> 00:02:18,145
+But if the kernels contract,
+the error saturates.
+
+34
+00:02:18,525 --> 00:02:23,432
+We see it: with an almost
+deterministic program, the error
+
+35
+00:02:23,432 --> 00:02:28,340
+goes from 0.02 to 0.31 in
+thirty steps; with a contracting
+
+36
+00:02:28,340 --> 00:02:32,656
+program, it stays at 0.003,
+under the bound of 0.1.
+
+37
+00:02:33,783 --> 00:02:36,668
+The paper demonstrates the framework in
+
+38
+00:02:36,668 --> 00:02:40,439
+simulation with THRML, on
+a model of the Z1 device.
+
+39
+00:02:40,819 --> 00:02:46,348
+In a three-body Ising model compiled
+with hidden spins, the stationary
+
+40
+00:02:46,348 --> 00:02:51,245
+error drops from 0.46 to 0.024
+as the coupling cap is relaxed.
+
+41
+00:02:51,625 --> 00:02:57,735
+In a Gaussian circuit for experiment
+design, the compiled program achieves an
+
+42
+00:02:57,735 --> 00:03:03,289
+error of 0.259, equal to the exact
+posterior, against 0.305 at random.
+
+43
+00:03:03,669 --> 00:03:07,139
+The authors warn that every
+compiled program is approximate
+
+44
+00:03:07,139 --> 00:03:10,373
+and that there is no validation
+on a physical chip yet.
+
+45
+00:03:11,483 --> 00:03:15,537
+The workflow: write the program
+in torx, compile each gate into a
+
+46
+00:03:15,537 --> 00:03:19,903
+clamped model, distribute hidden
+spins and coupling caps, and validate
+
+47
+00:03:19,903 --> 00:03:23,832
+first each gate and then the
+measure that matters for the task.
+
+48
+00:03:24,212 --> 00:03:29,053
+A final tuning over trajectories can
+help, taking care not to reward cheating.
+
+49
+00:03:30,183 --> 00:03:32,843
+Common mistakes: expecting
+a pairwise Ising model
+
+50
+00:03:32,843 --> 00:03:35,176
+without hidden spins
+to express any kernel.
+
+51
+00:03:35,556 --> 00:03:38,847
+Ignoring the coupling caps
+and topology of the chip.
+
+52
+00:03:39,227 --> 00:03:41,354
+Relying only on the per-gate error.
+
+53
+00:03:41,734 --> 00:03:45,229
+And presenting a simulated
+compilation as hardware evidence.
+
+54
+00:03:46,350 --> 00:03:50,524
+In summary, a thermalizer realizes
+a stochastic kernel by clamping
+
+55
+00:03:50,524 --> 00:03:54,319
+the inputs of an energy-based
+model and reading its outputs.
+
+56
+00:03:54,699 --> 00:03:58,132
+It is compiled by minimizing
+a divergence with positive and
+
+57
+00:03:58,132 --> 00:04:01,332
+negative phases, and hidden
+spins give it expressivity.
+
+58
+00:04:01,712 --> 00:04:05,080
+Errors add up along the
+program, linearly in the
+
+59
+00:04:05,080 --> 00:04:08,518
+worst case, and saturate
+if the kernels contract.
+
+60
+00:04:09,650 --> 00:04:12,802
+To practice: write the
+kernel of a clamped model.
+
+61
+00:04:13,182 --> 00:04:14,928
+Explain the gauge freedom.
+
+62
+00:04:15,308 --> 00:04:17,103
+Name the phases of the gradient.
+
+63
+00:04:17,483 --> 00:04:20,711
+And bound the stationary error
+of a contracting program.

@@ -1,0 +1,419 @@
+1
+00:00:00,350 --> 00:00:02,000
+Lección 1.2.
+
+2
+00:00:02,380 --> 00:00:05,507
+Mecánica estadística y la
+distribución de Boltzmann.
+
+3
+00:00:06,617 --> 00:00:11,959
+Si este curso tuviera una sola fórmula,
+sería esta: la probabilidad de un estado
+
+4
+00:00:11,959 --> 00:00:16,768
+es proporcional a la exponencial de
+menos su energía dividida por k_B T.
+
+5
+00:00:17,148 --> 00:00:19,545
+Un chip termodinámico
+recibe una función de
+
+6
+00:00:19,545 --> 00:00:22,222
+energía y devuelve muestras
+de esa distribución.
+
+7
+00:00:22,602 --> 00:00:25,916
+En esta lección veremos de
+dónde sale, qué papel juega la
+
+8
+00:00:25,916 --> 00:00:28,939
+temperatura y por qué el
+número que la normaliza, la
+
+9
+00:00:28,939 --> 00:00:32,021
+función de partición, contiene
+toda la termodinámica.
+
+10
+00:00:33,150 --> 00:00:36,499
+Piensa en un sistema pequeño
+en contacto con un baño enorme.
+
+11
+00:00:36,879 --> 00:00:38,611
+La energía total está fija.
+
+12
+00:00:38,991 --> 00:00:42,430
+Cada unidad de energía que
+tiene el sistema se la quita al
+
+13
+00:00:42,430 --> 00:00:45,750
+baño, y el baño, al perder
+energía, pierde microestados.
+
+14
+00:00:46,130 --> 00:00:48,866
+Como la entropía del
+baño crece linealmente
+
+15
+00:00:48,866 --> 00:00:51,539
+con su energía, con pendiente uno sobre T,
+
+16
+00:00:51,919 --> 00:00:56,115
+su número de microestados cae
+exponencialmente: cada vez que
+
+17
+00:00:56,115 --> 00:01:00,381
+el sistema toma una porción E
+de energía, el número de formas
+
+18
+00:01:00,381 --> 00:01:03,947
+de arreglar el baño se
+multiplica por e^(−E/k_B T).
+
+19
+00:01:04,327 --> 00:01:06,183
+Las barras muestran ese conteo.
+
+20
+00:01:06,563 --> 00:01:08,931
+La probabilidad de un
+estado del sistema es
+
+21
+00:01:08,931 --> 00:01:12,181
+proporcional al número de
+microestados que le deja al baño.
+
+22
+00:01:12,561 --> 00:01:14,336
+Esa es la distribución de Boltzmann.
+
+23
+00:01:15,450 --> 00:01:19,583
+Ahora tomemos un paisaje de energía
+con dos valles de distinta profundidad.
+
+24
+00:01:19,963 --> 00:01:22,606
+La curva verde es la
+distribución de Boltzmann.
+
+25
+00:01:22,986 --> 00:01:25,752
+A temperatura alta, la exponencial es casi
+
+26
+00:01:25,752 --> 00:01:28,584
+plana y el sistema
+explora todo el paisaje.
+
+27
+00:01:28,964 --> 00:01:32,024
+Al enfriar, la probabilidad
+se concentra en los valles.
+
+28
+00:01:32,404 --> 00:01:35,656
+Y a temperatura muy baja,
+casi toda la probabilidad
+
+29
+00:01:35,656 --> 00:01:38,652
+cae en el valle más
+profundo, el mínimo global.
+
+30
+00:01:39,032 --> 00:01:42,266
+La temperatura es una perilla
+entre explorar y optimizar.
+
+31
+00:01:42,646 --> 00:01:45,559
+Esta misma idea es la base
+del recocido simulado.
+
+32
+00:01:46,683 --> 00:01:50,324
+Para que las probabilidades
+sumen uno dividimos por
+
+33
+00:01:50,324 --> 00:01:53,607
+Z, la suma de e^(−βE)
+sobre todos los estados,
+
+34
+00:01:53,987 --> 00:01:57,141
+con β igual a 1/k_B T. Z parece un simple
+
+35
+00:01:57,141 --> 00:02:00,986
+normalizador, pero codifica
+toda la termodinámica.
+
+36
+00:02:01,366 --> 00:02:06,139
+La energía libre es F = −k_B T ln Z.
+
+37
+00:02:06,519 --> 00:02:11,031
+La energía media es menos la derivada
+del logaritmo de Z respecto a β.
+
+38
+00:02:11,411 --> 00:02:14,330
+Y la varianza de la energía
+es la segunda derivada.
+
+39
+00:02:14,710 --> 00:02:17,849
+El problema es que Z suma
+sobre todos los estados:
+
+40
+00:02:17,849 --> 00:02:20,987
+para cien espines hay dos
+elevado a cien términos.
+
+41
+00:02:21,367 --> 00:02:24,345
+Por eso, en lugar de
+calcular Z, muestreamos.
+
+42
+00:02:25,450 --> 00:02:27,124
+Hay otra derivación elegante.
+
+43
+00:02:27,504 --> 00:02:30,051
+Busquemos la distribución
+con la máxima entropía
+
+44
+00:02:30,051 --> 00:02:32,385
+de Shannon que tenga
+una energía media fija.
+
+45
+00:02:32,765 --> 00:02:37,552
+Con multiplicadores de Lagrange, uno para
+la normalización y otro para la energía,
+
+46
+00:02:37,552 --> 00:02:41,755
+la condición de óptimo da que el
+logaritmo de p es lineal en la energía.
+
+47
+00:02:42,135 --> 00:02:47,660
+Es decir, p es exponencial en la energía,
+y el multiplicador es exactamente β.
+
+48
+00:02:48,040 --> 00:02:51,222
+La distribución de Boltzmann
+es la menos comprometida con
+
+49
+00:02:51,222 --> 00:02:53,957
+todo lo que no sabemos,
+excepto la energía media.
+
+50
+00:02:55,083 --> 00:02:58,192
+Un sistema de tres
+niveles con energías cero,
+
+51
+00:02:58,192 --> 00:03:00,954
+uno y dos, medidas en unidades de k_B T.
+
+52
+00:03:01,334 --> 00:03:05,693
+Los pesos de Boltzmann son
+uno, e^(−1) y e^(−2): uno,
+
+53
+00:03:05,693 --> 00:03:09,969
+cero coma tres seis ocho y
+cero coma uno tres cinco.
+
+54
+00:03:10,349 --> 00:03:14,295
+La función de partición es su
+suma, uno coma cinco cero tres.
+
+55
+00:03:14,675 --> 00:03:18,067
+Las probabilidades son cero
+coma seis seis cinco, cero
+
+56
+00:03:18,067 --> 00:03:20,893
+coma dos cuatro cinco
+y cero coma cero nueve.
+
+57
+00:03:21,273 --> 00:03:26,260
+La energía media es cero coma cuatro dos
+cinco, y la energía libre es menos el
+
+58
+00:03:26,260 --> 00:03:30,799
+logaritmo de uno coma cinco cero
+tres, unos menos cero coma cuatro uno.
+
+59
+00:03:31,917 --> 00:03:36,213
+Esta distribución es el lenguaje de
+programación del cómputo termodinámico.
+
+60
+00:03:36,593 --> 00:03:40,265
+Un chip recibe los parámetros de
+una energía y devuelve muestras.
+
+61
+00:03:40,645 --> 00:03:43,720
+En aprendizaje automático,
+los modelos basados en
+
+62
+00:03:43,720 --> 00:03:46,670
+energía aprenden esa
+energía a partir de datos.
+
+63
+00:03:47,050 --> 00:03:49,211
+En optimización, bajar la temperatura
+
+64
+00:03:49,211 --> 00:03:51,899
+concentra la distribución
+en el mínimo global.
+
+65
+00:03:52,279 --> 00:03:55,796
+Y con una energía cuadrática,
+la distribución de Boltzmann es
+
+66
+00:03:55,796 --> 00:03:58,794
+una gaussiana cuya media
+resuelve un sistema lineal.
+
+67
+00:03:59,917 --> 00:04:04,334
+En la próxima lección conectaremos esta
+distribución con la entropía de Gibbs.
+
+68
+00:04:04,714 --> 00:04:07,004
+En la unidad dos veremos que es el estado
+
+69
+00:04:07,004 --> 00:04:09,239
+estacionario de la dinámica de Langevin.
+
+70
+00:04:09,619 --> 00:04:13,150
+Y en la unidad cuatro la
+aplicaremos al modelo de Ising y al
+
+71
+00:04:13,150 --> 00:04:16,623
+pbit, que es la distribución
+de Boltzmann de un solo espín.
+
+72
+00:04:17,750 --> 00:04:21,690
+Atención: la fórmula da la
+probabilidad de un microestado; para un
+
+73
+00:04:21,690 --> 00:04:25,391
+macroestado hay que multiplicar
+por su número de microestados.
+
+74
+00:04:25,771 --> 00:04:29,471
+Sumar una constante a la energía
+no cambia las probabilidades.
+
+75
+00:04:29,851 --> 00:04:32,797
+Beta es uno sobre k_B T, no uno sobre T.
+
+76
+00:04:33,177 --> 00:04:36,424
+Y la distribución describe
+equilibrio con un baño: fuera
+
+77
+00:04:36,424 --> 00:04:39,208
+del equilibrio necesitaremos
+otras herramientas.
+
+78
+00:04:40,317 --> 00:04:45,042
+En resumen: un sistema en contacto
+con un baño visita cada estado con
+
+79
+00:04:45,042 --> 00:04:49,835
+probabilidad e^(−βE)/Z, porque eso
+maximiza los microestados del baño,
+
+80
+00:04:49,835 --> 00:04:53,533
+o equivalentemente la entropía
+con energía media fija.
+
+81
+00:04:53,913 --> 00:04:57,819
+La temperatura controla la forma
+de la distribución, y la función de
+
+82
+00:04:57,819 --> 00:05:01,899
+partición contiene la energía libre
+y todos los momentos de la energía.
+
+83
+00:05:03,017 --> 00:05:06,036
+Para practicar: resuelve
+el sistema de dos niveles.
+
+84
+00:05:06,416 --> 00:05:09,708
+Demuestra las fórmulas de la
+energía media y su varianza.
+
+85
+00:05:10,088 --> 00:05:12,087
+Cuenta los términos de la función de
+
+86
+00:05:12,087 --> 00:05:14,641
+partición para cien
+espines y para el chip Z1.
+
+87
+00:05:15,021 --> 00:05:19,300
+Y aplica Boltzmann a un resorte para
+obtener el teorema de equipartición.

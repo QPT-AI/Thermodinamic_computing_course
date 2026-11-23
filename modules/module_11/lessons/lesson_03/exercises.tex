@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{11.3}{Termalizadores}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba el núcleo hacia adelante de un EBM fijado.
+\item (B) ¿Por qué sumar $\lambda(x)$ a la energía no cambia el núcleo?
+\item (B) ¿Qué fases aparecen en el gradiente de compilación?
+\item (B) Cota del error estacionario con $\rho=0{,}85$ y error por paso $0{,}0155$.
+\item (I) Sin ocultos y con $x,y$ de un bit, ¿qué núcleos $P(y\mid x)$ puede expresar un Ising de pares? ¿Y con dos bits de salida?
+\item (I) Un programa de 60 núcleos con $\varepsilon_\ell=10^{-3}$ nats cada uno: cota de la KL sobre trayectorias.
+\item (A) Ejecute \texttt{termalizador.py} con otro objetivo y con conexiones $x$--$y$ prohibidas; ¿cuántos ocultos hacen falta?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\tilde P^F(y\mid x)=\sum_we^{-E(x,w,y)}/\sum_{w,y'}e^{-E(x,w,y')}$.
+
+\textbf{E2.} $e^{-\lambda(x)}$ aparece en numerador y denominador y se cancela.
+
+\textbf{E3.} Negativa (solo $x$ fijado) y positiva ($x$ e $y$ fijados, ocultos libres).
+
+\textbf{E4.} $0{,}0155/(1-0{,}85)\approx0{,}10$.
+
+\textbf{E5.} Un bit: cualquier núcleo (campo y acoplamiento ajustan las dos condicionales). Dos bits: las salidas solo se correlacionan por un término $y_1y_2$ fijo e
+independiente de $x$; núcleos con correlación dependiente de $x$ exigen ocultos.
+
+\textbf{E6.} $60\cdot10^{-3}=0{,}06$ nats.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

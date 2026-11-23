@@ -1,0 +1,298 @@
+1
+00:00:00,350 --> 00:00:02,102
+Lesson 4.3.
+
+2
+00:00:02,482 --> 00:00:03,503
+MCMC:
+
+3
+00:00:03,883 --> 00:00:05,825
+Metropolis–Hastings and Gibbs.
+
+4
+00:00:06,950 --> 00:00:11,188
+We already know we cannot compute the
+partition function of a large model.
+
+5
+00:00:11,568 --> 00:00:15,520
+The way out is to sample: build
+a Markov chain whose stationary
+
+6
+00:00:15,520 --> 00:00:19,722
+distribution is exactly the Boltzmann
+distribution, and let it run.
+
+7
+00:00:20,102 --> 00:00:23,058
+That is the Markov chain
+Monte Carlo method.
+
+8
+00:00:23,438 --> 00:00:27,181
+In this lesson we will see its
+two classic recipes and how to
+
+9
+00:00:27,181 --> 00:00:30,679
+parallelize them, which is
+exactly what a pbit chip does.
+
+10
+00:00:31,783 --> 00:00:35,144
+Metropolis proposes a
+change, for example flipping
+
+11
+00:00:35,144 --> 00:00:37,966
+a spin, and computes the energy change ΔE.
+
+12
+00:00:38,346 --> 00:00:40,577
+If the energy goes
+down, it always accepts.
+
+13
+00:00:40,957 --> 00:00:44,962
+If it goes up, it accepts
+with probability e^(−βΔE).
+
+14
+00:00:45,342 --> 00:00:49,815
+With that rule, the probability flow
+between two states is equal in both
+
+15
+00:00:49,815 --> 00:00:53,977
+directions: detailed balance holds
+with the Boltzmann distribution.
+
+16
+00:00:54,357 --> 00:00:56,782
+The nice part is that we only need energy
+
+17
+00:00:56,782 --> 00:00:59,266
+differences, never the partition function.
+
+18
+00:01:00,383 --> 00:01:03,908
+Gibbs sampling takes one
+variable and redraws it from
+
+19
+00:01:03,908 --> 00:01:07,300
+its conditional distribution,
+given all the others.
+
+20
+00:01:07,680 --> 00:01:11,688
+By the Markov blanket, that conditional
+depends only on the neighbors.
+
+21
+00:01:12,068 --> 00:01:20,203
+For an Ising spin it is P(s_i = +1) =
+σ(2βu_i), a sigmoid of the local field.
+
+22
+00:01:20,583 --> 00:01:24,880
+There are no rejections: each step
+produces a new sample of that variable.
+
+23
+00:01:25,260 --> 00:01:29,306
+And the sigmoid of the local field
+is exactly what a pbit implements.
+
+24
+00:01:30,417 --> 00:01:33,291
+Updating spins one by one is slow.
+
+25
+00:01:33,671 --> 00:01:35,693
+Can we update many at once?
+
+26
+00:01:36,073 --> 00:01:38,461
+Yes, as long as they
+are not neighbors: their
+
+27
+00:01:38,461 --> 00:01:40,638
+conditionals do not depend on each other.
+
+28
+00:01:41,018 --> 00:01:44,532
+We color the graph so that
+no two neighbors share a
+
+29
+00:01:44,532 --> 00:01:48,184
+color, and update all nodes
+of one color in parallel.
+
+30
+00:01:48,564 --> 00:01:52,740
+On a square lattice two colors
+suffice, like a chessboard.
+
+31
+00:01:53,120 --> 00:01:56,488
+That is chromatic Gibbs, and
+that is how a pbit chip works.
+
+32
+00:01:57,617 --> 00:02:00,444
+And if we update all spins simultaneously?
+
+33
+00:02:00,824 --> 00:02:05,162
+Each would use the old value of its
+neighbors, which are also changing.
+
+34
+00:02:05,542 --> 00:02:09,720
+The resulting chain no longer has
+Boltzmann as its stationary distribution.
+
+35
+00:02:10,100 --> 00:02:14,482
+At temperature three,
+chromatic Gibbs gives a mean
+
+36
+00:02:14,482 --> 00:02:18,689
+energy per spin of −0.82,
+and Metropolis, −0.79.
+
+37
+00:02:19,069 --> 00:02:24,304
+The fully parallel update
+gives 0.02: completely wrong.
+
+38
+00:02:25,417 --> 00:02:27,508
+An example of Metropolis acceptance.
+
+39
+00:02:27,888 --> 00:02:31,344
+On a square lattice at
+temperature three, flipping a spin
+
+40
+00:02:31,344 --> 00:02:35,225
+surrounded by four aligned neighbors
+raises the energy by eight.
+
+41
+00:02:35,605 --> 00:02:40,667
+The acceptance probability is
+e^(−8/3), about seven percent.
+
+42
+00:02:41,047 --> 00:02:44,868
+The same spin, with
+Gibbs, ends up against its
+
+43
+00:02:44,868 --> 00:02:49,354
+neighbors with probability
+σ(−8/3), about 6.5 percent.
+
+44
+00:02:49,734 --> 00:02:54,135
+The two chains differ in their
+steps, but agree on the distribution.
+
+45
+00:02:55,250 --> 00:03:00,737
+Pbit chips implement chromatic Gibbs
+in hardware, one color per clock phase.
+
+46
+00:03:01,117 --> 00:03:05,892
+THRML does block Gibbs
+over factor graphs on GPU.
+
+47
+00:03:06,272 --> 00:03:09,465
+And since the graph has
+bounded degree, few colors
+
+48
+00:03:09,465 --> 00:03:12,148
+suffice, which allows massive parallelism.
+
+49
+00:03:12,528 --> 00:03:15,339
+In lab five you will program it in JAX.
+
+50
+00:03:16,450 --> 00:03:19,540
+Frequent mistakes: updating
+neighbors at the same time.
+
+51
+00:03:19,920 --> 00:03:23,432
+Using a non-symmetric proposal
+without the Hastings correction.
+
+52
+00:03:23,812 --> 00:03:26,139
+Forgetting the factor
+of two in the sigmoid.
+
+53
+00:03:26,519 --> 00:03:29,773
+And confusing a correct
+stationary distribution with
+
+54
+00:03:29,773 --> 00:03:32,964
+fast mixing, which is the
+topic of the next lesson.
+
+55
+00:03:34,083 --> 00:03:34,916
+In summary:
+
+56
+00:03:35,296 --> 00:03:40,040
+Metropolis accepts changes with
+probability min(1, e^(−βΔE)),
+
+57
+00:03:40,040 --> 00:03:44,161
+and Gibbs redraws each
+variable from its conditional.
+
+58
+00:03:44,541 --> 00:03:49,194
+Both satisfy detailed balance with
+Boltzmann and use only local information.
+
+59
+00:03:49,574 --> 00:03:53,814
+Coloring the graph allows parallel
+updates without breaking the distribution.
+
+60
+00:03:54,917 --> 00:03:58,591
+To practice: prove detailed
+balance for Metropolis.
+
+61
+00:03:58,971 --> 00:04:01,533
+Derive the Gibbs conditional for Ising.
+
+62
+00:04:01,913 --> 00:04:03,983
+Count the colors of a triangular lattice.
+
+63
+00:04:04,363 --> 00:04:07,812
+And explain why the fully
+parallel update fails.

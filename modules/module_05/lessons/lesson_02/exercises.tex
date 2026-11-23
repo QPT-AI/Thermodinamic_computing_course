@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.2}{p-bits: MTJ y CMOS}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Con $\tau_0=1$ ns, ¿qué barrera da un tiempo medio de volteo de 10 ns? ¿Y de 10 años?
+\item (B) ¿Por qué un pbit necesita $\Delta\sim\kB T$ y una memoria $\Delta\sim40\,\kB T$?
+\item (B) ¿Cuántos colores y fases de reloj por barrido necesita una red cuadrada de grado 4?
+\item (B) ¿En qué gasta energía un pbit digital que uno magnético no?
+\item (I) Un dispositivo de dos estados salta con $k_\pm=\nu\,\sigma(\pm2u)$. Muestre que $P(+1)=\sigma(2u)$ y que el tiempo de correlación es $1/\nu$.
+\item (I) Si la barrera tiene una dispersión de $\pm0{,}5\,\kB T$ entre dispositivos, ¿en qué factor varía $\tau$?
+\item (A) Simule con Gillespie 1000 pbits con barreras dispersas y mida la distribución de tiempos de correlación.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\Delta=\ln10\approx2{,}3\,\kB T$; 10 años $=3{,}2\times10^8$ s: $\Delta=\ln(3{,}2\times10^{17})\approx40{,}3\,\kB T$.
+
+\textbf{E2.} Un pbit debe fluctuar rápido (muchas muestras por segundo); una memoria debe retener años con error mínimo.
+
+\textbf{E3.} 2 colores, 2 fases por barrido.
+
+\textbf{E4.} En generar números pseudoaleatorios y en mover datos a la LUT y al comparador.
+
+\textbf{E5.} Estacionaria $k_+/(k_++k_-)$ y $k_++k_-=\nu$.
+
+\textbf{E6.} $e^{\pm0{,}5}$: entre $0{,}61\tau$ y $1{,}65\tau$.
+
+\textbf{E7.} Distribución log-normal de $\tau$ si la barrera es gaussiana.
+\end{solucion}
+\end{document}

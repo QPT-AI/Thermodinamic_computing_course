@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.2}{La ecuación de Langevin}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Escriba la ecuación sobreamortiguada para $V=\frac12\kappa x^2$ y su varianza estacionaria.
+\item Calcule $m/\gamma$ para una esfera de 100 nm en agua ($\rho=1000$ kg/m$^3$, $\eta=10^{-3}$ Pa\,s).
+\item Muestre que con ruido $\sqrt{2D}\xi$ y $D\neq\mu\kB T$ la temperatura efectiva es $D/(\mu\kB)$ (caso cuadrático).
+\item ¿Cuál es el tiempo de relajación de un RC de 10 k$\Omega$ y 100 fF?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Para el oscilador subamortiguado con $V=\frac12\kappa x^2$, encuentre los valores propios de la dinámica determinista y la condición de amortiguamiento crítico $\gamma^2=4m\kappa$.
+\item Derive el límite sobreamortiguado: con $m\to0$, muestre que $\gamma\dot x=f+\sqrt{2\gamma\kB T}\xi$.
+\item Escriba Langevin para el voltaje de un RC con ruido de Johnson y recupere $\langle V^2\rangle=\kB T/C$ (lección 1.6).
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Para el oscilador subamortiguado, calcule $\langle x^2\rangle$ y $\langle v^2\rangle$ estacionarios con el método de momentos (Itô) y verifique la equipartición.
+\item Discuta por qué, para muestrear $e^{-\beta V}$, la dinámica subamortiguada (Hamiltoniana con fricción) puede mezclar más rápido que la sobreamortiguada en potenciales mal condicionados (anticipo de la lección 6.4).
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $\dot x=-\mu\kappa x+\sqrt{2\mu\kB T}\xi$; $\langle x^2\rangle=\kB T/\kappa$.
+
+\textbf{B2.} $m=4{,}19\times10^{-18}$ kg, $\gamma=1{,}88\times10^{-9}$ kg/s, $m/\gamma\approx2{,}2$ ns.
+
+\textbf{B3.} $\langle x^2\rangle=D/(\mu\kappa)$; igualando a $\kB T_{\text{ef}}/\kappa$: $T_{\text{ef}}=D/(\mu\kB)$.
+
+\textbf{B4.} $RC=10^4\cdot10^{-13}=1$ ns.
+
+\textbf{I1.} $m\lambda^2+\gamma\lambda+\kappa=0$, $\lambda=\frac{-\gamma\pm\sqrt{\gamma^2-4m\kappa}}{2m}$; crítico en $\gamma^2=4m\kappa$; subamortiguado si $\gamma^2<4m\kappa$.
+
+\textbf{I2.} Con $m\ddot x\to0$ (velocidad relajada en $\tau_{\text{in}}\to0$): $0=f-\gamma\dot x+\sqrt{2\gamma\kB T}\xi$. Divida por $\gamma$.
+
+\textbf{I3.} La corriente de ruido de la resistencia tiene $\langle i(t)i(t')\rangle=\frac{2\kB T}{R}\delta(t-t')$ (bilateral; equivale a $S_I=4\kB T/R$ unilateral). Entonces $C\dot V=-V/R+\sqrt{2\kB T/R}\,\xi$, es decir $\dot V=-\frac{V}{RC}+\frac{\sqrt{2\kB T/R}}{C}\xi$, y la varianza estacionaria es $\frac{2\kB T/(RC^2)}{2/(RC)}=\frac{\kB T}{C}$.
+
+\textbf{A1.} $\frac{d}{dt}\langle x^2\rangle=2\langle xv\rangle$, $\frac{d}{dt}\langle xv\rangle=\langle v^2\rangle-\frac\kappa m\langle x^2\rangle-\frac\gamma m\langle xv\rangle$, $\frac d{dt}\langle v^2\rangle=-\frac{2\kappa}m\langle xv\rangle-\frac{2\gamma}m\langle v^2\rangle+\frac{2\gamma\kB T}{m^2}$. Estacionario: $\langle xv\rangle=0$, $\langle v^2\rangle=\kB T/m$, $\langle x^2\rangle=\kB T/\kappa$.
+
+\textbf{A2.} La inercia permite avanzar por valles largos y estrechos sin el comportamiento difusivo $\propto\kappa$; con fricción óptima el número de pasos escala como $\sqrt\kappa$ (cf. $d^2\sqrt\kappa$ del pensum, 6.4).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Simule la ecuación subamortiguada para $\gamma\in\{0{,}1;1;10\}$ y compare el tiempo de autocorrelación de $x$.
+\item Simule el pozo doble con $D=\mu\kB T$ y con $D=2\mu\kB T$; compare las tasas de salto con Kramers.
+\end{enumerate}
+\end{document}

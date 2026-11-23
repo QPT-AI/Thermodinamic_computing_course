@@ -1,0 +1,299 @@
+1
+00:00:00,350 --> 00:00:02,034
+Lesson 9.1.
+
+2
+00:00:02,414 --> 00:00:03,743
+Diffusion models.
+
+3
+00:00:04,850 --> 00:00:09,082
+Diffusion models generate images,
+audio and video by destroying data
+
+4
+00:00:09,082 --> 00:00:12,941
+with noise little by little and
+learning to undo that process.
+
+5
+00:00:13,321 --> 00:00:17,947
+Deep down, they are Langevin
+dynamics driven by a neural network.
+
+6
+00:00:18,327 --> 00:00:21,362
+That is why they fit thermodynamic
+computing so well: the
+
+7
+00:00:21,362 --> 00:00:24,184
+hardware already knows how
+to do stochastic dynamics.
+
+8
+00:00:24,564 --> 00:00:26,931
+Today we see the theory
+and measure how much
+
+9
+00:00:26,931 --> 00:00:29,245
+the sampler and the
+number of steps matter.
+
+10
+00:00:30,350 --> 00:00:38,548
+The forward process is an Ornstein-Uhlenbeck
+process: dx = −x dt + √2 dW.
+
+11
+00:00:38,928 --> 00:00:43,808
+Starting from a data
+point x₀, at time t the
+
+12
+00:00:43,808 --> 00:00:48,134
+sample is e^(−t) x₀ + √(1 − e^(−2t)) ε.
+
+13
+00:00:48,514 --> 00:00:53,118
+Given enough time, all structure is
+erased and a standard Gaussian remains.
+
+14
+00:00:53,498 --> 00:00:58,488
+In our example, two modes at plus and
+minus two merge into a single bell.
+
+15
+00:00:59,617 --> 00:01:05,098
+Anderson showed in nineteen eighty-two that
+the process has a time reversal, another
+
+16
+00:01:05,098 --> 00:01:09,862
+stochastic equation whose drift includes
+the gradient of the log-density,
+
+17
+00:01:10,242 --> 00:01:13,418
+∇ log p_t, called the score.
+
+18
+00:01:13,798 --> 00:01:16,862
+If we know the score at
+every time, we can start
+
+19
+00:01:16,862 --> 00:01:19,990
+from noise and run time
+backwards to obtain data.
+
+20
+00:01:20,370 --> 00:01:23,143
+All the learning consists
+of estimating that field.
+
+21
+00:01:24,250 --> 00:01:29,669
+DDPM trains a network that predicts the
+noise ε added to a noisy data point.
+
+22
+00:01:30,049 --> 00:01:34,318
+It turns out that predicting
+the noise is equivalent
+
+23
+00:01:34,318 --> 00:01:38,013
+to estimating the score:
+∇ log p_t ≈ −ε̂/σ_t.
+
+24
+00:01:38,393 --> 00:01:41,465
+That is denoising score matching.
+
+25
+00:01:41,845 --> 00:01:45,539
+The loss is a simple squared
+error, stable and easy to
+
+26
+00:01:45,539 --> 00:01:48,754
+scale, one of the reasons
+these models succeed.
+
+27
+00:01:49,883 --> 00:01:51,351
+There are two ways to sample.
+
+28
+00:01:51,732 --> 00:01:55,211
+The reverse stochastic equation
+adds noise at every step.
+
+29
+00:01:55,591 --> 00:01:59,053
+The probability-flow ordinary
+differential equation
+
+30
+00:01:59,053 --> 00:02:02,040
+is deterministic and
+has the same marginals.
+
+31
+00:02:02,420 --> 00:02:05,955
+In our example, with the exact
+score of a mixture of two
+
+32
+00:02:05,955 --> 00:02:09,995
+Gaussians, we measure the Wasserstein
+distance to the true data.
+
+33
+00:02:10,375 --> 00:02:14,235
+With five steps both fail, near 0.87.
+
+34
+00:02:14,615 --> 00:02:20,305
+With fifty, the stochastic one reaches
+0.16 and the ordinary one 0.11.
+
+35
+00:02:20,685 --> 00:02:24,374
+With two hundred, 0.07 and 0.03.
+
+36
+00:02:25,483 --> 00:02:29,359
+Each step costs one network
+evaluation: on a GPU, the cost of
+
+37
+00:02:29,359 --> 00:02:32,599
+generating grows linearly
+with the number of steps.
+
+38
+00:02:32,979 --> 00:02:35,953
+That is why so much
+research seeks few-step
+
+39
+00:02:35,953 --> 00:02:39,342
+samplers, better time
+schedules and distillation.
+
+40
+00:02:39,722 --> 00:02:44,074
+For thermodynamic hardware the
+question changes: if each step is
+
+41
+00:02:44,074 --> 00:02:47,745
+cheap physical dynamics, how
+many steps can we afford?
+
+42
+00:02:48,125 --> 00:02:50,651
+That is the idea that the denoising
+
+43
+00:02:50,651 --> 00:02:54,114
+thermodynamic models of
+lesson 9.3 will develop.
+
+44
+00:02:55,217 --> 00:03:00,258
+Diffusion models dominate the generation
+of images, video, audio and molecules.
+
+45
+00:03:00,638 --> 00:03:05,560
+In practice they are combined with
+samplers such as DDIM and DPM-Solver,
+
+46
+00:03:05,560 --> 00:03:09,730
+careful schedules, distillation
+and classifier-free guidance.
+
+47
+00:03:10,110 --> 00:03:13,620
+In lab twelve you will train a small DDPM.
+
+48
+00:03:14,750 --> 00:03:18,048
+Common mistakes: confusing
+the forward process, which
+
+49
+00:03:18,048 --> 00:03:20,848
+is fixed, with the
+reverse, which is learned.
+
+50
+00:03:21,228 --> 00:03:23,931
+Forgetting the factor
+relating noise and score.
+
+51
+00:03:24,311 --> 00:03:28,992
+Using a uniform time grid, when the
+error concentrates near the end.
+
+52
+00:03:29,372 --> 00:03:32,537
+And comparing samplers with
+different numbers of evaluations.
+
+53
+00:03:33,650 --> 00:03:37,066
+In summary: a diffusion
+model destroys data with an
+
+54
+00:03:37,066 --> 00:03:41,218
+Ornstein-Uhlenbeck process and
+learns the score to reverse it.
+
+55
+00:03:41,599 --> 00:03:43,813
+Predicting the noise is
+estimating the score.
+
+56
+00:03:44,193 --> 00:03:47,667
+One samples with the reverse
+stochastic equation or the
+
+57
+00:03:47,667 --> 00:03:51,393
+probability-flow ordinary one,
+and quality depends strongly
+
+58
+00:03:51,393 --> 00:03:54,614
+on the number of steps,
+which on a GPU is the cost.
+
+59
+00:03:55,717 --> 00:03:59,451
+To practice: write the marginal
+of the forward process.
+
+60
+00:03:59,831 --> 00:04:02,346
+Prove the relation
+between noise and score.
+
+61
+00:04:02,726 --> 00:04:05,915
+Write the reverse equation
+and the probability-flow one.
+
+62
+00:04:06,295 --> 00:04:09,375
+And explain why a uniform
+grid wastes steps.

@@ -1,0 +1,293 @@
+1
+00:00:00,350 --> 00:00:02,099
+Lesson 6.6.
+
+2
+00:00:02,479 --> 00:00:04,814
+Landscape: inference and beyond.
+
+3
+00:00:05,917 --> 00:00:07,921
+We close the unit with a landscape.
+
+4
+00:00:08,301 --> 00:00:11,006
+The same device of coupled oscillators is
+
+5
+00:00:11,006 --> 00:00:13,712
+useful for much more than linear systems.
+
+6
+00:00:14,092 --> 00:00:18,746
+We will see three examples: sampling
+Bayesian posterior distributions,
+
+7
+00:00:18,746 --> 00:00:23,600
+solving constrained quadratic programs
+and computing matrix exponentials.
+
+8
+00:00:23,980 --> 00:00:26,575
+And we will finish with an
+idea that tries to explain
+
+9
+00:00:26,575 --> 00:00:28,778
+where the thermodynamic
+advantage comes from.
+
+10
+00:00:29,883 --> 00:00:36,039
+With a Gaussian prior and linear
+observations with Gaussian noise, the
+
+11
+00:00:36,039 --> 00:00:41,402
+posterior is also Gaussian, with
+precision Λ = I + Hᵀ H / σ².
+
+12
+00:00:41,782 --> 00:00:45,382
+If we load Λ as the coupling
+matrix, the equilibrium of
+
+13
+00:00:45,382 --> 00:00:49,047
+the device is exactly the
+posterior: nothing needs to be
+
+14
+00:00:49,047 --> 00:00:52,188
+solved, every instant of
+the system is a sample.
+
+15
+00:00:52,568 --> 00:00:56,235
+Aifer and colleagues propose
+circuits for this model and for
+
+16
+00:00:56,235 --> 00:00:59,719
+Bayesian logistic regression,
+and argue that the sampling
+
+17
+00:00:59,719 --> 00:01:02,836
+time scales only as the
+logarithm of the dimension.
+
+18
+00:01:03,950 --> 00:01:07,030
+We simulate it in two dimensions
+with three observations.
+
+19
+00:01:07,410 --> 00:01:13,547
+The device samples reproduce the
+exact posterior: the variances
+
+20
+00:01:13,547 --> 00:01:19,099
+are 0.27 and 0.64, and the
+estimated ones, 0.28 and 0.67.
+
+21
+00:01:19,479 --> 00:01:21,631
+The uncertainty is not
+computed separately:
+
+22
+00:01:21,631 --> 00:01:23,633
+it comes for free from the fluctuations.
+
+23
+00:01:24,750 --> 00:01:29,760
+If there are also box constraints, such
+as every variable between zero and one, it
+
+24
+00:01:29,760 --> 00:01:34,097
+is enough to add walls: when the
+system hits one, it stays at the edge.
+
+25
+00:01:34,477 --> 00:01:36,835
+At low temperature, the
+average converges to
+
+26
+00:01:36,835 --> 00:01:38,817
+the optimum of the quadratic program.
+
+27
+00:01:39,197 --> 00:01:44,136
+In our example, the optimum is 0.6 and 1;
+
+28
+00:01:44,136 --> 00:01:48,955
+with k_B T = 0.001 we get 0.60 and 0.99.
+
+29
+00:01:49,335 --> 00:01:52,839
+At higher temperature the wall
+biases the average inward.
+
+30
+00:01:53,950 --> 00:01:57,377
+The third example uses the
+dynamics, not only the equilibrium.
+
+31
+00:01:57,757 --> 00:02:04,309
+In an Ornstein-Uhlenbeck process, the
+autocorrelation at lag s is e^(−A s) Σ.
+
+32
+00:02:04,689 --> 00:02:09,182
+By measuring correlations between
+the current state and the one s units
+
+33
+00:02:09,182 --> 00:02:13,358
+earlier, and multiplying by β A,
+we obtain the matrix exponential.
+
+34
+00:02:13,738 --> 00:02:16,660
+With dimension five and
+a trajectory of twenty
+
+35
+00:02:16,660 --> 00:02:19,899
+thousand units, the relative
+error is five percent.
+
+36
+00:02:20,279 --> 00:02:24,002
+Duffield and colleagues show that
+this gives a speedup linear in
+
+37
+00:02:24,002 --> 00:02:27,143
+the dimension for simulating
+linear dynamical systems.
+
+38
+00:02:28,250 --> 00:02:31,761
+Why does a gain proportional
+to the dimension always appear?
+
+39
+00:02:32,141 --> 00:02:37,133
+Duffield and colleagues propose a
+hypothesis: thermodynamic parallelism.
+
+40
+00:02:37,513 --> 00:02:42,336
+Noise pushes the system in all directions
+at once, so a single trajectory
+
+41
+00:02:42,336 --> 00:02:47,358
+explores all modes simultaneously and
+estimates many quantities in parallel.
+
+42
+00:02:47,738 --> 00:02:50,200
+Noise, which in a digital computer is an
+
+43
+00:02:50,200 --> 00:02:53,032
+enemy, is here the
+resource that parallelizes.
+
+44
+00:02:53,412 --> 00:02:56,293
+It is a hypothesis, not
+a theorem, and it is
+
+45
+00:02:56,293 --> 00:02:58,846
+among the open problems of unit eleven.
+
+46
+00:02:59,950 --> 00:03:05,708
+These primitives touch artificial
+intelligence in Bayesian deep learning, in
+
+47
+00:03:05,708 --> 00:03:10,785
+constrained optimization, in
+state-space models, and in unit eight,
+
+48
+00:03:11,165 --> 00:03:15,063
+where the natural gradient will
+use the same linear-algebra core.
+
+49
+00:03:16,183 --> 00:03:20,867
+Common mistakes: sampling the posterior
+at a temperature other than one.
+
+50
+00:03:21,247 --> 00:03:24,147
+Solving a quadratic program
+at high temperature.
+
+51
+00:03:24,527 --> 00:03:27,054
+Estimating the exponential with very long
+
+52
+00:03:27,054 --> 00:03:29,519
+lags, where the signal is lost in noise.
+
+53
+00:03:29,899 --> 00:03:33,100
+And treating thermodynamic
+parallelism as a theorem.
+
+54
+00:03:34,217 --> 00:03:38,886
+In summary: the equilibrium of an
+oscillator device is an exact Bayesian
+
+55
+00:03:38,886 --> 00:03:43,556
+posterior in the Gaussian case; with
+walls and low temperature it solves
+
+56
+00:03:43,556 --> 00:03:48,096
+quadratic programs; and its
+autocorrelation gives matrix exponentials.
+
+57
+00:03:48,476 --> 00:03:52,383
+Thermodynamic parallelism is the
+hypothesis that unifies these advantages.
+
+58
+00:03:53,483 --> 00:03:56,554
+To practice: derive
+the Gaussian posterior.
+
+59
+00:03:56,934 --> 00:03:59,399
+Explain why the temperature must be one.
+
+60
+00:03:59,779 --> 00:04:02,151
+Prove the autocorrelation formula.
+
+61
+00:04:02,531 --> 00:04:04,825
+And explain what biases
+the solution of the
+
+62
+00:04:04,825 --> 00:04:06,959
+quadratic program at finite temperature.

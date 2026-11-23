@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.6}{Problemas abiertos}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} reunir los problemas abiertos con los números medidos en el curso; recorrer la escalera de energía hasta
+$k_BT\ln2$; definir qué evidencia convencería de una ventaja real; discutir política energética.
+\textbf{Prerrequisitos:} unidades 9--11.
+
+\section{Conectividad frente a calidad}
+Grado óptimo intermedio en el experimento iso-FLOP ($k=16$, 10.4 \evS); $+0{,}34$ bits/carácter con $k=4$ en el caso de estudio (10.9 \evS); Z1T necesitó $\sim10\times$ FLOPs
+de entrenamiento para igualar a GPT-2 small (10.7 \evP). Abierto: escalado del impuesto y arquitecturas que lo reduzcan.
+
+\section{El pegamento digital: la escalera de un token}
+Cabeza de vocabulario $\approx136\ \mu$J $\xrightarrow{\div477}$ FPGA $286$ nJ $\xrightarrow{\div33}$ muestreo Z1 $8{,}74$ nJ \evP. Con $1{,}3\times10^{-14}$ J por muestra,
+$\approx6{,}7\times10^5$ muestras por token; a $k_BT\ln2$ por muestra, $\approx1{,}9$ fJ ($\div4{,}5\times10^6$). La ventaja del sustrato solo aparece al eliminar los peldaños
+superiores. (La cota de Landauer se aplica al borrado; aquí $k_BT\ln2$ es solo una escala de referencia. La estimación de Extropic, $1{,}3\times10^{-14}$ J por muestra, es coherente con la cota $\le7{,}4\times10^{-14}$ J de la lección 5.3, que divide 1 W entre la tasa de actualización.)
+
+\section{Precisión y física del dispositivo}
+$+1$ bit efectivo $=4\times$ muestras (10.5); sesgo de Jensen en unidades tanh (10.6); error de calibración de pbits $\approx5\,\%$ (11.2). Abierto: bits que necesita un
+modelo de lenguaje, absorción de ruido y deriva, calibración a escala.
+
+\section{Teoría}
+Falta una teoría de la complejidad termodinámica: tiempo de mezcla y energía por distribución frente al cómputo digital. Conocido: expresividad frente a mezcla (9.3);
+acumulación del error de compilación con la profundidad (11.3); margen físico $1{,}3\times10^{-14}/2{,}87\times10^{-21}\approx4{,}5\times10^6$.
+
+\section{Sociedad y política energética \evP}
+Agencia Internacional de la Energía (\emph{Energy and AI}, 2025): centros de datos $\approx415$ TWh en 2024 ($\approx1{,}5\,\%$ de la electricidad mundial), proyección
+$\approx945$ TWh en 2030. Efecto rebote: la eficiencia puede aumentar el uso total. Abierto: medición y reporte honestos; políticas que acompañen a la tecnología.
+
+\section{Evidencia de una ventaja real}
+Medición en chip físico de principio a fin; mismo alcance (cabeza, E/S, movimiento de datos, número de chips); misma calidad con lote y utilización declarados;
+reproducción independiente; etiquetas de evidencia en cada número.
+
+\begin{aplicacion}
+Direcciones para el proyecto final: arquitecturas con menor impuesto; sacar la cabeza y el pegamento de lo digital; entrenamiento robusto a ruido y deriva; bancos de prueba
+con contabilidad energética completa.
+\end{aplicacion}
+
+\begin{thebibliography}{9}\small
+\bibitem{iea} International Energy Agency, \emph{Energy and AI}, París (2025).
+\bibitem{z1t} Extropic, Z1T, \url{https://extropic.ai/writing/z1t} (septiembre de 2026).
+\bibitem{landauer} R. Landauer, Irreversibility and heat generation in the computing process, \emph{IBM J. Res. Dev.} 5, 183 (1961).
+\end{thebibliography}
+\end{document}

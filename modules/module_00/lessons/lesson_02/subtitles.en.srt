@@ -1,0 +1,431 @@
+1
+00:00:00,350 --> 00:00:01,965
+Lesson 0.2.
+
+2
+00:00:02,345 --> 00:00:04,240
+A map of computing paradigms.
+
+3
+00:00:05,350 --> 00:00:10,484
+Classical, quantum, neuromorphic,
+analog, reversible, thermodynamic.
+
+4
+00:00:10,864 --> 00:00:15,520
+There are many ways to compute, and
+each one exploits physics differently.
+
+5
+00:00:15,900 --> 00:00:19,068
+In this lesson we will
+build a map to place them.
+
+6
+00:00:19,448 --> 00:00:21,949
+The question that organizes
+the map is simple:
+
+7
+00:00:22,329 --> 00:00:24,897
+what does each paradigm
+do with fluctuations?
+
+8
+00:00:26,017 --> 00:00:29,756
+Suppose you need to flip a
+fair coin a million times.
+
+9
+00:00:30,136 --> 00:00:34,108
+A digital computer cannot flip
+coins: it simulates them with a
+
+10
+00:00:34,108 --> 00:00:38,272
+pseudorandom generator, a long
+chain of deterministic operations.
+
+11
+00:00:38,652 --> 00:00:42,747
+A small physical system, by contrast,
+is already jiggling from heat.
+
+12
+00:00:43,127 --> 00:00:45,428
+A particle in a double well with a low
+
+13
+00:00:45,428 --> 00:00:47,971
+barrier hops from side to side on its own.
+
+14
+00:00:48,351 --> 00:00:51,190
+Just looking at it gives random bits.
+
+15
+00:00:51,570 --> 00:00:54,592
+The digital paradigm spends
+energy to remove noise
+
+16
+00:00:54,592 --> 00:00:57,434
+and then more energy to
+manufacture randomness.
+
+17
+00:00:57,814 --> 00:01:01,125
+The thermodynamic paradigm
+uses the noise directly.
+
+18
+00:01:02,250 --> 00:01:05,206
+The variable that decides
+everything is the barrier
+
+19
+00:01:05,206 --> 00:01:07,872
+height compared with the
+thermal energy k_B T.
+
+20
+00:01:08,252 --> 00:01:14,233
+The probability of a spontaneous
+hop scales as e^(−E_b/k_B T).
+
+21
+00:01:14,613 --> 00:01:18,265
+With a barrier of one or
+two k_B T, the particle
+
+22
+00:01:18,265 --> 00:01:21,688
+hops constantly: we have
+a probabilistic bit.
+
+23
+00:01:22,068 --> 00:01:24,856
+If we raise the barrier, hops become rare.
+
+24
+00:01:25,236 --> 00:01:29,605
+At about forty k_B T, the error
+probability falls below one
+
+25
+00:01:29,605 --> 00:01:33,604
+in ten quadrillion per
+attempt: we have a digital bit.
+
+26
+00:01:33,984 --> 00:01:36,741
+The same device can be
+deterministic or random
+
+27
+00:01:36,741 --> 00:01:39,917
+depending on how much energy
+we put into the barrier.
+
+28
+00:01:41,050 --> 00:01:44,240
+We can draw a map with
+two dimensionless ratios.
+
+29
+00:01:44,620 --> 00:01:48,676
+On the horizontal axis, the
+signal energy divided by k_B T.
+
+30
+00:01:49,056 --> 00:01:55,047
+On the vertical axis, the energy
+of a quantum, ħω, divided by k_B T.
+
+31
+00:01:55,427 --> 00:01:59,567
+Bottom right, with signals much
+larger than thermal noise, lives
+
+32
+00:01:59,567 --> 00:02:03,255
+classical digital computing:
+fluctuations are suppressed.
+
+33
+00:02:03,635 --> 00:02:07,363
+Bottom left, with signals
+on the order of k_B T, lives
+
+34
+00:02:07,363 --> 00:02:11,506
+thermodynamic computing: thermal
+fluctuations are harnessed.
+
+35
+00:02:11,886 --> 00:02:15,999
+At the top, when the energy
+quantum exceeds the thermal energy,
+
+36
+00:02:15,999 --> 00:02:20,307
+quantum fluctuations dominate: the
+territory of quantum computing.
+
+37
+00:02:20,687 --> 00:02:22,942
+These are the three fluctuation regimes.
+
+38
+00:02:24,050 --> 00:02:25,094
+Let's put in numbers.
+
+39
+00:02:25,474 --> 00:02:29,528
+At three hundred kelvin,
+k_B T is about 4.14 ×
+
+40
+00:02:29,528 --> 00:02:33,230
+10⁻²¹ J, or twenty-six millielectronvolts.
+
+41
+00:02:33,610 --> 00:02:37,531
+A typical superconducting qubit
+operates near five gigahertz.
+
+42
+00:02:37,911 --> 00:02:40,701
+Its quantum, h f, divided by k_B,
+
+43
+00:02:40,701 --> 00:02:44,844
+corresponds to a temperature
+of only 0.24 kelvin.
+
+44
+00:02:45,224 --> 00:02:48,761
+For thermal noise not to
+destroy the quantum state, it
+
+45
+00:02:48,761 --> 00:02:52,298
+must be cooled far below
+that, to tens of millikelvin.
+
+46
+00:02:52,678 --> 00:02:55,812
+Thermodynamic computing,
+instead, works at room
+
+47
+00:02:55,812 --> 00:02:58,947
+temperature, because
+noise is its raw material.
+
+48
+00:03:00,050 --> 00:03:02,748
+Now let's place each
+paradigm by its primitive.
+
+49
+00:03:03,128 --> 00:03:06,587
+Classical computing executes
+deterministic Boolean logic.
+
+50
+00:03:06,967 --> 00:03:10,123
+Analog computing lets
+continuous quantities, like
+
+51
+00:03:10,123 --> 00:03:13,600
+voltages and currents, solve
+equations as they evolve.
+
+52
+00:03:13,980 --> 00:03:16,755
+Reversible computing uses
+gates that do not erase
+
+53
+00:03:16,755 --> 00:03:19,191
+information to approach
+the Landauer limit.
+
+54
+00:03:19,571 --> 00:03:22,401
+Neuromorphic computing
+mimics the brain, with
+
+55
+00:03:22,401 --> 00:03:24,979
+sparse events and memory next to compute.
+
+56
+00:03:25,359 --> 00:03:27,630
+Quantum computing
+manipulates amplitudes with
+
+57
+00:03:27,630 --> 00:03:29,749
+unitary evolution and measures at the end.
+
+58
+00:03:30,129 --> 00:03:33,414
+And thermodynamic computing
+lets a physical system relax
+
+59
+00:03:33,414 --> 00:03:36,876
+toward a Boltzmann distribution,
+and reads samples from it.
+
+60
+00:03:37,983 --> 00:03:39,883
+No paradigm wins at everything.
+
+61
+00:03:40,263 --> 00:03:44,465
+Digital remains unbeatable when
+we need exactness and control.
+
+62
+00:03:44,845 --> 00:03:50,441
+Thermodynamic targets tasks that are
+already probabilistic: sampling energy-based
+
+63
+00:03:50,441 --> 00:03:55,621
+models, generating with diffusion,
+solving linear systems by equilibration.
+
+64
+00:03:56,001 --> 00:04:01,000
+Quantum shines on problems with
+interference structure, such as factoring.
+
+65
+00:04:01,380 --> 00:04:04,302
+And in practice systems
+will be heterogeneous,
+
+66
+00:04:04,302 --> 00:04:07,669
+combining several of these
+paradigms in one computer.
+
+67
+00:04:08,783 --> 00:04:11,099
+We will come back to this map many times.
+
+68
+00:04:11,479 --> 00:04:15,182
+In unit one we will study the
+thermodynamics of information.
+
+69
+00:04:15,562 --> 00:04:17,921
+In unit four we will see the pbit, the
+
+70
+00:04:17,921 --> 00:04:20,775
+primitive of discrete
+thermodynamic computing.
+
+71
+00:04:21,155 --> 00:04:24,061
+In unit five we will meet real hardware.
+
+72
+00:04:24,441 --> 00:04:27,168
+And in unit seven we
+will compare a diffusion
+
+73
+00:04:27,168 --> 00:04:30,379
+algorithm head to head with
+Shor's quantum algorithm.
+
+74
+00:04:31,483 --> 00:04:33,264
+Watch out for four confusions.
+
+75
+00:04:33,644 --> 00:04:38,228
+Thermodynamic computing is not quantum
+at room temperature: there is no
+
+76
+00:04:38,228 --> 00:04:42,553
+superposition or interference, only
+classical thermal fluctuations.
+
+77
+00:04:42,933 --> 00:04:47,390
+Nor is it the same as analog, which
+can be completely deterministic.
+
+78
+00:04:47,770 --> 00:04:51,090
+It is not the same as reversible
+computing, which is about not erasing.
+
+79
+00:04:51,470 --> 00:04:54,701
+And noise is not always
+bad: when the task is
+
+80
+00:04:54,701 --> 00:04:57,572
+sampling, noise is exactly what we need.
+
+81
+00:04:58,683 --> 00:05:01,205
+In summary: each paradigm
+is defined by its
+
+82
+00:05:01,205 --> 00:05:04,019
+primitive and by what it
+does with fluctuations.
+
+83
+00:05:04,399 --> 00:05:07,586
+Digital suppresses them with
+barriers of tens of k_B T.
+
+84
+00:05:07,966 --> 00:05:11,842
+Thermodynamic harnesses them with
+barriers on the order of k_B T.
+
+85
+00:05:12,222 --> 00:05:16,327
+Quantum requires the energy quantum
+to exceed the thermal energy.
+
+86
+00:05:16,707 --> 00:05:20,950
+The question of the course is when
+harnessing noise truly saves energy.
+
+87
+00:05:22,083 --> 00:05:27,598
+To practice: compute the barrier needed
+for an error rate of one in a billion.
+
+88
+00:05:27,978 --> 00:05:32,541
+Find the equivalent temperature of the
+quantum of a ten-gigahertz oscillator.
+
+89
+00:05:32,921 --> 00:05:35,677
+Classify three systems
+on the paradigm map.
+
+90
+00:05:36,058 --> 00:05:40,162
+And explain why sampling is the natural
+task of thermodynamic computing.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{11.5}{Agentes de investigación con modelos de lenguaje}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Ventajas de GRPO para las recompensas $(1;\,0{,}4;\,0;\,0{,}7)$.
+\item (B) ¿Por qué GRPO no necesita red de valor?
+\item (B) ¿Por qué la política solo con ejecución puso el 35\,\% en la trampa?
+\item (B) ¿Qué demostraría de verdad la automejora recursiva?
+\item (I) Si todos los intentos de un grupo tienen la misma recompensa, ¿qué gradiente produce GRPO? ¿Qué implica para tareas demasiado fáciles o difíciles?
+\item (I) Factor de mejora de Thermo-RSI y fracción de la distancia a Opus 4.8 que se cerró.
+\item (A) Ejecute \texttt{grpo\_juguete.py} con rúbrica de peso 0{,}1 y 0{,}5; ¿desde qué peso desaparece la trampa?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Media 0{,}525, desviación 0{,}370: $(+1{,}28;\,-0{,}34;\,-1{,}42;\,+0{,}47)$.
+
+\textbf{E2.} La media del grupo hace de línea base de la recompensa esperada.
+
+\textbf{E3.} La trampa obtenía la ejecución máxima, igual que el método correcto: sin rúbrica no hay preferencia entre ambos.
+
+\textbf{E4.} Que el agente descubra un algoritmo nuevo, validado de forma independiente, que mejore el hardware o el propio ciclo, y que esa mejora se repita.
+
+\textbf{E5.} Ventajas nulas (desviación cero): no hay aprendizaje; el currículo debe tener dificultad intermedia.
+
+\textbf{E6.} $0{,}361/0{,}127\approx2{,}8$; $(0{,}361-0{,}127)/(0{,}464-0{,}127)\approx69\,\%$.
+
+\textbf{E7.} Verificado con 100 semillas: con peso 0 la trampa queda en 0{,}35; con 0{,}1, 0{,}3 o 0{,}5 la correcta llega a 0{,}998. En este juguete basta un peso pequeño, porque la rúbrica separa por completo la correcta de la trampa.
+\end{solucion}
+\end{document}

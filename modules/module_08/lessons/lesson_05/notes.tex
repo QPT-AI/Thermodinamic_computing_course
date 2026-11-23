@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.5}{K-FAC termodinámico}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} reemplazar las inversiones $n\times n$ de K-FAC por soluciones termodinámicas; comparar complejidades;
+cuantización de entrada y salida.
+\textbf{Prerrequisitos:} 5.6, 6.1--6.2, 8.4.
+
+\section{El algoritmo}
+La GPU calcula $A=\mathbb E[aa^\top]$ y $G=\mathbb E[gg^\top]$ por capa; en vez de invertirlas digitalmente, las carga (DAC) en un resolvedor termodinámico de
+sistemas de tamaño $n$ (dinámica OU, Unidad 6), lee la solución (ADC) y aplica $\Delta W=-\eta\,G^{-1}\nabla W A^{-1}$. Los promedios móviles pueden vivir en la GPU o en
+el dispositivo.
+
+\section{Complejidad (Donatella et al.\ 2025, por capa y por iteración)}
+\begin{center}\begin{tabular}{lll}\toprule
+optimizador & tiempo & memoria\\\midrule
+SGD / Adam & $O(bn^2)$ & $O(n^2)$\\
+K-FAC & $O(bn^2+n^3)$ & $O(bn+n^2)$\\
+K-FAC termodinámico & $O(bn^2+n^2\kappa^2)$ & $O(bn)$ (sin EMA)\\\bottomrule\end{tabular}\end{center}
+$\kappa$ acota el número de condición de los factores. La ventaja crece linealmente con el ancho $n$.
+
+\section{Aceleraciones estimadas}
+Fracción del tiempo de K-FAC dedicada a invertir (AlgoPerf, medida en GPU): 11\,\% (ViT/ImageNet), 27\,\% (GNN/ogbg-molpcba). Los autores estiman alcanzar la misma métrica de
+validación $\approx50\,\%$ más rápido en la GNN \evP. Por Amdahl, acelerar solo la inversión con el mismo número de pasos da a lo sumo $1/(1-0{,}27)=1{,}37$: la estimación debe
+incluir cambios en los pasos. Ningún dispositivo físico ejecutó estos experimentos.
+
+\section{Cuantización}
+Entrada (DAC): un cuantizador ingenuo puede romper la semidefinición positiva; se usa uno conservador de diagonal dominante. Salida (ADC): en el entrenamiento de una
+ResNet, la entrada afecta poco y la salida necesita al menos 8 bits; con 8 bits, K-FAC compite con Adam en precisión completa \evS.
+
+\begin{ejemplo}[ (advertencia metodológica)]
+En la capa softmax de 8.4, un solo paso \evS: con cuantizador uniforme ingenuo, la entrada daña más (coseno $0{,}70$ a 4 bits) y la salida apenas cambia la dirección
+($0{,}93$). Es lo contrario del hallazgo en entrenamiento completo: las métricas de un paso no sustituyen experimentos de entrenamiento.
+\end{ejemplo}
+
+\begin{aplicacion}
+Redes anchas; medir primero la fracción de inversión; cuantizador conservador y ADC de $\ge8$ bits. Laboratorio L11: barrido de bits de entrada y salida.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Prometer aceleración total cuando la inversión es una fracción. \quad Ignorar $\kappa^2$.
+\item Cuantizadores que rompen la positividad. \quad Juzgar la precisión con métricas de un paso.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[41]{stso} K. Donatella et al., Scalable thermodynamic second-order optimization, arXiv:2502.08603 (2025).
+\bibitem{mg} J. Martens y R. Grosse, Optimizing neural networks with Kronecker-factored approximate curvature, \emph{ICML} (2015).
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\end{thebibliography}
+\end{document}

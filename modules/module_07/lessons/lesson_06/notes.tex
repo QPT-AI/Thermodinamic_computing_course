@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.6}{Realización física con redes RC}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} implementar la difusión de Cayley como red RC; contabilizar nodos, precisión, desajuste y ruido de lectura.
+\textbf{Prerrequisitos:} 5.5, 7.4.
+
+\section{La red RC}
+Cada nodo es un capacitor $C_0$ a tierra; cada aparición de generador, una conductancia $g$. Kirchhoff:
+\[C_0\dot V=-LV,\qquad L=g\sum_{t=0}^M\big(2I-T^{2^t}-T^{-2^t}\big),\qquad0\le v_e(t)-\tfrac1r\le e^{-2gt/C_0},\]
+exacto por la expansión en caracteres (sin discretizar), porque todo valor propio no nulo de $L$ es $\ge2g$ (lema de duplicación).
+\evS\ $r=33$, $g=C_0=1$: en $t=1$ el error real es $5{,}3\times10^{-7}$, frente a la cota $e^{-2}=0{,}14$.
+
+\section{Recurso 1: nodos}
+Hacen falta $\ge r$ nodos, y $r$ puede ser $\sim N$. Construir un ciclo de longitud $r$ supone conocer la respuesta; la disposición honesta usa una dirección por residuo
+($N$ nodos) y la carga ocupa solo la órbita. Para $N\approx2^{2048}$: un número de nodos de 617 cifras.
+
+\section{Recurso 2: precisión}
+$\frac1r-\frac1{r+1}=\frac1{r(r+1)}$: distinguir órdenes hasta $B$ exige precisión absoluta $\sim B^{-2}$, unos $2\log_2B$ bits: 10,1 bits ($B=33$), 24,8 ($B=5313$),
+$\approx2048$ para tamaños de RSA-2048. Son bits analógicos.
+
+\section{Recurso 3: desajuste de capacitancias}
+Las conductancias desiguales cambian la velocidad; las capacitancias desiguales cambian el resultado. Por conservación de carga, $V_e(\infty)/V_0=C_e/\sum_xC_x$:
+\[\frac{V_0}{V_e(\infty)}=r\,\frac{1+\bar\varepsilon}{1+\varepsilon_e},\qquad\text{se requiere }|\bar\varepsilon-\varepsilon_e|<\frac{1+\varepsilon_e}{2r}.\]
+\evS\ $r=33$, $10^4$ redes con $C_x=1+\sigma\xi_x$: aciertan el 99,6\,\% ($\sigma=0{,}5\,\%$), 88\,\% (1\,\%), 56\,\% (2\,\%), 40\,\% (3\,\%), 25\,\% (5\,\%).
+
+\section{Recurso 4: ruido de lectura}
+Con un muestreo de varianza $k_BT/C_{\text{read}}$ y $J$ muestras, el error rms $\le V_0/(8B^2)$ exige $JC_{\text{read}}\ge64k_BTB^4/V_0^2$. Con 1 pF, 1 V y 300 K:
+$J\approx2{,}65\times10^5$ ($B=10^3$), $2{,}65\times10^{17}$ ($10^6$), $2{,}65\times10^{29}$ ($10^9$). Es un modelo simple, no una cota universal, pero muestra que contar celdas
+no demuestra factibilidad. El tiempo es corto; el costo se trasladó al hardware.
+
+\begin{aplicacion}
+Un prototipo debe: reproducir el núcleo de calor exacto en casos pequeños (lección 7.5); calibrar capacitancias por debajo de $1/(2r)$; reportar nodos, bits y
+muestras por lectura. Proyecto P5: simulación por direcciones de residuo con desajuste y ruido $k_BT/C$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Contar pasos e ignorar los $\Omega(r)$ nodos. \quad Construir un ciclo de longitud $r$.
+\item Creer baratos los $2\log_2B$ bits. \quad Calibrar conductancias e ignorar capacitancias.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{tratado} Cadavid et al., Tratado de factorización por difusión (data/ del curso), sección 20, 2026.
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem[25]{mel} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\end{thebibliography}
+\end{document}

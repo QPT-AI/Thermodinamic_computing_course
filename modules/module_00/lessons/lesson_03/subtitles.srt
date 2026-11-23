@@ -1,0 +1,497 @@
+1
+00:00:00,350 --> 00:00:01,995
+Lección 0.3.
+
+2
+00:00:02,375 --> 00:00:03,826
+Repaso de probabilidad.
+
+3
+00:00:04,950 --> 00:00:08,387
+Un computador termodinámico
+no devuelve números exactos:
+
+4
+00:00:08,387 --> 00:00:11,702
+devuelve muestras de una
+distribución de probabilidad.
+
+5
+00:00:12,082 --> 00:00:15,697
+Para entender qué calcula,
+cuánto ruido tiene su respuesta y
+
+6
+00:00:15,697 --> 00:00:19,373
+cuánta información contiene,
+necesitamos un lenguaje preciso.
+
+7
+00:00:19,753 --> 00:00:23,990
+En esta lección repasamos las piezas
+que usaremos todo el semestre: las
+
+8
+00:00:23,990 --> 00:00:27,929
+variables de Bernoulli, categóricas
+y gaussianas, sus momentos, la
+
+9
+00:00:27,929 --> 00:00:31,450
+entropía de Shannon y la
+divergencia de Kullback y Leibler.
+
+10
+00:00:32,550 --> 00:00:37,968
+Empecemos con una moneda cargada que
+sale uno con probabilidad p = 0,7.
+
+11
+00:00:38,348 --> 00:00:39,914
+Es una variable de Bernoulli.
+
+12
+00:00:40,294 --> 00:00:43,531
+Lancémosla muchas veces y
+sigamos la fracción de unos.
+
+13
+00:00:43,911 --> 00:00:47,496
+Al principio la curva oscila
+mucho, pero a medida que crece
+
+14
+00:00:47,496 --> 00:00:50,777
+el número de lanzamientos
+se acerca a cero coma siete.
+
+15
+00:00:51,157 --> 00:00:53,804
+Es la ley de los grandes
+números: el promedio de
+
+16
+00:00:53,804 --> 00:00:56,175
+muchas muestras converge
+al valor esperado.
+
+17
+00:00:56,555 --> 00:01:01,042
+Si en lugar de dos resultados hay K,
+como en un dado, tenemos una variable
+
+18
+00:01:01,042 --> 00:01:05,043
+categórica, descrita por un vector
+de probabilidades que suma uno.
+
+19
+00:01:06,150 --> 00:01:08,505
+Ahora sumemos muchas
+variables de Bernoulli.
+
+20
+00:01:08,885 --> 00:01:12,648
+Si sumamos veinte lanzamientos
+y repetimos el experimento miles
+
+21
+00:01:12,648 --> 00:01:16,052
+de veces, el histograma de la
+suma toma forma de campana.
+
+22
+00:01:16,432 --> 00:01:20,080
+La curva verde es una
+gaussiana con la misma
+
+23
+00:01:20,080 --> 00:01:23,810
+media, n p, y la misma
+varianza, n p (1 − p).
+
+24
+00:01:24,190 --> 00:01:27,098
+Es el teorema central del
+límite: sumas de muchas
+
+25
+00:01:27,098 --> 00:01:30,303
+contribuciones independientes
+tienden a una gaussiana.
+
+26
+00:01:30,683 --> 00:01:33,213
+Por eso el ruido térmico,
+que es la suma de
+
+27
+00:01:33,213 --> 00:01:36,096
+innumerables choques
+microscópicos, es gaussiano.
+
+28
+00:01:36,476 --> 00:01:46,318
+La densidad es p(x) =
+exp(−(x−μ)²/2σ²)/√(2πσ²).
+
+29
+00:01:47,450 --> 00:01:51,812
+En varias dimensiones, la nube de
+puntos de una gaussiana estándar es
+
+30
+00:01:51,812 --> 00:01:55,794
+redonda: cada coordenada es
+independiente y tiene varianza uno.
+
+31
+00:01:56,174 --> 00:02:00,585
+Apliquemos una transformación lineal
+A a cada punto y sumemos un vector b.
+
+32
+00:02:00,965 --> 00:02:03,475
+La nube se estira, rota y se traslada.
+
+33
+00:02:03,855 --> 00:02:08,772
+La nueva media es b, y la nueva
+matriz de covarianza es A Aᵀ.
+
+34
+00:02:09,152 --> 00:02:12,953
+La elipse dibujada encierra la
+región donde vive la mayor parte de
+
+35
+00:02:12,953 --> 00:02:16,179
+la probabilidad: sus ejes son
+los vectores propios de la
+
+36
+00:02:16,179 --> 00:02:19,865
+covarianza, y sus longitudes, las
+raíces de los valores propios.
+
+37
+00:02:20,245 --> 00:02:23,481
+Esta regla de transformación
+es la base del solucionador
+
+38
+00:02:23,481 --> 00:02:26,428
+lineal termodinámico que
+veremos en la unidad seis.
+
+39
+00:02:27,550 --> 00:02:29,825
+Los momentos resumen una distribución.
+
+40
+00:02:30,205 --> 00:02:33,063
+El primer momento es la
+media, el centro de masa.
+
+41
+00:02:33,443 --> 00:02:37,147
+El segundo momento central es
+la varianza, que mide el ancho.
+
+42
+00:02:37,527 --> 00:02:41,112
+Para una gaussiana, la media y
+la covarianza determinan todo.
+
+43
+00:02:41,492 --> 00:02:45,267
+Esto tendrá una consecuencia
+profunda: un sistema físico que se
+
+44
+00:02:45,267 --> 00:02:49,341
+relaja hacia una gaussiana guarda
+la respuesta de un problema lineal
+
+45
+00:02:49,341 --> 00:02:52,696
+en su media, y la de la matriz
+inversa en su covarianza.
+
+46
+00:02:53,817 --> 00:02:55,867
+¿Cuánta información trae un resultado?
+
+47
+00:02:56,247 --> 00:03:01,000
+Shannon propuso medirla por la sorpresa,
+menos el logaritmo de su probabilidad.
+
+48
+00:03:01,380 --> 00:03:05,043
+Un evento seguro no sorprende;
+uno raro sorprende mucho.
+
+49
+00:03:05,423 --> 00:03:11,459
+La entropía es la sorpresa
+promedio: H = −Σ p log p.
+
+50
+00:03:11,839 --> 00:03:15,898
+Para una moneda, la curva vale
+cero si el resultado es seguro y
+
+51
+00:03:15,898 --> 00:03:19,314
+alcanza su máximo, un bit,
+cuando la moneda es justa.
+
+52
+00:03:19,694 --> 00:03:23,182
+Para una gaussiana, la entropía
+crece con el logaritmo de
+
+53
+00:03:23,182 --> 00:03:26,120
+la desviación estándar:
+más ancha, más incierta.
+
+54
+00:03:27,250 --> 00:03:31,636
+Para comparar dos distribuciones
+usamos la divergencia de Kullback y
+
+55
+00:03:31,636 --> 00:03:35,958
+Leibler: el promedio, bajo p, del
+logaritmo del cociente p sobre q.
+
+56
+00:03:36,338 --> 00:03:39,217
+Mide cuántos bits extra
+pagamos si codificamos
+
+57
+00:03:39,217 --> 00:03:41,970
+datos de p usando un
+código diseñado para q.
+
+58
+00:03:42,350 --> 00:03:44,726
+Siempre es mayor o igual que cero, y vale
+
+59
+00:03:44,726 --> 00:03:47,159
+cero solo si las distribuciones coinciden.
+
+60
+00:03:47,539 --> 00:03:49,994
+Pero no es una distancia: no es simétrica.
+
+61
+00:03:50,374 --> 00:03:53,391
+Fíjate en los dos números
+cuando la gaussiana naranja se
+
+62
+00:03:53,391 --> 00:03:55,924
+mueve y se ensancha:
+cambian de forma distinta.
+
+63
+00:03:57,050 --> 00:03:58,316
+Hagamos dos cálculos.
+
+64
+00:03:58,696 --> 00:04:02,529
+La entropía de una moneda con
+p = 0,9 es menos cero coma
+
+65
+00:04:02,529 --> 00:04:06,224
+nueve por el logaritmo en
+base dos de cero coma nueve,
+
+66
+00:04:06,224 --> 00:04:09,920
+menos cero coma uno por el
+logaritmo de cero coma uno.
+
+67
+00:04:10,300 --> 00:04:13,470
+El resultado es cero coma
+cuarenta y siete bits.
+
+68
+00:04:13,850 --> 00:04:16,957
+Segundo: la divergencia
+entre una normal estándar
+
+69
+00:04:16,957 --> 00:04:19,684
+y una normal de media
+uno y desviación dos.
+
+70
+00:04:20,064 --> 00:04:23,744
+La fórmula cerrada da el
+logaritmo de dos, más un cuarto,
+
+71
+00:04:23,744 --> 00:04:27,230
+menos un medio: unos cero
+coma cuarenta y cuatro nats.
+
+72
+00:04:28,350 --> 00:04:30,570
+Estas piezas aparecen en todo el curso.
+
+73
+00:04:30,950 --> 00:04:35,665
+El pbit es una variable de Bernoulli cuya
+probabilidad controla un campo local.
+
+74
+00:04:36,045 --> 00:04:38,512
+El estado final del proceso de Ornstein y
+
+75
+00:04:38,512 --> 00:04:40,919
+Uhlenbeck es una gaussiana multivariada.
+
+76
+00:04:41,299 --> 00:04:43,692
+La entropía fija el costo de Landauer.
+
+77
+00:04:44,072 --> 00:04:47,531
+Y la divergencia KL aparece en
+el aprendizaje de máquinas de
+
+78
+00:04:47,531 --> 00:04:51,220
+Boltzmann, en los modelos de
+difusión y en el gradiente natural.
+
+79
+00:04:52,350 --> 00:04:55,543
+En la próxima lección veremos
+las matrices simétricas
+
+80
+00:04:55,543 --> 00:04:59,219
+definidas positivas, que dan
+forma a la elipse de covarianza.
+
+81
+00:04:59,599 --> 00:05:02,377
+Luego estudiaremos cadenas
+de Markov, donde las
+
+82
+00:05:02,377 --> 00:05:04,742
+distribuciones evolucionan en el tiempo.
+
+83
+00:05:05,122 --> 00:05:08,386
+En la unidad uno conectaremos
+la entropía de Shannon con la
+
+84
+00:05:08,386 --> 00:05:11,650
+de Gibbs, y en la unidad dos
+aprenderemos a poner barras de
+
+85
+00:05:11,650 --> 00:05:14,195
+error a promedios de
+muestras correlacionadas.
+
+86
+00:05:15,317 --> 00:05:22,137
+Errores frecuentes: la covarianza de
+A y más b es A Aᵀ, no A al cuadrado.
+
+87
+00:05:22,517 --> 00:05:26,667
+La divergencia KL no es una
+distancia, porque no es simétrica.
+
+88
+00:05:27,047 --> 00:05:29,889
+Cuida las unidades: con
+logaritmo en base dos
+
+89
+00:05:29,889 --> 00:05:32,859
+medimos en bits, con
+logaritmo natural en nats.
+
+90
+00:05:33,239 --> 00:05:37,493
+Y recuerda que la entropía diferencial
+de una densidad continua puede ser
+
+91
+00:05:37,493 --> 00:05:41,164
+negativa, a diferencia de la
+entropía de una variable discreta.
+
+92
+00:05:42,283 --> 00:05:43,116
+En resumen:
+
+93
+00:05:43,496 --> 00:05:47,658
+Bernoulli, categórica y gaussiana
+son las variables básicas del curso.
+
+94
+00:05:48,038 --> 00:05:51,385
+Una transformación lineal
+lleva una gaussiana
+
+95
+00:05:51,385 --> 00:05:54,657
+estándar a una de media
+b y covarianza A Aᵀ.
+
+96
+00:05:55,037 --> 00:05:59,244
+La entropía mide la sorpresa
+promedio, y la divergencia KL mide
+
+97
+00:05:59,244 --> 00:06:03,183
+cuánto difiere una distribución
+de otra, sin ser simétrica.
+
+98
+00:06:04,317 --> 00:06:08,774
+Para practicar: obtén la media
+y la covarianza de A y más b.
+
+99
+00:06:09,154 --> 00:06:13,391
+Calcula la entropía de una Bernoulli
+y de una gaussiana de dimensión d.
+
+100
+00:06:13,771 --> 00:06:16,775
+Compara las dos divergencias
+KL entre una normal
+
+101
+00:06:16,775 --> 00:06:19,405
+de varianza uno y otra de varianza cuatro.
+
+102
+00:06:19,785 --> 00:06:22,945
+Y calcula cuántos lanzamientos
+necesitas para estimar una
+
+103
+00:06:22,945 --> 00:06:25,606
+probabilidad con error
+estándar de un centésimo.

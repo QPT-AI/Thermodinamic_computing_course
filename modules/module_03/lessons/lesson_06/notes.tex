@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.6}{Relaciones de incertidumbre termodinámica}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} enunciar la TUR y la cota cinética; compararlas; aplicarlas al tiempo de cómputo.
+\textbf{Prerrequisitos:} 3.2 (producción de entropía), 2.8 (procesos de saltos y Gillespie).
+
+\section{Corrientes y precisión}
+Una \emph{corriente} $J$ es un observable antisimétrico bajo inversión temporal que crece con el tiempo: pasos netos de un motor, tics de
+un reloj, tokens procesados por un circuito browniano. Su precisión se mide con la varianza relativa
+$\epsilon^2 = \mathrm{Var}(J)/\langle J\rangle^2$.
+
+\begin{intuicion}
+Un contador que salta adelante con tasa $k_+$ y atrás con tasa $k_-$ disipa $\ln(k_+/k_-)$ (en unidades de $\kB$) por cada paso neto.
+Si $k_+\approx k_-$ casi no disipa, pero avanza de forma errática; si $k_-\ll k_+$ avanza con regularidad, pero cada paso cuesta mucha entropía.
+\end{intuicion}
+
+\section{La relación de incertidumbre termodinámica}
+\begin{resultado}[ (TUR)]
+Para un proceso de Markov en estado estacionario, toda corriente cumple
+\begin{equation}
+\frac{\mathrm{Var}(J)}{\langle J\rangle^2}\ \ge\ \frac{2\kB}{\Sigma},
+\end{equation}
+donde $\Sigma$ es la entropía total producida en el intervalo de observación.
+\end{resultado}
+\noindent Para el contador sesgado en tiempo $t$: $\langle J\rangle=(k_+-k_-)t$, $\mathrm{Var}(J)=(k_++k_-)t$ y $\Sigma=(k_+-k_-)t\ln(k_+/k_-)$, de modo que
+\begin{equation}
+\epsilon^2\Sigma=\frac{(k_++k_-)\ln(k_+/k_-)}{k_+-k_-}\ \ge\ 2,
+\end{equation}
+con igualdad en el límite $k_+\to k_-$ (desarrollo: $\ln(1+x)\approx x-x^2/2$). Reducir el error relativo a la mitad exige cuadruplicar $\Sigma$.
+
+\section{La cota cinética}
+\begin{resultado}[ (cota cinética)]
+Con la actividad dinámica $\mathcal A$ (número medio total de saltos, adelante y atrás), $\ \mathrm{Var}(J)/\langle J\rangle^2\ \ge\ 1/\mathcal A$.
+\end{resultado}
+Para el contador, $\mathcal A=(k_++k_-)t$ y $\epsilon^2\mathcal A=(k_++k_-)^2/(k_+-k_-)^2\ge1$, ajustada cuando $k_-\to0$. La TUR es ajustada cerca
+del equilibrio y la cinética lejos de él; existen cotas mixtas que combinan $\Sigma$ y $\mathcal A$.
+
+\section{Tiempo de cómputo}
+El tiempo $T_N$ hasta que el contador llega a $N$ pasos netos es un tiempo de primer paso. Para $N$ grande,
+$\langle T_N\rangle\approx N/(k_+-k_-)$ y $\epsilon_T^2\approx(k_++k_-)/[N(k_+-k_-)]$; las mismas cotas valen con $\Sigma\approx N\ln(k_+/k_-)$ y
+$\mathcal A\approx(k_++k_-)\langle T_N\rangle$ \cite{utsumi}.
+\begin{ejemplo}
+$N=100$, $k_-=1$, simulación de Gillespie \evS:
+\begin{center}\begin{tabular}{lccc}\toprule
+$k_+$ & $\epsilon_T^2$ & $2/\Sigma$ & $1/\mathcal A$\\\midrule
+1,2 & 0,110 & 0,110 & 0,0009\\
+3 & 0,020 & 0,018 & 0,005\\
+20 & 0,011 & 0,0067 & 0,009\\\bottomrule\end{tabular}\end{center}
+Con $k_+=1{,}2$ la TUR está saturada; con $k_+=20$ la cota cinética es la más ajustada. Ambas se cumplen siempre.
+\end{ejemplo}
+
+\begin{aplicacion}
+Circuitos brownianos de tokens (lección 5.5, reto L7): el tiempo de cómputo de una compuerta obedece una TUR \cite{utsumi}. Inferencia
+termodinámica: medir $\langle J\rangle$ y $\mathrm{Var}(J)$ da la cota inferior $\Sigma\ge2\langle J\rangle^2/\mathrm{Var}(J)$ sin conocer el modelo.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Aplicar la TUR fuera de Markov estacionario sin la versión adecuada. \quad Usar la \emph{tasa} de entropía en lugar de $\Sigma$ total.
+\item Olvidar el factor 2 (con $\kB=1$). \quad Suponer que la cota siempre está saturada.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[26]{utsumi} Y. Utsumi et al., Computation time and thermodynamic uncertainty relation of Brownian circuits, 2022.
+\bibitem[2]{pp} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, Princeton, 2021.
+\bibitem[11]{seifert} U. Seifert, Stochastic thermodynamics, fluctuation theorems and molecular machines, Rep. Prog. Phys. 75 (2012).
+\end{thebibliography}
+\end{document}

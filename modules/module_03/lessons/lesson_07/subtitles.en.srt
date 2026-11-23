@@ -1,0 +1,402 @@
+1
+00:00:00,350 --> 00:00:02,066
+Lesson 3.7.
+
+2
+00:00:02,446 --> 00:00:05,514
+Thermodynamics of resetting
+and error-free readout.
+
+3
+00:00:06,617 --> 00:00:09,965
+Every computer repeats a
+cycle: it puts its memory in
+
+4
+00:00:09,965 --> 00:00:12,871
+a known state, computes,
+and reads the result.
+
+5
+00:00:13,251 --> 00:00:18,815
+In lesson 1.5 we saw the cost of
+erasing a completely unknown bit.
+
+6
+00:00:19,195 --> 00:00:22,677
+But in practice memory
+is almost never uniform,
+
+7
+00:00:22,677 --> 00:00:26,308
+reset is never perfect,
+and readout is noisy too.
+
+8
+00:00:26,688 --> 00:00:29,770
+This lesson puts a price
+on all three: resetting,
+
+9
+00:00:29,770 --> 00:00:32,476
+retaining and reading
+a bit without errors.
+
+10
+00:00:33,583 --> 00:00:36,755
+Suppose the memory is
+one with probability p
+
+11
+00:00:36,755 --> 00:00:39,494
+and zero with probability one minus p.
+
+12
+00:00:39,874 --> 00:00:45,710
+Resetting it to zero removes its
+Shannon entropy, so the generalized
+
+13
+00:00:45,710 --> 00:00:51,202
+Landauer bound is W ≥ k_B T H(p),
+with entropy measured in nats.
+
+14
+00:00:51,582 --> 00:00:56,208
+The curve shows that bound: it
+equals k_B T ln 2 when the bit is
+
+15
+00:00:56,208 --> 00:01:00,328
+uniform and falls to zero when
+we already know its value.
+
+16
+00:01:00,708 --> 00:01:04,274
+Resetting a bit that is almost
+always zero is almost free.
+
+17
+00:01:05,383 --> 00:01:09,065
+No real reset is perfect:
+at the end there remains an
+
+18
+00:01:09,065 --> 00:01:12,261
+error probability ε that
+the bit is still one.
+
+19
+00:01:12,641 --> 00:01:17,452
+The final memory still
+has entropy H(ε), and
+
+20
+00:01:17,452 --> 00:01:22,043
+the bound becomes W ≥ k_B T (H(p) − H(ε)).
+
+21
+00:01:22,423 --> 00:01:26,148
+With a uniform bit and
+a one-percent error,
+
+22
+00:01:26,148 --> 00:01:29,786
+the minimum drops from 0.69 to 0.64 k_B T.
+
+23
+00:01:30,166 --> 00:01:33,579
+Accepting errors makes reset
+cheaper, but only slightly.
+
+24
+00:01:33,959 --> 00:01:36,653
+And if the protocol
+takes a finite time, the
+
+25
+00:01:36,653 --> 00:01:39,224
+excess that decays as one over τ is added.
+
+26
+00:01:40,350 --> 00:01:43,143
+A reset bit must also stay put.
+
+27
+00:01:43,523 --> 00:01:47,766
+In a double well, thermal
+noise makes it hop the
+
+28
+00:01:47,766 --> 00:01:52,097
+barrier at the Arrhenius
+rate, ν₀ e^(−E_b/k_B T).
+
+29
+00:01:52,477 --> 00:01:58,271
+For the probability of a hop
+within a time t to be below ε,
+
+30
+00:01:58,271 --> 00:02:03,181
+the barrier must satisfy
+E_b ≥ k_B T ln(ν₀ t / ε).
+
+31
+00:02:03,561 --> 00:02:07,667
+With an attempt frequency of
+10¹² Hz and an error of one in
+
+32
+00:02:07,667 --> 00:02:11,355
+a billion, keeping the bit
+for one second takes about
+
+33
+00:02:11,355 --> 00:02:14,973
+forty-eight k_B T; ten years
+take about sixty-eight.
+
+34
+00:02:15,353 --> 00:02:18,488
+Retention grows exponentially
+with the barrier, but
+
+35
+00:02:18,488 --> 00:02:21,438
+the barrier only grows
+with the log of the time.
+
+36
+00:02:22,550 --> 00:02:23,708
+Now let's read the bit.
+
+37
+00:02:24,088 --> 00:02:27,306
+The sensor is a node
+of capacitance C whose
+
+38
+00:02:27,306 --> 00:02:30,748
+voltage has thermal noise
+of variance k_B T/C.
+
+39
+00:02:31,128 --> 00:02:33,548
+A comparator decides
+zero or one depending on
+
+40
+00:02:33,548 --> 00:02:36,130
+whether the voltage exceeds
+a threshold halfway.
+
+41
+00:02:36,510 --> 00:02:41,021
+The error probability is
+the Gaussian tail, Q(V/σ).
+
+42
+00:02:41,401 --> 00:02:46,512
+For an error of one in a billion,
+the signal must be six standard
+
+43
+00:02:46,512 --> 00:02:52,253
+deviations, and the signal energy, ½
+C V², comes to about eighteen k_B T.
+
+44
+00:02:52,633 --> 00:02:57,513
+In general that energy grows
+as k_B T ln(1/ε): each factor
+
+45
+00:02:57,513 --> 00:03:01,888
+of ten in reliability costs
+a little over two k_B T.
+
+46
+00:03:03,017 --> 00:03:05,169
+Where is the unavoidable cost of reading?
+
+47
+00:03:05,549 --> 00:03:08,794
+As with Maxwell's demon,
+copying the bit into
+
+48
+00:03:08,794 --> 00:03:11,535
+a clean memory can be done reversibly.
+
+49
+00:03:11,915 --> 00:03:15,976
+What cannot be avoided is resetting
+that memory for the next readout.
+
+50
+00:03:16,356 --> 00:03:20,049
+If the result is discarded,
+each readout pays at
+
+51
+00:03:20,049 --> 00:03:23,588
+least the result's
+entropy, k_B T H, at reset.
+
+52
+00:03:23,968 --> 00:03:28,233
+That is why a chip that reads pbits
+millions of times per second spends
+
+53
+00:03:28,233 --> 00:03:32,619
+readout and reset energy that can far
+exceed that of the sampling itself.
+
+54
+00:03:33,750 --> 00:03:36,282
+Let's gather the numbers
+at three hundred kelvin.
+
+55
+00:03:36,662 --> 00:03:41,716
+Resetting a uniform bit
+with a one-percent error
+
+56
+00:03:41,716 --> 00:03:46,664
+costs at least 0.64 k_B
+T, about 2.6 × 10⁻²¹ J.
+
+57
+00:03:47,044 --> 00:03:51,494
+Reading it with an error of
+one in a billion requires
+
+58
+00:03:51,494 --> 00:03:55,357
+an eighteen k_B T signal,
+about 7.5 × 10⁻²⁰ J.
+
+59
+00:03:55,737 --> 00:03:59,734
+And keeping it for ten years requires
+a barrier of sixty-eight k_B T.
+
+60
+00:04:00,114 --> 00:04:04,170
+Reliable readout costs almost thirty
+times more than the ideal reset.
+
+61
+00:04:05,283 --> 00:04:07,784
+In hardware these
+accounts drive the design.
+
+62
+00:04:08,164 --> 00:04:12,003
+In a thermodynamic chip, the
+input and output energy to read
+
+63
+00:04:12,003 --> 00:04:15,522
+pbits often dominates over
+that of the sampling fabric.
+
+64
+00:04:15,902 --> 00:04:19,231
+Reading less often, spacing
+readouts more than the
+
+65
+00:04:19,231 --> 00:04:23,358
+autocorrelation time, saves
+energy without losing information.
+
+66
+00:04:23,738 --> 00:04:28,284
+In Torx, each Gibbs update is a
+reset followed by a gate, and we will
+
+67
+00:04:28,284 --> 00:04:32,171
+see the difference between an
+ideal reset and a finite one.
+
+68
+00:04:33,283 --> 00:04:37,158
+Frequent mistakes: using
+k_B T ln 2 for any reset,
+
+69
+00:04:37,158 --> 00:04:40,955
+when the bound depends on
+the prior distribution.
+
+70
+00:04:41,335 --> 00:04:45,123
+Confusing the barrier that retains
+the bit with the cost of resetting it.
+
+71
+00:04:45,503 --> 00:04:48,897
+Believing reading is free because
+the copy can be reversible.
+
+72
+00:04:49,277 --> 00:04:50,848
+And mixing bits with nats.
+
+73
+00:04:51,950 --> 00:04:56,624
+In summary: resetting costs at
+least k_B T (H(p) − H(ε)), which
+
+74
+00:04:56,624 --> 00:05:00,927
+depends on what we already
+know and on the accepted error.
+
+75
+00:05:01,307 --> 00:05:03,632
+Retaining a bit requires a barrier that
+
+76
+00:05:03,632 --> 00:05:06,076
+grows with the log of the retention time.
+
+77
+00:05:06,456 --> 00:05:12,348
+Reading with error ε requires a
+signal of about k_B T ln(1/ε).
+
+78
+00:05:12,728 --> 00:05:15,253
+And the unavoidable cost
+of reading appears when
+
+79
+00:05:15,253 --> 00:05:17,830
+resetting the memory where
+the result was stored.
+
+80
+00:05:18,950 --> 00:05:23,601
+To practice: compute the cost of
+resetting a biased bit with a given error.
+
+81
+00:05:23,981 --> 00:05:26,978
+Find the barrier to
+retain a bit for one hour.
+
+82
+00:05:27,358 --> 00:05:30,572
+Compute the energy and
+voltage of a reliable readout.
+
+83
+00:05:30,952 --> 00:05:36,474
+And explain why reading every sweep
+wastes energy when samples are correlated.

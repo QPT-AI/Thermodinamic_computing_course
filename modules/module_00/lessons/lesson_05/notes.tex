@@ -1,0 +1,82 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{0.5}{Cadenas de Markov}
+
+\noindent\textbf{Unidad 0.}\quad\textbf{Objetivos:} evolucionar distribuciones con $P$; calcular $\pi$; verificar
+balance detallado; relacionar brecha espectral y mezcla. \textbf{Prerrequisitos:} lecciones 0.3 y 0.4.
+
+\section{¿Por qué importa?}
+Gibbs, Metropolis, un arreglo de pbits y una partícula que salta entre pozos son cadenas de Markov: el próximo
+estado depende solo del actual. Toda la Unidad 4 (muestreo), el hardware de la Unidad 5 y la búsqueda de orden
+por difusión de la Unidad 7 descansan en esta lección \cite{levin}.
+
+\section{Definiciones}
+\begin{definicion}[ (cadena de Markov finita)]
+Una sucesión $x_0,x_1,\dots$ en $\{1,\dots,K\}$ con $P(x_{n+1}=j\mid x_n=i,x_{n-1},\dots)=P_{ij}$. $P$ es
+\emph{estocástica por filas}: $P_{ij}\ge0$, $\sum_jP_{ij}=1$.
+\end{definicion}
+Si $p_n$ (vector \emph{fila}) es la distribución de $x_n$, entonces $p_{n+1}=p_nP$ y $p_n=p_0P^n$.
+
+\section{Distribución estacionaria}
+$\pi$ es estacionaria si $\pi P=\pi$, $\pi_i\ge0$, $\sum\pi_i=1$: vector propio izquierdo con valor propio 1.
+\begin{teorema}[ergódico para cadenas finitas]
+Si $P$ es irreducible (todo estado alcanza a todo estado) y aperiódica, existe una única $\pi$ y
+$p_n\to\pi$ para todo $p_0$. Además, las fracciones de tiempo de visita convergen a $\pi$ casi seguramente.
+\end{teorema}
+
+\section{Balance detallado y reversibilidad}
+\begin{definicion}[ (balance detallado)]
+$\pi_iP_{ij}=\pi_jP_{ji}$ para todo $i,j$.
+\end{definicion}
+\begin{proposicion}
+Balance detallado $\Rightarrow$ estacionariedad: $\sum_i\pi_iP_{ij}=\sum_i\pi_jP_{ji}=\pi_j\sum_iP_{ji}=\pi_j$.
+\end{proposicion}
+El recíproco es falso: la cadena cíclica de 3 estados con probabilidad 0,8 hacia adelante, 0,1 hacia atrás y 0,1
+de quedarse tiene $\pi$ uniforme pero una corriente neta $\frac13(0{,}8-0{,}1)$ en cada arista. Las cadenas con
+balance detallado (reversibles) describen sistemas en \emph{equilibrio termodinámico}; las otras, estados
+estacionarios fuera del equilibrio (Unidad 3). \textbf{Receta:} dados pesos simétricos $W_{ij}=W_{ji}\ge0$,
+$P_{ij}=W_{ij}/\sum_kW_{ik}$ es reversible con $\pi_i\propto\sum_kW_{ik}$ (así se construyó el ejemplo).
+
+\section{Brecha espectral y tiempo de mezcla}
+Para $P$ reversible, $D^{1/2}PD^{-1/2}$ con $D=\diag(\pi)$ es simétrica: los valores propios son reales,
+$1=\lambda_1>\lambda_2\ge\dots\ge\lambda_K>-1$. Sea $\lambda_*=\max(|\lambda_2|,|\lambda_K|)$. Entonces
+\begin{equation}\|p_n-\pi\|_1\le C\,\lambda_*^n,\qquad t_{\text{mix}}(\varepsilon)\lesssim\frac{1}{1-\lambda_*}\ln\frac{1}{\varepsilon\,\pi_{\min}}.\end{equation}
+$1-\lambda_*$ es la \emph{brecha espectral} (absoluta). En modelos de Ising cerca de la temperatura crítica, la brecha
+de Gibbs se cierra y el número de barridos necesario se dispara (Unidad 4.4).
+
+\begin{ejemplo}
+$P=\begin{pmatrix}2/3&1/3&0\\1/4&1/2&1/4\\0&1/3&2/3\end{pmatrix}$, construida con $W=\begin{pmatrix}2&1&0\\1&2&1\\0&1&2\end{pmatrix}$.
+Entonces $\pi\propto(3,4,3)$, es decir $\pi=(0{,}3;0{,}4;0{,}3)$. Balance detallado: $\pi_1P_{12}=0{,}3\cdot\frac13=0{,}1=0{,}4\cdot\frac14=\pi_2P_{21}$
+(y por simetría entre 2 y 3). Valores propios: $1,\frac23,\frac16$; brecha $\frac13$; la distancia a $\pi$ se reduce
+asintóticamente en un factor $\frac23$ por paso, como muestra la recta en escala logarítmica.
+\end{ejemplo}
+
+\begin{aplicacion}
+Gibbs y Metropolis (Unidad 4) se diseñan para que $\pi$ sea la distribución de Boltzmann y cumplen balance
+detallado. Un TSU es una cadena de Markov física: su brecha espectral decide los barridos necesarios. El
+laboratorio L1 pide: cadenas de 3 y 50 estados; $\pi$ por iteración de potencias y por descomposición espectral;
+gráfica de $\|p_n-\pi\|_1$ frente a $n$ comparada con $\lambda_2^n$.
+\end{aplicacion}
+
+\section{Conexiones}
+Lección 0.6 (Fourier en $\Z/r\Z$ diagonaliza caminatas en ciclos), 1.2 (Boltzmann), 2.3 (Fokker--Planck, versión
+continua), 2.8 (tiempo continuo y Gillespie), 4.3--4.4 (MCMC y diagnósticos), 7.3 (caminatas en grafos de Cayley).
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Filas frente a columnas: con $p$ fila, $p_{n+1}=p_nP$ y las filas de $P$ suman 1.
+\item Estacionaria $\not\Rightarrow$ balance detallado.
+\item Cadena periódica: tiene $\pi$ pero $p_n$ no converge (oscila).
+\item La mezcla la decide $\lambda_*=\max|\lambda_{i\ge2}|$, no solo $\lambda_2$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$p_{n+1}=p_nP$; $\pi P=\pi$; balance detallado $\Rightarrow$ estacionariedad y equilibrio; $\|p_n-\pi\|\lesssim C\lambda_*^n$.
+
+\begin{thebibliography}{9}\small
+\bibitem[3]{levin} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS, 2009.
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009. \url{https://arxiv.org/abs/0905.1629}
+\end{thebibliography}
+\end{document}

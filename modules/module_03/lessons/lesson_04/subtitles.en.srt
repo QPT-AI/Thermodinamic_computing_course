@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:01,990
+Lesson 3.4.
+
+2
+00:00:02,370 --> 00:00:04,506
+Thermodynamic speed limits.
+
+3
+00:00:05,617 --> 00:00:08,861
+A computer must transform
+one probability distribution
+
+4
+00:00:08,861 --> 00:00:11,925
+into another: from the
+initial state to the result.
+
+5
+00:00:12,305 --> 00:00:14,650
+The question of the course
+is whether it can do so
+
+6
+00:00:14,650 --> 00:00:16,995
+fast and with little
+dissipation at the same time.
+
+7
+00:00:17,375 --> 00:00:22,103
+Thermodynamic speed limits answer
+precisely: the product of time
+
+8
+00:00:22,103 --> 00:00:26,610
+and entropy produced is bounded
+below by a geometric distance
+
+9
+00:00:26,610 --> 00:00:30,452
+between the distributions,
+the Wasserstein distance.
+
+10
+00:00:31,583 --> 00:00:34,760
+Imagine having to move a pile
+of sand from one place to
+
+11
+00:00:34,760 --> 00:00:37,878
+another, with a shovel moving
+through a viscous fluid.
+
+12
+00:00:38,258 --> 00:00:42,476
+The cost of moving sand against friction
+grows with the square of the speed.
+
+13
+00:00:42,856 --> 00:00:45,730
+If we have lots of time,
+we go slowly and spend
+
+14
+00:00:45,730 --> 00:00:48,604
+little; if we have little
+time, we spend a lot.
+
+15
+00:00:48,984 --> 00:00:52,147
+And there is an optimal
+way to split the work: move
+
+16
+00:00:52,147 --> 00:00:55,185
+each grain in a straight
+line, at constant speed.
+
+17
+00:00:55,565 --> 00:01:00,472
+The minimum total distance, measured with
+squares, is the Wasserstein distance.
+
+18
+00:01:01,583 --> 00:01:09,350
+The result, for overdamped
+dynamics, is: τ ≥ W₂² / (μ k_B T Σ).
+
+19
+00:01:09,730 --> 00:01:14,197
+Here W₂ is the Wasserstein distance
+between the initial and final
+
+20
+00:01:14,197 --> 00:01:18,526
+distributions, μ the mobility
+and Σ the total entropy produced.
+
+21
+00:01:18,906 --> 00:01:24,713
+Read backward: Σ ≥ W₂²/(μ k_B T τ).
+
+22
+00:01:25,093 --> 00:01:28,642
+To cover a fixed distance
+in less time, you must pay
+
+23
+00:01:28,642 --> 00:01:31,986
+more entropy, inversely
+proportional to the time.
+
+24
+00:01:32,366 --> 00:01:34,424
+The curve shows the forbidden region.
+
+25
+00:01:35,550 --> 00:01:38,946
+The Wasserstein distance is the
+minimum cost of transporting
+
+26
+00:01:38,946 --> 00:01:42,342
+one distribution into another,
+with cost equal to the square
+
+27
+00:01:42,342 --> 00:01:45,002
+of the distance traveled
+by each grain of mass.
+
+28
+00:01:45,382 --> 00:01:49,630
+For Gaussians it has a closed
+form: the squared difference of
+
+29
+00:01:49,630 --> 00:01:53,460
+the means plus a covariance
+term, the Gelbrich formula.
+
+30
+00:01:53,840 --> 00:01:56,823
+In one dimension, it is the
+squared difference of the means
+
+31
+00:01:56,823 --> 00:01:59,604
+plus the squared difference
+of the standard deviations.
+
+32
+00:01:59,984 --> 00:02:02,887
+For arbitrary distributions,
+that same formula
+
+33
+00:02:02,887 --> 00:02:05,663
+with means and covariances
+is a lower bound.
+
+34
+00:02:06,783 --> 00:02:14,592
+We define the efficiency as η = W₂² /
+(μ τ k_B T Σ), which never exceeds one.
+
+35
+00:02:14,972 --> 00:02:18,701
+Let's compare two protocols that
+translate a particle in a trap.
+
+36
+00:02:19,081 --> 00:02:23,685
+Dragging the trap at constant
+speed: the particle starts with a
+
+37
+00:02:23,685 --> 00:02:27,558
+lag and its mean accelerates;
+the efficiency is 0.88.
+
+38
+00:02:27,938 --> 00:02:32,632
+The optimal protocol makes the mean
+of the distribution move at constant
+
+39
+00:02:32,632 --> 00:02:36,869
+speed from the very first instant:
+the efficiency is exactly one.
+
+40
+00:02:37,249 --> 00:02:40,022
+The lesson is general:
+the optimal protocol
+
+41
+00:02:40,022 --> 00:02:42,536
+travels the geodesic at constant speed.
+
+42
+00:02:43,650 --> 00:02:47,718
+With stiffness one, mobility
+one and k_B T one, we
+
+43
+00:02:47,718 --> 00:02:51,623
+drag the trap at speed
+one for three time units.
+
+44
+00:02:52,003 --> 00:02:56,312
+The particle's mean advances 2.05 and the
+
+45
+00:02:56,312 --> 00:03:00,621
+variance does not change, so W₂² is 4.20.
+
+46
+00:03:01,001 --> 00:03:06,195
+The entropy produced is the integral
+of the squared mean velocity, 1.6.
+
+47
+00:03:06,575 --> 00:03:13,697
+The limit requires at least 4.2 over
+three, 1.40; the efficiency is 0.88.
+
+48
+00:03:14,077 --> 00:03:16,936
+If we wanted the same
+transport in half the
+
+49
+00:03:16,936 --> 00:03:19,530
+time, the minimum entropy would double.
+
+50
+00:03:20,650 --> 00:03:25,518
+For computing this is central: transforming
+one distribution into another in a
+
+51
+00:03:25,518 --> 00:03:29,949
+given time has a minimum dissipation
+cost, and erasing fast costs more.
+
+52
+00:03:30,329 --> 00:03:33,885
+Wasserstein geometry tells
+us which protocol is best.
+
+53
+00:03:34,265 --> 00:03:38,241
+In lab four you will compute the
+efficiency of a Gaussian process.
+
+54
+00:03:39,350 --> 00:03:43,683
+Frequent mistakes: confusing the
+Wasserstein distance with work,
+
+55
+00:03:43,683 --> 00:03:47,949
+forgetting the system entropy,
+applying the overdamped bound to
+
+56
+00:03:47,949 --> 00:03:52,553
+systems with inertia, and believing
+ideal efficiency comes for free.
+
+57
+00:03:53,683 --> 00:03:57,575
+In summary: transforming
+distributions costs
+
+58
+00:03:57,575 --> 00:04:00,847
+entropy, at least W₂² over μ k_B T τ.
+
+59
+00:04:01,227 --> 00:04:03,811
+Fast and efficient at once is impossible.
+
+60
+00:04:04,191 --> 00:04:07,203
+The Wasserstein distance
+measures how much must be
+
+61
+00:04:07,203 --> 00:04:10,637
+transported, the Gelbrich
+formula gives it for Gaussians,
+
+62
+00:04:10,637 --> 00:04:13,890
+and the optimal protocol
+transports at constant speed.
+
+63
+00:04:15,017 --> 00:04:19,030
+To practice: compute a Wasserstein
+distance between Gaussians,
+
+64
+00:04:19,030 --> 00:04:23,109
+the minimum entropy of a translation,
+prove the inequality with
+
+65
+00:04:23,109 --> 00:04:26,346
+Cauchy–Schwarz, and describe
+the optimal protocol.

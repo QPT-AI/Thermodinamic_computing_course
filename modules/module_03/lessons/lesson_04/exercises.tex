@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.4}{Límites termodinámicos de velocidad}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) $W_2^2$ entre $\N(0,1)$ y $\N(3,4)$.
+\item (B) Entropía mínima para trasladar una gaussiana una distancia 2 en tiempo $0{,}5$ ($\mu=\kB T=1$).
+\item (B) Muestre $\int_0^\tau\dot m^2dt\ge(\Delta m)^2/\tau$.
+\item (B) ¿Qué protocolo alcanza $\eta=1$ en un traslado rígido?
+\item (I) Gelbrich para $\N(0,I)\to\N(0,\diag(4,1))$.
+\item (I) Para la trampa arrastrada, calcule $\eta(\tau)$ con $v\tau=L$ fijo y muestre que $\eta\to1$ cuando $\tau\to\infty$.
+\item (A) Pensum L4.3: para un proceso gaussiano $p_t=\N(m_t,s_t^2)$ con $\Sigma=\int(\dot m^2+\dot s^2)dt$ (cuando la deformación es lineal), derive $\eta$ y el protocolo óptimo.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $9+(2-1)^2=10$.
+
+\textbf{E2.} $\Sigma_{\min}=4/0{,}5=8$.
+
+\textbf{E3.} Cauchy--Schwarz: $(\int\dot m)^2\le\tau\int\dot m^2$.
+
+\textbf{E4.} Mover la media a velocidad constante desde $t=0$ (la trampa debe adelantarse $v/\kappa$ al inicio).
+
+\textbf{E5.} $\Tr(I+D-2D^{1/2})=(1+4-4)+(1+1-2)=1$.
+
+\textbf{E6.} Con $v=L/\tau$: $\Delta m=L-\frac L\tau(1-e^{-\tau})$ y $\Sigma=\frac{L^2}{\tau^2}[\tau-2(1-e^{-\tau})+\frac12(1-e^{-2\tau})]$; para $\tau\gg1$, $\Delta m\approx L$ y $\Sigma\approx L^2/\tau$, luego $\eta\to1$.
+
+\textbf{E7.} El transporte óptimo entre gaussianas 1D es afín: $\Sigma\ge[(\Delta m)^2+(\Delta s)^2]/\tau=W_2^2/\tau$, con igualdad para $m_t$ y $s_t$ lineales en $t$.
+\end{solucion}
+\end{document}

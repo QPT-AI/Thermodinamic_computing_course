@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.1}{Sistemas lineales desde el primer momento de un OU}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} codificar $Ax=b$ como potencial cuadrático; ejecutar el protocolo de sistemas lineales (equilibrar y
+promediar); relacionar el error con la temperatura y la ventana de promedio.
+\textbf{Prerrequisitos:} 2.6, 5.4.
+
+\section{Codificación}
+Sea $A\in\R^{d\times d}$ simétrica definida positiva (SPD). Con
+\[U(x)=\tfrac12x^\top Ax-b^\top x,\qquad\nabla U=Ax-b,\]
+el único mínimo es $x^\ast=A^{-1}b$. Físicamente: osciladores armónicos acoplados; $A$ son los resortes y $b$ las fuerzas. Si $A$ no es SPD se resuelve
+$A^\top Ax=A^\top b$, lo que eleva al cuadrado el número de condición $\kappa=\lambda_{\max}/\lambda_{\min}$.
+
+\section{Dinámica y equilibrio}
+Langevin sobreamortiguada (proceso de Ornstein--Uhlenbeck), con amortiguamiento $\gamma$:
+\[dx=-\tfrac1\gamma(Ax-b)\,dt+\sqrt{2/(\gamma\beta)}\,dW\quad\Longrightarrow\quad x_\infty\sim\N\big(A^{-1}b,\ \beta^{-1}A^{-1}\big).\]
+La solución es el \emph{primer momento} de la distribución estacionaria. El ruido garantiza ergodicidad: el promedio temporal de una trayectoria converge al
+promedio del ensamble.
+
+\begin{definicion}[ (protocolo de sistemas lineales, Aifer et al.)]
+(1) Cargar $A$ y $b$. (2) Equilibrar durante $t_0\gtrsim\kappa\tau_r\ln(\kappa/\varepsilon_{\mu_0})$, con $\tau_r=\gamma/\|A\|$. (3) Promediar con un integrador
+analógico $\bar x=\tau^{-1}\int_{t_0}^{t_0+\tau}x(t)\,dt$, con
+\[\tau=\frac{2\kappa^2d\,\|A\|}{\beta\|b\|^2\varepsilon^2(1-P_\varepsilon)}\,\tau_r,\]
+lo que garantiza $\|A\bar x-b\|/\|b\|\le\varepsilon$ con probabilidad $\ge P_\varepsilon$.
+\end{definicion}
+
+\section{Simulación \evS}
+$d=50$, $A=GG^\top/(2d)$ con $G\in\R^{d\times2d}$ normal estándar (semilla 0, $\kappa\approx34$), $\gamma=1$, Euler--Maruyama con $dt=0{,}01$, $t_0=100$.
+\begin{center}\begin{tabular}{lccc}\toprule
+error relativo $\|\bar x-A^{-1}b\|/\|A^{-1}b\|$ & $\tau=10$ & $\tau=100$ & $\tau=900$\\\midrule
+$k_BT=0{,}01$ & 6,7\,\% & 2,1\,\% & 0,84\,\%\\
+$k_BT=0{,}001$ & 2,1\,\% & 0,66\,\% & 0,27\,\%\\\bottomrule\end{tabular}\end{center}
+Multiplicar $\tau$ o $\beta$ por 10 divide el error por $\approx\sqrt{10}$: $\varepsilon\propto1/\sqrt{\beta\tau}$.
+
+\section{Complejidad}
+Termodinámico (sobreamortiguado): $O(d\kappa^2\varepsilon^{-2})$; subamortiguado: $O(\gamma d\kappa^{3/2}\varepsilon^{-2})$. Digital: $O(\min\{d^\omega,d^2\sqrt\kappa\})$
+(gradiente conjugado o multiplicación rápida, $\omega\approx2{,}3$). La ventaja aparece para $d$ grande; el costo de carga $O(d^2)$ se estudia en 6.5.
+
+\begin{aplicacion}
+Soluciones aproximadas rápidas: precondicionadores, pasos de Newton, gradiente natural (Unidad 8), regresión con procesos gaussianos. Laboratorio L9:
+comparación con gradiente conjugado y Cholesky.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Promediar desde $t=0$ (sesgo del transitorio). \quad Usar $A$ no SPD sin transformar.
+\item Esperar alta precisión: $\varepsilon\propto1/\sqrt{\beta\tau}$. \quad Ignorar el costo de carga.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem[25]{mel} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\bibitem[28]{coles} P. J. Coles et al., Thermodynamic AI and the fluctuation frontier, 2023.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.2}{Atención libre y atención lineal}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} el transformer libre de atención (AFT) y sus variantes; la forma recurrente de AFT-simple causal; mezcla local
+con conectividad fija.
+\textbf{Prerrequisitos:} 10.1.
+
+\section{AFT}
+Zhai et al.\ (2021):
+\[Y_t=\sigma(Q_t)\odot\frac{\sum_{t'}\exp(K_{t'}+w_{t,t'})\odot V_{t'}}{\sum_{t'}\exp(K_{t'}+w_{t,t'})},\]
+todo elemento a elemento en la dimensión del modelo; no hay productos $QK^\top$. AFT completo, con sesgos $w_{t,t'}$ para todo par, cuesta $O(T^2d)$; AFT-simple ($w=0$) es lineal.
+
+\section{AFT-simple causal = recurrencia}
+\[n_t=n_{t-1}+e^{K_t}\odot V_t,\quad d_t=d_{t-1}+e^{K_t},\quad Y_t=\sigma(Q_t)\odot n_t/d_t.\]
+\evS\ Con $T=64$, $d=16$: las formas paralela y recurrente coinciden exactamente. El estado de decode son dos vectores, frente a una caché KV que crece con $T$.
+Para estabilidad numérica se resta un máximo móvil dentro de las exponenciales.
+
+\section{Costo \evE}
+Con $T=d=4096$: puntuaciones de atención $4T^2d\approx275$ GFLOP por capa; AFT-simple $\sim6Td\approx0{,}1$ GFLOP. El precio es expresividad: AFT-simple no puede enfocar una
+posición concreta.
+
+\section{Mezcla local}
+AFT-conv usa sesgos de posición locales dentro de una ventana; la atención convolucional con compuertas mezcla vecinos con un filtro aprendido y una compuerta multiplicativa,
+$y_t=g_t\odot\sum_{k<s}h_kx_{t-k}$. Conexiones locales y fijas: implementables en un grafo de grado fijo. Tres virtudes para un TSU: sin productos densos $QK^\top$, operaciones
+elemento a elemento cercanas a la respuesta de un pbit, conectividad local fija.
+
+\begin{aplicacion}
+Contextos largos y generación en flujo con estado constante; mezcladores eficientes (atención lineal, espacio de estados). Laboratorio L28: modelo causal AFT-conv pequeño.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Suponer lineal a AFT completo. \quad Olvidar la estabilidad de las exponenciales.
+\item Esperar la recuperación de la atención con mezcla local. \quad Comparar con distinto número de parámetros.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{aft} S. Zhai et al., An attention free transformer, arXiv:2105.14103 (2021).
+\bibitem{lin} A. Katharopoulos et al., Transformers are RNNs: fast autoregressive transformers with linear attention, \emph{ICML} (2020).
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.3}{Descenso de gradiente natural termodinámico}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba $\langle\tilde g_t\rangle$ para $\tilde g_0=\nabla\ell$.
+\item (B) ¿Por qué $t=0$ equivale a descenso de gradiente?
+\item (B) Dé una explicación del efecto de momento del retardo.
+\item (B) ¿Qué término domina el costo por iteración de TNGD?
+\item (I) Para $A=\mathrm{diag}(1,100)$ y $\nabla\ell=(1,1)$, calcule $\langle\tilde g_t\rangle$ en $t=0{,}01$, $0{,}1$ y $\infty$. ¿Qué componente se «naturaliza» primero?
+\item (I) ¿Cuántos tiempos de relajación hacen falta para que el modo más lento de $A$ esté a 1\,\% de su valor de equilibrio?
+\item (A) Implemente TNGD en un perceptrón para MNIST (simulado) y compare la pérdida frente a iteraciones para $t\in\{0,5\tau,50\tau\}$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $e^{-At}(\nabla\ell-A^{-1}\nabla\ell)+A^{-1}\nabla\ell$.
+
+\textbf{E2.} $e^{0}=I$: $\langle\tilde g_0\rangle=\nabla\ell$.
+
+\textbf{E3.} El estado arrastra la curvatura y el gradiente anteriores: una media móvil exponencial implícita, como el momento.
+
+\textbf{E4.} Construir $J_f$ y $H_L$: $O(bd_zN)$; el tiempo analógico $t$ es pequeño por diseño.
+
+\textbf{E5.} Componente 1: $e^{-t}(1-1)+1=1$ siempre. Componente 2: $e^{-100t}(1-0{,}01)+0{,}01$: $0{,}37$ ($t=0{,}01$), $0{,}01005$ ($t=0{,}1$), $0{,}01$ ($\infty$).
+El modo de curvatura alta se naturaliza primero.
+
+\textbf{E6.} $e^{-\lambda_{\min}t}=0{,}01\Rightarrow t=\ln100/\lambda_{\min}\approx4{,}6\,\kappa\tau$ (con $\tau=1/\lambda_{\max}$).
+
+\textbf{E7.} La pérdida por iteración mejora de forma continua al aumentar $t$.
+\end{solucion}
+\end{document}

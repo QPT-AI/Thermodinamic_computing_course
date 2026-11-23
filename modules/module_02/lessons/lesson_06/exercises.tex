@@ -1,0 +1,30 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.6}{Ergodicidad}
+
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule $\tau_{\text{int}}$ para $\rho_k=r^k$ y evalúe en $r=0{,}9$.
+\item (B) Con $n=10^5$ y $\tau_{\text{int}}=500$, ¿cuál es $n_{\text{ef}}$?
+\item (B) ¿Por qué un pozo doble con barrera de $40\,\kB T$ no es ergódico en la práctica?
+\item (B) Explique el método de bloques en tres pasos.
+\item (I) Para un OU continuo, muestre $\Var(\bar x_T)\approx\frac{2\Var(x)}{aT}$ para $T\gg1/a$.
+\item (A) Muestre que para una cadena reversible $\tau_{\text{int}}\le\frac{1+\lambda_*}{1-\lambda_*}$ para observables centrados.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $1+2\frac{r}{1-r}=\frac{1+r}{1-r}$; $r=0{,}9$: $19$.
+
+\textbf{E2.} $10^5/500=200$.
+
+\textbf{E3.} El tiempo medio de salto $\sim\nu^{-1}e^{40}$ supera cualquier ventana de observación: el promedio temporal queda atrapado en un pozo.
+
+\textbf{E4.} (1) Descartar el burn-in; (2) dividir en $B$ bloques de longitud $\gg\tau_{\text{int}}$ y promediar cada uno; (3) $\sigma_{\bar x}\approx\text{desv}(\text{medias})/\sqrt B$.
+
+\textbf{E5.} $\Var\bar x_T=\frac1{T^2}\iint C\approx\frac2T\int_0^\infty\Var(x)e^{-as}ds=\frac{2\Var(x)}{aT}$.
+
+\textbf{E6.} Descomponiendo el observable en la base propia, $\rho_k=\sum_jc_j\lambda_j^k$ con $c_j\ge0$, $\sum c_j=1$; entonces $1+2\sum_k\rho_k=\sum_jc_j\frac{1+\lambda_j}{1-\lambda_j}\le\frac{1+\lambda_*}{1-\lambda_*}$ (para $\lambda_j\ge0$; con valores negativos la cota sigue valiendo usando $\lambda_*=\max|\lambda_j|$).
+\end{solucion}
+\end{document}

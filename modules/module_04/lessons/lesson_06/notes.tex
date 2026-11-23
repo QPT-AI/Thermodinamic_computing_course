@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.6}{Redes de Hopfield y memoria asociativa}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} regla de Hebb; dinámica de descenso de energía; capacidad $\approx0{,}14N$ y estados espurios.
+\textbf{Prerrequisitos:} 4.2 (Ising), 4.5 (pbits).
+
+\section{Memoria como paisaje de energía}
+Una red de Hopfield \cite{hopfield} es un modelo de Ising con $N$ neuronas $s_i=\pm1$ y energía $E=-\tfrac12s^\top Js$. Para guardar $P$ patrones
+$\xi^\mu\in\{\pm1\}^N$ se usa la regla de Hebb
+\begin{equation}
+J_{ij}=\frac1N\sum_{\mu=1}^P\xi_i^\mu\xi_j^\mu,\qquad J_{ii}=0 .
+\end{equation}
+\begin{resultado}[ (descenso de energía)]
+La actualización asíncrona $s_i\leftarrow\mathrm{sgn}(u_i)$, $u_i=\sum_jJ_{ij}s_j$, cumple $\Delta E=-\Delta s_i\,u_i\le0$ (requiere $J$ simétrica y $J_{ii}=0$). La dinámica
+termina en un mínimo local: recordar es descender. Es un pbit con $\beta\to\infty$.
+\end{resultado}
+
+\section{Recuperación y capacidad}
+Con el estado $s=\xi^1$, el campo local se separa en señal y ruido cruzado:
+\begin{equation}
+u_i=\xi_i^1+\frac1N\sum_{\mu\ne1}\sum_{j\ne i}\xi_i^\mu\xi_j^\mu\xi_j^1,
+\end{equation}
+donde el segundo término tiene varianza $\approx\alpha=P/N$. Mientras $\alpha$ es pequeño, $\xi^1$ es estable. El análisis de Amit--Gutfreund--Sompolinsky
+da una carga crítica $\alpha_c\approx0{,}138$: por encima, la memoria colapsa.
+\begin{ejemplo}
+$N=400$, pista con 10\,\% de ruido, 8 ensayos por carga \evS: superposición final $1{,}00$ ($\alpha=0{,}05$), $0{,}99$ (0,1), $0{,}83$ (0,16),
+$0{,}55$ (0,2). Demostración $10\times10$ con 3 patrones geométricos: una pista con 20\,\% de píxeles volteados se corrige en 1--2 barridos.
+\end{ejemplo}
+\begin{intuicion}
+Si $\xi$ es mínimo, $-\xi$ también (simetría $s\to-s$). Además aparecen \emph{estados espurios}: mezclas como $\mathrm{sgn}(\xi^1+\xi^2+\xi^3)$, que son
+mínimos sin ser recuerdos.
+\end{intuicion}
+
+\begin{aplicacion}
+A $T>0$, la misma red con pbits muestrea alrededor de los recuerdos: es el punto de partida de las máquinas de Boltzmann (4.7). Las redes de Hopfield
+modernas (memorias asociativas densas) tienen capacidad exponencial y una actualización análoga a la atención. Nobel de Física 2024 (Hopfield y Hinton).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $J_{ii}\neq0$ congela el estado inicial. \quad Actualización síncrona: ciclos de período 2.
+\item Sobrecarga más allá de $\approx0{,}14N$. \quad Patrones correlacionados interfieren más.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[15]{hopfield} J. J. Hopfield, Neural networks and physical systems with emergent collective computational abilities, PNAS 79, 2554 (1982).
+\bibitem{ags} D. J. Amit, H. Gutfreund y H. Sompolinsky, Storing infinite numbers of patterns in a spin-glass model of neural networks, PRL 55, 1530 (1985).
+\bibitem{ramsauer} H. Ramsauer et al., Hopfield networks is all you need, ICLR 2021.
+\end{thebibliography}
+\end{document}

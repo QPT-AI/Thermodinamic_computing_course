@@ -1,0 +1,332 @@
+1
+00:00:00,350 --> 00:00:02,072
+Lección 11.3.
+
+2
+00:00:02,452 --> 00:00:05,559
+Termalizadores: compilar
+programas estocásticos.
+
+3
+00:00:06,683 --> 00:00:10,518
+Torx describe un programa estocástico
+como un circuito de compuertas.
+
+4
+00:00:10,898 --> 00:00:14,184
+Pero el chip Z1 no ejecuta
+compuertas arbitrarias: solo
+
+5
+00:00:14,184 --> 00:00:17,470
+sabe muestrear modelos de
+Ising con conexiones locales.
+
+6
+00:00:17,850 --> 00:00:20,570
+¿Cómo se traduce un programa
+a lo que el chip sabe hacer?
+
+7
+00:00:20,950 --> 00:00:25,064
+El artículo compañero de Extropic,
+termalizar programas estocásticos,
+
+8
+00:00:25,064 --> 00:00:29,296
+propone compilar cada compuerta en
+un pequeño modelo basado en energía.
+
+9
+00:00:30,417 --> 00:00:31,593
+La idea es fijar.
+
+10
+00:00:31,973 --> 00:00:36,497
+Tomamos un modelo basado en energía con
+espines de entrada, ocultos y de salida.
+
+11
+00:00:36,877 --> 00:00:39,417
+Fijamos las entradas a x, dejamos que el
+
+12
+00:00:39,417 --> 00:00:41,958
+resto se termalice y leemos las salidas.
+
+13
+00:00:42,338 --> 00:00:46,144
+La distribución de las salidas
+dada la entrada es un núcleo de
+
+14
+00:00:46,144 --> 00:00:49,521
+transición: los ocultos se
+marginalizan, nunca se leen.
+
+15
+00:00:49,901 --> 00:00:52,998
+Si sumamos a la energía
+cualquier función solo de la
+
+16
+00:00:52,998 --> 00:00:56,394
+entrada, el núcleo no cambia:
+es una libertad de calibre.
+
+17
+00:00:57,517 --> 00:01:01,274
+Para compilar, minimizamos la
+divergencia de Kullback-Leibler
+
+18
+00:01:01,274 --> 00:01:04,847
+del núcleo objetivo al núcleo
+del modelo, promediada sobre
+
+19
+00:01:04,847 --> 00:01:07,928
+las entradas: es máxima
+verosimilitud condicional.
+
+20
+00:01:08,308 --> 00:01:12,060
+El gradiente tiene dos fases, como
+en la divergencia contrastiva.
+
+21
+00:01:12,440 --> 00:01:16,652
+En la fase positiva fijamos entrada
+y salida y muestreamos los ocultos.
+
+22
+00:01:17,032 --> 00:01:19,651
+En la fase negativa
+fijamos solo la entrada.
+
+23
+00:01:20,031 --> 00:01:22,181
+Cada compuerta se entrena por separado.
+
+24
+00:01:23,283 --> 00:01:27,740
+Lo probamos nosotros: un núcleo
+objetivo al azar de dos bits a dos bits,
+
+25
+00:01:27,740 --> 00:01:32,506
+compilado en una máquina de Boltzmann
+con gradientes exactos por enumeración.
+
+26
+00:01:32,886 --> 00:01:36,766
+Sin espines ocultos, la distancia
+de variación total queda en cero
+
+27
+00:01:36,766 --> 00:01:40,292
+coma dos dos: un Ising de pares
+no puede expresar el núcleo.
+
+28
+00:01:40,672 --> 00:01:45,358
+Con un oculto, cero coma cero uno
+dos; con dos, prácticamente cero.
+
+29
+00:01:45,738 --> 00:01:49,670
+Y si limitamos la intensidad de
+los acoplamientos, como en un
+
+30
+00:01:49,670 --> 00:01:53,794
+chip real, el error sube: cero
+coma dos con un tope de cero coma
+
+31
+00:01:53,794 --> 00:01:57,403
+dos cinco, cero coma cero
+cero tres con un tope de tres.
+
+32
+00:01:58,517 --> 00:02:01,960
+Un programa profundo encadena
+muchos núcleos compilados.
+
+33
+00:02:02,340 --> 00:02:06,735
+Por la regla de la cadena, la divergencia
+sobre trayectorias es la suma de
+
+34
+00:02:06,735 --> 00:02:11,249
+los errores de cada núcleo, y cualquier
+lectura final tiene un error menor o
+
+35
+00:02:11,249 --> 00:02:15,050
+igual: en el peor caso crece de
+forma lineal con la profundidad.
+
+36
+00:02:15,430 --> 00:02:18,145
+Pero si los núcleos
+contraen, el error se satura.
+
+37
+00:02:18,525 --> 00:02:23,520
+Lo vemos: con un programa casi determinista,
+el error pasa de cero coma cero
+
+38
+00:02:23,520 --> 00:02:28,384
+dos a cero coma tres uno en treinta
+pasos; con un programa que contrae, se
+
+39
+00:02:28,384 --> 00:02:32,656
+queda en cero coma cero cero tres,
+bajo la cota de cero coma uno.
+
+40
+00:02:33,783 --> 00:02:37,333
+El artículo demuestra el
+marco en simulación con
+
+41
+00:02:37,333 --> 00:02:40,439
+THRML, sobre un modelo del dispositivo Z1.
+
+42
+00:02:40,819 --> 00:02:44,517
+En un Ising de tres cuerpos
+compilado con espines ocultos, el
+
+43
+00:02:44,517 --> 00:02:48,154
+error estacionario baja de cero
+coma cuatro seis a cero coma
+
+44
+00:02:48,154 --> 00:02:51,245
+cero dos cuatro al relajar
+el tope de acoplamiento.
+
+45
+00:02:51,625 --> 00:02:55,637
+En un circuito gaussiano para
+diseño de experimentos, el programa
+
+46
+00:02:55,637 --> 00:02:59,525
+compilado logra un error de cero
+coma dos cinco nueve, igual al
+
+47
+00:02:59,525 --> 00:03:03,289
+posterior exacto, frente a cero
+coma tres cero cinco al azar.
+
+48
+00:03:03,669 --> 00:03:06,868
+Los autores advierten que
+todo programa compilado es
+
+49
+00:03:06,868 --> 00:03:10,373
+aproximado y que no hay aún
+validación en un chip físico.
+
+50
+00:03:11,483 --> 00:03:15,941
+El flujo: escribe el programa en torx,
+compila cada compuerta en un modelo
+
+51
+00:03:15,941 --> 00:03:20,338
+fijado, reparte espines ocultos y
+topes de acoplamiento, y valida primero
+
+52
+00:03:20,338 --> 00:03:23,832
+cada compuerta y después la
+medida que importa a la tarea.
+
+53
+00:03:24,212 --> 00:03:26,574
+Un ajuste final sobre trayectorias puede
+
+54
+00:03:26,574 --> 00:03:29,053
+ayudar, con cuidado de no premiar trampas.
+
+55
+00:03:30,183 --> 00:03:32,590
+Errores comunes: esperar que un Ising de
+
+56
+00:03:32,590 --> 00:03:35,176
+pares sin ocultos
+exprese cualquier núcleo.
+
+57
+00:03:35,556 --> 00:03:38,847
+Ignorar los topes de acoplamiento
+y la topología del chip.
+
+58
+00:03:39,227 --> 00:03:41,354
+Confiar solo en el error por compuerta.
+
+59
+00:03:41,734 --> 00:03:45,229
+Y presentar una compilación
+simulada como evidencia de hardware.
+
+60
+00:03:46,350 --> 00:03:50,547
+En resumen, un termalizador realiza
+un núcleo estocástico fijando las
+
+61
+00:03:50,547 --> 00:03:54,319
+entradas de un modelo basado en
+energía y leyendo sus salidas.
+
+62
+00:03:54,699 --> 00:03:58,225
+Se compila minimizando una
+divergencia con fases positiva y
+
+63
+00:03:58,225 --> 00:04:01,332
+negativa, y los espines
+ocultos le dan expresividad.
+
+64
+00:04:01,712 --> 00:04:05,146
+Los errores se suman a lo
+largo del programa, en el peor
+
+65
+00:04:05,146 --> 00:04:08,518
+caso linealmente, y se saturan
+si los núcleos contraen.
+
+66
+00:04:09,650 --> 00:04:12,802
+Para practicar: escribe el
+núcleo de un modelo fijado.
+
+67
+00:04:13,182 --> 00:04:14,928
+Explica la libertad de calibre.
+
+68
+00:04:15,308 --> 00:04:17,103
+Nombra las fases del gradiente.
+
+69
+00:04:17,483 --> 00:04:20,711
+Y acota el error estacionario
+de un programa que contrae.

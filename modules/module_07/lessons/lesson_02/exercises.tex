@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.2}{El algoritmo de Shor}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Por qué se exige $Q\ge N^2$?
+\item (B) Desarrolle $85/512$ en fracción continua y liste sus reducidas.
+\item (B) Dos corridas dan denominadores 2 y 3. ¿Cuál es $r$?
+\item (B) ¿Qué etapa domina el número de compuertas?
+\item (I) Para $N=15$, $a=7$ ($r=4$) y $Q=256$, ¿dónde están los picos y por qué son exactos?
+\item (I) Si $\gcd(k,r)=1$, la reducida da $r$. ¿Qué fracción de $k\in\{0,\dots,r-1\}$ cumple esto para $r=6$?
+\item (A) Programe la simulación exacta para $N=33$, $a=5$ y mida la probabilidad de obtener $r$ en una corrida.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Para que $|y/Q-k/r|\le1/(2N^2)$ garantice que $k/r$ (con $r<N$) sea la única fracción tan cercana: una reducida de la fracción continua.
+
+\textbf{E2.} $[0;6,42,2]$; reducidas $0$, $1/6$, $42/253$, $85/512$. La primera con denominador $<21$ que verifica es $1/6$.
+
+\textbf{E3.} $\mathrm{mcm}(2,3)=6$ (y se verifica $2^6\equiv1\pmod{21}$).
+
+\textbf{E4.} La exponenciación modular, $O(n^3)$.
+
+\textbf{E5.} $Q/r=64$ es entero: picos exactos en $0,64,128,192$, con probabilidad $1/4$ cada uno.
+
+\textbf{E6.} $\varphi(6)/6=2/6=1/3$ (k = 1, 5), coherente con el $0{,}31$ simulado.
+
+\textbf{E7.} $\mathrm{ord}_{33}(5)=10$; la probabilidad está cerca de $\varphi(10)/10=0{,}4$ por la concentración en los picos.
+\end{solucion}
+\end{document}

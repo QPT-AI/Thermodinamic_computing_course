@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.8}{Métricas de energía para modelos de lenguaje}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) J/token en una H100 para 11{,}55M parámetros con MFU 25\,\%.
+\item (B) Razón titular con MFU 40\,\%.
+\item (B) FLOPs de la cabeza con $D=512$ y $V=32\,000$.
+\item (B) Enumere los cinco elementos de una comparación justa.
+\item (I) Repita la tabla de igual alcance con $V=32\,000$ suponiendo que la cabeza de Z1T escala linealmente con $V$.
+\item (I) Si la cabeza se ejecutara en la H100 con MFU 40\,\% y el resto en Z1T, ¿razón con la H100 sola al 40\,\%?
+\item (A) Escriba un párrafo de afirmación de energía para su modelo del laboratorio L29 con los cinco elementos.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $4{,}09/0{,}25\approx16{,}4\ \mu$J.
+
+\textbf{E2.} $10{,}2\ \mu\text{J}/294{,}52\ \text{nJ}\approx35$.
+
+\textbf{E3.} $2\cdot512\cdot32\,000\approx3{,}3\times10^7$.
+
+\textbf{E4.} MFU y lote; alcance; calidad; razones de sistema y tejido; etiquetas de evidencia.
+
+\textbf{E5.} Cabeza H100: $9{,}1\cdot32\,000/50\,257\approx5{,}8\ \mu$J/MFU; Z1T: $136{,}4\cdot0{,}64\approx86{,}8\ \mu$J. Al 10\,\%: $(40{,}9+58)/87{,}1\approx1{,}1$;
+al 40\,\%: $(10{,}2+14{,}5)/87{,}1\approx0{,}28$.
+
+\textbf{E6.} Híbrido: $0{,}29+22{,}8\approx23{,}1\ \mu$J frente a $33\ \mu$J: $\approx1{,}4\times$. La cabeza domina ambos.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

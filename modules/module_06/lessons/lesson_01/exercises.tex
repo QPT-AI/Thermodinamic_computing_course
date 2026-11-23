@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{6.1}{Sistemas lineales desde el primer momento de un OU}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre que el mínimo de $U(x)=\tfrac12x^\top Ax-b^\top x$ es $A^{-1}b$ cuando $A$ es SPD.
+\item (B) ¿Por qué se descarta el intervalo $[0,t_0]$ antes de promediar?
+\item (B) ¿Cuánto baja el error si la ventana $\tau$ se multiplica por 4?
+\item (B) ¿Qué ocurre con $\kappa$ al resolver $A^\top Ax=A^\top b$?
+\item (I) Para $d=1$, $dx=-(ax-b)dt+\sqrt{2/\beta}\,dW$: calcule la varianza del promedio temporal $\bar x$ para $\tau\gg1/a$.
+\item (I) Con la fórmula de $\tau$, ¿cuánto crece el tiempo si $\kappa$ pasa de 34 a 340, con lo demás fijo?
+\item (A) Reproduzca la tabla de la simulación y añada gradiente conjugado: ¿a partir de qué $d$ conviene el método termodinámico en número de pasos?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\nabla U=Ax-b=0$ y $\nabla^2U=A\succ0$: mínimo único y global.
+
+\textbf{E2.} En el transitorio $\langle x(t)\rangle=A^{-1}b+e^{-At/\gamma}(x_0-A^{-1}b)$: incluirlo sesga la media.
+
+\textbf{E3.} Por 2 ($\varepsilon\propto\tau^{-1/2}$).
+
+\textbf{E4.} $\kappa(A^\top A)=\kappa(A)^2$.
+
+\textbf{E5.} La autocorrelación es $\beta^{-1}a^{-1}e^{-a|s|}$; $\mathrm{Var}(\bar x)\approx\frac1\tau\int\beta^{-1}a^{-1}e^{-a|s|}ds=\frac{2}{\beta a^2\tau}$.
+
+\textbf{E6.} $\tau\propto\kappa^2$: crece 100 veces.
+
+\textbf{E7.} En pasos de dinámica: $d\kappa^2\varepsilon^{-2}$ frente a $d^2\sqrt\kappa$; conviene si $d>\kappa^{3/2}\varepsilon^{-2}$ (orden de magnitud; sin contar la carga).
+\end{solucion}
+\end{document}

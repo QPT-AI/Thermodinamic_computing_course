@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.1}{Leyes de la termodinámica y energía libre}
+$\kB=8{,}617\times10^{-5}$ eV/K $=1{,}380649\times10^{-23}$ J/K.
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item ¿Cuántos microestados tiene «50 caras» de 100 monedas? ¿Y «100 caras»? Calcule $S/\kB$ de cada macroestado.
+\item Para el sistema de dos estados ($\varepsilon=0{,}1$ eV, $g=1000$), calcule $p_B$ a 100 K.
+\item Un sistema recibe 5 J de calor y realiza 2 J de trabajo sobre el entorno. ¿Cuánto cambia $U$?
+\item ¿Por qué la igualdad $W=\Delta F$ exige un proceso infinitamente lento?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Demuestre que a $T$ y $V$ fijos $\Delta S_{\text{univ}}=-\Delta F/T$ cuando no se hace trabajo, y concluya que $F$ es mínima en equilibrio.
+\item Calcule la energía media $\langle E\rangle$ y la entropía del sistema de dos estados en función de $T$; verifique $\langle E\rangle\to\varepsilon\,g/(1+g)$ cuando $T\to\infty$.
+\item Para $N$ monedas, use Stirling para mostrar $\ln\binom{N}{N/2}\approx N\ln2-\frac12\ln\frac{\pi N}{2}$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item En el modelo cinético de la animación (reparto uniforme de la energía del par), muestre que la distribución estacionaria de energías individuales es exponencial (Boltzmann) con media igual a la energía media total.
+\item Una molécula puede estar plegada ($E=0$, $\Omega=1$) o desplegada ($E=\varepsilon$, $\Omega=g$). Si se tira de ella con fuerza que añade $-f\ell$ a la energía desplegada, ¿cómo cambia $T^*$? Interprete como «programar» una distribución con un parámetro externo.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $\binom{100}{50}\approx1{,}01\times10^{29}$, $S/\kB=\ln(1{,}01\times10^{29})\approx66{,}8$. «100 caras»: $\Omega=1$, $S=0$.
+
+\textbf{B2.} $\Delta F=0{,}1-8{,}617\times10^{-3}\cdot6{,}908=0{,}0405$ eV; $\Delta F/\kB T=4{,}70$; $p_B=1/(1+e^{4{,}70})\approx0{,}009$.
+
+\textbf{B3.} $Q=+5$ J, $W=-2$ J (trabajo hecho sobre el sistema) $\Rightarrow\Delta U=3$ J.
+
+\textbf{B4.} $W-\Delta F=T\Delta S_{\text{univ}}$ y la producción de entropía es cero solo si el sistema está en equilibrio en todo instante (cuasiestático); a velocidad finita, $W_{\text{dis}}>0$ (típicamente $\propto1/\tau$).
+
+\textbf{I1.} Con $W=0$: $Q=\Delta U$, $\Delta S_{\text{baño}}=-\Delta U/T$, $\Delta S_{\text{univ}}=\Delta S-\Delta U/T=-\Delta F/T\ge0$.
+
+\textbf{I2.} $Z=1+g\,e^{-\beta\varepsilon}$, $\langle E\rangle=\frac{\varepsilon g e^{-\beta\varepsilon}}{Z}$, $S=\kB(\ln Z+\beta\langle E\rangle)$. Cuando $T\to\infty$: $\langle E\rangle\to\varepsilon g/(1+g)$ y $S\to\kB\ln(1+g)$.
+
+\textbf{I3.} $\ln N!\approx N\ln N-N+\frac12\ln(2\pi N)$; sustituya en $\ln N!-2\ln(N/2)!$.
+
+\textbf{A1.} Para $N$ partículas con energía total fija, el reparto uniforme hace que la medida estacionaria sea uniforme sobre el simplex $\sum E_i=E$ (es reversible respecto de ella). La marginal de una energía es $\propto(1-E_i/E)^{N-2}\to e^{-E_i/\langle E\rangle}$ cuando $N\to\infty$.
+
+\textbf{A2.} $\varepsilon\to\varepsilon-f\ell$, luego $T^*=(\varepsilon-f\ell)/(\kB\ln g)$: la fuerza baja la temperatura de transición; un campo externo cambia $F$ y por tanto la distribución (idea de los pbits con sesgo $h_i$, Unidad 4).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Simule el modelo cinético de dos cajas con $N=10^3$ y grafique el histograma final de energías; compárelo con una exponencial.
+\item Grafique $F_A$, $F_B$ y $p_B$ frente a $T$ para $g\in\{10,1000,10^6\}$. ¿Cómo cambia la nitidez de la transición?
+\end{enumerate}
+\end{document}

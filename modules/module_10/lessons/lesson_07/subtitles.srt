@@ -1,0 +1,313 @@
+1
+00:00:00,350 --> 00:00:02,089
+Lección 10.7.
+
+2
+00:00:02,469 --> 00:00:03,984
+La arquitectura Z1T.
+
+3
+00:00:05,117 --> 00:00:09,778
+En septiembre de dos mil veintiséis,
+Extropic publicó Z1T, un modelo de
+
+4
+00:00:09,778 --> 00:00:14,375
+lenguaje parecido a un transformer,
+diseñado para su chip de pbits Z1.
+
+5
+00:00:14,755 --> 00:00:16,952
+Reúne todo lo que vimos en esta unidad.
+
+6
+00:00:17,332 --> 00:00:22,079
+Hoy lo desarmamos: su arquitectura,
+cómo se reparte el trabajo entre el chip
+
+7
+00:00:22,079 --> 00:00:26,264
+y una FPGA, y qué dicen de verdad
+sus tablas de energía y latencia.
+
+8
+00:00:27,383 --> 00:00:31,013
+Z1T es pequeño: cuatro
+capas, dimensión quinientos
+
+9
+00:00:31,013 --> 00:00:34,061
+doce, contexto de mil veinticuatro tokens.
+
+10
+00:00:34,441 --> 00:00:36,817
+La atención se reemplaza por atención
+
+11
+00:00:36,817 --> 00:00:39,898
+convolucional con compuertas,
+de la familia AFT.
+
+12
+00:00:40,278 --> 00:00:42,265
+La normalización es DyT.
+
+13
+00:00:42,645 --> 00:00:45,489
+El MLP usa unidades tanh-lineales.
+
+14
+00:00:45,869 --> 00:00:48,915
+Todas las proyecciones
+son dispersas, con cuatro
+
+15
+00:00:48,915 --> 00:00:52,088
+entradas por salida, y los
+pesos usan cuatro bits.
+
+16
+00:00:53,217 --> 00:00:57,996
+Cada pbit de salida gasta sus dieciséis
+acoplamientos en cuatro valores de
+
+17
+00:00:57,996 --> 00:01:02,904
+entrada por cuatro pbits, con una
+codificación llamada dy4p, de cuatro bits.
+
+18
+00:01:03,284 --> 00:01:08,123
+El chip Z1 tiene ocho núcleos y doscientos
+sesenta y nueve mil quinientos sesenta y
+
+19
+00:01:08,123 --> 00:01:12,554
+ocho pbits, con muestreo a más de
+cincuenta megahercios y menos de un vatio.
+
+20
+00:01:12,934 --> 00:01:16,167
+En el chip corren las
+proyecciones muestreadas y DyT.
+
+21
+00:01:17,283 --> 00:01:21,250
+Lo demás corre en una FPGA: el
+embedding, la aritmética de la
+
+22
+00:01:21,250 --> 00:01:24,697
+atención convolucional, los
+residuos, la codificación
+
+23
+00:01:24,697 --> 00:01:28,663
+posicional y la cabeza de
+vocabulario que produce los logits.
+
+24
+00:01:29,043 --> 00:01:33,734
+Es inferencia desagregada: cada operación
+va al dispositivo donde es nativa.
+
+25
+00:01:34,114 --> 00:01:37,727
+El artículo menciona que la
+FPGA podría cambiarse por
+
+26
+00:01:37,727 --> 00:01:41,134
+una GPU u otro acelerador,
+aunque eso no se midió.
+
+27
+00:01:42,250 --> 00:01:46,620
+La estimación de energía es de
+doscientos noventa y cuatro coma cinco
+
+28
+00:01:46,620 --> 00:01:51,117
+dos nanojulios por token: ocho coma
+siete cuatro para el muestreo en Z1
+
+29
+00:01:51,117 --> 00:01:54,791
+y doscientos ochenta y cinco
+coma siete ocho para la FPGA.
+
+30
+00:01:55,171 --> 00:01:57,972
+El chip termodinámico es
+menos del tres por ciento.
+
+31
+00:01:58,352 --> 00:02:02,381
+Frente a una H100 con utilización
+del diez por ciento, la ventaja
+
+32
+00:02:02,381 --> 00:02:06,287
+reportada es de unas ciento
+treinta y nueve veces; al cincuenta
+
+33
+00:02:06,287 --> 00:02:09,510
+por ciento, veintiocho; al
+cien por ciento, catorce.
+
+34
+00:02:09,890 --> 00:02:13,457
+Las capas de Z1 por sí solas
+serían cientos o miles de
+
+35
+00:02:13,457 --> 00:02:17,024
+veces más eficientes: el
+cuello de botella es la FPGA,
+
+36
+00:02:17,024 --> 00:02:20,459
+como predijo Amdahl en la
+lección nueve punto cinco.
+
+37
+00:02:21,583 --> 00:02:22,876
+Ahora la letra pequeña.
+
+38
+00:02:23,255 --> 00:02:27,648
+La cabeza de vocabulario, la última
+capa densa que produce los logits, se
+
+39
+00:02:27,648 --> 00:02:32,101
+excluye de las cifras principales;
+incluida, la energía sube a unos ciento
+
+40
+00:02:32,101 --> 00:02:36,614
+treinta y seis microjulios por token,
+unas cuatrocientas sesenta veces más.
+
+41
+00:02:36,994 --> 00:02:39,623
+Tampoco se cuenta el movimiento de datos
+
+42
+00:02:39,623 --> 00:02:42,252
+entre chip y FPGA ni el número de chips.
+
+43
+00:02:42,632 --> 00:02:46,100
+La latencia estimada es de
+cincuenta y ocho coma ocho
+
+44
+00:02:46,100 --> 00:02:49,764
+microsegundos por token,
+frente a ciento dos en una H100
+
+45
+00:02:49,764 --> 00:02:53,559
+compilada, y la orquestación
+de la FPGA es la mayor parte.
+
+46
+00:02:53,939 --> 00:02:57,974
+Todo son proyecciones con lote uno,
+no mediciones del sistema completo.
+
+47
+00:02:59,083 --> 00:03:03,089
+De Z1T aprendemos una receta de
+diseño, la necesidad de contar la
+
+48
+00:03:03,089 --> 00:03:07,157
+energía por dispositivo incluyendo
+la cabeza de vocabulario, y que
+
+49
+00:03:07,157 --> 00:03:10,670
+la próxima ganancia está en
+reducir el pegamento digital.
+
+50
+00:03:11,050 --> 00:03:15,336
+En el laboratorio veintinueve harás tu
+propia proyección de energía por token.
+
+51
+00:03:16,450 --> 00:03:19,746
+Errores comunes: citar ciento
+treinta y nueve veces sin
+
+52
+00:03:19,746 --> 00:03:22,623
+decir que supone diez por
+ciento de utilización.
+
+53
+00:03:23,003 --> 00:03:25,593
+Ignorar la cabeza de vocabulario excluida.
+
+54
+00:03:25,973 --> 00:03:29,863
+Confundir la ventaja de las capas
+de Z1 con la del sistema completo.
+
+55
+00:03:30,243 --> 00:03:32,875
+Y tratar proyecciones
+como si fueran mediciones.
+
+56
+00:03:33,983 --> 00:03:38,885
+En resumen, Z1T combina atención
+convolucional con compuertas, DyT,
+
+57
+00:03:38,885 --> 00:03:43,933
+unidades tanh-lineales y proyecciones
+de grado cuatro con pbits dy4p.
+
+58
+00:03:44,313 --> 00:03:47,973
+El chip hace el muestreo; la
+FPGA, todo lo demás, y se lleva
+
+59
+00:03:47,973 --> 00:03:51,205
+el noventa y siete por ciento
+de la energía estimada.
+
+60
+00:03:51,585 --> 00:03:54,913
+Las cifras son proyecciones
+prometedoras con exclusiones
+
+61
+00:03:54,913 --> 00:03:57,825
+importantes, la cabeza de
+vocabulario la primera.
+
+62
+00:03:58,950 --> 00:04:02,362
+Para practicar: calcula
+la fracción de la FPGA.
+
+63
+00:04:02,742 --> 00:04:05,764
+Recalcula la ventaja de
+ciento treinta y nueve veces.
+
+64
+00:04:06,144 --> 00:04:09,070
+Calcula el factor que añade
+la cabeza de vocabulario.
+
+65
+00:04:09,450 --> 00:04:12,034
+Y explica qué componente
+domina la latencia.

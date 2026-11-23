@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.1}{Movimiento browniano, proceso de Wiener y cálculo de Itô}
+
+\noindent\textbf{Unidad 2 --- Dinámica estocástica.}\quad\textbf{Objetivos:} construir $W(t)$; entender $(dW)^2=dt$;
+aplicar el lema de Itô. \textbf{Prerrequisitos:} 0.3; series de Taylor.
+
+\section{Historia y motivación}
+Brown (1827) observó el movimiento errático de granos de polen; Einstein (1905) lo explicó por choques moleculares y
+predijo $\langle x^2\rangle=2Dt$ con $D=\kB T/(6\pi\eta a)$ (Einstein--Stokes). El movimiento browniano es el modelo
+matemático del ruido térmico de toda la unidad \cite{gardiner}.
+
+\section{El proceso de Wiener}
+\begin{definicion}[ (proceso de Wiener)]
+$W(t)$, $t\ge0$, con $W(0)=0$, trayectorias continuas, incrementos independientes y $W(t)-W(s)\sim\N(0,t-s)$ para $t>s$.
+\end{definicion}
+\textbf{Construcción:} una caminata con pasos de tiempo $\Delta t$ y saltos $\pm\sqrt{\Delta t}$ converge a $W$ cuando
+$\Delta t\to0$ (teorema de Donsker). Si los saltos escalan como $\Delta t^\alpha$ con $\alpha>\frac12$ el límite es 0;
+con $\alpha<\frac12$ explota. Propiedades: $\E[W(s)W(t)]=\min(s,t)$; autosemejanza $W(ct)\overset{d}{=}\sqrt c\,W(t)$;
+continuo pero no derivable en ningún punto; el ruido blanco $\xi=\dot W$ solo existe como distribución.
+
+\section{Variación cuadrática}
+\begin{resultado}
+Para particiones de $[0,T]$ con paso $\to0$, $\sum_k(\Delta W_k)^2\to T$ (en media cuadrática), mientras
+$\sum_k|\Delta W_k|\to\infty$. Notación: $(dW)^2=dt$, $dW\,dt=0$, $(dt)^2=0$.
+\end{resultado}
+\begin{proof}[Idea]
+$\E\sum(\Delta W_k)^2=\sum\Delta t_k=T$ y $\Var\sum(\Delta W_k)^2=2\sum\Delta t_k^2\to0$. En cambio
+$\E\sum|\Delta W_k|=\sum\sqrt{2\Delta t_k/\pi}\to\infty$.
+\end{proof}
+
+\section{Integral y lema de Itô}
+La integral de Itô $\int_0^tg(s)\,dW(s)$ se define con sumas evaluadas en el extremo izquierdo; para $g$ no anticipativa,
+$\E\int g\,dW=0$ e $\E(\int g\,dW)^2=\int\E g^2\,ds$ (isometría de Itô).
+\begin{resultado}[ (lema de Itô)]
+Para $f$ dos veces derivable: $df(W)=f'(W)\,dW+\tfrac12f''(W)\,dt$. Para un proceso $dX=a\,dt+b\,dW$:
+$df(X)=\big(f'a+\tfrac12f''b^2\big)dt+f'b\,dW$.
+\end{resultado}
+\begin{ejemplo}
+$d(W^2)=2W\,dW+dt$ $\Rightarrow$ $\E[W(t)^2]=t$. $d(e^W)=e^W\,dW+\frac12e^W\,dt$ $\Rightarrow$ $\E[e^{W(t)}]=e^{t/2}$.
+\end{ejemplo}
+\textbf{Itô frente a Stratonovich.} Con ruido aditivo (coeficiente constante) coinciden; con ruido multiplicativo
+difieren por un término de deriva $\frac12bb'$. En este curso usamos Itô.
+
+\section{Ejemplo físico}
+Esfera de $a=1\ \mu$m en agua ($\eta=10^{-3}$ Pa\,s) a 300 K: $D=4{,}14\times10^{-21}/(6\pi\cdot10^{-3}\cdot10^{-6})\approx2{,}2\times10^{-13}$ m$^2$/s;
+$x(t)=\sqrt{2D}\,W(t)$; $x_{\text{rms}}(1\ \text{s})\approx0{,}66\ \mu$m; en 100 s, solo 10 veces más.
+
+\begin{aplicacion}
+Fuente de ruido de las ecuaciones de Langevin (2.2), de los modelos de difusión (Unidad 9) y del solucionador OU (L3).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Saltos $\propto\Delta t$ en vez de $\sqrt{\Delta t}$.
+\item Regla de la cadena ordinaria (falta $\frac12f''dt$).
+\item Tratar $\xi(t)$ como función ordinaria.
+\item Mezclar Itô y Stratonovich con ruido multiplicativo.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$W$: incrementos $\N(0,t-s)$; $(dW)^2=dt$; Itô: $df=f'dW+\frac12f''dt$; difusión $\propto\sqrt t$.
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}, Springer.
+\bibitem[5]{kloeden} P. E. Kloeden y E. Platen, \emph{Numerical Solution of Stochastic Differential Equations}, Springer, 1992.
+\bibitem[46]{holderrieth} P. Holderrieth y E. Erives, An introduction to flow matching and diffusion models, 2025.
+\end{thebibliography}
+\end{document}

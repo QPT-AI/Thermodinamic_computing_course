@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.1}{Por qué el hardware digital es ineficiente para la IA probabilística}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Estime la intensidad aritmética de una actualización de grado 16 con acoplamientos fp16 y estados de 1 byte.
+\item (B) Z1: 269\,568 pbits, 50 MHz, $<1$ W. Acote la energía por actualización y compárela con $\kB T\ln2$ a 300 K.
+\item (B) ¿Por qué la GPU queda ociosa en Gibbs disperso?
+\item (B) Enumere los tres costos digitales que un pbit evita.
+\item (I) Si los acoplamientos vinieran de DRAM en lugar de SRAM, ¿cómo cambia la estimación de 70 pJ?
+\item (I) Un generador produce 64 bits aleatorios con 10 operaciones de 1 pJ. ¿Energía por bit? Compare con 300 aJ por bit de un generador físico.
+\item (A) Mida en su GPU el tiempo y la energía (NVML) de $10^8$ actualizaciones de Gibbs en un grafo de grado 16 y calcule J/actualización.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\sim32$ FLOPs (16 multiplicaciones-suma) sobre $16\cdot2+16\cdot1+$ escritura $\approx50$ bytes: $\sim0{,}6$ FLOP/byte.
+
+\textbf{E2.} $\le7{,}4\times10^{-14}$ J; $\kB T\ln2=2{,}87\times10^{-21}$ J: $\sim2{,}6\times10^7$ veces.
+
+\textbf{E3.} Está limitada por ancho de banda: hay $\sim1$ FLOP por byte y poco reuso.
+
+\textbf{E4.} Movimiento de datos lejanos, fabricación de aleatoriedad, márgenes de ruido.
+
+\textbf{E5.} $12\times640$ pJ $\approx7{,}7$ nJ: dos órdenes de magnitud más.
+
+\textbf{E6.} $10/64\approx0{,}16$ pJ $=156$ fJ por bit, unas 500 veces 300 aJ.
+
+\textbf{E7.} Resultado típico: decenas a cientos de pJ por actualización (sistema), según la GPU y el empaquetado de datos.
+\end{solucion}
+\end{document}

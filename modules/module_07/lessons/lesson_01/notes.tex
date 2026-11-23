@@ -1,0 +1,49 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.1}{De la factorización a la búsqueda de orden}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} reducir la factorización a la búsqueda del orden; explicar con el teorema chino del resto (TCR) cuándo
+$x=a^{r/2}$ es una raíz no trivial de 1; probabilidad de éxito.
+\textbf{Prerrequisitos:} 0.6; mcd y algoritmo de Euclides.
+
+\section{El orden}
+Para $a$ con $\gcd(a,N)=1$, el orden es $r=\mathrm{ord}_N(a)=\min\{k>0:a^k\equiv1\pmod N\}$. Ejemplo: $N=299$, $\mathrm{ord}_{299}(2)=132$.
+
+\section{El truco de la raíz cuadrada}
+Si $r$ es par, $x=a^{r/2}$ cumple $x^2\equiv1$, luego $N\mid(x-1)(x+1)$. Si $x\not\equiv\pm1$, $N$ no divide a ninguno de los factores, y
+\[1<\gcd(x-1,N)<N.\]
+\begin{ejemplo}
+$a=2$: $x=2^{66}\bmod299=116$, $\gcd(115,299)=23$, así $299=13\cdot23$.
+\end{ejemplo}
+
+\section{Por qué funciona: TCR}
+$\mathbb Z_{299}\cong\mathbb Z_{13}\times\mathbb Z_{23}$. Las raíces de $x^2\equiv1$ módulo 299 son $1,116,183,298$, con signos $(+,+)$, $(-,+)$, $(+,-)$, $(-,-)$:
+solo las mixtas factorizan. El truco falla cuando las partes de potencia de dos de los órdenes locales coinciden (Proposición 3.1 del tratado).
+
+\section{Probabilidad de éxito}
+Para $a$ uniforme y $m$ primos distintos, el patrón de paridades suficiente tiene probabilidad $p(m)=1-(m+1)/2^m\ge1/4$; la ley exacta da al menos $1/2$
+para semiprimos y $1-2^{1-m}$ en general. En $N=299$, contando todas las unidades $a\ge2$: éxito en $198/263=75\,\%$ (conteo exacto). Con $k$ intentos
+independientes, el fallo es $\le(1/2)^k$ para semiprimos.
+
+\section{La parte difícil}
+Recorrer potencias cuesta hasta $r\sim N=2^n$ pasos: exponencial en el número de bits. Shor (7.2) usa interferencia; la difusión (7.3--7.6) usa calor en un grafo.
+Base impar (para 7.4): $b=a^{2^M}$ con $M=\lfloor\log_2N\rfloor+1$ tiene orden impar; conocido $r_b$, $\mathrm{ord}(a)$ se obtiene en $O(\log N)$ pasos.
+
+\begin{aplicacion}
+Seguridad de RSA. Todo método de búsqueda de orden (cuántico, difusión, colisiones) se conecta a esta reducción. Laboratorio L10: implementarla para $N=299$ y $N=1\,022\,117$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item No calcular primero $\gcd(a,N)$. \quad Aceptar $x\equiv-1$.
+\item Aplicarlo a potencias de primo. \quad Confundir la cota $1/4$ con la ley exacta.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\bibitem{shor} P. W. Shor, Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer, \emph{SIAM J. Comput.} 26, 1484 (1997).
+\bibitem{nc} M. A. Nielsen e I. L. Chuang, \emph{Quantum Computation and Quantum Information}, cap. 5, Cambridge (2010).
+\end{thebibliography}
+\end{document}

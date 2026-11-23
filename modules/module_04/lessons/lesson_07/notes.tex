@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.7}{Máquinas de Boltzmann y su regla de aprendizaje}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} derivar la regla de aprendizaje; fases de vigilia y sueño; unidades ocultas; costo de la fase del modelo.
+\textbf{Prerrequisitos:} 4.2--4.6, 0.3 (KL).
+
+\section{El modelo y la verosimilitud}
+Una máquina de Boltzmann \cite{ackley} es un modelo de Ising $p_\theta(s)=e^{-\beta E_\theta(s)}/Z_\theta$ con parámetros $\theta=(J,h)$ que se ajustan a
+datos $\{s^{(m)}\}_{m=1}^M$. La log-verosimilitud media es
+\begin{equation}
+\mathcal L(\theta)=-\beta\,\overline{E_\theta(s)}_{\text{datos}}-\ln Z_\theta,\qquad
+\frac{\partial\ln Z}{\partial J_{ij}}=\beta\langle s_is_j\rangle_{\text{modelo}} .
+\end{equation}
+\begin{resultado}[ (regla de aprendizaje)]
+\begin{equation}
+\frac{\partial\mathcal L}{\partial J_{ij}}=\beta\big(\langle s_is_j\rangle_{\text{datos}}-\langle s_is_j\rangle_{\text{modelo}}\big),\qquad
+\frac{\partial\mathcal L}{\partial h_i}=\beta\big(\langle s_i\rangle_{\text{datos}}-\langle s_i\rangle_{\text{modelo}}\big).
+\end{equation}
+\end{resultado}
+\noindent Maximizar $\mathcal L$ equivale a minimizar $\mathrm{KL}(p_{\text{datos}}\|p_\theta)$. El gradiente se anula cuando el modelo reproduce las correlaciones
+de primer y segundo orden de los datos: es la distribución de máxima entropía con esas restricciones.
+
+\begin{intuicion}
+Vigilia (hebbiana): reforzar lo que coincide en los datos. Sueño (antihebbiana): debilitar lo que coincide en los sueños del modelo. El modelo
+deja de cambiar cuando sueña con las mismas correlaciones que observa.
+\end{intuicion}
+
+\section{Unidades ocultas}
+Sin unidades ocultas solo se capturan correlaciones de a pares. Con unidades ocultas $h$, la marginal $p(v)=\sum_hp(v,h)$ puede representar
+estructura de orden alto; la fase de datos requiere entonces muestrear $h$ con $v$ fijo, y la del modelo, todo libre.
+
+\begin{ejemplo}
+$N=5$ visibles, 2000 muestras de un Ising aleatorio, gradientes exactos (enumeración de 32 estados), $\eta=0{,}1$ \evS:
+$\mathrm{KL}(p_{\text{real}}\|p_\theta)=1{,}50\to0{,}076$ (10 pasos) $\to0{,}0020$ (300); $\max|J-J^\star|=0{,}76\to0{,}06$. El residuo se debe al
+tamaño finito de la muestra.
+\end{ejemplo}
+
+\section{El costo de la fase del modelo}
+Cada paso necesita $\langle s_is_j\rangle_{\text{modelo}}$ en equilibrio: una corrida de MCMC completa. En digital es muy caro (por eso las máquinas de
+Boltzmann quedaron relegadas); en un chip de pbits la fase de sueño es dejar correr el hardware. Esquema híbrido: el TSU suministra las correlaciones y el
+anfitrión digital actualiza $J$ y $h$.
+
+\begin{aplicacion}
+RBMs y divergencia contrastiva (4.8); modelos de eliminación de ruido (Unidad 9). Laboratorio L6: aprender un Ising pequeño desde muestras y comparar
+gradientes exactos y muestreados.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Muestras del modelo fuera de equilibrio: gradiente sesgado. \quad Olvidar la actualización de $h$.
+\item Esperar estructura de orden alto sin ocultas. \quad Tasa de aprendizaje demasiado grande.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[14]{ackley} D. H. Ackley, G. E. Hinton y T. J. Sejnowski, A learning algorithm for Boltzmann machines, Cognitive Science 9, 147 (1985).
+\bibitem[16]{hinton} G. E. Hinton, A practical guide to training restricted Boltzmann machines, 2010.
+\end{thebibliography}
+\end{document}

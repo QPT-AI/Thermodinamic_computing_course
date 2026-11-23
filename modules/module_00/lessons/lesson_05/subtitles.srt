@@ -1,0 +1,448 @@
+1
+00:00:00,350 --> 00:00:02,055
+Lección 0.5.
+
+2
+00:00:02,435 --> 00:00:03,542
+Cadenas de Markov.
+
+3
+00:00:04,650 --> 00:00:08,334
+Un muestreador de Gibbs, un chip
+de pbits o una partícula que
+
+4
+00:00:08,334 --> 00:00:11,897
+salta entre pozos tienen algo
+en común: su siguiente estado
+
+5
+00:00:11,897 --> 00:00:15,340
+depende solo del estado actual,
+y de nada más del pasado.
+
+6
+00:00:15,720 --> 00:00:17,285
+Eso es una cadena de Markov.
+
+7
+00:00:17,664 --> 00:00:20,894
+Las cadenas de Markov son el
+motor matemático del muestreo.
+
+8
+00:00:21,274 --> 00:00:24,648
+En esta lección veremos cómo
+una cadena olvida su punto de
+
+9
+00:00:24,648 --> 00:00:28,080
+partida, a qué distribución
+llega y qué tan rápido lo hace.
+
+10
+00:00:29,183 --> 00:00:31,955
+Imagina un caminante en
+un grafo de tres estados.
+
+11
+00:00:32,335 --> 00:00:35,332
+En cada paso tira un dado
+cargado que depende solo
+
+12
+00:00:35,332 --> 00:00:38,208
+del nodo donde está, y
+salta según el resultado.
+
+13
+00:00:38,588 --> 00:00:42,176
+Las flechas indican las
+probabilidades de transición: desde
+
+14
+00:00:42,176 --> 00:00:45,641
+el estado uno, por ejemplo,
+se queda con probabilidad dos
+
+15
+00:00:45,641 --> 00:00:48,620
+tercios y pasa al dos con
+probabilidad un tercio.
+
+16
+00:00:49,000 --> 00:00:53,089
+Si contamos cuántas veces visita
+cada estado, las fracciones se
+
+17
+00:00:53,089 --> 00:00:56,787
+estabilizan: tres décimos,
+cuatro décimos y tres décimos.
+
+18
+00:00:57,167 --> 00:00:59,817
+Ese es el comportamiento a
+largo plazo de la cadena.
+
+19
+00:01:00,950 --> 00:01:03,642
+En lugar de seguir a un
+solo caminante, sigamos
+
+20
+00:01:03,642 --> 00:01:05,990
+la distribución de probabilidad completa.
+
+21
+00:01:06,370 --> 00:01:10,693
+Es un vector fila p_n, y
+un paso de la cadena es
+
+22
+00:01:10,693 --> 00:01:16,006
+multiplicarlo por la matriz de
+transición: p_{n+1} = p_n P.
+
+23
+00:01:16,386 --> 00:01:19,636
+Empecemos con toda la
+probabilidad en el estado uno.
+
+24
+00:01:20,016 --> 00:01:24,104
+Las barras cambian paso a paso y se
+acercan a la distribución estacionaria.
+
+25
+00:01:24,484 --> 00:01:26,858
+Si empezamos en el estado tres, o en una
+
+26
+00:01:26,858 --> 00:01:29,529
+mezcla cualquiera,
+llegamos al mismo destino.
+
+27
+00:01:29,909 --> 00:01:31,791
+La cadena olvida de dónde vino.
+
+28
+00:01:33,150 --> 00:01:38,361
+La distribución de llegada no cambia
+al aplicar un paso más: π P = π.
+
+29
+00:01:38,741 --> 00:01:41,161
+Es un vector propio por la izquierda de la
+
+30
+00:01:41,161 --> 00:01:43,639
+matriz de transición,
+con valor propio uno.
+
+31
+00:01:44,019 --> 00:01:48,644
+Para una cadena irreducible y aperiódica,
+es decir, que puede ir de cualquier
+
+32
+00:01:48,644 --> 00:01:53,029
+estado a cualquier otro y no oscila
+con un período fijo, esa distribución
+
+33
+00:01:53,029 --> 00:01:57,174
+existe, es única, y la cadena converge
+a ella desde cualquier inicio.
+
+34
+00:01:58,283 --> 00:02:01,603
+Hay una condición más fuerte que la
+
+35
+00:02:01,603 --> 00:02:07,199
+estacionariedad: el balance
+detallado, π_i P_ij = π_j P_ji.
+
+36
+00:02:07,579 --> 00:02:11,415
+Significa que, en equilibrio,
+el flujo de probabilidad de
+
+37
+00:02:11,415 --> 00:02:14,644
+i a j es igual al flujo
+de j a i en cada arista.
+
+38
+00:02:15,024 --> 00:02:18,481
+En nuestra cadena los flujos
+se compensan arista por arista.
+
+39
+00:02:18,861 --> 00:02:22,307
+Ahora mira una cadena que gira
+en un ciclo: su distribución
+
+40
+00:02:22,307 --> 00:02:26,102
+estacionaria es uniforme, pero
+hay una corriente neta circulando.
+
+41
+00:02:26,482 --> 00:02:29,316
+Es estacionaria, pero no
+cumple balance detallado.
+
+42
+00:02:29,696 --> 00:02:32,532
+Las cadenas que cumplen
+balance detallado se llaman
+
+43
+00:02:32,532 --> 00:02:35,979
+reversibles, y describen sistemas
+en equilibrio termodinámico.
+
+44
+00:02:36,359 --> 00:02:40,863
+Si el balance detallado se cumple, la
+estacionariedad se sigue automáticamente.
+
+45
+00:02:41,983 --> 00:02:43,729
+¿Qué tan rápido se olvida el inicio?
+
+46
+00:02:44,109 --> 00:02:46,765
+La respuesta está en los
+otros valores propios.
+
+47
+00:02:47,145 --> 00:02:48,927
+El más grande siempre es uno.
+
+48
+00:02:49,307 --> 00:02:53,478
+El segundo en valor absoluto,
+λ₂, controla la velocidad:
+
+49
+00:02:53,478 --> 00:02:57,053
+la distancia a la
+estacionaria decae como ∣λ₂∣ⁿ.
+
+50
+00:02:57,433 --> 00:03:00,479
+En escala logarítmica,
+la distancia cae en línea
+
+51
+00:03:00,479 --> 00:03:03,398
+recta, con pendiente
+igual al logaritmo de λ₂.
+
+52
+00:03:03,778 --> 00:03:06,618
+La brecha espectral es uno menos λ₂, y el
+
+53
+00:03:06,618 --> 00:03:09,318
+tiempo de mezcla crece como su inverso.
+
+54
+00:03:09,698 --> 00:03:14,693
+Cadenas con brecha pequeña tardan mucho en
+olvidar; en los modelos de Ising cerca de
+
+55
+00:03:14,693 --> 00:03:19,033
+la temperatura crítica la brecha se
+cierra y el muestreo se vuelve lento.
+
+56
+00:03:20,150 --> 00:03:21,847
+Verifiquemos con nuestra cadena.
+
+57
+00:03:22,227 --> 00:03:25,578
+Resolvemos π P = π con
+la suma igual a uno, y
+
+58
+00:03:25,578 --> 00:03:29,600
+obtenemos tres décimos,
+cuatro décimos y tres décimos.
+
+59
+00:03:29,980 --> 00:03:34,914
+Comprobemos balance detallado entre los
+estados uno y dos: tres décimos por un
+
+60
+00:03:34,914 --> 00:03:39,531
+tercio da un décimo, y cuatro décimos
+por un cuarto también da un décimo.
+
+61
+00:03:39,911 --> 00:03:44,349
+Los valores propios de la matriz
+son uno, dos tercios y un sexto.
+
+62
+00:03:44,729 --> 00:03:48,432
+La brecha espectral es un tercio,
+así que cada paso reduce la
+
+63
+00:03:48,432 --> 00:03:51,953
+distancia a la estacionaria
+aproximadamente a dos tercios.
+
+64
+00:03:53,083 --> 00:03:56,499
+Las cadenas de Markov aparecen
+por todas partes en el curso.
+
+65
+00:03:56,879 --> 00:03:59,887
+Gibbs y Metropolis son
+cadenas diseñadas para que su
+
+66
+00:03:59,887 --> 00:04:02,547
+distribución estacionaria
+sea la de Boltzmann.
+
+67
+00:04:02,927 --> 00:04:06,207
+Un chip de pbits es una
+cadena de Markov física, y su
+
+68
+00:04:06,207 --> 00:04:09,486
+brecha espectral decide
+cuántos barridos hacen falta.
+
+69
+00:04:09,866 --> 00:04:13,557
+En el laboratorio uno construirás
+cadenas de tres y de cincuenta
+
+70
+00:04:13,557 --> 00:04:17,362
+estados, y medirás la convergencia
+contra la predicción espectral.
+
+71
+00:04:18,483 --> 00:04:21,266
+En la próxima lección
+veremos que, en un ciclo,
+
+72
+00:04:21,266 --> 00:04:23,753
+los vectores propios son ondas de Fourier.
+
+73
+00:04:24,133 --> 00:04:27,892
+En la unidad uno la distribución
+estacionaria será la de Boltzmann.
+
+74
+00:04:28,272 --> 00:04:32,375
+La ecuación de Fokker y Planck es la
+versión continua de lo que vimos hoy.
+
+75
+00:04:32,755 --> 00:04:35,235
+Y en la unidad cuatro
+mediremos en la práctica
+
+76
+00:04:35,235 --> 00:04:37,553
+qué tan correlacionadas
+están las muestras.
+
+77
+00:04:38,683 --> 00:04:42,812
+Cuidado con las convenciones: si la
+distribución es un vector fila, se
+
+78
+00:04:42,812 --> 00:04:46,528
+multiplica por la izquierda y
+las filas de la matriz suman uno.
+
+79
+00:04:46,908 --> 00:04:50,029
+Recuerda que estacionaria no
+implica balance detallado.
+
+80
+00:04:50,409 --> 00:04:52,387
+Una cadena periódica puede tener
+
+81
+00:04:52,387 --> 00:04:55,415
+distribución estacionaria
+y aun así no converger.
+
+82
+00:04:55,795 --> 00:04:59,465
+Y la velocidad la decide el
+valor absoluto del segundo valor
+
+83
+00:04:59,465 --> 00:05:02,889
+propio: uno cercano a menos
+uno también frena la mezcla.
+
+84
+00:05:04,017 --> 00:05:08,699
+En resumen: una cadena de Markov
+se describe con su matriz de
+
+85
+00:05:08,699 --> 00:05:13,766
+transición, y las distribuciones
+evolucionan como p_{n+1} = p_n P.
+
+86
+00:05:14,146 --> 00:05:19,769
+La estacionaria cumple π P = π, y el
+balance detallado describe el equilibrio.
+
+87
+00:05:20,149 --> 00:05:24,216
+La brecha espectral fija la velocidad
+con que la cadena olvida su inicio.
+
+88
+00:05:25,317 --> 00:05:29,887
+Para practicar: demuestra que el balance
+detallado implica estacionariedad.
+
+89
+00:05:30,267 --> 00:05:32,593
+Encuentra la estacionaria de una cadena de
+
+90
+00:05:32,593 --> 00:05:34,698
+dos estados y su segundo valor propio.
+
+91
+00:05:35,078 --> 00:05:37,144
+Calcula cuántos pasos hacen falta para
+
+92
+00:05:37,144 --> 00:05:39,428
+llegar a una distancia de una millonésima.
+
+93
+00:05:39,808 --> 00:05:42,047
+Y construye una cadena con estacionaria
+
+94
+00:05:42,047 --> 00:05:44,401
+uniforme que no cumpla balance detallado.

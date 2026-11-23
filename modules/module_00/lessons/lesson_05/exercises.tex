@@ -1,0 +1,54 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.5}{Cadenas de Markov}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item (Pensum, Ap. A.3) Enuncie el balance detallado y demuestre que implica estacionariedad.
+\item Encuentre $\pi$ y $\lambda_2$ para $P=\begin{pmatrix}1-a&a\\b&1-b\end{pmatrix}$, $0<a,b<1$.
+\item ¿Cuántos pasos hacen falta para $\|p_n-\pi\|_1<10^{-6}$ si $\|p_n-\pi\|_1\le(2/3)^n$?
+\item Dé una cadena con estacionaria uniforme que no cumpla balance detallado.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Caminata perezosa en el ciclo $\Z/r\Z$: quedarse con probabilidad $1/2$, moverse $\pm1$ con $1/4$ cada uno. Muestre que $\pi$ es uniforme y que los valores propios son $\frac12(1+\cos\frac{2\pi k}{r})$. (Anticipo de las lecciones 0.6 y 7.3.)
+\item Muestre que una cadena reversible tiene valores propios reales (simetrice con $D^{1/2}PD^{-1/2}$).
+\item ¿Por qué la caminata no perezosa ($\pm1$ con $1/2$) en un ciclo de longitud par no converge? Identifique el valor propio responsable.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Metropolis: dada $\pi$ sobre $K$ estados y una propuesta simétrica $Q$, defina $P_{ij}=Q_{ij}\min(1,\pi_j/\pi_i)$ para $i\neq j$. Muestre que cumple balance detallado con $\pi$.
+\item Calcule la corriente neta en estado estacionario de la cadena cíclica de la lección (adelante 0,8, atrás 0,1, quedarse 0,1) y la producción de entropía por paso $\sum_{i<j}(\pi_iP_{ij}-\pi_jP_{ji})\ln\frac{\pi_iP_{ij}}{\pi_jP_{ji}}$. (Anticipo de la Unidad 3.)
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} Véanse las notas: $\sum_i\pi_iP_{ij}=\pi_j\sum_iP_{ji}=\pi_j$.
+
+\textbf{B2.} $\pi=\big(\frac{b}{a+b},\frac{a}{a+b}\big)$; $\Tr P=2-a-b=1+\lambda_2\Rightarrow\lambda_2=1-a-b$.
+
+\textbf{B3.} $n>\ln10^6/\ln1{,}5=13{,}82/0{,}405=34{,}1$: $n=35$.
+
+\textbf{B4.} La cadena cíclica de la lección; o el ciclo determinista $1\to2\to3\to1$ (que además es periódico).
+
+\textbf{I1.} $P$ es circulante y doblemente estocástica, luego $\pi$ uniforme. Con $\phi_k(x)=e^{2\pi ikx/r}$: $(P\phi_k)(x)=\frac12\phi_k(x)+\frac14(\phi_k(x+1)+\phi_k(x-1))=\big[\frac12+\frac12\cos\frac{2\pi k}{r}\big]\phi_k(x)$.
+
+\textbf{I2.} $S=D^{1/2}PD^{-1/2}$ tiene $S_{ij}=\sqrt{\pi_i}P_{ij}/\sqrt{\pi_j}$; por balance detallado $S_{ij}=S_{ji}$. $S$ simétrica tiene espectro real y es semejante a $P$.
+
+\textbf{I3.} Valores propios $\cos\frac{2\pi k}{r}$; con $r$ par, $k=r/2$ da $-1$: la cadena alterna entre pares e impares (período 2).
+
+\textbf{A1.} Para $\pi_j\le\pi_i$: $\pi_iP_{ij}=\pi_iQ_{ij}\pi_j/\pi_i=\pi_jQ_{ij}$ y $\pi_jP_{ji}=\pi_jQ_{ji}\cdot1=\pi_jQ_{ij}$. Iguales. El caso $\pi_j>\pi_i$ es simétrico.
+
+\textbf{A2.} $\pi=\frac13$ uniforme. Corriente por arista $J=\frac13(0{,}8-0{,}1)=\frac{0{,}7}{3}\approx0{,}233$. Producción de entropía por paso (3 aristas): $3\cdot\frac{0{,}7}{3}\ln\frac{0{,}8}{0{,}1}=0{,}7\ln8\approx1{,}46$ (en unidades de $\kB$).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Laboratorio L1: construya una cadena de 50 estados con pesos aleatorios simétricos; calcule $\pi$ por potencias y por \texttt{eigh}; grafique $\|p_n-\pi\|_1$ y $\lambda_*^n$.
+\item Implemente Metropolis para muestrear $\pi_i\propto e^{-E_i}$ con $E_i$ aleatorias; verifique el histograma.
+\item ¿Cómo cambia el tiempo de mezcla de la caminata perezosa en $\Z/r\Z$ con $r$? Estime $1-\lambda_2$ para $r$ grande.
+\end{enumerate}
+\end{document}

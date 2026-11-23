@@ -1,0 +1,280 @@
+1
+00:00:00,350 --> 00:00:02,010
+Lesson 8.2.
+
+2
+00:00:02,390 --> 00:00:03,750
+Curvature matrices.
+
+3
+00:00:04,883 --> 00:00:07,930
+The natural gradient
+needs a curvature matrix.
+
+4
+00:00:08,310 --> 00:00:12,807
+The true Fisher information requires
+sampling from the model, so in practice
+
+5
+00:00:12,807 --> 00:00:16,711
+approximations computable with
+automatic differentiation are used.
+
+6
+00:00:17,091 --> 00:00:20,944
+Today we see the two most common
+ones, the empirical Fisher and
+
+7
+00:00:20,944 --> 00:00:24,920
+the generalized Gauss-Newton, and
+two digital ways of solving the
+
+8
+00:00:24,920 --> 00:00:28,161
+system: conjugate gradient
+and the Woodbury identity.
+
+9
+00:00:29,283 --> 00:00:35,330
+The empirical Fisher averages the outer
+product of per-example gradients: J Jᵀ.
+
+10
+00:00:35,710 --> 00:00:41,960
+The generalized Gauss-Newton uses the
+Jacobian of the network output and the
+
+11
+00:00:41,960 --> 00:00:47,387
+Hessian of the loss with respect
+to that output: G = J_f H_L J_fᵀ.
+
+12
+00:00:47,767 --> 00:00:52,938
+For exponential-family losses, the
+GGN coincides with the true Fisher.
+
+13
+00:00:53,318 --> 00:00:56,745
+The empirical one, in contrast,
+can be very different: in a
+
+14
+00:00:56,745 --> 00:00:59,882
+logistic regression with
+nonzero weights, the relative
+
+15
+00:00:59,882 --> 00:01:03,192
+difference between the two is
+two hundred thirty percent.
+
+16
+00:01:04,317 --> 00:01:09,813
+A crucial detail: with a batch of b examples
+and output dimension d_z, the matrix
+
+17
+00:01:09,813 --> 00:01:14,495
+has rank at most b d_z, much smaller
+than the number of parameters N.
+
+18
+00:01:14,875 --> 00:01:17,754
+In our example, two hundred parameters and
+
+19
+00:01:17,754 --> 00:01:20,565
+thirty-two examples give rank thirty-two.
+
+20
+00:01:20,945 --> 00:01:27,922
+The matrix is singular, so it is
+damped: one solves (G + λI) g̃ = ∇ℓ.
+
+21
+00:01:29,050 --> 00:01:33,089
+Conjugate gradient solves the
+system using only matrix-vector
+
+22
+00:01:33,089 --> 00:01:36,599
+products, and the GGN-vector
+product is computed with
+
+23
+00:01:36,599 --> 00:01:41,102
+Jacobian-vector products in O(b N)
+time, without forming the matrix.
+
+24
+00:01:41,482 --> 00:01:47,181
+Since the damped matrix has at most b + 1
+distinct eigenvalues, conjugate gradient
+
+25
+00:01:47,181 --> 00:01:52,116
+converges in few iterations: twenty-one
+to twenty-three in the example,
+
+26
+00:01:52,496 --> 00:01:54,942
+even when the condition
+number reaches seven thousand.
+
+27
+00:01:55,322 --> 00:01:59,801
+Its weak point is that the iterations are
+sequential and cannot be parallelized.
+
+28
+00:02:00,917 --> 00:02:05,644
+The Woodbury identity exploits
+the low rank: inverting G +
+
+29
+00:02:05,644 --> 00:02:09,964
+λI reduces to inverting a
+small matrix of size b d_z.
+
+30
+00:02:10,344 --> 00:02:12,781
+In the example, the result agrees with the
+
+31
+00:02:12,781 --> 00:02:15,276
+direct solution to ten
+to the minus twelve.
+
+32
+00:02:15,656 --> 00:02:20,647
+The cost is O(b² d_z²
+N + b³ d_z³): excellent
+
+33
+00:02:20,647 --> 00:02:24,862
+if the batch and the output are small,
+
+34
+00:02:25,242 --> 00:02:30,019
+but intractable when d_z is the size
+of a vocabulary, tens of thousands.
+
+35
+00:02:31,150 --> 00:02:33,929
+This is the table of
+Donatella and colleagues.
+
+36
+00:02:34,309 --> 00:02:38,501
+Adam and stochastic descent
+cost O(b N) per iteration.
+
+37
+00:02:38,881 --> 00:02:43,680
+Direct natural gradient
+costs O(N³) and N² memory.
+
+38
+00:02:44,060 --> 00:02:48,072
+With conjugate gradient, c times
+the first-order cost, sequential.
+
+39
+00:02:48,452 --> 00:02:51,996
+With Woodbury, linear
+in N but cubic in b d_z.
+
+40
+00:02:52,376 --> 00:02:55,963
+In the next lesson we will
+see that the thermodynamic
+
+41
+00:02:55,963 --> 00:02:59,076
+version costs O(b d_z
+N) plus the analog time.
+
+42
+00:03:00,183 --> 00:03:03,643
+In practice, prefer the GGN
+to the empirical Fisher; use
+
+43
+00:03:03,643 --> 00:03:07,102
+Woodbury when batch times
+output is small, and truncated
+
+44
+00:03:07,102 --> 00:03:10,191
+conjugate gradient when
+there are many parameters.
+
+45
+00:03:10,571 --> 00:03:13,992
+In lab eleven you will
+implement both on MNIST.
+
+46
+00:03:15,117 --> 00:03:19,156
+Common mistakes: using the empirical
+Fisher as if it were the true one.
+
+47
+00:03:19,536 --> 00:03:22,985
+Forming the full matrix when its
+product with a vector suffices.
+
+48
+00:03:23,365 --> 00:03:28,491
+Running conjugate gradient to full
+convergence, when it is truncated on purpose.
+
+49
+00:03:28,871 --> 00:03:32,532
+And applying Woodbury with an
+output the size of a vocabulary.
+
+50
+00:03:33,650 --> 00:03:38,469
+In summary: the GGN is the preferred
+curvature and coincides with the Fisher
+
+51
+00:03:38,469 --> 00:03:42,590
+in the exponential family; the
+empirical Fisher can differ a lot.
+
+52
+00:03:42,970 --> 00:03:45,635
+The matrix has low rank and is damped.
+
+53
+00:03:46,015 --> 00:03:51,113
+Conjugate gradient and Woodbury solve
+it digitally, each with its limit: the
+
+54
+00:03:51,113 --> 00:03:55,607
+first is sequential, the second
+explodes with the output dimension.
+
+55
+00:03:56,717 --> 00:03:59,618
+To practice: compute the rank of the GGN.
+
+56
+00:03:59,998 --> 00:04:01,774
+Write the Woodbury formula.
+
+57
+00:04:02,154 --> 00:04:05,934
+Explain why conjugate gradient
+converges in few iterations.
+
+58
+00:04:06,314 --> 00:04:10,827
+And say when the empirical Fisher and
+the GGN coincide in logistic regression.

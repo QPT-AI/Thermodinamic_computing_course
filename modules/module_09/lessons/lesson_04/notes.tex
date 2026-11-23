@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{9.4}{Modelo de costo de la difusión}
+
+\noindent\textbf{Unidad 9.}\quad\textbf{Objetivos:} energía por token $\approx T\,e_{\text{pos}}$; MFU en GPU frente a TSU espaciales; calendarios de precisión.
+\textbf{Prerrequisitos:} 5.8, 9.1--9.3.
+
+\section{Modelo \evE}
+Un modelo de difusión hace $T$ pasos y en cada uno procesa todas las posiciones: $E_{\text{token}}\approx T\,e_{\text{pos}}$. En GPU, una pasada cuesta $\approx2N$ FLOP por posición:
+\[e_{\text{pos}}=\frac{2N\,e_{\text{FLOP}}}{\text{MFU}},\qquad e_{\text{FLOP}}\approx\frac{700\ \text{W}}{989\ \text{TFLOP/s}}\approx0{,}71\ \text{pJ}.\]
+
+\section{Autorregresivo frente a difusión}
+Supuestos: $N=10^9$; decodificación autorregresiva limitada por memoria con MFU $=5\,\%$; difusión paralela con MFU $=50\,\%$.
+\begin{center}\begin{tabular}{lcccc}\toprule
+& AR & $T=8$ & $T=32$ & $T=128$\\\midrule
+mJ por token & 28 & 23 & 91 & 362\\\bottomrule\end{tabular}\end{center}
+Equilibrio: $T^\ast=\text{MFU}_{\text{dif}}/\text{MFU}_{\text{AR}}=10$. En GPU todo se juega en reducir pasos (muestreadores, destilación). El MFU real debe medirse.
+
+\section{TSU espacial}
+Un circuito por variable: $e_{\text{pos}}=n_{\text{celdas}}\,K\,E_{\text{cell}}$, sin pérdida por utilización. DTM de 9.3: $19{,}6$ nJ por imagen de 784 píxeles $\approx25$ pJ por píxel,
+$\approx3$ pJ por píxel y paso.
+
+\section{Calendarios de precisión}
+Los pasos ruidosos toleran menos bits. Si el costo crece con los bits, ejecutar la primera mitad de 32 pasos a la mitad de bits ahorra un 25\,\%; hay que validarlo con la calidad.
+
+\begin{aplicacion}
+Reportar J/token con $T$, MFU y $e_{\text{FLOP}}$ explícitos; calcular $T^\ast$ antes de elegir difusión en GPU. Laboratorio L13: $T\in\{8,32,128\}$, calidad y J/token proyectados.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Suponer el rendimiento pico. \quad Comparar con calidades distintas.
+\item Olvidar el factor $T$. \quad Mezclar energías estimadas de TSU con medidas de GPU.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[48]{dtm} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, 2025.
+\bibitem{mdlm} S. S. Sahoo et al., Simple and effective masked diffusion language models, \emph{NeurIPS} (2024).
+\bibitem{palm} A. Chowdhery et al., PaLM: scaling language modeling with Pathways, \emph{JMLR} 24 (2023).
+\end{thebibliography}
+\end{document}

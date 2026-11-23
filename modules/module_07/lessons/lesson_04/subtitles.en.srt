@@ -1,0 +1,289 @@
+1
+00:00:00,350 --> 00:00:02,037
+Lesson 7.4.
+
+2
+00:00:02,417 --> 00:00:04,973
+The diffusion order-finding theorem.
+
+3
+00:00:06,083 --> 00:00:08,605
+We already saw that
+heat on the Cayley graph
+
+4
+00:00:08,605 --> 00:00:11,412
+spreads until it equals
+one over r at every node.
+
+5
+00:00:11,792 --> 00:00:15,107
+The question is how many
+steps are needed to read r
+
+6
+00:00:15,107 --> 00:00:17,966
+without error, without
+knowing r in advance.
+
+7
+00:00:18,346 --> 00:00:22,284
+The theorem of Cadavid and
+colleagues answers: a number of steps
+
+8
+00:00:22,284 --> 00:00:25,790
+that grows only as the square
+of the number of bits of N.
+
+9
+00:00:26,917 --> 00:00:31,155
+Let M = ⌊log₂ N⌋ + 1.
+
+10
+00:00:31,535 --> 00:00:36,850
+For every ℓ ≥ 4(M + 1)(log₂ N + 2),
+
+11
+00:00:37,230 --> 00:00:43,715
+the value of the heat kernel at the
+identity is within 1/(4N²) of one over r.
+
+12
+00:00:44,095 --> 00:00:49,511
+And since two distinct reciprocals
+of integers smaller than N differ by
+
+13
+00:00:49,511 --> 00:00:54,088
+at least 1/N², rounding one
+over that value gives exactly r.
+
+14
+00:00:54,468 --> 00:01:00,666
+For N = 299, M = 9 and the bound
+is four hundred nine steps.
+
+15
+00:01:01,783 --> 00:01:04,411
+The key piece is the doubling lemma.
+
+16
+00:01:04,791 --> 00:01:11,988
+If 2^M > r, for every nonzero
+frequency k there exists t ≤ M
+
+17
+00:01:12,368 --> 00:01:18,844
+such that k 2^t mod r falls in the
+central interval, between r/4 and 3r/4.
+
+18
+00:01:19,224 --> 00:01:22,951
+The reason: as long as it does
+not fall there, the distance to
+
+19
+00:01:22,951 --> 00:01:26,316
+zero doubles at each step,
+and it cannot double forever.
+
+20
+00:01:26,696 --> 00:01:30,809
+With r = 33 and k = 1:
+one, two, four, eight,
+
+21
+00:01:30,809 --> 00:01:34,648
+sixteen; sixteen is already in the center.
+
+22
+00:01:35,750 --> 00:01:41,953
+In the central interval, the cosine
+of 2πk2^t/r is negative or zero.
+
+23
+00:01:42,333 --> 00:01:46,143
+So in the average of M
++ 1 cosines, at least
+
+24
+00:01:46,143 --> 00:01:49,346
+one does not add up: μ_k ≤ M/(M + 1),
+
+25
+00:01:49,726 --> 00:01:53,994
+and λ_k ≤ 1 − 1/(2(M + 1)).
+
+26
+00:01:54,374 --> 00:01:58,080
+For M = 9, the bound is 0.95.
+
+27
+00:01:58,460 --> 00:02:02,957
+It is a single bound for all
+frequencies: a lacunary exponential
+
+28
+00:02:02,957 --> 00:02:06,821
+sum, with doubling jumps,
+cannot stay near its maximum.
+
+29
+00:02:07,950 --> 00:02:09,086
+Now everything fits.
+
+30
+00:02:09,466 --> 00:02:16,919
+The error is at most the largest λ_k^ℓ,
+which is smaller than e^(−ℓ/(2(M + 1))).
+
+31
+00:02:17,299 --> 00:02:25,078
+With ℓ_0 steps, that is smaller
+than e^(−4)/N², below 1/(4N²).
+
+32
+00:02:25,458 --> 00:02:28,645
+The order is determined
+by a single readout,
+
+33
+00:02:28,645 --> 00:02:31,760
+after a number of steps
+of order (log₂ N)².
+
+34
+00:02:32,883 --> 00:02:34,401
+The bound is conservative.
+
+35
+00:02:34,781 --> 00:02:38,593
+For N = 299, rounding
+already gives thirty-three
+
+36
+00:02:38,593 --> 00:02:42,324
+from step seventeen,
+against four hundred nine.
+
+37
+00:02:42,704 --> 00:02:45,728
+For N equal to one million
+twenty-two thousand one hundred
+
+38
+00:02:45,728 --> 00:02:49,065
+seventeen, with order five thousand
+three hundred thirteen, step
+
+39
+00:02:49,065 --> 00:02:52,505
+forty-six suffices, against one
+thousand eight hundred forty-five.
+
+40
+00:02:52,885 --> 00:02:56,401
+But beware: each step
+updates r nodes at once.
+
+41
+00:02:56,781 --> 00:02:59,590
+If simulated digitally,
+it costs r operations
+
+42
+00:02:59,590 --> 00:03:01,962
+per step and the advantage disappears.
+
+43
+00:03:02,342 --> 00:03:05,572
+The theorem shifts the
+cost from time to physical
+
+44
+00:03:05,572 --> 00:03:08,537
+resources, which we will
+study in lesson 7.6.
+
+45
+00:03:09,650 --> 00:03:16,384
+The full algorithm: pick a, move to the
+odd base, diffuse, read and round, recover
+
+46
+00:03:16,384 --> 00:03:22,626
+the order of a with a few doublings and
+extract the factor as in lesson 7.1.
+
+47
+00:03:23,006 --> 00:03:26,199
+In lab ten you will run it end to end.
+
+48
+00:03:27,317 --> 00:03:30,289
+Common mistakes: claiming
+there is a polynomial
+
+49
+00:03:30,289 --> 00:03:33,388
+digital algorithm, when
+the vector has r entries.
+
+50
+00:03:33,768 --> 00:03:36,375
+Forgetting the condition
+of the doubling lemma.
+
+51
+00:03:36,755 --> 00:03:41,338
+Ignoring that the readout needs
+about two log₂ N bits of precision.
+
+52
+00:03:41,718 --> 00:03:44,550
+And reading the bound as
+the typical number of steps.
+
+53
+00:03:45,650 --> 00:03:50,420
+In summary: the doubling lemma
+guarantees that every nonzero frequency
+
+54
+00:03:50,420 --> 00:03:55,530
+eventually falls in the negative-cosine
+zone, which bounds all eigenvalues.
+
+55
+00:03:55,910 --> 00:04:03,720
+After ℓ_0 = O((log N)²) steps, rounding
+one over p_ℓ(e) gives the order.
+
+56
+00:04:04,100 --> 00:04:07,382
+In practice far fewer steps
+suffice, but each step
+
+57
+00:04:07,382 --> 00:04:10,205
+costs physical resources
+proportional to r.
+
+58
+00:04:11,317 --> 00:04:15,240
+To practice: apply the doubling
+lemma to another frequency.
+
+59
+00:04:15,620 --> 00:04:18,087
+Prove the separation between reciprocals.
+
+60
+00:04:18,467 --> 00:04:20,293
+Compute the bound for another N.
+
+61
+00:04:20,673 --> 00:04:23,841
+And explain what the theorem does
+not say about energy and area.

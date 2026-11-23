@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.1}{De la factorización a la búsqueda de orden}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule $\mathrm{ord}_{15}(2)$ y factorice 15 con él.
+\item (B) ¿Por qué hace falta $x\not\equiv\pm1$?
+\item (B) Evalúe $1-(m+1)/2^m$ para $m=2,3,4$.
+\item (B) ¿Por qué la búsqueda directa del orden es exponencial en $\log_2N$?
+\item (I) Encuentre las cuatro raíces de $x^2\equiv1\pmod{21}$ y sus pares de signos módulo 3 y 7.
+\item (I) Demuestre que $b=a^{2^M}$, $M=\lfloor\log_2N\rfloor+1$, tiene orden impar.
+\item (A) Programe la reducción y mida la tasa de éxito exacta para $N=1\,022\,117=1009\cdot1013$ sobre una muestra de 2000 valores de $a$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $2^4=16\equiv1$: $r=4$; $x=2^2=4$; $\gcd(3,15)=3$, $\gcd(5,15)=5$: $15=3\cdot5$.
+
+\textbf{E2.} Si $x\equiv1$, $\gcd(x-1,N)=N$; si $x\equiv-1$, $\gcd(x-1,N)=\gcd(-2,N)=1$ ($N$ impar).
+
+\textbf{E3.} $1/4$, $1/2$, $11/16$.
+
+\textbf{E4.} $r$ puede ser del orden de $N=2^n$.
+
+\textbf{E5.} $1,8,13,20$: $8\equiv(2,1)=(-,+)$; $13\equiv(1,6)=(+,-)$; $20\equiv(-,-)$.
+
+\textbf{E6.} $v_2(\mathrm{ord}_N(a))\le\max_ic_i<\log_2N<M$: elevar a $2^M$ elimina toda la parte de dos.
+
+\textbf{E7.} La tasa debe superar $1/2$ (ley exacta para semiprimos).
+\end{solucion}
+\end{document}

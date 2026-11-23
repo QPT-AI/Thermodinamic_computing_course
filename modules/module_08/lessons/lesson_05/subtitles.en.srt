@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:02,194
+Lesson 8.5.
+
+2
+00:00:02,574 --> 00:00:03,978
+Thermodynamic K-FAC.
+
+3
+00:00:05,083 --> 00:00:08,637
+K-FAC's bottleneck is
+inverting each layer's
+
+4
+00:00:08,637 --> 00:00:12,594
+factors, which costs n³
+for a layer of n neurons.
+
+5
+00:00:12,974 --> 00:00:16,442
+In twenty twenty-five, Donatella
+and colleagues proposed
+
+6
+00:00:16,442 --> 00:00:19,600
+doing those inversions on
+a thermodynamic computer.
+
+7
+00:00:19,980 --> 00:00:24,681
+The idea is that of unit six applied
+to each layer, with an important
+
+8
+00:00:24,681 --> 00:00:29,246
+practical detail: how many bits
+the device's input and output need.
+
+9
+00:00:30,350 --> 00:00:33,183
+The GPU computes, as usual, the activation
+
+10
+00:00:33,183 --> 00:00:35,747
+and gradient statistics of each layer.
+
+11
+00:00:36,127 --> 00:00:41,022
+Instead of inverting the factors
+digitally, it loads them into the device,
+
+12
+00:00:41,022 --> 00:00:45,784
+which solves A x = b systems of size
+n with Ornstein-Uhlenbeck dynamics.
+
+13
+00:00:46,164 --> 00:00:51,849
+The result returns to the GPU,
+which applies the step G⁻¹ ∇W A⁻¹.
+
+14
+00:00:52,229 --> 00:00:57,296
+The moving averages of the factors can
+live on the GPU or on the device itself.
+
+15
+00:00:58,417 --> 00:01:04,210
+Per layer and per iteration,
+digital K-FAC costs O(b n² + n³).
+
+16
+00:01:04,590 --> 00:01:09,457
+The thermodynamic version
+costs O(b n² + n² κ²), where
+
+17
+00:01:09,457 --> 00:01:13,514
+κ bounds the condition
+number of the factors,
+
+18
+00:01:13,894 --> 00:01:18,052
+and without moving averages
+in memory, only O(b n) memory.
+
+19
+00:01:18,432 --> 00:01:21,368
+The advantage grows
+linearly with the network
+
+20
+00:01:21,368 --> 00:01:23,979
+width: the cubic term becomes quadratic.
+
+21
+00:01:24,359 --> 00:01:29,155
+With the layers of modern transformers,
+thousands of neurons wide, that matters.
+
+22
+00:01:30,283 --> 00:01:31,797
+How much is gained in practice?
+
+23
+00:01:32,177 --> 00:01:36,620
+The authors measured what fraction
+of time K-FAC spends inverting on
+
+24
+00:01:36,620 --> 00:01:40,996
+AlgoPerf benchmark tasks: eleven
+percent on a vision transformer on
+
+25
+00:01:40,996 --> 00:01:45,373
+ImageNet, and twenty-seven percent
+on a graph network on molecules.
+
+26
+00:01:45,753 --> 00:01:49,930
+If that part becomes almost free,
+they estimate reaching the same
+
+27
+00:01:49,930 --> 00:01:54,170
+validation metric about fifty
+percent faster on the graph network.
+
+28
+00:01:54,550 --> 00:01:59,205
+Note: speeding up only twenty-seven
+percent of the time allows, by Amdahl's
+
+29
+00:01:59,205 --> 00:02:03,612
+law, at most a thirty-seven percent
+gain with the same number of steps,
+
+30
+00:02:03,992 --> 00:02:06,690
+so that estimate must
+also include changes in
+
+31
+00:02:06,690 --> 00:02:09,268
+the steps; it is worth
+reading the details.
+
+32
+00:02:09,648 --> 00:02:13,104
+These are estimates from
+digital measurements and
+
+33
+00:02:13,104 --> 00:02:16,911
+simulations: no physical
+device ran these experiments.
+
+34
+00:02:18,017 --> 00:02:22,336
+The device receives the factors through
+digital-to-analog converters and
+
+35
+00:02:22,336 --> 00:02:26,776
+delivers the solution through
+analog-to-digital converters, with few bits.
+
+36
+00:02:27,156 --> 00:02:31,829
+A naive quantizer can break the
+positivity of the factors; the authors
+
+37
+00:02:31,829 --> 00:02:35,835
+use a conservative, diagonal-dominant
+one that preserves it.
+
+38
+00:02:36,214 --> 00:02:40,966
+Training a ResNet, they found that input
+quantization has little effect, but
+
+39
+00:02:40,966 --> 00:02:45,718
+output quantization matters: at least
+eight output bits are needed, and with
+
+40
+00:02:45,718 --> 00:02:49,407
+eight bits K-FAC already competes
+with full-precision Adam.
+
+41
+00:02:50,517 --> 00:02:52,289
+A methodological warning.
+
+42
+00:02:52,669 --> 00:02:57,169
+In our softmax layer we measured a
+single step: with a naive uniform
+
+43
+00:02:57,169 --> 00:03:01,405
+quantizer, the input is what hurts
+most, with a cosine of 0.7 at
+
+44
+00:03:01,405 --> 00:03:05,045
+four bits, and the output
+barely changes the direction.
+
+45
+00:03:05,425 --> 00:03:09,629
+It is the opposite of what the authors
+found in full training, with their
+
+46
+00:03:09,629 --> 00:03:13,892
+conservative quantizer and errors that
+accumulate over thousands of steps.
+
+47
+00:03:14,272 --> 00:03:19,754
+The lesson: single-step metrics are no
+substitute for training experiments.
+
+48
+00:03:20,883 --> 00:03:24,352
+Use it in wide networks, where
+the cubic inversion dominates.
+
+49
+00:03:24,732 --> 00:03:29,109
+Before promising speedups, measure what
+fraction of time goes into inverting.
+
+50
+00:03:29,489 --> 00:03:34,349
+And design with a conservative input
+quantizer and at least eight output bits.
+
+51
+00:03:34,729 --> 00:03:38,260
+In lab eleven you will
+sweep input and output bits.
+
+52
+00:03:39,383 --> 00:03:42,430
+Common mistakes: promising
+a total speedup when
+
+53
+00:03:42,430 --> 00:03:45,087
+inversion is only a fraction of the time.
+
+54
+00:03:45,467 --> 00:03:47,820
+Ignoring the squared condition factor.
+
+55
+00:03:48,200 --> 00:03:51,341
+Using naive quantizers
+that break positivity.
+
+56
+00:03:51,721 --> 00:03:55,206
+And judging the precision
+needed with single-step metrics.
+
+57
+00:03:56,317 --> 00:04:02,209
+In summary: thermodynamic K-FAC replaces
+each layer's cubic inversions with
+
+58
+00:04:02,209 --> 00:04:07,630
+analog solves costing n² κ², with
+an advantage that grows with width.
+
+59
+00:04:08,010 --> 00:04:11,271
+The speedups are estimated,
+not measured on hardware.
+
+60
+00:04:11,651 --> 00:04:14,734
+And precision matters:
+input with a conservative
+
+61
+00:04:14,734 --> 00:04:17,368
+quantizer and at least eight output bits.
+
+62
+00:04:18,483 --> 00:04:22,420
+To practice: compute the
+cost ratio for a wide layer.
+
+63
+00:04:22,800 --> 00:04:25,650
+Apply Amdahl's law to
+the inversion fraction.
+
+64
+00:04:26,030 --> 00:04:29,589
+Explain how a uniform
+quantizer breaks positivity.
+
+65
+00:04:29,969 --> 00:04:34,588
+And explain why output errors weigh
+more in training than in one step.

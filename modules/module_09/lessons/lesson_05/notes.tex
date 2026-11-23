@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{9.5}{Análisis de eficiencia: ruta A frente a ruta B}
+
+\noindent\textbf{Unidad 9.}\quad\textbf{Objetivos:} distinguir la ruta A (portar un modelo de difusión neuronal a un sistema con TSU) de la ruta B (eliminación de ruido
+termodinámica nativa); aplicar Amdahl al pegamento digital; decidir con una lista explícita.
+\textbf{Prerrequisitos:} 5.8, 9.3, 9.4.
+
+\section{Ruta A: portar}
+Reutiliza modelos maduros (DiT, transformers de difusión enmascarada), pero un transformer es sobre todo multiplicación de matrices y un TSU muestrea: lo determinista queda en
+FPGA/XPU. Extropic reporta para Z1T $294{,}52$ nJ/token, de los cuales $285{,}78$ nJ son trabajo de la FPGA: $f_{\text{pegamento}}=0{,}97$ \evP.
+
+\section{Ley de Amdahl}
+\[S_{\max}=\frac1{f_{\text{pegamento}}}=\frac1{0{,}97}\approx1{,}03.\]
+Hacer gratis la parte termodinámica mejora a lo sumo un 3\,\%. Para acercarse a $1000\times$: llevar funciones al chip, bajar la precisión digital o cambiar la arquitectura (Unidad 10).
+
+\section{Ruta B: nativa}
+Todo el modelo es una cadena de EBM condicionales muestreados por el hardware: $E\approx TK_{\text{mix}}L^2E_{\text{cell}}\approx20$ nJ por muestra (DTM de 9.3) \evE, casi sin
+pegamento. Menos expresiva; los híbridos DTM + red neuronal reintroducen algo de pegamento, con una red diez veces menor.
+
+\section{Comparación y decisión}
+\begin{center}\small\begin{tabular}{lll}\toprule
+& ruta A & ruta B\\\midrule
+modelos & maduros & jóvenes\\
+calidad & conocida & bancos pequeños\\
+ganancia de energía & limitada por el pegamento & órdenes de magnitud (estimada)\\
+evidencia & cifras reportadas & estimaciones\\\bottomrule\end{tabular}\end{center}
+Lista: (1) si el pegamento supera el 90\,\%, la ganancia es $\le10\times$; (2) ¿hay un modelo nativo de calidad suficiente?; (3) contar toda la energía, incluida E/S;
+(4) etiquetar cada cifra.
+
+\begin{aplicacion}
+Planificación de productos; investigación en modelos nativos; qué funciones llevar al chip (Z1T, Unidad 10). Proyecto P8: planificador de inferencia heterogénea.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Citar la energía del TSU como la del sistema. \quad Comparar con calidades distintas.
+\item Suponer híbridos sin costo digital. \quad Tratar proyecciones como mediciones.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\bibitem[48]{dtm} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, 2025.
+\bibitem{amdahl} G. M. Amdahl, Validity of the single processor approach to achieving large scale computing capabilities, \emph{AFIPS} (1967).
+\end{thebibliography}
+\end{document}

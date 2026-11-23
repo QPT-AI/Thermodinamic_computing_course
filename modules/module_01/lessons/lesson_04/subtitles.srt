@@ -1,0 +1,407 @@
+1
+00:00:00,350 --> 00:00:02,129
+Lección 1.4.
+
+2
+00:00:02,509 --> 00:00:05,110
+El demonio de Maxwell y
+la máquina de Szilard.
+
+3
+00:00:06,217 --> 00:00:10,224
+En 1867 James Clerk Maxwell
+imaginó un pequeño ser
+
+4
+00:00:10,224 --> 00:00:13,991
+que vigila una puerta
+entre dos cámaras de gas.
+
+5
+00:00:14,371 --> 00:00:17,812
+Sin hacer trabajo, solo mirando
+y abriendo la puerta en el
+
+6
+00:00:17,812 --> 00:00:21,314
+momento justo, parece capaz de
+separar moléculas rápidas de
+
+7
+00:00:21,314 --> 00:00:24,637
+lentas y crear una diferencia
+de temperatura de la nada.
+
+8
+00:00:25,017 --> 00:00:28,194
+Esa paradoja tardó más de
+un siglo en resolverse, y su
+
+9
+00:00:28,194 --> 00:00:31,784
+solución es el corazón de la
+termodinámica de la información.
+
+10
+00:00:32,917 --> 00:00:34,577
+Mira el demonio en acción.
+
+11
+00:00:34,957 --> 00:00:37,456
+Cuando una molécula
+rápida se acerca desde la
+
+12
+00:00:37,456 --> 00:00:40,510
+izquierda, abre la puerta y
+la deja pasar a la derecha.
+
+13
+00:00:40,890 --> 00:00:44,893
+Cuando una lenta se acerca desde la
+derecha, la deja pasar a la izquierda.
+
+14
+00:00:45,273 --> 00:00:49,037
+Con el tiempo, la cámara derecha se
+calienta y la izquierda se enfría.
+
+15
+00:00:49,417 --> 00:00:52,611
+Con esa diferencia de temperatura
+podríamos mover un motor.
+
+16
+00:00:52,991 --> 00:00:55,959
+Si el demonio no gasta
+energía, hemos construido una
+
+17
+00:00:55,959 --> 00:00:58,814
+máquina de movimiento
+perpetuo de segunda especie.
+
+18
+00:00:59,194 --> 00:01:00,348
+Algo tiene que fallar.
+
+19
+00:01:01,450 --> 00:01:05,472
+Leó Szilard simplificó el
+problema al extremo en 1929:
+
+20
+00:01:05,472 --> 00:01:08,898
+una sola molécula en una
+caja a temperatura T.
+
+21
+00:01:09,278 --> 00:01:11,467
+Primero se inserta una pared en el medio.
+
+22
+00:01:11,847 --> 00:01:14,362
+Después el demonio mira
+de qué lado está la
+
+23
+00:01:14,362 --> 00:01:16,761
+molécula: adquiere un bit de información.
+
+24
+00:01:17,141 --> 00:01:21,456
+Con ese bit, coloca un pistón del lado
+correcto y deja que la molécula lo
+
+25
+00:01:21,456 --> 00:01:25,121
+empuje mientras se expande
+lentamente, tomando calor del baño.
+
+26
+00:01:25,501 --> 00:01:28,375
+Al final la molécula vuelve
+a ocupar toda la caja.
+
+27
+00:01:28,755 --> 00:01:31,764
+Se ha extraído trabajo, y
+el ciclo puede repetirse.
+
+28
+00:01:32,883 --> 00:01:34,191
+Calculemos el trabajo.
+
+29
+00:01:34,571 --> 00:01:39,857
+Para un gas de una molécula, la
+ecuación de estado es p V = k_B T.
+
+30
+00:01:40,237 --> 00:01:45,679
+En la expansión isotérmica de la
+mitad del volumen al volumen completo,
+
+31
+00:01:45,679 --> 00:01:50,584
+el trabajo extraído es la integral
+de p dV, que vale k_B T ln 2.
+
+32
+00:01:50,964 --> 00:01:54,932
+Ese trabajo sale del calor del
+baño: la energía interna no cambia.
+
+33
+00:01:55,312 --> 00:02:00,146
+Un bit de información se convirtió
+en k_B T ln 2 de trabajo.
+
+34
+00:02:00,526 --> 00:02:04,162
+Con un ciclo por segundo, eso
+parece violar la segunda ley.
+
+35
+00:02:05,283 --> 00:02:09,575
+Durante décadas se pensó que
+el costo estaba en medir: que
+
+36
+00:02:09,575 --> 00:02:13,275
+observar la molécula
+disipaba al menos k_B T ln 2.
+
+37
+00:02:13,655 --> 00:02:16,416
+En 1982 Charles Bennett mostró que la
+
+38
+00:02:16,416 --> 00:02:19,623
+medición puede hacerse
+de forma reversible.
+
+39
+00:02:20,003 --> 00:02:23,663
+El costo inevitable está en otra
+parte: la memoria del demonio.
+
+40
+00:02:24,043 --> 00:02:28,963
+Para repetir el ciclo, el demonio
+debe borrar el bit que guardó, y por
+
+41
+00:02:28,963 --> 00:02:33,321
+el principio de Landauer, borrarlo
+cuesta al menos k_B T ln 2.
+
+42
+00:02:33,701 --> 00:02:37,184
+El balance del ciclo completo es
+cero en el mejor de los casos.
+
+43
+00:02:37,564 --> 00:02:40,274
+La segunda ley se salva,
+pero solo si contamos
+
+44
+00:02:40,274 --> 00:02:42,630
+la información como una cantidad física.
+
+45
+00:02:43,750 --> 00:02:46,073
+Hagamos el balance de
+entropía de un ciclo.
+
+46
+00:02:46,453 --> 00:02:51,170
+Al medir, la memoria del demonio
+pasa de un estado conocido a un bit
+
+47
+00:02:51,170 --> 00:02:55,747
+correlacionado con la molécula:
+la entropía de la memoria sube k_B
+
+48
+00:02:55,747 --> 00:02:59,493
+ln 2, mientras la incertidumbre
+del gas baja lo mismo.
+
+49
+00:02:59,873 --> 00:03:05,712
+Durante la expansión, el baño entrega
+calor y pierde k_B ln 2 de entropía.
+
+50
+00:03:06,092 --> 00:03:12,306
+Al borrar, la memoria vuelve a cero
+y el baño recupera al menos k_B ln 2.
+
+51
+00:03:12,686 --> 00:03:15,538
+Sumando todo, la entropía
+total no disminuye.
+
+52
+00:03:16,650 --> 00:03:23,227
+A trescientos kelvin, cada ciclo
+extrae como máximo 2,87 × 10⁻²¹ J.
+
+53
+00:03:23,607 --> 00:03:26,283
+Si la medición tiene
+errores y el demonio acierta
+
+54
+00:03:26,283 --> 00:03:28,685
+el lado con probabilidad
+noventa por ciento,
+
+55
+00:03:29,065 --> 00:03:32,797
+la información útil es solo
+la información mutua entre la
+
+56
+00:03:32,797 --> 00:03:36,464
+medición y la posición: uno
+menos la entropía binaria de
+
+57
+00:03:36,464 --> 00:03:39,476
+cero coma uno, unos cero
+coma cinco tres bits.
+
+58
+00:03:39,856 --> 00:03:44,702
+El trabajo máximo
+extraíble baja a cero coma
+
+59
+00:03:44,702 --> 00:03:49,768
+cinco tres por k_B T ln
+2, unos 1,5 × 10⁻²¹ J.
+
+60
+00:03:50,883 --> 00:03:54,509
+Hoy existen demonios reales:
+motores de información que usan
+
+61
+00:03:54,509 --> 00:03:59,222
+retroalimentación sobre partículas
+coloidales o sobre electrones individuales.
+
+62
+00:03:59,602 --> 00:04:04,411
+Con mediciones imperfectas, el trabajo
+máximo es k_B T por la información mutua.
+
+63
+00:04:04,791 --> 00:04:08,311
+Para el cómputo, la lección
+es clara: medir y controlar
+
+64
+00:04:08,311 --> 00:04:11,511
+puede ser casi gratis,
+pero reiniciar memorias no.
+
+65
+00:04:11,891 --> 00:04:14,554
+En el reto del laboratorio
+dos simularás una
+
+66
+00:04:14,554 --> 00:04:16,914
+máquina de Szilard y cerrarás el ciclo.
+
+67
+00:04:18,017 --> 00:04:21,100
+El demonio conecta lo que
+vimos sobre entropía de Shannon
+
+68
+00:04:21,100 --> 00:04:23,859
+con el principio de Landauer
+de la próxima lección.
+
+69
+00:04:24,239 --> 00:04:27,865
+En la unidad tres veremos la
+generalización de la igualdad de
+
+70
+00:04:27,865 --> 00:04:31,669
+Jarzynski con retroalimentación
+y la termodinámica del reinicio.
+
+71
+00:04:32,783 --> 00:04:37,148
+Errores frecuentes: creer que el costo
+está en medir, cuando está en borrar.
+
+72
+00:04:37,528 --> 00:04:40,272
+Pensar que el demonio viola
+la segunda ley, cuando
+
+73
+00:04:40,272 --> 00:04:42,577
+lo que ocurre es que olvidamos su memoria.
+
+74
+00:04:42,957 --> 00:04:45,265
+Olvidar que la expansión debe ser lenta.
+
+75
+00:04:45,645 --> 00:04:48,920
+Y suponer el trabajo completo
+cuando la medición es ruidosa.
+
+76
+00:04:50,050 --> 00:04:54,322
+En resumen: el demonio de Maxwell
+usa información para extraer trabajo.
+
+77
+00:04:54,702 --> 00:04:59,969
+La máquina de Szilard convierte
+un bit en k_B T ln 2 de trabajo.
+
+78
+00:05:00,349 --> 00:05:03,717
+La segunda ley se salva porque
+la memoria del demonio debe
+
+79
+00:05:03,717 --> 00:05:06,679
+borrarse, y borrar un bit
+cuesta al menos lo mismo.
+
+80
+00:05:07,059 --> 00:05:09,482
+La información es un
+recurso termodinámico.
+
+81
+00:05:10,583 --> 00:05:13,595
+Para practicar: deriva el
+trabajo de la expansión.
+
+82
+00:05:13,975 --> 00:05:18,077
+Calcula el trabajo promedio si la pared
+se coloca a un tercio del volumen.
+
+83
+00:05:18,457 --> 00:05:22,597
+Encuentra el trabajo máximo con una
+medición que acierta el ochenta por ciento.
+
+84
+00:05:22,977 --> 00:05:25,206
+Y señala en qué paso se paga el costo.

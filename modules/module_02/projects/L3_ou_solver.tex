@@ -1,0 +1,36 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Laboratorio}{L3}{El solucionador lineal Ornstein--Uhlenbeck (semana 3)}
+\section*{Enunciado}
+Resolver $Ax=b$ e invertir $A$ por equilibración: el OU $dx=-(Ax-b)\,dt+\sqrt{2\beta^{-1}}\,dW$ tiene estado estacionario
+$\N(A^{-1}b,\beta^{-1}A^{-1})$ (lección 2.4). Se estima $A^{-1}b$ por promedio temporal y $A^{-1}$ por la covarianza.
+\section*{Objetivos}
+\begin{itemize}[nosep]
+\item Implementar Euler--Maruyama para el OU con matrices SPD de Wishart ($d=10$ a $500$).
+\item Medir el error frente al tiempo de integración y frente a $d$; verificar $\Delta t<2/\lambda_{\max}$.
+\item Comparar con gradiente conjugado y Cholesky (tiempo de pared en CPU).
+\end{itemize}
+\section*{Conocimientos requeridos}
+Lecciones 0.4, 2.4, 2.6, 2.7; JAX (0.7).
+\section*{Tareas núcleo}
+\begin{enumerate}
+\item Implemente Euler--Maruyama para $dx=-(Ax-b)dt+\sqrt{2\beta^{-1}}dW$ con matrices de Wishart ($d=10$ a $500$).
+\item Estime $A^{-1}b$ por promedio temporal tras el burn-in, y $A^{-1}$ a partir de la covarianza.
+\item Verifique la condición $\Delta t<2/\lambda_{\max}$; grafique el error frente al tiempo de integración y frente a $d$ (escalado lineal frente a cuadrático).
+\item Compare con gradiente conjugado y Cholesky (tiempo de pared en CPU).
+\end{enumerate}
+\section*{Reto}
+Dinámica subamortiguada; compare la convergencia en función de $\kappa$.
+\section*{Implementación}
+Código de inicio \texttt{L3\_inicio.py} (JAX, \texttt{lax.scan}). Con $T=200$ y $\Delta t=0{,}1/\lambda_{\max}$ se obtienen errores relativos
+de $\sim8\,\%$ en $A^{-1}b$ y $25$--$50\,\%$ en $A^{-1}$ para $d=10$--$50$ \evS; el error debe bajar como $1/\sqrt T$.
+Use barras de error con $\tau_{\text{int}}$ (lección 2.6).
+\section*{Resultados esperados}
+Curvas error--tiempo con pendiente $-\frac12$ en escala log; tiempo de cruce frente a $d$; tabla comparativa con CG/Cholesky indicando que
+en CPU la simulación digital del OU es más lenta que los métodos directos (la ventaja hipotética es del hardware analógico, Unidad 6).
+\section*{Entregable}
+Curvas error--tiempo, gráfica de tiempo de cruce frente a $d$, informe de 2--3 páginas, pruebas.
+\section*{Rúbrica (pensum §10.1)}
+Corrección 40 · Análisis 25 · Reproducibilidad 20 · Energía/evidencia 15.
+\end{document}

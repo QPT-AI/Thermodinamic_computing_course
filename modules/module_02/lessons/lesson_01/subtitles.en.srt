@@ -1,0 +1,328 @@
+1
+00:00:00,350 --> 00:00:01,998
+Lesson 2.1.
+
+2
+00:00:02,378 --> 00:00:05,979
+Brownian motion, the Wiener
+process and Itô calculus.
+
+3
+00:00:07,083 --> 00:00:12,678
+In 1827 the botanist Robert Brown looked
+through a microscope at pollen grains
+
+4
+00:00:12,678 --> 00:00:18,273
+suspended in water: they moved ceaselessly,
+zigzagging, with no visible cause.
+
+5
+00:00:18,653 --> 00:00:22,273
+In 1905 Einstein explained
+it: the grains are
+
+6
+00:00:22,273 --> 00:00:25,491
+kicked by water molecules we cannot see.
+
+7
+00:00:25,871 --> 00:00:29,419
+That motion, Brownian motion,
+is the mathematical model
+
+8
+00:00:29,419 --> 00:00:32,579
+of thermal noise we will
+use throughout the unit.
+
+9
+00:00:33,683 --> 00:00:36,822
+Let's start with a random walk: at each
+
+10
+00:00:36,822 --> 00:00:40,122
+time step, the particle jumps up or down.
+
+11
+00:00:40,502 --> 00:00:45,095
+Now let's make the time steps shorter
+and, at the same time, the jumps smaller.
+
+12
+00:00:45,475 --> 00:00:49,359
+How must the jump shrink so the
+limit neither freezes nor blows up?
+
+13
+00:00:49,739 --> 00:00:54,240
+The answer is that the jump must scale
+as the square root of the time step.
+
+14
+00:00:54,620 --> 00:00:58,280
+With that rule, the walks
+converge to a continuous
+
+15
+00:00:58,280 --> 00:01:01,646
+but extremely rough
+curve: the Wiener process.
+
+16
+00:01:02,750 --> 00:01:08,421
+The Wiener process, W(t), starts at
+zero, has independent increments,
+
+17
+00:01:08,801 --> 00:01:15,894
+and each increment W(t) − W(s) is Gaussian
+with mean zero and variance t − s.
+
+18
+00:01:16,274 --> 00:01:20,095
+Look at many trajectories at
+once: they fan out, and the
+
+19
+00:01:20,095 --> 00:01:23,985
+width of the fan grows as the
+square root of t, not as t.
+
+20
+00:01:24,365 --> 00:01:28,210
+The histogram at a fixed
+instant is exactly a Gaussian.
+
+21
+00:01:28,590 --> 00:01:32,697
+And if we zoom into any piece of
+a trajectory, it looks just as
+
+22
+00:01:32,697 --> 00:01:36,608
+rough: the process is continuous
+but differentiable nowhere.
+
+23
+00:01:37,717 --> 00:01:40,086
+Here comes the property
+that changes everything.
+
+24
+00:01:40,466 --> 00:01:43,970
+Let's split the interval
+from zero to T into finer and
+
+25
+00:01:43,970 --> 00:01:47,474
+finer pieces and add up the
+squares of the increments.
+
+26
+00:01:47,854 --> 00:01:50,769
+For a smooth curve that
+sum would tend to zero.
+
+27
+00:01:51,149 --> 00:01:55,888
+For the Wiener process it tends
+to T, exactly, with no randomness.
+
+28
+00:01:56,268 --> 00:01:59,968
+We summarize it with the rule (dW)² = dt.
+
+29
+00:02:00,348 --> 00:02:04,159
+The increments are of order
+root dt, so their squares
+
+30
+00:02:04,159 --> 00:02:07,467
+are of order dt, and
+they cannot be neglected.
+
+31
+00:02:08,583 --> 00:02:11,240
+Consequence: the chain rule changes.
+
+32
+00:02:11,620 --> 00:02:17,128
+If f is a smooth function, the
+Taylor expansion of f(W + dW)
+
+33
+00:02:17,128 --> 00:02:22,084
+has a first-order term, f'
+dW, and a second-order one,
+
+34
+00:02:22,464 --> 00:02:25,610
+one half of f'' (dW)².
+
+35
+00:02:25,990 --> 00:02:31,479
+In ordinary calculus the second
+is dropped, but here (dW)² is dt.
+
+36
+00:02:31,859 --> 00:02:38,945
+So we get Itô's lemma:
+df = f' dW + ½ f'' dt.
+
+37
+00:02:39,325 --> 00:02:46,007
+For example, for W², d(W²) = 2W dW + dt:
+
+38
+00:02:46,387 --> 00:02:52,111
+the extra dt term is exactly what
+makes the mean of W² grow as t.
+
+39
+00:02:53,217 --> 00:02:54,718
+Let's put in real numbers.
+
+40
+00:02:55,098 --> 00:03:00,941
+A sphere of one micrometer radius in
+water at three hundred kelvin has,
+
+41
+00:03:00,941 --> 00:03:06,291
+by Stokes–Einstein, a diffusion
+coefficient D = k_B T / (6π η a),
+
+42
+00:03:06,671 --> 00:03:10,816
+about 2.2 × 10⁻¹³ m²/s.
+
+43
+00:03:11,196 --> 00:03:16,188
+Its position along one direction
+is √(2D) W(t), so in one
+
+44
+00:03:16,188 --> 00:03:20,480
+second it typically moves
+about 0.66 micrometers.
+
+45
+00:03:20,860 --> 00:03:25,254
+In a hundred seconds, only ten
+times more: the square root of time.
+
+46
+00:03:26,383 --> 00:03:30,595
+The Wiener process is the noise
+source of every stochastic
+
+47
+00:03:30,595 --> 00:03:34,735
+equation in the course: the
+thermal noise of circuits and
+
+48
+00:03:34,735 --> 00:03:38,075
+pbits, the noise diffusion
+models add to data,
+
+49
+00:03:38,455 --> 00:03:42,458
+and the noise of the thermodynamic
+linear solver in lab three.
+
+50
+00:03:43,583 --> 00:03:48,214
+In the next lesson we will add
+forces and get the Langevin equation.
+
+51
+00:03:48,594 --> 00:03:52,561
+Then we will write the equation
+for the probability density, the
+
+52
+00:03:52,561 --> 00:03:57,332
+Fokker–Planck equation, and learn to
+simulate with the Euler–Maruyama method.
+
+53
+00:03:58,450 --> 00:04:01,099
+Common mistakes: scaling
+the jumps like the
+
+54
+00:04:01,099 --> 00:04:03,379
+time step instead of its square root.
+
+55
+00:04:03,759 --> 00:04:07,614
+Applying the ordinary chain rule
+and forgetting the Itô term.
+
+56
+00:04:07,994 --> 00:04:10,743
+Treating white noise as
+an ordinary function.
+
+57
+00:04:11,123 --> 00:04:13,387
+And confusing the Itô and Stratonovich
+
+58
+00:04:13,387 --> 00:04:16,484
+interpretations when the
+noise depends on the state.
+
+59
+00:04:17,617 --> 00:04:20,987
+In summary: the Wiener
+process is the limit of
+
+60
+00:04:20,987 --> 00:04:23,918
+random walks with jumps of size root dt.
+
+61
+00:04:24,298 --> 00:04:28,461
+It has independent Gaussian increments
+and a variance that grows as t.
+
+62
+00:04:28,841 --> 00:04:33,879
+Its quadratic variation makes
+(dW)² = dt, which is why Itô
+
+63
+00:04:33,879 --> 00:04:38,397
+calculus has an extra term
+of one half f'' times dt.
+
+64
+00:04:39,517 --> 00:04:41,868
+To practice: find the distribution of an
+
+65
+00:04:41,868 --> 00:04:44,455
+increment and the
+covariance of the process.
+
+66
+00:04:44,835 --> 00:04:47,092
+Use Itô's lemma with the exponential.
+
+67
+00:04:47,472 --> 00:04:51,030
+Compute how long the sphere
+takes to move ten micrometers.
+
+68
+00:04:51,410 --> 00:04:54,003
+And explain why the sum
+of squares converges
+
+69
+00:04:54,003 --> 00:04:56,479
+while the sum of absolute values diverges.

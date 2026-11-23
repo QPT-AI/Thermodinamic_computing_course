@@ -1,0 +1,391 @@
+1
+00:00:00,350 --> 00:00:02,000
+Lesson 1.2.
+
+2
+00:00:02,380 --> 00:00:05,507
+Statistical mechanics and
+the Boltzmann distribution.
+
+3
+00:00:06,617 --> 00:00:11,991
+If this course had a single formula, it
+would be this: the probability of a state
+
+4
+00:00:11,991 --> 00:00:16,768
+is proportional to the exponential
+of minus its energy divided by k_B T.
+
+5
+00:00:17,148 --> 00:00:19,824
+A thermodynamic chip
+receives an energy function
+
+6
+00:00:19,824 --> 00:00:22,222
+and returns samples
+from that distribution.
+
+7
+00:00:22,602 --> 00:00:25,778
+In this lesson we will see
+where it comes from, what role
+
+8
+00:00:25,778 --> 00:00:29,178
+temperature plays, and why the
+number that normalizes it, the
+
+9
+00:00:29,178 --> 00:00:32,021
+partition function, contains
+all of thermodynamics.
+
+10
+00:00:33,150 --> 00:00:36,499
+Think of a small system in
+contact with a huge bath.
+
+11
+00:00:36,879 --> 00:00:38,611
+The total energy is fixed.
+
+12
+00:00:38,991 --> 00:00:42,340
+Every unit of energy the
+system holds is taken from the
+
+13
+00:00:42,340 --> 00:00:45,750
+bath, and the bath, by losing
+energy, loses microstates.
+
+14
+00:00:46,130 --> 00:00:51,539
+Since the bath's entropy grows linearly
+with its energy, with slope one over T,
+
+15
+00:00:51,919 --> 00:00:56,074
+its number of microstates
+falls exponentially: every time
+
+16
+00:00:56,074 --> 00:01:00,302
+the system takes a portion E
+of energy, the number of ways
+
+17
+00:01:00,302 --> 00:01:03,947
+to arrange the bath is
+multiplied by e^(−E/k_B T).
+
+18
+00:01:04,327 --> 00:01:06,183
+The bars show that count.
+
+19
+00:01:06,563 --> 00:01:09,575
+The probability of a system
+state is proportional to
+
+20
+00:01:09,575 --> 00:01:12,181
+the number of microstates
+it leaves the bath.
+
+21
+00:01:12,561 --> 00:01:14,336
+That is the Boltzmann distribution.
+
+22
+00:01:15,450 --> 00:01:19,583
+Now take an energy landscape with
+two valleys of different depth.
+
+23
+00:01:19,963 --> 00:01:22,606
+The green curve is the
+Boltzmann distribution.
+
+24
+00:01:22,986 --> 00:01:25,991
+At high temperature, the
+exponential is almost flat
+
+25
+00:01:25,991 --> 00:01:28,584
+and the system explores
+the whole landscape.
+
+26
+00:01:28,964 --> 00:01:32,024
+As it cools, probability
+concentrates in the valleys.
+
+27
+00:01:32,404 --> 00:01:35,677
+And at very low temperature,
+almost all the probability
+
+28
+00:01:35,677 --> 00:01:38,652
+falls into the deepest
+valley, the global minimum.
+
+29
+00:01:39,032 --> 00:01:42,266
+Temperature is a knob between
+exploring and optimizing.
+
+30
+00:01:42,646 --> 00:01:45,559
+This same idea underlies
+simulated annealing.
+
+31
+00:01:46,683 --> 00:01:50,306
+For the probabilities
+to sum to one we divide
+
+32
+00:01:50,306 --> 00:01:53,607
+by Z, the sum of e^(−βE) over all states,
+
+33
+00:01:53,987 --> 00:01:57,299
+with β equal to 1/k_B
+T. Z looks like a mere
+
+34
+00:01:57,299 --> 00:02:00,986
+normalizer, but it encodes
+all of thermodynamics.
+
+35
+00:02:01,366 --> 00:02:06,139
+The free energy is F = −k_B T ln Z.
+
+36
+00:02:06,519 --> 00:02:11,031
+The mean energy is minus the derivative
+of the log of Z with respect to β.
+
+37
+00:02:11,411 --> 00:02:14,330
+And the variance of the energy
+is the second derivative.
+
+38
+00:02:14,710 --> 00:02:17,849
+The problem is that Z sums
+over all states: for a
+
+39
+00:02:17,849 --> 00:02:20,987
+hundred spins there are
+two to the hundred terms.
+
+40
+00:02:21,367 --> 00:02:24,345
+That is why, instead of
+computing Z, we sample.
+
+41
+00:02:25,450 --> 00:02:27,124
+There is another elegant derivation.
+
+42
+00:02:27,504 --> 00:02:29,917
+Let's look for the
+distribution with maximum
+
+43
+00:02:29,917 --> 00:02:32,385
+Shannon entropy that
+has a fixed mean energy.
+
+44
+00:02:32,765 --> 00:02:37,560
+With Lagrange multipliers, one for
+normalization and one for energy, the
+
+45
+00:02:37,560 --> 00:02:41,755
+optimality condition says the
+log of p is linear in the energy.
+
+46
+00:02:42,135 --> 00:02:47,660
+That is, p is exponential in the
+energy, and the multiplier is exactly β.
+
+47
+00:02:48,040 --> 00:02:51,086
+The Boltzmann distribution
+is the least committed to
+
+48
+00:02:51,086 --> 00:02:53,957
+everything we don't know,
+except the mean energy.
+
+49
+00:02:55,083 --> 00:03:00,954
+A three-level system with energies
+zero, one and two, in units of k_B T.
+
+50
+00:03:01,334 --> 00:03:09,969
+The Boltzmann weights are one, e^(−1)
+and e^(−2): 1, 0.368 and 0.135.
+
+51
+00:03:10,349 --> 00:03:14,295
+The partition function
+is their sum, 1.503.
+
+52
+00:03:14,675 --> 00:03:20,893
+The probabilities are
+0.665, 0.245 and 0.09.
+
+53
+00:03:21,273 --> 00:03:26,377
+The mean energy is 0.425,
+and the free energy
+
+54
+00:03:26,377 --> 00:03:30,799
+is minus the log of 1.503, about −0.41.
+
+55
+00:03:31,917 --> 00:03:36,213
+This distribution is the programming
+language of thermodynamic computing.
+
+56
+00:03:36,593 --> 00:03:40,265
+A chip receives the parameters
+of an energy and returns samples.
+
+57
+00:03:40,645 --> 00:03:46,670
+In machine learning, energy-based
+models learn that energy from data.
+
+58
+00:03:47,050 --> 00:03:49,187
+In optimization, lowering the temperature
+
+59
+00:03:49,187 --> 00:03:51,899
+concentrates the distribution
+on the global minimum.
+
+60
+00:03:52,279 --> 00:03:55,758
+And with a quadratic energy,
+the Boltzmann distribution
+
+61
+00:03:55,758 --> 00:03:58,794
+is a Gaussian whose mean
+solves a linear system.
+
+62
+00:03:59,917 --> 00:04:04,334
+In the next lesson we will connect
+this distribution with Gibbs entropy.
+
+63
+00:04:04,714 --> 00:04:09,239
+In unit two we will see that it is the
+stationary state of Langevin dynamics.
+
+64
+00:04:09,619 --> 00:04:13,235
+And in unit four we will apply
+it to the Ising model and to the
+
+65
+00:04:13,235 --> 00:04:16,623
+pbit, which is the Boltzmann
+distribution of a single spin.
+
+66
+00:04:17,750 --> 00:04:21,788
+Careful: the formula gives the
+probability of a microstate; for a
+
+67
+00:04:21,788 --> 00:04:25,391
+macrostate you must multiply
+by its number of microstates.
+
+68
+00:04:25,771 --> 00:04:29,471
+Adding a constant to the energy
+does not change the probabilities.
+
+69
+00:04:29,851 --> 00:04:32,797
+Beta is one over k_B T, not one over T.
+
+70
+00:04:33,177 --> 00:04:36,162
+And the distribution
+describes equilibrium with a
+
+71
+00:04:36,162 --> 00:04:39,208
+bath: out of equilibrium
+we will need other tools.
+
+72
+00:04:40,317 --> 00:04:45,057
+In summary: a system in contact
+with a bath visits each state with
+
+73
+00:04:45,057 --> 00:04:49,079
+probability e^(−βE)/Z, because
+that maximizes the bath's
+
+74
+00:04:49,079 --> 00:04:53,533
+microstates, or equivalently the
+entropy at fixed mean energy.
+
+75
+00:04:53,913 --> 00:04:57,935
+Temperature controls the shape of
+the distribution, and the partition
+
+76
+00:04:57,935 --> 00:05:01,899
+function contains the free energy
+and all the moments of the energy.
+
+77
+00:05:03,017 --> 00:05:06,036
+To practice: solve the two-level system.
+
+78
+00:05:06,416 --> 00:05:09,708
+Prove the formulas for the
+mean energy and its variance.
+
+79
+00:05:10,088 --> 00:05:12,392
+Count the terms of the partition function
+
+80
+00:05:12,392 --> 00:05:14,641
+for a hundred spins and for the Z1 chip.
+
+81
+00:05:15,021 --> 00:05:19,300
+And apply Boltzmann to a spring to
+obtain the equipartition theorem.

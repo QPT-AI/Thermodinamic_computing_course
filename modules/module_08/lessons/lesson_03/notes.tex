@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.3}{Descenso de gradiente natural termodinámico (TNGD)}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} el ciclo híbrido GPU + SPU; la interpolación entre descenso de gradiente y NGD; el retardo como momento;
+costo, TNGD-Adam y robustez.
+\textbf{Prerrequisitos:} 6.1, 8.2.
+
+\section{El ciclo híbrido}
+La GPU calcula $\nabla\ell$, $J_f$ y $H_L$ por diferenciación automática; se cargan en el SPU (DAC), que evoluciona según
+\[d\tilde g=-\big((G+\lambda I)\tilde g-\nabla\ell\big)dt+\sqrt{2\kappa_0}\,dW,\qquad\langle\tilde g_\infty\rangle=(G+\lambda I)^{-1}\nabla\ell.\]
+Tras un tiempo analógico $t$ se lee $\tilde g$ y se actualiza $\theta\leftarrow\theta-\eta\tilde g$. GPU y SPU pueden trabajar en paralelo y de forma asíncrona.
+
+\section{De SGD a NGD}
+Con $A=G+\lambda I$ y $\tilde g_0=\nabla\ell$: $\langle\tilde g_t\rangle=e^{-At}(\nabla\ell-A^{-1}\nabla\ell)+A^{-1}\nabla\ell$. En $t=0$ es descenso de gradiente; para
+$t\to\infty$, gradiente natural. El tiempo analógico es una perilla continua.
+\begin{ejemplo}
+Regresión logística, $n=256$, $N=50$, $\lambda=10^{-3}$, $\tau=1/\lambda_{\max}(A)$, 30 iteraciones con $\eta=1$ \evS. Pérdida final: $t=0$: 0,407; $5\tau$: 0,389;
+$20\tau$: 0,378; $50\tau$: 0,373; NGD exacto: 0,368.
+\end{ejemplo}
+
+\section{Retardo como momento}
+No reiniciar el SPU entre iteraciones (arranque en caliente) o aceptar un retardo $t_d$: el estado conserva la curvatura anterior mientras se adapta a la nueva, como
+el momento. En el ejemplo, con $t=5\tau$: 0,389 (frío) frente a 0,383 (caliente). En MNIST, Donatella et al.\ observan que ciertos retardos superan al NGD exacto.
+
+\section{Costo, TNGD-Adam y robustez}
+Costo por iteración $O(bd_zN+t)$, memoria $O(bd_zN+b^2d_z^2)$. En MNIST estiman unas $2\times$ el costo por iteración de Adam, con muchas menos iteraciones \evS.
+En el ajuste fino de DistilBERT (SQuAD), TNGD puro fue peor que Adam y TNGD-Adam (gradiente natural pasado por la regla de Adam) el mejor \evS. La dinámica OU
+converge en promedio para cualquier matriz SPD (CG puede divergir), y el ruido es parte del algoritmo. Limitación: resultados simulados; requiere SPU grandes.
+
+\begin{aplicacion}
+$t$ como hiperparámetro; arranque en caliente; TNGD-Adam para modelos grandes. Laboratorio L11: TNGD en MNIST con barrido de $t$ y $t_d$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Esperar el equilibrio en cada paso. \quad Olvidar $\lambda$.
+\item Contar solo el tiempo analógico. \quad Presentar aceleraciones simuladas como medidas.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[40]{tngd} K. Donatella et al., Thermodynamic natural gradient descent, 2024.
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem[31]{err} M. Aifer et al., Error mitigation for thermodynamic computing, 2024.
+\end{thebibliography}
+\end{document}

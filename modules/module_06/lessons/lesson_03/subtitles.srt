@@ -1,0 +1,303 @@
+1
+00:00:00,350 --> 00:00:01,995
+Lección 6.3.
+
+2
+00:00:02,375 --> 00:00:04,902
+Determinantes desde
+estadísticas de trabajo.
+
+3
+00:00:06,017 --> 00:00:09,349
+Ya sabemos sacar del equilibrio
+la media, que resuelve
+
+4
+00:00:09,349 --> 00:00:12,682
+sistemas lineales, y la
+covarianza, que da la inversa.
+
+5
+00:00:13,062 --> 00:00:15,869
+Hoy subimos un escalón
+más: el determinante.
+
+6
+00:00:16,249 --> 00:00:20,027
+No está en ningún momento finito
+de la distribución, sino en
+
+7
+00:00:20,027 --> 00:00:23,490
+la función de partición, es
+decir, en la energía libre.
+
+8
+00:00:23,870 --> 00:00:26,105
+Y la energía libre se mide con trabajo.
+
+9
+00:00:27,217 --> 00:00:32,263
+Para el potencial U = ½ xᵀ A
+x, la función de partición es
+
+10
+00:00:32,263 --> 00:00:36,875
+una integral gaussiana
+proporcional a (det A)^(−1/2).
+
+11
+00:00:37,255 --> 00:00:43,840
+Entonces la energía libre es F =
+ln det A / (2β) más una constante.
+
+12
+00:00:44,220 --> 00:00:49,464
+Si pasamos de una matriz conocida, como la
+identidad, a la matriz A, la diferencia de
+
+13
+00:00:49,464 --> 00:00:53,968
+energía libre es la mitad del logaritmo
+del determinante, dividida por β.
+
+14
+00:00:55,083 --> 00:00:58,419
+La igualdad de Jarzynski,
+de la lección tres
+
+15
+00:00:58,419 --> 00:01:01,830
+punto cuatro, dice que
+el promedio de e^(−βW)
+
+16
+00:01:02,210 --> 00:01:06,230
+sobre muchas repeticiones de
+un protocolo es exactamente
+
+17
+00:01:06,230 --> 00:01:10,823
+e^(−βΔF), aunque el protocolo sea
+rápido y fuera del equilibrio.
+
+18
+00:01:11,203 --> 00:01:15,521
+Así que el algoritmo es: empezar en
+equilibrio con la identidad, cambiar
+
+19
+00:01:15,521 --> 00:01:19,299
+el potencial hacia A midiendo el
+trabajo, repetir muchas veces,
+
+20
+00:01:19,679 --> 00:01:26,233
+y calcular ln det A = −2 ln⟨e^(−βW)⟩.
+
+21
+00:01:27,350 --> 00:01:30,719
+Simulemos una matriz de
+dimensión cinco, cuyo logaritmo
+
+22
+00:01:30,719 --> 00:01:33,659
+del determinante es menos
+tres coma cuatro cero.
+
+23
+00:01:34,039 --> 00:01:38,791
+Con lotes de cien repeticiones, un cambio
+instantáneo da menos dos coma cinco
+
+24
+00:01:38,791 --> 00:01:43,111
+cuatro, con una dispersión de uno
+coma cero cuatro: sesgado y ruidoso.
+
+25
+00:01:43,491 --> 00:01:46,684
+Con un tiempo de cambio de
+diez unidades, menos tres
+
+26
+00:01:46,684 --> 00:01:49,876
+coma uno ocho, con dispersión
+de cero coma tres dos.
+
+27
+00:01:50,256 --> 00:01:52,893
+Con cien unidades, menos tres coma cuatro
+
+28
+00:01:52,893 --> 00:01:55,658
+uno, con dispersión de
+cero coma uno cinco.
+
+29
+00:01:56,038 --> 00:02:00,154
+Cuanto más lento el protocolo, menos
+disipación y mejor el estimador.
+
+30
+00:02:01,283 --> 00:02:03,456
+¿Por qué no basta con
+promediar el trabajo?
+
+31
+00:02:03,836 --> 00:02:07,509
+Por la segunda ley: el trabajo
+medio es siempre mayor que la
+
+32
+00:02:07,509 --> 00:02:11,427
+diferencia de energía libre, y
+el exceso es el trabajo disipado.
+
+33
+00:02:11,807 --> 00:02:15,443
+Con cien unidades, el doble
+del trabajo medio da menos tres
+
+34
+00:02:15,443 --> 00:02:18,709
+coma uno siete, lejos de
+menos tres coma cuatro cero.
+
+35
+00:02:19,089 --> 00:02:22,573
+La exponencial de Jarzynski
+pondera más las trayectorias
+
+36
+00:02:22,573 --> 00:02:25,496
+raras con poco trabajo,
+y eso corrige el sesgo.
+
+37
+00:02:25,876 --> 00:02:29,583
+Por eso decimos que el determinante
+usa todos los momentos del trabajo.
+
+38
+00:02:30,683 --> 00:02:32,713
+Así queda la jerarquía de momentos.
+
+39
+00:02:33,093 --> 00:02:35,629
+El primer momento resuelve
+sistemas lineales.
+
+40
+00:02:36,009 --> 00:02:39,001
+El segundo da la inversa y
+las ecuaciones de Lyapunov.
+
+41
+00:02:39,381 --> 00:02:42,464
+La estadística completa del
+trabajo da el determinante.
+
+42
+00:02:42,844 --> 00:02:47,227
+Según Aifer y colaboradores,
+la complejidad del
+
+43
+00:02:47,227 --> 00:02:53,009
+determinante es de orden d κ
+ln(κ)³ ε⁻², frente a d^ω digital.
+
+44
+00:02:53,389 --> 00:02:57,192
+En la práctica se usan estimadores
+mejores que Jarzynski, como
+
+45
+00:02:57,192 --> 00:03:00,503
+el de Bennett, que combina
+protocolos de ida y vuelta.
+
+46
+00:03:01,617 --> 00:03:05,166
+Los logaritmos de determinantes
+aparecen en la verosimilitud
+
+47
+00:03:05,166 --> 00:03:09,010
+marginal de los procesos gaussianos,
+en los flujos normalizantes,
+
+48
+00:03:09,010 --> 00:03:12,441
+y en toda estimación de energía
+libre en física y química.
+
+49
+00:03:12,821 --> 00:03:16,791
+En el laboratorio nueve compararás
+Jarzynski, Bennett y Cholesky.
+
+50
+00:03:17,917 --> 00:03:21,931
+Errores comunes: usar el trabajo
+medio en lugar de la exponencial.
+
+51
+00:03:22,311 --> 00:03:25,105
+Hacer pocas repeticiones
+con un protocolo rápido,
+
+52
+00:03:25,105 --> 00:03:27,615
+cuando el promedio
+depende de eventos raros.
+
+53
+00:03:27,995 --> 00:03:30,905
+No empezar en equilibrio,
+que Jarzynski exige.
+
+54
+00:03:31,285 --> 00:03:32,847
+Y equivocarse con los signos.
+
+55
+00:03:33,950 --> 00:03:38,779
+En resumen: el logaritmo del determinante
+es una diferencia de energía libre, y la
+
+56
+00:03:38,779 --> 00:03:43,255
+igualdad de Jarzynski la obtiene del
+trabajo medido en protocolos repetidos.
+
+57
+00:03:43,636 --> 00:03:47,634
+Los protocolos lentos disipan menos
+y dan estimadores más precisos.
+
+58
+00:03:48,014 --> 00:03:50,646
+Es el tercer escalón de
+la jerarquía de momentos.
+
+59
+00:03:51,750 --> 00:03:55,830
+Para practicar: deduce la energía
+libre de un potencial cuadrático.
+
+60
+00:03:56,210 --> 00:03:59,978
+Explica por qué el trabajo medio
+acota el logaritmo del determinante.
+
+61
+00:04:00,358 --> 00:04:02,923
+Escribe el trabajo de
+un cambio instantáneo.
+
+62
+00:04:03,303 --> 00:04:06,107
+Y nombra el estimador
+que combina ida y vuelta.

@@ -1,0 +1,328 @@
+1
+00:00:00,350 --> 00:00:02,175
+Lección 11.6.
+
+2
+00:00:02,555 --> 00:00:03,816
+Problemas abiertos.
+
+3
+00:00:04,917 --> 00:00:08,371
+Llegamos al final del curso
+con una pregunta guía, qué te
+
+4
+00:00:08,371 --> 00:00:11,583
+convencería de que una
+ventaja termodinámica es real.
+
+5
+00:00:11,963 --> 00:00:14,427
+A lo largo de las unidades medimos muchas
+
+6
+00:00:14,427 --> 00:00:17,192
+cosas, y cada medida
+dejó un problema abierto.
+
+7
+00:00:17,572 --> 00:00:21,331
+Hoy los reunimos en cinco frentes:
+conectividad y calidad, el
+
+8
+00:00:21,331 --> 00:00:24,782
+pegamento digital, la precisión,
+la teoría, y el impacto
+
+9
+00:00:24,782 --> 00:00:28,233
+energético de la inteligencia
+artificial en la sociedad.
+
+10
+00:00:29,350 --> 00:00:30,367
+Primer frente.
+
+11
+00:00:30,747 --> 00:00:34,555
+Los chips tienen grado fijo y los
+modelos densos funcionan mejor.
+
+12
+00:00:34,935 --> 00:00:39,683
+En nuestro experimento iso-FLOP hubo un
+grado óptimo intermedio, pero en el caso de
+
+13
+00:00:39,683 --> 00:00:43,916
+estudio la dispersión de grado cuatro
+costó un tercio de bit por carácter,
+
+14
+00:00:44,296 --> 00:00:47,543
+y Z1T necesitó del orden
+de diez veces más cómputo
+
+15
+00:00:47,543 --> 00:00:50,401
+de entrenamiento para
+igualar a GPT-2 small.
+
+16
+00:00:50,781 --> 00:00:53,523
+Abierto: cómo escalan
+estas pérdidas con el
+
+17
+00:00:53,523 --> 00:00:56,073
+tamaño, y qué arquitecturas las reducen.
+
+18
+00:00:57,183 --> 00:00:59,722
+Segundo frente: el pegamento digital.
+
+19
+00:01:00,102 --> 00:01:03,314
+Recorramos la escalera de
+energía de un token de Z1T.
+
+20
+00:01:03,694 --> 00:01:07,718
+La cabeza de vocabulario cuesta unos
+ciento treinta y seis microjulios.
+
+21
+00:01:08,098 --> 00:01:11,288
+El trabajo de la FPGA,
+doscientos ochenta y seis
+
+22
+00:01:11,288 --> 00:01:14,877
+nanojulios, cuatrocientas
+setenta y siete veces menos.
+
+23
+00:01:15,257 --> 00:01:18,171
+El muestreo en el chip,
+ocho coma siete cuatro
+
+24
+00:01:18,171 --> 00:01:20,641
+nanojulios, treinta y tres veces menos.
+
+25
+00:01:21,021 --> 00:01:23,970
+Cada peldaño es un problema
+abierto: la ventaja del
+
+26
+00:01:23,970 --> 00:01:26,918
+sustrato solo aparece si
+se eliminan los de arriba.
+
+27
+00:01:28,050 --> 00:01:30,152
+Tercer frente: la precisión.
+
+28
+00:01:30,532 --> 00:01:34,447
+Cada bit efectivo cuesta cuatro
+veces más muestras; el ruido de las
+
+29
+00:01:34,447 --> 00:01:38,478
+entradas sesga la salida de las
+unidades tangente; y los pbits reales
+
+30
+00:01:38,478 --> 00:01:42,276
+tienen un error de calibración de
+alrededor del cinco por ciento.
+
+31
+00:01:42,656 --> 00:01:46,858
+Abierto: cuántos bits necesita de
+verdad un modelo de lenguaje, si el
+
+32
+00:01:46,858 --> 00:01:50,999
+entrenamiento puede absorber el
+ruido y la deriva del dispositivo, y
+
+33
+00:01:50,999 --> 00:01:54,774
+cómo calibrar millones de pbits
+sin pagar con energía digital.
+
+34
+00:01:55,883 --> 00:01:57,647
+Cuarto frente: la teoría.
+
+35
+00:01:58,027 --> 00:02:02,899
+Falta una teoría de la complejidad
+termodinámica: cuánto tiempo de mezcla y cuánta
+
+36
+00:02:02,899 --> 00:02:07,295
+energía exige cada distribución, y
+cómo se compara con el cómputo digital.
+
+37
+00:02:07,675 --> 00:02:10,732
+Sabemos que la expresividad
+se paga en mezcla, y que el
+
+38
+00:02:10,732 --> 00:02:13,566
+error de compilación se
+acumula con la profundidad.
+
+39
+00:02:13,946 --> 00:02:17,465
+Y queda mucho margen físico:
+un muestreo de Z1 cuesta
+
+40
+00:02:17,465 --> 00:02:21,183
+unos trece femtojulios, cuatro
+millones y medio de veces
+
+41
+00:02:21,183 --> 00:02:24,502
+la escala térmica k T ln
+2 a temperatura ambiente.
+
+42
+00:02:25,617 --> 00:02:27,378
+Quinto frente: la sociedad.
+
+43
+00:02:27,758 --> 00:02:31,527
+La Agencia Internacional de la Energía
+estimó que los centros de datos
+
+44
+00:02:31,527 --> 00:02:35,727
+consumieron unos cuatrocientos quince
+teravatios hora en dos mil veinticuatro,
+
+45
+00:02:36,107 --> 00:02:40,090
+alrededor del uno coma cinco por
+ciento de la electricidad mundial, y
+
+46
+00:02:40,090 --> 00:02:44,015
+proyectó cerca de novecientos
+cuarenta y cinco para dos mil treinta.
+
+47
+00:02:44,395 --> 00:02:47,406
+Un hardware más eficiente
+ayuda, pero la eficiencia
+
+48
+00:02:47,406 --> 00:02:50,595
+también puede aumentar el
+uso total, el efecto rebote.
+
+49
+00:02:50,975 --> 00:02:55,232
+Abierto: cómo medir y reportar la
+energía de la inteligencia artificial
+
+50
+00:02:55,232 --> 00:02:58,831
+de forma honesta, y qué políticas
+acompañan a la tecnología.
+
+51
+00:02:59,950 --> 00:03:03,476
+Para tu proyecto final, hay
+espacio en cuatro direcciones:
+
+52
+00:03:03,476 --> 00:03:07,610
+arquitecturas con menor impuesto
+de dispersión, sacar la cabeza y el
+
+53
+00:03:07,610 --> 00:03:11,744
+pegamento de lo digital, entrenamiento
+robusto al ruido y la deriva,
+
+54
+00:03:12,124 --> 00:03:15,994
+y bancos de prueba con contabilidad
+energética completa y etiquetada.
+
+55
+00:03:17,117 --> 00:03:21,787
+Una ventaja real exige medición en un
+chip físico de principio a fin, el mismo
+
+56
+00:03:21,787 --> 00:03:26,397
+alcance en ambos lados, la misma calidad
+con lote y utilización declarados, y
+
+57
+00:03:26,397 --> 00:03:30,529
+reproducción independiente con
+etiquetas de evidencia en cada número.
+
+58
+00:03:31,650 --> 00:03:35,167
+En resumen, los problemas
+abiertos son cinco: el precio
+
+59
+00:03:35,167 --> 00:03:38,619
+de la conectividad, el
+pegamento digital que domina la
+
+60
+00:03:38,619 --> 00:03:41,816
+energía, la precisión y
+la física del dispositivo,
+
+61
+00:03:42,196 --> 00:03:46,922
+una teoría de la complejidad termodinámica,
+y el impacto social de la energía.
+
+62
+00:03:47,302 --> 00:03:50,478
+La escalera va de microjulios
+a femtojulios: hay
+
+63
+00:03:50,478 --> 00:03:53,852
+margen enorme, y por eso
+vale la pena medirlo bien.
+
+64
+00:03:54,232 --> 00:03:55,719
+Gracias por llegar hasta aquí.
+
+65
+00:03:56,850 --> 00:04:00,927
+Para practicar: calcula el
+factor entre la cabeza y la FPGA.
+
+66
+00:04:01,307 --> 00:04:04,825
+Calcula la escala térmica y su
+razón con trece femtojulios.
+
+67
+00:04:05,205 --> 00:04:08,288
+Recuerda la fracción de electricidad
+de los centros de datos.
+
+68
+00:04:08,668 --> 00:04:11,725
+Y enumera cuatro requisitos
+de evidencia convincente.

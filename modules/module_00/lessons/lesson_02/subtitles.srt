@@ -1,0 +1,453 @@
+1
+00:00:00,350 --> 00:00:01,965
+Lección 0.2.
+
+2
+00:00:02,345 --> 00:00:04,240
+Mapa de paradigmas de cómputo.
+
+3
+00:00:05,350 --> 00:00:10,484
+Clásico, cuántico, neuromórfico,
+analógico, reversible, termodinámico.
+
+4
+00:00:10,864 --> 00:00:13,137
+Hay muchas formas de computar, y cada una
+
+5
+00:00:13,137 --> 00:00:15,520
+aprovecha la física de
+una manera distinta.
+
+6
+00:00:15,900 --> 00:00:19,068
+En esta lección construiremos
+un mapa para ubicarlas.
+
+7
+00:00:19,448 --> 00:00:21,949
+La pregunta que organiza
+el mapa es simple:
+
+8
+00:00:22,329 --> 00:00:24,897
+¿qué hace cada paradigma
+con las fluctuaciones?
+
+9
+00:00:26,017 --> 00:00:29,756
+Supón que necesitas lanzar una
+moneda justa un millón de veces.
+
+10
+00:00:30,136 --> 00:00:34,530
+Un computador digital no puede lanzar
+monedas: las simula con un generador
+
+11
+00:00:34,530 --> 00:00:38,272
+pseudoaleatorio, una larga cadena
+de operaciones deterministas.
+
+12
+00:00:38,652 --> 00:00:42,747
+Un sistema físico pequeño, en cambio,
+ya está temblando por el calor.
+
+13
+00:00:43,127 --> 00:00:45,428
+Una partícula en un pozo doble con una
+
+14
+00:00:45,428 --> 00:00:47,971
+barrera baja salta sola de un lado a otro.
+
+15
+00:00:48,351 --> 00:00:51,190
+Basta con mirarla para
+obtener bits aleatorios.
+
+16
+00:00:51,570 --> 00:00:54,685
+El paradigma digital gasta
+energía para eliminar el
+
+17
+00:00:54,685 --> 00:00:57,434
+ruido y luego más energía
+para fabricar azar.
+
+18
+00:00:57,814 --> 00:01:01,125
+El paradigma termodinámico
+usa el ruido directamente.
+
+19
+00:01:02,250 --> 00:01:05,031
+La variable que decide
+todo es la altura de la
+
+20
+00:01:05,031 --> 00:01:07,872
+barrera comparada con la
+energía térmica k_B T.
+
+21
+00:01:08,252 --> 00:01:14,233
+La probabilidad de un salto
+espontáneo escala como e^(−E_b/k_B T).
+
+22
+00:01:14,613 --> 00:01:18,217
+Con una barrera de una o dos
+veces k_B T, la partícula
+
+23
+00:01:18,217 --> 00:01:21,688
+salta constantemente: tenemos
+un bit probabilístico.
+
+24
+00:01:22,068 --> 00:01:24,856
+Si subimos la barrera, los
+saltos se vuelven raros.
+
+25
+00:01:25,236 --> 00:01:29,607
+Con unas cuarenta veces k_B T, la
+probabilidad de error cae por debajo
+
+26
+00:01:29,607 --> 00:01:33,604
+de una en diez mil billones por
+intento: tenemos un bit digital.
+
+27
+00:01:33,984 --> 00:01:37,215
+El mismo dispositivo puede
+ser determinista o aleatorio
+
+28
+00:01:37,215 --> 00:01:39,917
+según cuánta energía le
+pongamos a la barrera.
+
+29
+00:01:41,050 --> 00:01:44,240
+Podemos dibujar un mapa con
+dos cocientes adimensionales.
+
+30
+00:01:44,620 --> 00:01:48,676
+En el eje horizontal, la energía
+de la señal dividida por k_B T.
+
+31
+00:01:49,056 --> 00:01:55,047
+En el eje vertical, la energía de
+un cuanto, ħω, dividida por k_B T.
+
+32
+00:01:55,427 --> 00:01:59,461
+Abajo a la derecha, con señales
+mucho mayores que el ruido térmico,
+
+33
+00:01:59,461 --> 00:02:03,255
+vive el cómputo digital clásico:
+las fluctuaciones se suprimen.
+
+34
+00:02:03,635 --> 00:02:07,476
+Abajo a la izquierda, con señales
+del orden de k_B T, vive el
+
+35
+00:02:07,476 --> 00:02:11,506
+cómputo termodinámico: las
+fluctuaciones térmicas se aprovechan.
+
+36
+00:02:11,886 --> 00:02:16,248
+Arriba, cuando el cuanto de energía
+supera a la energía térmica, dominan
+
+37
+00:02:16,248 --> 00:02:20,307
+las fluctuaciones cuánticas: es el
+territorio del cómputo cuántico.
+
+38
+00:02:20,687 --> 00:02:22,942
+Estos son los tres
+dominios de fluctuación.
+
+39
+00:02:24,050 --> 00:02:25,094
+Pongamos números.
+
+40
+00:02:25,474 --> 00:02:29,442
+A trescientos kelvin,
+k_B T vale unos 4,14 ×
+
+41
+00:02:29,442 --> 00:02:33,230
+10⁻²¹ J, o veintiséis milielectronvoltios.
+
+42
+00:02:33,610 --> 00:02:37,531
+Un cúbit superconductor típico
+opera cerca de cinco gigahercios.
+
+43
+00:02:37,911 --> 00:02:41,307
+Su cuanto, h f, dividido
+por k_B, equivale a una
+
+44
+00:02:41,307 --> 00:02:44,844
+temperatura de solo cero
+coma veinticuatro kelvin.
+
+45
+00:02:45,224 --> 00:02:49,056
+Para que el ruido térmico no
+destruya el estado cuántico, hay que
+
+46
+00:02:49,056 --> 00:02:52,298
+enfriar muy por debajo de
+eso, a decenas de milikelvin.
+
+47
+00:02:52,678 --> 00:02:55,484
+El cómputo termodinámico,
+en cambio, funciona a
+
+48
+00:02:55,484 --> 00:02:58,947
+temperatura ambiente, porque
+el ruido es su materia prima.
+
+49
+00:03:00,050 --> 00:03:02,748
+Ahora ubiquemos cada
+paradigma por su primitiva.
+
+50
+00:03:03,128 --> 00:03:06,587
+El cómputo clásico ejecuta
+lógica booleana determinista.
+
+51
+00:03:06,967 --> 00:03:10,500
+El analógico deja que magnitudes
+continuas, como voltajes
+
+52
+00:03:10,500 --> 00:03:13,600
+y corrientes, resuelvan
+ecuaciones al evolucionar.
+
+53
+00:03:13,980 --> 00:03:16,385
+El reversible usa compuertas que no borran
+
+54
+00:03:16,385 --> 00:03:19,191
+información para acercarse
+al límite de Landauer.
+
+55
+00:03:19,571 --> 00:03:22,503
+El neuromórfico imita
+al cerebro, con eventos
+
+56
+00:03:22,503 --> 00:03:24,979
+esparcidos y memoria junto al cómputo.
+
+57
+00:03:25,359 --> 00:03:29,749
+El cuántico manipula amplitudes con
+evoluciones unitarias y mide al final.
+
+58
+00:03:30,129 --> 00:03:33,708
+Y el termodinámico deja que un
+sistema físico se relaje hacia
+
+59
+00:03:33,708 --> 00:03:36,876
+una distribución de Boltzmann,
+y lee muestras de ella.
+
+60
+00:03:37,983 --> 00:03:39,883
+Ningún paradigma gana en todo.
+
+61
+00:03:40,263 --> 00:03:44,465
+El digital sigue siendo imbatible
+cuando necesitamos exactitud y control.
+
+62
+00:03:44,845 --> 00:03:48,717
+El termodinámico apunta a tareas
+que ya son probabilísticas:
+
+63
+00:03:48,717 --> 00:03:52,072
+muestrear de modelos basados
+en energía, generar con
+
+64
+00:03:52,072 --> 00:03:55,621
+difusión, resolver sistemas
+lineales por equilibración.
+
+65
+00:03:56,001 --> 00:03:58,675
+El cuántico brilla en
+problemas con estructura
+
+66
+00:03:58,675 --> 00:04:01,000
+de interferencia, como la factorización.
+
+67
+00:04:01,380 --> 00:04:04,182
+Y en la práctica los
+sistemas serán heterogéneos,
+
+68
+00:04:04,182 --> 00:04:07,669
+combinando varios de estos
+paradigmas en un mismo computador.
+
+69
+00:04:08,783 --> 00:04:11,099
+Volveremos a este mapa muchas veces.
+
+70
+00:04:11,479 --> 00:04:15,182
+En la unidad uno estudiaremos la
+termodinámica de la información.
+
+71
+00:04:15,562 --> 00:04:17,983
+En la unidad cuatro veremos el pbit, la
+
+72
+00:04:17,983 --> 00:04:20,775
+primitiva del cómputo
+termodinámico discreto.
+
+73
+00:04:21,155 --> 00:04:24,061
+En la unidad cinco
+conoceremos el hardware real.
+
+74
+00:04:24,441 --> 00:04:27,119
+Y en la unidad siete
+compararemos de frente un
+
+75
+00:04:27,119 --> 00:04:30,379
+algoritmo de difusión con el
+algoritmo cuántico de Shor.
+
+76
+00:04:31,483 --> 00:04:33,264
+Cuidado con cuatro confusiones.
+
+77
+00:04:33,644 --> 00:04:38,131
+El cómputo termodinámico no es
+cuántico a temperatura ambiente: no hay
+
+78
+00:04:38,131 --> 00:04:42,553
+superposición ni interferencia, solo
+fluctuaciones térmicas clásicas.
+
+79
+00:04:42,933 --> 00:04:47,390
+Tampoco es lo mismo que el analógico,
+que puede ser completamente determinista.
+
+80
+00:04:47,770 --> 00:04:51,090
+No es lo mismo que el reversible,
+que se ocupa de no borrar.
+
+81
+00:04:51,470 --> 00:04:54,402
+Y el ruido no siempre es
+malo: cuando la tarea es
+
+82
+00:04:54,402 --> 00:04:57,572
+muestrear, el ruido es
+justamente lo que necesitamos.
+
+83
+00:04:58,683 --> 00:05:01,151
+En resumen: cada
+paradigma se define por su
+
+84
+00:05:01,151 --> 00:05:04,019
+primitiva y por lo que
+hace con las fluctuaciones.
+
+85
+00:05:04,399 --> 00:05:07,586
+El digital las suprime con
+barreras de decenas de k_B T.
+
+86
+00:05:07,966 --> 00:05:11,842
+El termodinámico las aprovecha
+con barreras del orden de k_B T.
+
+87
+00:05:12,222 --> 00:05:16,327
+El cuántico requiere que el cuanto de
+energía supere a la energía térmica.
+
+88
+00:05:16,707 --> 00:05:20,950
+La pregunta del curso es cuándo aprovechar
+el ruido ahorra energía de verdad.
+
+89
+00:05:22,083 --> 00:05:25,086
+Para practicar: calcula
+la barrera necesaria para
+
+90
+00:05:25,086 --> 00:05:27,598
+una tasa de error de uno en mil millones.
+
+91
+00:05:27,978 --> 00:05:30,177
+Encuentra la temperatura equivalente del
+
+92
+00:05:30,177 --> 00:05:32,541
+cuanto de un oscilador
+de diez gigahercios.
+
+93
+00:05:32,921 --> 00:05:35,677
+Clasifica tres sistemas
+en el mapa de paradigmas.
+
+94
+00:05:36,058 --> 00:05:40,162
+Y explica por qué el muestreo es la
+tarea natural del cómputo termodinámico.

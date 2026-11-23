@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{5}{Quiz: hardware probabilístico y termodinámico}
+\noindent Preguntas guía: ¿qué hace un chip de pbits mejor que uno digital? ¿Qué lo limita? ¿Cómo se cuenta honestamente su energía?
+\section*{Preguntas}
+\begin{enumerate}
+\item Un pbit con entrada $u$ produce $m=+1$ con probabilidad: (a) $u$ (b) $\sigma(2\beta u)$ (c) $\tanh(u)$ (d) $1/2$ siempre.
+\item La cota del Z1 por actualización ($\le74$ fJ) está a unas \rule{1.2cm}{0.4pt} veces del límite de Landauer a 300 K: (a) $10^2$ (b) $10^4$ (c) $2{,}6\times10^7$ (d) $10^{12}$.
+\item Estacionaria de $dx=-(Ax-b)\,dt+\sqrt{2/\beta}\,dW$: (a) $\N(b,A)$ (b) $\N(A^{-1}b,\beta^{-1}A^{-1})$ (c) uniforme (d) $\N(0,I)$.
+\item En un circuito browniano de tokens, sesgar el avance ($k_+>k_-$): (a) no cuesta nada (b) reduce el tiempo y cuesta disipación (c) aumenta la varianza relativa (d) requiere reloj.
+\item Para desajustes pequeños de los campos, la KL crece como: (a) $\sigma$ (b) $\sigma^2$ (c) $e^{\sigma}$ (d) no depende de $\sigma$.
+\item El redondeo estocástico es: (a) determinista (b) sesgado hacia cero (c) insesgado (d) solo para enteros.
+\item El grafo padre de un chip es: (a) completo (b) fijo y disperso (c) elegido por el programa (d) aleatorio en cada barrido.
+\item En el ejemplo de la lección 5.8 con pegamento fp32, el término dominante es: (a) tejido (b) E/S (c) pegamento digital (d) Landauer.
+\item (Problema) ¿Cuántas copias mínimas necesita una variable de grado 50 en un grafo de grado 16?
+\item (Problema) Probabilidad de ruptura de una cadena de dos copias con $\beta J_c=1{,}5$.
+\item (Problema) Energía del tejido con $N=10^5$ pbits, $K=500$ barridos y 74 fJ por actualización.
+\item (Problema) Varianza del redondeo estocástico de $x=q_k+0{,}3\Delta$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (c) · 3 (b) · 4 (b) · 5 (b) · 6 (c) · 7 (b) · 8 (c).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $\lceil(50-2)/(16-2)\rceil=4$.
+\item $1/(1+e^{3})=0{,}047$.
+\item $10^5\times500\times74\,\text{fJ}=3{,}7$ \textmu J \evE.
+\item $\Delta^2\cdot0{,}3\cdot0{,}7=0{,}21\,\Delta^2$.
+\end{enumerate}
+Aprobación 8/12; fallos en 3, 5 o 8 $\Rightarrow$ repasar 5.4, 5.6, 5.8.
+\end{document}

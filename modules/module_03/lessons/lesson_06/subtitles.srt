@@ -1,0 +1,301 @@
+1
+00:00:00,350 --> 00:00:02,101
+Lección 3.6.
+
+2
+00:00:02,481 --> 00:00:04,934
+Relaciones de incertidumbre termodinámica.
+
+3
+00:00:06,050 --> 00:00:11,149
+Un reloj, un motor molecular o un circuito
+que cuenta pasos tienen algo en común:
+
+4
+00:00:11,149 --> 00:00:15,492
+producen una corriente, un número
+de eventos que crece con el tiempo.
+
+5
+00:00:15,872 --> 00:00:18,805
+Pero en un sistema pequeño
+esa corriente fluctúa.
+
+6
+00:00:19,185 --> 00:00:20,812
+¿Cuánto cuesta hacerla precisa?
+
+7
+00:00:21,192 --> 00:00:24,527
+Las relaciones de incertidumbre
+termodinámica responden:
+
+8
+00:00:24,527 --> 00:00:27,385
+la precisión se paga con
+producción de entropía.
+
+9
+00:00:28,517 --> 00:00:31,990
+Tomemos el modelo más
+simple: un contador que salta
+
+10
+00:00:31,990 --> 00:00:35,599
+hacia adelante con tasa k₊
+y hacia atrás con tasa k₋.
+
+11
+00:00:35,979 --> 00:00:41,802
+Cada salto adelante disipa el logaritmo
+de k₊ sobre k₋, en unidades de k_B.
+
+12
+00:00:42,182 --> 00:00:45,884
+Si las tasas son casi iguales,
+el contador avanza poco y de
+
+13
+00:00:45,884 --> 00:00:49,398
+forma errática; si el salto
+atrás es muy raro, avanza de
+
+14
+00:00:49,398 --> 00:00:52,662
+forma regular, pero cada
+paso cuesta mucha entropía.
+
+15
+00:00:53,042 --> 00:00:57,051
+Aquí ves trayectorias simuladas con
+Gillespie para dos sesgos distintos.
+
+16
+00:00:58,183 --> 00:01:01,305
+La relación de incertidumbre
+termodinámica, demostrada
+
+17
+00:01:01,305 --> 00:01:04,022
+para procesos de Markov
+en estado estacionario,
+
+18
+00:01:04,402 --> 00:01:10,498
+dice que la varianza relativa de
+cualquier corriente es al menos dos
+
+19
+00:01:10,498 --> 00:01:15,877
+dividido por la entropía total
+producida: Var(J)/⟨J⟩² ≥ 2/Σ.
+
+20
+00:01:16,257 --> 00:01:20,747
+Para reducir el error relativo a la
+mitad, hay que cuadruplicar la entropía.
+
+21
+00:01:21,127 --> 00:01:26,537
+Para el contador, el producto
+de la varianza relativa
+
+22
+00:01:26,537 --> 00:01:31,539
+por la entropía es (k₊ +
+k₋) ln(k₊/k₋)/(k₊ − k₋),
+
+23
+00:01:31,919 --> 00:01:35,269
+que nunca baja de dos y lo
+alcanza cerca del equilibrio.
+
+24
+00:01:36,383 --> 00:01:40,259
+Hay una segunda cota, que no usa
+la entropía sino la actividad: el
+
+25
+00:01:40,259 --> 00:01:43,723
+número medio total de saltos,
+hacia adelante y hacia atrás.
+
+26
+00:01:44,103 --> 00:01:46,260
+La cota cinética dice que la varianza
+
+27
+00:01:46,260 --> 00:01:48,824
+relativa es al menos
+uno sobre la actividad.
+
+28
+00:01:49,204 --> 00:01:53,781
+Las dos cotas son complementarias: la
+termodinámica es ajustada cerca del
+
+29
+00:01:53,781 --> 00:01:58,546
+equilibrio; la cinética, lejos de él,
+cuando casi no hay saltos hacia atrás.
+
+30
+00:01:58,926 --> 00:02:01,360
+Existen también cotas mixtas que combinan
+
+31
+00:02:01,360 --> 00:02:04,030
+entropía y actividad en
+una sola desigualdad.
+
+32
+00:02:05,150 --> 00:02:07,934
+Para un cómputo, lo que
+importa es el tiempo hasta
+
+33
+00:02:07,934 --> 00:02:11,107
+terminar: el instante en que
+el contador llega a N pasos.
+
+34
+00:02:11,487 --> 00:02:15,233
+Las mismas cotas valen para la
+varianza relativa de ese tiempo,
+
+35
+00:02:15,233 --> 00:02:18,623
+con la entropía y la actividad
+acumuladas hasta terminar.
+
+36
+00:02:19,003 --> 00:02:23,719
+Con cien pasos y k₊ = 3, k₋ = 1,
+la simulación da un tiempo medio
+
+37
+00:02:23,719 --> 00:02:28,000
+de cincuenta y una varianza
+relativa de cero coma cero dos.
+
+38
+00:02:28,380 --> 00:02:31,996
+La cota termodinámica exige
+al menos cero coma cero
+
+39
+00:02:31,996 --> 00:02:35,471
+uno ocho; la cinética,
+cero coma cero cero cinco.
+
+40
+00:02:35,851 --> 00:02:40,971
+Con k₊ = 20, la varianza relativa es
+cero coma cero uno uno, y ahora la
+
+41
+00:02:40,971 --> 00:02:45,370
+cota cinética, cero coma cero
+cero nueve, es la más ajustada.
+
+42
+00:02:46,483 --> 00:02:50,020
+Comparemos los tres sesgos
+simulados, siempre con cien pasos.
+
+43
+00:02:50,400 --> 00:02:55,707
+Con k₊ igual a uno coma dos, casi en
+equilibrio, la varianza relativa es cero
+
+44
+00:02:55,707 --> 00:03:00,324
+coma once y la cota termodinámica
+es cero coma once: está saturada.
+
+45
+00:03:00,704 --> 00:03:03,397
+Con tres, la cota
+termodinámica sigue cerca.
+
+46
+00:03:03,776 --> 00:03:05,730
+Con veinte, la cinética domina.
+
+47
+00:03:06,110 --> 00:03:09,481
+En todos los casos, la
+simulación respeta ambas cotas.
+
+48
+00:03:10,583 --> 00:03:13,827
+Estas cotas se aplican al
+tiempo de cómputo de circuitos
+
+49
+00:03:13,827 --> 00:03:16,723
+brownianos, a la precisión
+de relojes moleculares,
+
+50
+00:03:17,103 --> 00:03:21,425
+y al revés: midiendo las fluctuaciones
+de una corriente se obtiene una cota
+
+51
+00:03:21,425 --> 00:03:25,054
+inferior a la disipación, sin
+conocer los detalles del sistema.
+
+52
+00:03:26,183 --> 00:03:30,651
+Cuidado con el dominio de validez, con
+usar la tasa en lugar de la entropía
+
+53
+00:03:30,651 --> 00:03:35,058
+total, con el factor dos, y con suponer
+que la cota siempre está saturada.
+
+54
+00:03:36,183 --> 00:03:41,589
+En resumen: la precisión de cualquier
+corriente está limitada por la
+
+55
+00:03:41,589 --> 00:03:46,200
+entropía producida, Var(J)/⟨J⟩²
+≥ 2/Σ, y por la actividad,
+
+56
+00:03:46,581 --> 00:03:49,672
+Var(J)/⟨J⟩² ≥ 1/A.
+
+57
+00:03:50,052 --> 00:03:54,097
+La primera es ajustada cerca del
+equilibrio y la segunda lejos de él.
+
+58
+00:03:54,477 --> 00:03:56,931
+Para un cómputo, las
+mismas cotas limitan las
+
+59
+00:03:56,931 --> 00:03:59,111
+fluctuaciones del tiempo hasta terminar.
+
+60
+00:04:00,217 --> 00:04:03,670
+Para practicar: calcula
+media, varianza y entropía del
+
+61
+00:04:03,670 --> 00:04:07,442
+contador, verifica la TUR,
+estima la entropía para un error
+
+62
+00:04:07,442 --> 00:04:11,151
+del uno por ciento y explica
+cuándo gana la cota cinética.

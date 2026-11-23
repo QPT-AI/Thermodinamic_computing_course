@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.5}{Otros sustratos físicos}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Tiempo medio de primer paso de una caminata libre sobre $n$ sitios con inicio reflectante ($k=1$).
+\item (B) Entropía disipada por paso con tasa hacia adelante doble de la de retroceso.
+\item (B) ¿Por qué un circuito browniano necesita trinquetes?
+\item (B) Escriba la dinámica de una red RC y su estado estacionario.
+\item (I) Con $k_+=2$, $k_-=1$ y $n=20$, ¿cuánta entropía total se disipa en promedio? Compare con la cota de la TUR para $\sigma/\langle T\rangle=0{,}38$.
+\item (I) Para un ciclo de $r$ nodos, escriba los modos de $L$ y el tiempo de mezcla de la difusión RC.
+\item (A) Simule un CJoin con dos tokens independientes y mida el tiempo de espera hasta que ambos llegan.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\langle T\rangle=n(n+1)/2$ (para $n=20$: 210).
+
+\textbf{E2.} $\ln2\approx0{,}69\,\kB$.
+
+\textbf{E3.} Sin ellos la difusión no tiene dirección: el tiempo crece como $n^2$ y el cómputo puede deshacerse.
+
+\textbf{E4.} $C\dot V=-LV$; estacionario: voltaje uniforme igual al promedio inicial (si la red es conexa).
+
+\textbf{E5.} $\Sigma\approx n\ln2=13{,}9$; TUR: $\epsilon^2\ge2/\Sigma$ da $0{,}144$, y $0{,}38^2=0{,}144$: prácticamente saturada.
+
+\textbf{E6.} Autovalores $2-2\cos(2\pi k/r)$; tiempo de mezcla $\sim C/(2-2\cos(2\pi/r))\approx Cr^2/(4\pi^2)$.
+
+\textbf{E7.} El tiempo es el máximo de dos primeros pasos: mayor media que uno solo.
+\end{solucion}
+\end{document}

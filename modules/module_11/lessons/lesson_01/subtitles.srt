@@ -1,0 +1,319 @@
+1
+00:00:00,350 --> 00:00:02,116
+Lección 11.1.
+
+2
+00:00:02,496 --> 00:00:06,123
+THRML: simular TSU en GPU.
+
+3
+00:00:07,250 --> 00:00:09,859
+Antes de tener un chip,
+hay que poder programarlo.
+
+4
+00:00:10,239 --> 00:00:13,041
+THRML es la biblioteca de Extropic para
+
+5
+00:00:13,041 --> 00:00:16,202
+simular computadores
+probabilísticos en GPU.
+
+6
+00:00:16,582 --> 00:00:20,103
+Está construida sobre JAX y
+sirve de andamio para implementar
+
+7
+00:00:20,103 --> 00:00:23,393
+algoritmos de muestreo por
+bloques sobre modelos gráficos
+
+8
+00:00:23,393 --> 00:00:26,683
+dispersos y heterogéneos, como
+los que corre su hardware.
+
+9
+00:00:27,063 --> 00:00:31,526
+Hoy la usamos de verdad: comprobamos
+su exactitud y medimos su velocidad.
+
+10
+00:00:32,650 --> 00:00:37,499
+El punto de partida es un modelo basado
+en energía factorizado: la energía es
+
+11
+00:00:37,499 --> 00:00:41,719
+una suma de factores, cada uno
+sobre unas pocas variables cercanas.
+
+12
+00:00:42,099 --> 00:00:45,393
+Para muestrear se usa Gibbs:
+cada variable se actualiza
+
+13
+00:00:45,393 --> 00:00:48,328
+según su distribución
+condicionada a sus vecinas.
+
+14
+00:00:48,708 --> 00:00:53,073
+Como la condicional solo depende de los
+factores que tocan a esa variable, la
+
+15
+00:00:53,073 --> 00:00:57,382
+actualización es local, justo lo que
+un chip puede hacer con cableado corto.
+
+16
+00:00:58,483 --> 00:01:01,394
+THRML organiza esto en piezas.
+
+17
+00:01:01,774 --> 00:01:04,728
+Los nodos representan
+variables de distintos
+
+18
+00:01:04,728 --> 00:01:07,346
+tipos: espines, categóricas, continuas.
+
+19
+00:01:07,726 --> 00:01:11,439
+Los bloques agrupan nodos que
+no interactúan entre sí y pueden
+
+20
+00:01:11,439 --> 00:01:15,390
+actualizarse a la vez, por ejemplo
+los dos colores de una rejilla.
+
+21
+00:01:15,770 --> 00:01:18,664
+Los factores definen la
+energía, y los muestreadores
+
+22
+00:01:18,664 --> 00:01:21,669
+condicionales dicen cómo
+actualizar cada tipo de nodo.
+
+23
+00:01:22,049 --> 00:01:25,554
+Un programa de muestreo junta
+todo, y un calendario fija el
+
+24
+00:01:25,554 --> 00:01:29,533
+calentamiento, el número de muestras
+y los barridos entre muestras.
+
+25
+00:01:30,650 --> 00:01:34,267
+Lo comprobamos con una rejilla
+de cuatro por cuatro, dieciséis
+
+26
+00:01:34,267 --> 00:01:38,117
+espines con acoplamientos y campos
+al azar, donde podemos enumerar
+
+27
+00:01:38,117 --> 00:01:41,501
+los sesenta y cinco mil
+quinientos treinta y seis estados.
+
+28
+00:01:41,881 --> 00:01:46,925
+Con veinte mil cadenas y dos colores,
+tras un barrido el error máximo en las
+
+29
+00:01:46,925 --> 00:01:51,902
+magnetizaciones es cero coma cuatro;
+tras diez, cero coma cero cuatro; tras
+
+30
+00:01:51,902 --> 00:01:56,150
+treinta, cero coma cero uno, el
+piso estadístico de las cadenas.
+
+31
+00:01:56,530 --> 00:01:59,202
+El muestreador converge a
+la distribución correcta.
+
+32
+00:02:00,317 --> 00:02:01,444
+Ahora la velocidad.
+
+33
+00:02:01,824 --> 00:02:05,321
+Simulamos una rejilla de
+doscientos sesenta y dos mil
+
+34
+00:02:05,321 --> 00:02:09,082
+espines, del tamaño de un chip
+Z1, en una GPU de consumo.
+
+35
+00:02:09,462 --> 00:02:12,601
+Obtenemos entre cinco coma
+ocho y siete coma cinco
+
+36
+00:02:12,601 --> 00:02:15,740
+giros por nanosegundo,
+según el número de cadenas.
+
+37
+00:02:16,120 --> 00:02:19,852
+Una FPGA que cablea el
+problema logra unos sesenta.
+
+38
+00:02:20,232 --> 00:02:23,758
+Y la especificación de Z1,
+doscientos sesenta y nueve mil
+
+39
+00:02:23,758 --> 00:02:27,036
+pbits a cincuenta megahercios,
+implica unos trece mil
+
+40
+00:02:27,036 --> 00:02:30,191
+quinientos, casi dos mil
+veces más que nuestra GPU.
+
+41
+00:02:31,317 --> 00:02:35,074
+THRML no pretende competir
+en velocidad con el chip.
+
+42
+00:02:35,454 --> 00:02:39,209
+Sirve para diseñar y depurar
+algoritmos antes de tener hardware,
+
+43
+00:02:39,209 --> 00:02:42,495
+para entrenar modelos basados
+en energía con divergencia
+
+44
+00:02:42,495 --> 00:02:46,310
+contrastiva, y para validar que
+un programa muestrea lo que debe.
+
+45
+00:02:46,690 --> 00:02:50,243
+Sus programas usan las mismas
+abstracciones que el hardware:
+
+46
+00:02:50,243 --> 00:02:54,032
+bloques, condicionales locales y
+calendarios, de modo que lo que
+
+47
+00:02:54,032 --> 00:02:57,171
+funciona en la simulación
+se puede trasladar al chip.
+
+48
+00:02:58,283 --> 00:03:03,554
+Usa THRML para prototipar muestreadores
+por bloques, entrenar modelos basados en
+
+49
+00:03:03,554 --> 00:03:08,693
+energía con fases fijada y libre, validar
+primero contra enumeración exacta en
+
+50
+00:03:08,693 --> 00:03:13,173
+grafos pequeños, y escalar con
+muchas cadenas y varios dispositivos.
+
+51
+00:03:14,283 --> 00:03:18,184
+Errores comunes: poner nodos que
+interactúan en el mismo bloque.
+
+52
+00:03:18,564 --> 00:03:20,756
+Usar pocos barridos de calentamiento.
+
+53
+00:03:21,136 --> 00:03:24,181
+Comparar giros por nanosegundo
+sin declarar tamaños.
+
+54
+00:03:24,561 --> 00:03:27,762
+Y saltarse la comprobación
+exacta en un grafo pequeño.
+
+55
+00:03:28,883 --> 00:03:33,919
+En resumen, THRML simula en GPU el
+muestreo por bloques que corre el
+
+56
+00:03:33,919 --> 00:03:38,955
+hardware, con nodos, bloques,
+factores, condicionales y calendarios.
+
+57
+00:03:39,335 --> 00:03:42,549
+Lo verificamos contra la
+enumeración exacta, con error
+
+58
+00:03:42,549 --> 00:03:45,226
+en el piso estadístico
+tras treinta barridos.
+
+59
+00:03:45,606 --> 00:03:49,256
+En velocidad, una GPU de
+consumo da unos siete giros por
+
+60
+00:03:49,256 --> 00:03:53,037
+nanosegundo, frente a trece
+mil quinientos que implica Z1:
+
+61
+00:03:53,037 --> 00:03:56,165
+la simulación es para
+diseñar, no para producir.
+
+62
+00:03:57,283 --> 00:03:59,859
+Para practicar: explica
+por qué los nodos del
+
+63
+00:03:59,859 --> 00:04:02,033
+mismo color se actualizan en paralelo.
+
+64
+00:04:02,413 --> 00:04:04,096
+Calcula el piso estadístico.
+
+65
+00:04:04,476 --> 00:04:06,870
+Calcula los giros por nanosegundo de Z1.
+
+66
+00:04:07,250 --> 00:04:09,707
+Y di qué especifica un
+calendario de muestreo.

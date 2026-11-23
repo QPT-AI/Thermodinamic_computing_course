@@ -1,0 +1,304 @@
+1
+00:00:00,350 --> 00:00:02,149
+Lección 5.7.
+
+2
+00:00:02,529 --> 00:00:04,030
+Abstracciones de hardware.
+
+3
+00:00:05,150 --> 00:00:07,911
+Un modelo de Ising con todas
+las conexiones posibles
+
+4
+00:00:07,911 --> 00:00:10,354
+tiene un acoplamiento
+por cada par de espines.
+
+5
+00:00:10,734 --> 00:00:14,071
+Con diez mil espines eso son
+casi cincuenta millones de
+
+6
+00:00:14,071 --> 00:00:17,591
+acoplamientos, y cada uno
+necesita un cable y un registro.
+
+7
+00:00:17,971 --> 00:00:19,816
+Ningún chip puede cablear eso.
+
+8
+00:00:20,196 --> 00:00:22,517
+Por eso el hardware ofrece un grafo fijo y
+
+9
+00:00:22,517 --> 00:00:25,391
+disperso, y los programas
+tienen que adaptarse a él.
+
+10
+00:00:26,517 --> 00:00:32,956
+Un grafo completo de N nodos tiene N(N
+− 1)/2 aristas: crece como el cuadrado.
+
+11
+00:00:33,336 --> 00:00:37,737
+Un grafo de grado fijo d tiene
+N d/2: crece linealmente.
+
+12
+00:00:38,117 --> 00:00:41,299
+Para diez mil nodos y grado
+dieciséis, son ochenta
+
+13
+00:00:41,299 --> 00:00:44,037
+mil aristas en lugar
+de cincuenta millones.
+
+14
+00:00:44,417 --> 00:00:47,762
+Además, en un chip las
+conexiones deben ser cortas, así
+
+15
+00:00:47,762 --> 00:00:50,987
+que los vecinos de cada pbit
+están cerca en el plano.
+
+16
+00:00:51,367 --> 00:00:53,687
+Ese grafo fijo se llama el grafo padre.
+
+17
+00:00:54,817 --> 00:00:57,040
+¿Y si una variable del modelo necesita más
+
+18
+00:00:57,040 --> 00:00:59,051
+vecinos de los que ofrece el hardware?
+
+19
+00:00:59,431 --> 00:01:03,899
+La representamos con una cadena de
+pbits físicos unidos por acoplamientos
+
+20
+00:01:03,899 --> 00:01:08,123
+ferromagnéticos fuertes, de modo
+que se comporten como un solo espín.
+
+21
+00:01:08,503 --> 00:01:11,108
+Cada copia aporta sus
+propios vecinos libres.
+
+22
+00:01:11,488 --> 00:01:14,311
+Con grado dieciséis, una
+variable con noventa y
+
+23
+00:01:14,311 --> 00:01:17,015
+nueve vecinos necesita
+al menos siete copias.
+
+24
+00:01:17,395 --> 00:01:19,350
+Esto se llama embebido de menores.
+
+25
+00:01:20,450 --> 00:01:24,594
+El acoplamiento de la cadena debe
+ser fuerte, porque si las copias
+
+26
+00:01:24,594 --> 00:01:28,801
+discrepan, la variable lógica queda
+indefinida: la cadena se rompe.
+
+27
+00:01:29,181 --> 00:01:35,464
+Para dos copias aisladas, la probabilidad
+de ruptura es 1/(1 + e^(2βJ_c)).
+
+28
+00:01:35,844 --> 00:01:40,201
+Con βJ_c = 1 es del doce por
+ciento; con dos, menos del dos
+
+29
+00:01:40,201 --> 00:01:44,042
+por ciento; con tres, un
+cuarto de punto porcentual.
+
+30
+00:01:44,422 --> 00:01:49,070
+Pero un acoplamiento demasiado fuerte
+congela la cadena y hace lenta la mezcla.
+
+31
+00:01:49,450 --> 00:01:50,334
+Hay que equilibrar.
+
+32
+00:01:51,450 --> 00:01:55,624
+El costo del embebido es el número
+de pbits físicos por variable lógica.
+
+33
+00:01:56,004 --> 00:01:58,526
+Para modelos dispersos de grado menor a
+
+34
+00:01:58,526 --> 00:02:01,242
+dieciséis, es uno: el modelo cabe directo.
+
+35
+00:02:01,622 --> 00:02:04,190
+Para grado treinta y uno, tres copias.
+
+36
+00:02:04,570 --> 00:02:09,241
+Para un modelo denso de mil variables,
+cada una con novecientos noventa y nueve
+
+37
+00:02:09,241 --> 00:02:13,853
+vecinos, hacen falta al menos setenta y
+dos copias por variable, más el ruteo.
+
+38
+00:02:14,233 --> 00:02:18,770
+Por eso los algoritmos para hardware
+termodinámico se diseñan dispersos desde el
+
+39
+00:02:18,770 --> 00:02:22,910
+principio, como veremos con los
+transformers dispersos de la unidad diez.
+
+40
+00:02:24,017 --> 00:02:25,402
+Calculemos con el Z1.
+
+41
+00:02:25,782 --> 00:02:28,782
+Sus doscientos sesenta y
+nueve mil pbits de grado
+
+42
+00:02:28,782 --> 00:02:31,966
+dieciséis tienen unos dos
+millones de acoplamientos.
+
+43
+00:02:32,346 --> 00:02:35,226
+Un modelo disperso de grado
+dieciséis ocupa el chip
+
+44
+00:02:35,226 --> 00:02:38,164
+entero con doscientas sesenta
+y nueve mil variables.
+
+45
+00:02:38,544 --> 00:02:42,847
+Un modelo denso, en cambio, con setenta
+y dos copias por variable apenas
+
+46
+00:02:42,847 --> 00:02:47,210
+alcanzaría para unas tres mil setecientas
+variables, sin contar el ruteo.
+
+47
+00:02:48,317 --> 00:02:52,075
+La regla de diseño es elegir
+modelos dispersos y locales desde el
+
+48
+00:02:52,075 --> 00:02:56,238
+principio, y embeber con cadenas solo
+las pocas variables de grado alto.
+
+49
+00:02:56,618 --> 00:03:00,814
+El coloreo del grafo padre fija cuántas
+fases de reloj tiene un barrido.
+
+50
+00:03:01,194 --> 00:03:03,808
+En el laboratorio ocho embeberás un modelo
+
+51
+00:03:03,808 --> 00:03:06,610
+denso pequeño en un
+grafo de grado dieciséis.
+
+52
+00:03:07,717 --> 00:03:11,690
+Errores comunes: suponer que
+cualquier modelo corre directamente.
+
+53
+00:03:12,070 --> 00:03:15,254
+Ignorar las cadenas rotas
+al decodificar las muestras.
+
+54
+00:03:15,634 --> 00:03:19,336
+Usar acoplamientos de cadena tan
+fuertes que la mezcla se congela.
+
+55
+00:03:19,716 --> 00:03:22,091
+Y contar las copias sin contar el ruteo.
+
+56
+00:03:23,217 --> 00:03:27,631
+En resumen: la conectividad
+completa crece como N² y no se puede
+
+57
+00:03:27,631 --> 00:03:32,253
+cablear, así que el hardware ofrece
+un grafo padre fijo y disperso.
+
+58
+00:03:32,633 --> 00:03:36,243
+Las variables de grado alto se
+embeben como cadenas de copias
+
+59
+00:03:36,243 --> 00:03:39,676
+acopladas, con una fuerza que
+equilibra rupturas y mezcla.
+
+60
+00:03:40,056 --> 00:03:44,239
+El costo del embebido empuja a diseñar
+modelos dispersos desde el principio.
+
+61
+00:03:45,350 --> 00:03:48,505
+Para practicar: cuenta las
+aristas de ambos grafos.
+
+62
+00:03:48,885 --> 00:03:51,441
+Calcula las copias mínimas
+para un grado dado.
+
+63
+00:03:51,821 --> 00:03:54,560
+Calcula la probabilidad
+de ruptura de una cadena.
+
+64
+00:03:54,940 --> 00:03:59,028
+Y explica por qué una cadena demasiado
+fuerte hace lento el muestreo.

@@ -1,0 +1,326 @@
+1
+00:00:00,350 --> 00:00:02,052
+Lección 10.8.
+
+2
+00:00:02,432 --> 00:00:05,008
+Métricas de energía para
+modelos de lenguaje.
+
+3
+00:00:06,117 --> 00:00:09,277
+Una razón de energía es tan
+buena como su denominador.
+
+4
+00:00:09,657 --> 00:00:12,980
+Cien veces más eficiente,
+¿frente a qué GPU, con qué
+
+5
+00:00:12,980 --> 00:00:16,943
+utilización, contando qué partes
+del modelo y con qué calidad?
+
+6
+00:00:17,323 --> 00:00:20,730
+Hoy aprendemos las métricas
+y las aplicamos a las cifras
+
+7
+00:00:20,730 --> 00:00:23,894
+de Z1T, para separar el
+titular de la ganancia neta.
+
+8
+00:00:25,017 --> 00:00:25,906
+Tres métricas.
+
+9
+00:00:26,286 --> 00:00:29,432
+Julios por token: la energía
+para generar un token.
+
+10
+00:00:29,812 --> 00:00:32,129
+Julios por operación: el costo de una
+
+11
+00:00:32,129 --> 00:00:35,072
+operación de coma flotante
+al rendimiento pico.
+
+12
+00:00:35,452 --> 00:00:40,247
+Y la utilización, MFU, la fracción
+del pico que realmente se usa.
+
+13
+00:00:40,627 --> 00:00:45,023
+Se relacionan así: la energía por
+token es dos veces los parámetros,
+
+14
+00:00:45,023 --> 00:00:48,774
+por la energía por operación,
+dividido por la utilización.
+
+15
+00:00:49,154 --> 00:00:53,998
+Con once coma cinco cinco millones de
+parámetros y cero coma uno siete siete
+
+16
+00:00:53,998 --> 00:00:58,970
+picojulios por operación, obtenemos
+cuatro coma cero nueve microjulios al cien
+
+17
+00:00:58,970 --> 00:01:02,859
+por cien, exactamente la cifra
+de la H100 en la tabla de Z1T.
+
+18
+00:01:03,983 --> 00:01:07,061
+El titular de Z1T, ciento
+treinta y nueve veces,
+
+19
+00:01:07,061 --> 00:01:09,625
+usa una utilización del diez por ciento.
+
+20
+00:01:10,005 --> 00:01:14,637
+Es razonable para decode con lote uno,
+pero el propio artículo menciona que en
+
+21
+00:01:14,637 --> 00:01:18,674
+modelos como Llama tres la utilización
+ronda el cuarenta por ciento.
+
+22
+00:01:19,054 --> 00:01:22,604
+Con ese valor, la ventaja baja
+a unas treinta y cinco veces.
+
+23
+00:01:22,984 --> 00:01:26,246
+Ningún número es falso; lo
+que cambia es el supuesto.
+
+24
+00:01:27,350 --> 00:01:28,429
+Ahora el alcance.
+
+25
+00:01:28,809 --> 00:01:31,441
+El titular excluye la
+cabeza de vocabulario.
+
+26
+00:01:31,821 --> 00:01:35,380
+Comparemos con el mismo alcance
+en ambos lados, suponiendo un
+
+27
+00:01:35,380 --> 00:01:38,705
+vocabulario de cincuenta mil
+doscientos cincuenta y siete
+
+28
+00:01:38,705 --> 00:01:41,972
+tokens, el de GPT-2, porque
+el artículo no da el tamaño.
+
+29
+00:01:42,352 --> 00:01:46,179
+En la H100, la cabeza cuesta
+nueve coma uno microjulios al
+
+30
+00:01:46,179 --> 00:01:49,478
+cien por cien, o noventa
+y uno al diez por ciento.
+
+31
+00:01:49,858 --> 00:01:53,809
+En Z1T, en la FPGA, unos
+ciento treinta y seis.
+
+32
+00:01:54,189 --> 00:01:57,585
+Con todo incluido, al diez
+por ciento hay empate, y al
+
+33
+00:01:57,585 --> 00:02:00,981
+cuarenta por ciento la GPU
+es unas cuatro veces mejor.
+
+34
+00:02:01,361 --> 00:02:04,595
+Esta es una estimación nuestra,
+con un supuesto explícito.
+
+35
+00:02:05,717 --> 00:02:06,674
+Falta la calidad.
+
+36
+00:02:07,054 --> 00:02:10,511
+Un modelo disperso de igual
+tamaño es peor que uno denso.
+
+37
+00:02:10,891 --> 00:02:15,737
+Según el artículo, igualar la pérdida
+de GPT-2 small exige del orden de diez
+
+38
+00:02:15,737 --> 00:02:20,328
+veces más operaciones de entrenamiento:
+es el impuesto de la dispersión.
+
+39
+00:02:20,708 --> 00:02:24,514
+En inferencia, una comparación
+de igual calidad podría requerir
+
+40
+00:02:24,514 --> 00:02:28,019
+un modelo disperso más grande,
+y ese factor no se reporta.
+
+41
+00:02:28,399 --> 00:02:32,254
+La ganancia neta es el titular
+dividido por todos estos factores.
+
+42
+00:02:33,383 --> 00:02:37,500
+Una comparación justa declara cinco
+cosas: la utilización supuesta
+
+43
+00:02:37,500 --> 00:02:41,618
+de la GPU, el alcance de lo que
+se cuenta, incluida la cabeza y el
+
+44
+00:02:41,618 --> 00:02:44,861
+movimiento de datos, la
+calidad a la que se compara,
+
+45
+00:02:45,241 --> 00:02:48,280
+la razón del sistema completo
+y la de solo el tejido
+
+46
+00:02:48,280 --> 00:02:51,610
+termodinámico, y la etiqueta
+de evidencia de cada número.
+
+47
+00:02:51,990 --> 00:02:56,527
+Con eso, la lección de Z1T es clara:
+las capas termodinámicas son muy
+
+48
+00:02:56,527 --> 00:03:01,195
+eficientes, y el trabajo pendiente
+es llevar todo lo demás a ese nivel.
+
+49
+00:03:02,317 --> 00:03:06,529
+Al escribir una afirmación de
+energía: reporta julios por token con
+
+50
+00:03:06,529 --> 00:03:10,364
+utilización, lote y alcance; da
+la razón del sistema y la del
+
+51
+00:03:10,364 --> 00:03:14,136
+tejido; y declara la calidad y
+el impuesto de la dispersión.
+
+52
+00:03:14,516 --> 00:03:18,611
+En el laboratorio veintinueve construirás
+tu tabla de titular frente a neto.
+
+53
+00:03:19,717 --> 00:03:22,769
+Errores comunes: comparar
+con distinto alcance.
+
+54
+00:03:23,149 --> 00:03:26,582
+Elegir la utilización de la
+GPU que maximiza la razón.
+
+55
+00:03:26,962 --> 00:03:28,998
+Comparar modelos de distinta calidad.
+
+56
+00:03:29,378 --> 00:03:32,538
+Y mezclar números medidos y
+proyectados sin etiquetas.
+
+57
+00:03:33,650 --> 00:03:36,784
+En resumen, la energía
+por token es dos veces los
+
+58
+00:03:36,784 --> 00:03:40,365
+parámetros por la energía por
+operación, dividido por la
+
+59
+00:03:40,365 --> 00:03:44,074
+utilización, y con ella
+reconstruimos la cifra de la H100.
+
+60
+00:03:44,454 --> 00:03:47,605
+El titular de Z1T depende
+del diez por ciento de
+
+61
+00:03:47,605 --> 00:03:51,216
+utilización y excluye la
+cabeza; con el mismo alcance y
+
+62
+00:03:51,216 --> 00:03:55,023
+nuestro supuesto de vocabulario,
+hay empate o gana la GPU.
+
+63
+00:03:55,402 --> 00:03:59,629
+La ganancia neta exige declarar
+utilización, alcance y calidad.
+
+64
+00:04:00,750 --> 00:04:05,129
+Para practicar: calcula la energía
+por token al veinticinco por ciento.
+
+65
+00:04:05,509 --> 00:04:07,663
+Calcula la razón al cuarenta por ciento.
+
+66
+00:04:08,043 --> 00:04:11,111
+Calcula las operaciones de la
+cabeza con otro vocabulario.
+
+67
+00:04:11,491 --> 00:04:14,561
+Y enumera los cinco elementos
+de una comparación justa.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{9.5}{Ruta A frente a ruta B}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule la fracción de FPGA de Z1T ($285{,}78$ de $294{,}52$ nJ/token).
+\item (B) Ganancia máxima si la parte TSU fuera gratis.
+\item (B) ¿Qué debe cambiar para acercarse a $1000\times$?
+\item (B) ¿Cuándo elegiría igualmente la ruta A?
+\item (I) Si el pegamento baja a 285,78/10 nJ y el TSU se mantiene, ¿nueva energía por token y nueva fracción de pegamento?
+\item (I) Un híbrido DTM + red usa 20 nJ en el TSU y $10^{-1}$ mJ en la red digital. ¿Qué parte domina?
+\item (A) Construya una hoja de cálculo de rutas A y B para una tarea propia, con etiquetas de evidencia.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $285{,}78/294{,}52\approx0{,}970$.
+
+\textbf{E2.} $1/0{,}970\approx1{,}03$.
+
+\textbf{E3.} Reducir el pegamento: funciones en el chip, menor precisión digital, otra arquitectura de modelo.
+
+\textbf{E4.} Cuando la calidad es el cuello de botella y no hay modelo nativo suficiente.
+
+\textbf{E5.} TSU: $294{,}52-285{,}78=8{,}74$ nJ; total $28{,}58+8{,}74=37{,}3$ nJ; pegamento $77\,\%$.
+
+\textbf{E6.} La red: $10^{-4}$ J frente a $2\times10^{-8}$ J, cinco mil veces más.
+
+\textbf{E7.} Abierto.
+\end{solucion}
+\end{document}

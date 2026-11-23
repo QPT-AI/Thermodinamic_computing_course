@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.4}{Simuladores y flujos de investigación con agentes}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} la capa de simulación en un ciclo de investigación; empaquetar un experimento como tarea verificable; detectar
+métricas mal especificadas.
+\textbf{Prerrequisitos:} 11.1--11.3.
+
+\section{La capa de simulación}
+THRML (muestreo por bloques en GPU), torx (programas estocásticos y gradientes) y la interfaz de simulación de Extropic (acceso anticipado en \texttt{extropic.dev},
+pensada para que agentes busquen algoritmos que compilen y corran bien en su hardware; su documentación no es pública, por lo que aquí usamos las bibliotecas abiertas).
+El agente solo ve una interfaz: código de entrada, métricas de salida.
+
+\section{Tarea verificable}
+(1) Enunciado; (2) ejecución aislada (proceso separado, tiempo límite: el código es no confiable); (3) métrica de referencia; (4) rúbrica. Recompensa del entorno
+Thermo-RSI de Extropic: $r=0{,}7\,\text{exec}+0{,}3\,\text{rúbrica}$, con $\text{exec}=0{,}15\,[\text{corre}]+0{,}85\,[\text{reproduce}]$.
+
+\section{Arnés propio \evS}
+Tarea: magnetizaciones de un Ising $4\times4$ con muestreador por bloques, error máximo $\le0{,}03$ frente a enumeración. Rúbrica por reglas (sustituto de un juez LLM): usa
+muestreo; coloreado válido. Un proponente programado sustituye al agente (\texttt{datos/arnes\_agente.py}).
+\begin{center}\small\begin{tabular}{lcccc}\toprule
+propuesta & error & exec & rúbrica & $r$\\\midrule
+A: todos en paralelo, 30 barridos & 0{,}019 & 1 & 0{,}5 & 0{,}850\\
+B: 2 colores, 3 barridos & 0{,}041 & 0{,}15 & 1 & 0{,}405\\
+C: 2 colores, 30 barridos & 0{,}025 & 1 & 1 & 1{,}000\\
+D: error de sintaxis & --- & 0 & 0 & 0\\
+E: trampa (enumeración exacta) & 0 & 1 & 0 & 0{,}700\\\bottomrule
+\end{tabular}\end{center}
+
+\section{Métrica mal especificada}
+A no es Gibbs y aun así pasa: en un grafo bipartito, la actualización simultánea equivale a dos cadenas entrelazadas correctas, de modo que las marginales de un sitio son
+correctas. Las correlaciones entre vecinos lo delatan: error $0{,}80$ frente a $0{,}04$ con Gibbs cromático. Solo la rúbrica lo detectó.
+
+\section{Reglas de diseño}
+Medir todo lo que define el resultado (momentos de primer y segundo orden); aislar el código; pesar más la ejecución (más difícil de engañar) y usar la rúbrica para lo que
+no ve; versionar cada cambio del entorno.
+
+\begin{aplicacion}
+Laboratorio L30: empaquetar cinco laboratorios como tareas y evaluar uno o dos modelos de lenguaje.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Verificar solo la estadística más fácil. \quad Ejecutar código sin aislamiento.
+\item Premiar la respuesta y no el método. \quad Cambiar la recompensa sin versionar.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{rsi} A. Neagoe, G. Verdon y S. Morton (Extropic, con Prime Intellect), First sparks of thermodynamic recursive intelligence, 1 de octubre de 2026.
+\bibitem{thrml} Extropic, documentación de THRML y torx; interfaz de simulación en acceso anticipado (\texttt{extropic.dev}), 2026.
+\bibitem{gonzalez} J. Gonzalez et al., Parallel Gibbs sampling: from colored fields to thin junction trees, \emph{AISTATS} (2011).
+\end{thebibliography}
+\end{document}

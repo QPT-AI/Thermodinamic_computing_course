@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{9.2}{Difusión discreta}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Probabilidad de que un token esté enmascarado en $t$. ¿Es markoviano el proceso?
+\item (B) ¿Por qué revelar un token por paso es exacto con un modelo perfecto?
+\item (B) Con dos bits perfectamente correlacionados ($00$ o $11$, cada uno con 1/2), ¿qué produce un muestreador de un paso?
+\item (B) Nombre dos formas de reducir los pasos.
+\item (I) Para la cadena de la lección, calcule la probabilidad de las dos cadenas constantes.
+\item (I) Demuestre que el muestreador de un paso produce cada bit con marginal $1/2$ y bits independientes.
+\item (A) Implemente revelado por confianza (revelar primero las posiciones con condicional más extrema) y mida la variación total con 2 pasos.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $t$; sí, con la máscara absorbente la probabilidad crece de forma monótona.
+
+\textbf{E2.} Es la regla de la cadena: $p(x)=\prod_kp(x_{\sigma_k}\mid x_{\sigma_1},\dots,x_{\sigma_{k-1}})$.
+
+\textbf{E3.} Bits independientes con marginal $1/2$: $00,01,10,11$ con $1/4$; variación total $1/2$.
+
+\textbf{E4.} Revelado por confianza; destilación (o muestreo conjunto con un EBM).
+
+\textbf{E5.} $2\times\frac12\times0{,}9^7=0{,}478$.
+
+\textbf{E6.} Sin tokens visibles, cada condicional es la marginal ($1/2$ por simetría) y se muestrean por separado.
+
+\textbf{E7.} Compare con el orden aleatorio (variación total 0,46 con 2 pasos); el resultado depende de la estructura de correlaciones.
+\end{solucion}
+\end{document}

@@ -1,0 +1,303 @@
+1
+00:00:00,350 --> 00:00:02,175
+Lesson 11.6.
+
+2
+00:00:02,555 --> 00:00:03,816
+Open problems.
+
+3
+00:00:04,917 --> 00:00:08,306
+We reach the end of the course
+with a guiding question, what
+
+4
+00:00:08,306 --> 00:00:11,583
+would convince you that a
+thermodynamic advantage is real.
+
+5
+00:00:11,963 --> 00:00:14,798
+Across the units we
+measured many things, and
+
+6
+00:00:14,798 --> 00:00:17,192
+each measurement left an open problem.
+
+7
+00:00:17,572 --> 00:00:22,936
+Today we gather them on five fronts:
+connectivity and quality, the digital glue,
+
+8
+00:00:22,936 --> 00:00:28,233
+precision, theory, and the energy impact
+of artificial intelligence on society.
+
+9
+00:00:29,350 --> 00:00:30,367
+First front.
+
+10
+00:00:30,747 --> 00:00:34,555
+Chips have fixed degree and
+dense models work better.
+
+11
+00:00:34,935 --> 00:00:39,762
+In our iso-FLOP experiment there was an
+optimal intermediate degree, but in the
+
+12
+00:00:39,762 --> 00:00:43,916
+case study degree-four sparsity
+cost a third of a bit per character,
+
+13
+00:00:44,296 --> 00:00:47,606
+and Z1T needed on the
+order of ten times more
+
+14
+00:00:47,606 --> 00:00:50,401
+training compute to match GPT-2 small.
+
+15
+00:00:50,781 --> 00:00:56,073
+Open: how these losses scale with size,
+and which architectures reduce them.
+
+16
+00:00:57,183 --> 00:00:59,722
+Second front: the digital glue.
+
+17
+00:01:00,102 --> 00:01:03,314
+Let's walk down the energy
+ladder of a Z1T token.
+
+18
+00:01:03,694 --> 00:01:07,718
+The vocabulary head costs about
+one hundred thirty-six microjoules.
+
+19
+00:01:08,098 --> 00:01:10,981
+The FPGA work, two hundred eighty-six
+
+20
+00:01:10,981 --> 00:01:14,877
+nanojoules, four hundred
+seventy-seven times less.
+
+21
+00:01:15,257 --> 00:01:20,641
+Sampling on the chip, 8.74
+nanojoules, thirty-three times less.
+
+22
+00:01:21,021 --> 00:01:23,729
+Each step is an open
+problem: the substrate's
+
+23
+00:01:23,729 --> 00:01:26,918
+advantage only appears if
+the ones above are removed.
+
+24
+00:01:28,050 --> 00:01:30,152
+Third front: precision.
+
+25
+00:01:30,532 --> 00:01:36,589
+Each effective bit costs four times more
+samples; input noise biases the output of
+
+26
+00:01:36,589 --> 00:01:42,276
+tangent units; and real pbits have a
+calibration error of about five percent.
+
+27
+00:01:42,656 --> 00:01:46,583
+Open: how many bits a language
+model really needs, whether
+
+28
+00:01:46,583 --> 00:01:50,644
+training can absorb the device's
+noise and drift, and how to
+
+29
+00:01:50,644 --> 00:01:54,774
+calibrate millions of pbits
+without paying in digital energy.
+
+30
+00:01:55,883 --> 00:01:57,647
+Fourth front: theory.
+
+31
+00:01:58,027 --> 00:02:02,807
+A theory of thermodynamic complexity is
+missing: how much mixing time and how much
+
+32
+00:02:02,807 --> 00:02:07,295
+energy each distribution demands, and
+how it compares with digital computing.
+
+33
+00:02:07,675 --> 00:02:10,653
+We know expressivity is
+paid for in mixing, and
+
+34
+00:02:10,653 --> 00:02:13,566
+that compilation error
+accumulates with depth.
+
+35
+00:02:13,946 --> 00:02:17,726
+And there is a lot of physical
+headroom: a Z1 sample costs
+
+36
+00:02:17,726 --> 00:02:21,440
+about thirteen femtojoules,
+four and a half million times
+
+37
+00:02:21,440 --> 00:02:24,502
+the thermal scale k T ln
+2 at room temperature.
+
+38
+00:02:25,617 --> 00:02:27,378
+Fifth front: society.
+
+39
+00:02:27,758 --> 00:02:31,863
+The International Energy Agency
+estimated that data centers consumed
+
+40
+00:02:31,863 --> 00:02:35,727
+about four hundred fifteen terawatt
+hours in twenty twenty-four,
+
+41
+00:02:36,107 --> 00:02:40,213
+around 1.5 percent of world
+electricity, and projected
+
+42
+00:02:40,213 --> 00:02:44,015
+close to nine hundred
+forty-five by twenty thirty.
+
+43
+00:02:44,395 --> 00:02:47,661
+More efficient hardware
+helps, but efficiency can
+
+44
+00:02:47,661 --> 00:02:50,595
+also increase total
+use, the rebound effect.
+
+45
+00:02:50,975 --> 00:02:54,551
+Open: how to measure and
+report the energy of artificial
+
+46
+00:02:54,551 --> 00:02:58,831
+intelligence honestly, and which
+policies accompany the technology.
+
+47
+00:02:59,950 --> 00:03:03,706
+For your final project, there
+is room in four directions:
+
+48
+00:03:03,706 --> 00:03:07,791
+architectures with a smaller
+sparsity tax, moving the head and
+
+49
+00:03:07,791 --> 00:03:11,744
+the glue out of digital, training
+robust to noise and drift,
+
+50
+00:03:12,124 --> 00:03:15,994
+and benchmarks with complete,
+labeled energy accounting.
+
+51
+00:03:17,117 --> 00:03:21,876
+A real advantage requires measurement
+on a physical chip end to end, the same
+
+52
+00:03:21,876 --> 00:03:26,697
+scope on both sides, the same quality
+with declared batch and utilization, and
+
+53
+00:03:26,697 --> 00:03:30,529
+independent reproduction with
+evidence labels on every number.
+
+54
+00:03:31,650 --> 00:03:36,993
+In summary, there are five open
+problems: the price of connectivity, the
+
+55
+00:03:36,993 --> 00:03:41,816
+digital glue that dominates energy,
+precision and device physics,
+
+56
+00:03:42,196 --> 00:03:46,922
+a theory of thermodynamic complexity,
+and the social impact of energy.
+
+57
+00:03:47,302 --> 00:03:50,845
+The ladder goes from microjoules
+to femtojoules: there is enormous
+
+58
+00:03:50,845 --> 00:03:53,852
+headroom, and that is why it
+is worth measuring it well.
+
+59
+00:03:54,232 --> 00:03:55,719
+Thank you for making it this far.
+
+60
+00:03:56,850 --> 00:04:00,927
+To practice: compute the factor
+between the head and the FPGA.
+
+61
+00:04:01,307 --> 00:04:04,825
+Compute the thermal scale and its
+ratio to thirteen femtojoules.
+
+62
+00:04:05,205 --> 00:04:08,288
+Recall the electricity
+share of data centers.
+
+63
+00:04:08,668 --> 00:04:11,725
+And list four requirements
+of convincing evidence.

@@ -1,0 +1,39 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{1}{Quiz: termodinámica e información}
+\noindent\textbf{Resultados evaluados:} RA1. Preguntas guía de la unidad: ¿cuánto cuesta borrar un bit y cuándo se paga?
+¿Por qué los computadores digitales operan millones de veces por encima del límite de Landauer?
+
+\section*{Parte A — Opción múltiple}
+\begin{enumerate}
+\item A temperatura y volumen fijos, el equilibrio minimiza: (a) $U$ \quad (b) $S$ \quad (c) $F=U-TS$ \quad (d) $Q$.
+\item En un proceso isotérmico: (a) $W\le\Delta F$ \quad (b) $W\ge\Delta F$ \quad (c) $W=\Delta U$ \quad (d) $W=T\Delta S$.
+\item Para $p(x)=e^{-\beta E}/Z$, $\langle E\rangle$ es: (a) $\partial_\beta\ln Z$ \quad (b) $-\partial_\beta\ln Z$ \quad (c) $\ln Z/\beta$ \quad (d) $-\kB T\ln Z$.
+\item Un bit equivale a una entropía física de: (a) $\kB$ \quad (b) $\kB\ln2$ \quad (c) $\kB T\ln2$ \quad (d) $\ln2$.
+\item Según Bennett, el costo inevitable del demonio de Maxwell está en: (a) medir \quad (b) abrir la puerta \quad (c) borrar su memoria \quad (d) ninguno.
+\item El calor mínimo para borrar un bit desconocido a 300 K es: (a) $4{,}1\times10^{-21}$ J \quad (b) $2{,}87\times10^{-21}$ J \quad (c) $1{,}38\times10^{-23}$ J \quad (d) 0.
+\item La varianza del voltaje de un capacitor $C$ en paralelo con $R$ a temperatura $T$ es: (a) $4\kB TR$ \quad (b) $\kB T/C$ \quad (c) $\kB TRC$ \quad (d) depende de $R$.
+\item La igualdad de Jarzynski se debe a: (a) Crooks \quad (b) Jarzynski, 1997 \quad (c) Landauer \quad (d) Gibbs.
+\end{enumerate}
+
+\section*{Parte B — Problemas cortos}
+\begin{enumerate}\setcounter{enumi}{8}
+\item Dos niveles $0$ y $\varepsilon$ con degeneraciones $1$ y $g$. Escriba $p_B(T)$ y la temperatura de transición.
+\item Calcule el trabajo de Szilard con una medición que acierta el 90\,\% a 300 K.
+\item ¿Cuál es la potencia mínima de Landauer para borrar $10^{18}$ bits/s a 300 K? Compárela con 1 W.
+\item Un nodo digital de 1 fF a 0,8 V: ¿cuántas veces $\kB T$ es su energía? ¿Por qué tan alta?
+\end{enumerate}
+
+\newpage
+\section*{Clave de respuestas}
+\begin{enumerate}
+\item (c). \quad 2. (b), igualdad solo cuasiestática. \quad 3. (b). \quad 4. (b). \quad 5. (c). \quad 6. (b) $\kB T\ln2$. \quad 7. (b), independiente de $R$. \quad 8. (b).
+\setcounter{enumi}{8}
+\item $p_B=\frac{g e^{-\beta\varepsilon}}{1+g e^{-\beta\varepsilon}}$; $T^*=\varepsilon/(\kB\ln g)$.
+\item $I=1-h(0{,}1)=0{,}531$ bits; $W\le0{,}531\cdot2{,}87\times10^{-21}\approx1{,}5\times10^{-21}$ J.
+\item $10^{18}\cdot2{,}87\times10^{-21}=2{,}87$ mW, unas 350 veces menos que 1 W: Landauer no es el límite práctico.
+\item $\approx7{,}7\times10^4\,\kB T$: confiabilidad (barrera $\gg\kB T$), velocidad y márgenes de ruido; además el movimiento de datos domina.
+\end{enumerate}
+\noindent\textbf{Rúbrica:} 1 punto por pregunta; aprobación 8/12. Fallos en 2, 6 o 11 $\Rightarrow$ repasar lecciones 1.1 y 1.5.
+\end{document}

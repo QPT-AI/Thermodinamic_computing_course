@@ -1,0 +1,294 @@
+1
+00:00:00,350 --> 00:00:02,037
+Lección 7.4.
+
+2
+00:00:02,417 --> 00:00:04,973
+El teorema de búsqueda
+de orden por difusión.
+
+3
+00:00:06,083 --> 00:00:08,777
+Ya vimos que el calor
+en el grafo de Cayley se
+
+4
+00:00:08,777 --> 00:00:11,412
+reparte hasta valer uno
+sobre r en cada nodo.
+
+5
+00:00:11,792 --> 00:00:14,914
+La pregunta es cuántos
+pasos hacen falta para
+
+6
+00:00:14,914 --> 00:00:17,966
+leer r sin error, sin
+conocer r de antemano.
+
+7
+00:00:18,346 --> 00:00:22,373
+El teorema de Cadavid y colaboradores
+responde: un número de pasos
+
+8
+00:00:22,373 --> 00:00:25,790
+que crece solo como el cuadrado
+del número de bits de N.
+
+9
+00:00:26,917 --> 00:00:31,155
+Sea M = ⌊log₂ N⌋ + 1.
+
+10
+00:00:31,535 --> 00:00:36,850
+Para todo ℓ ≥ 4(M + 1)(log₂ N + 2),
+
+11
+00:00:37,230 --> 00:00:40,667
+el valor del núcleo de
+calor en la identidad
+
+12
+00:00:40,667 --> 00:00:43,715
+está a menos de 1/(4N²) de uno sobre r.
+
+13
+00:00:44,095 --> 00:00:49,322
+Y como dos recíprocos distintos de
+enteros menores que N difieren al
+
+14
+00:00:49,322 --> 00:00:54,088
+menos en 1/N², redondear uno
+sobre ese valor da exactamente r.
+
+15
+00:00:54,468 --> 00:01:00,666
+Para N = 299, M = 9 y la cota
+es de cuatrocientos nueve pasos.
+
+16
+00:01:01,783 --> 00:01:04,411
+La pieza clave es el lema de duplicación.
+
+17
+00:01:04,791 --> 00:01:11,988
+Si 2^M > r, para cada frecuencia
+k distinta de cero existe un t ≤ M
+
+18
+00:01:12,368 --> 00:01:18,844
+tal que k 2^t mod r cae en el
+intervalo central, entre r/4 y 3r/4.
+
+19
+00:01:19,224 --> 00:01:22,707
+La razón: mientras no caiga
+ahí, la distancia a cero se
+
+20
+00:01:22,707 --> 00:01:26,316
+duplica en cada paso, y no
+puede duplicarse para siempre.
+
+21
+00:01:26,696 --> 00:01:30,582
+Con r = 33 y k = 1:
+uno, dos, cuatro, ocho,
+
+22
+00:01:30,582 --> 00:01:34,648
+dieciséis; el dieciséis
+ya está en el centro.
+
+23
+00:01:35,750 --> 00:01:41,953
+En el intervalo central, el coseno
+de 2πk2^t/r es negativo o cero.
+
+24
+00:01:42,333 --> 00:01:49,346
+Así que en el promedio de M + 1 cosenos,
+al menos uno no suma: μ_k ≤ M/(M + 1),
+
+25
+00:01:49,726 --> 00:01:53,994
+y λ_k ≤ 1 − 1/(2(M + 1)).
+
+26
+00:01:54,374 --> 00:01:58,080
+Para M = 9, la cota es
+cero coma noventa y cinco.
+
+27
+00:01:58,460 --> 00:02:02,967
+Es una sola cota para todas las
+frecuencias: una suma exponencial lacunaria,
+
+28
+00:02:02,967 --> 00:02:06,821
+con saltos que se duplican, no
+puede quedarse cerca de su máximo.
+
+29
+00:02:07,950 --> 00:02:09,086
+Ahora todo encaja.
+
+30
+00:02:09,466 --> 00:02:16,919
+El error es a lo sumo el mayor λ_k^ℓ,
+que es menor que e^(−ℓ/(2(M + 1))).
+
+31
+00:02:17,299 --> 00:02:25,078
+Con ℓ_0 pasos, eso es menor que
+e^(−4)/N², por debajo de 1/(4N²).
+
+32
+00:02:25,458 --> 00:02:28,782
+El orden queda determinado
+por una sola lectura,
+
+33
+00:02:28,782 --> 00:02:31,760
+tras un número de pasos
+de orden (log₂ N)².
+
+34
+00:02:32,883 --> 00:02:34,401
+La cota es conservadora.
+
+35
+00:02:34,781 --> 00:02:38,889
+Para N = 299, el redondeo ya
+da treinta y tres desde el
+
+36
+00:02:38,889 --> 00:02:42,324
+paso diecisiete, frente
+a cuatrocientos nueve.
+
+37
+00:02:42,704 --> 00:02:46,263
+Para N igual a un millón veintidós
+mil ciento diecisiete, con
+
+38
+00:02:46,263 --> 00:02:49,705
+orden cinco mil trescientos
+trece, basta el paso cuarenta y
+
+39
+00:02:49,705 --> 00:02:52,505
+seis, frente a mil
+ochocientos cuarenta y cinco.
+
+40
+00:02:52,885 --> 00:02:56,401
+Pero cuidado: cada paso
+actualiza r nodos a la vez.
+
+41
+00:02:56,781 --> 00:03:01,962
+Si se simula en digital, cuesta r
+operaciones por paso y la ventaja desaparece.
+
+42
+00:03:02,342 --> 00:03:05,356
+El teorema traslada el costo
+del tiempo a los recursos
+
+43
+00:03:05,356 --> 00:03:08,537
+físicos, que estudiaremos en
+la lección siete punto seis.
+
+44
+00:03:09,650 --> 00:03:14,089
+El algoritmo completo: elegir a,
+pasar a la base impar, difundir,
+
+45
+00:03:14,089 --> 00:03:17,914
+leer y redondear, recuperar
+el orden de a con unas pocas
+
+46
+00:03:17,914 --> 00:03:22,626
+duplicaciones y extraer el factor
+como en la lección siete punto uno.
+
+47
+00:03:23,006 --> 00:03:26,199
+En el laboratorio diez lo
+ejecutarás de principio a fin.
+
+48
+00:03:27,317 --> 00:03:30,567
+Errores comunes: afirmar
+que hay un algoritmo digital
+
+49
+00:03:30,567 --> 00:03:33,388
+polinomial, cuando el
+vector tiene r entradas.
+
+50
+00:03:33,768 --> 00:03:36,375
+Olvidar la condición
+del lema de duplicación.
+
+51
+00:03:36,755 --> 00:03:41,338
+Ignorar que la lectura necesita
+unos dos log₂ N bits de precisión.
+
+52
+00:03:41,718 --> 00:03:44,550
+Y leer la cota como el
+número típico de pasos.
+
+53
+00:03:45,650 --> 00:03:50,873
+En resumen: el lema de duplicación garantiza
+que toda frecuencia no nula cae alguna
+
+54
+00:03:50,873 --> 00:03:55,530
+vez en la zona de coseno negativo, lo
+que acota todos los valores propios.
+
+55
+00:03:55,910 --> 00:04:03,720
+Tras ℓ_0 = O((log N)²) pasos,
+redondear uno sobre p_ℓ(e) da el orden.
+
+56
+00:04:04,100 --> 00:04:07,245
+En la práctica bastan muchos
+menos pasos, pero cada
+
+57
+00:04:07,245 --> 00:04:10,205
+paso cuesta recursos
+físicos proporcionales a r.
+
+58
+00:04:11,317 --> 00:04:15,240
+Para practicar: aplica el lema
+de duplicación a otra frecuencia.
+
+59
+00:04:15,620 --> 00:04:18,087
+Demuestra la separación entre recíprocos.
+
+60
+00:04:18,467 --> 00:04:20,293
+Calcula la cota para otro N.
+
+61
+00:04:20,673 --> 00:04:23,841
+Y explica qué no dice el
+teorema sobre energía y área.

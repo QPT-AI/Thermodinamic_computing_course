@@ -1,0 +1,69 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.6}{Ruido térmico}
+
+\noindent\textbf{Unidad 1.}\quad\textbf{Objetivos:} ruido de Johnson--Nyquist; ruido $\kB T/C$ por equipartición;
+escalas de energía de dispositivos frente a $\kB T$. \textbf{Prerrequisitos:} 1.2 y 0.1.
+
+\section{Origen físico}
+Los portadores de carga de un conductor a temperatura $T$ se mueven al azar por choques con la red; las
+fluctuaciones de carga producen un voltaje entre terminales de media nula y varianza positiva. Ese ruido fija el
+piso de cualquier circuito analógico y es la materia prima del cómputo termodinámico \cite{conte,melanson}.
+
+\section{Ruido de Johnson--Nyquist}
+\begin{resultado}
+Una resistencia $R$ a temperatura $T$ presenta, en circuito abierto, un voltaje de ruido con densidad espectral
+unilateral plana (ruido blanco) $S_V(f)=4\kB TR$; en un ancho de banda $\Delta f$: $\langle V^2\rangle=4\kB TR\,\Delta f$.
+\end{resultado}
+La estructura «$\kB T\times$(lo que disipa)» es el primer ejemplo del teorema de fluctuación--disipación (lección 2.5).
+Validez: $hf\ll\kB T$ (a 300 K, $f\ll6$ THz).
+
+\section{Ruido $\kB T/C$}
+Con un capacitor $C$ en paralelo, $\tau\dot V=-V+\sqrt{2\tau\kB T/C}\,\xi(t)$ con $\tau=RC$: un proceso de
+Ornstein--Uhlenbeck (lección 2.4). Su varianza estacionaria es
+\begin{equation}\langle V^2\rangle=\frac{\kB T}{C},\end{equation}
+independiente de $R$. Dos derivaciones:
+\begin{enumerate}[nosep]
+\item \textbf{Equipartición:} $E=\frac12CV^2$ y $p(V)\propto e^{-CV^2/2\kB T}$ dan $\frac12C\langle V^2\rangle=\frac12\kB T$.
+\item \textbf{Espectral:} el filtro RC atenúa $|H(f)|^2=1/(1+(2\pi fRC)^2)$ y
+$\int_0^\infty\frac{4\kB TR}{1+(2\pi fRC)^2}\dd f=4\kB TR\cdot\frac1{4RC}=\frac{\kB T}C$.
+\end{enumerate}
+$R$ grande: más densidad espectral pero filtro más angosto; $R$ pequeña: al revés. Solo cambia el tiempo de correlación $\tau$
+(las trazas de la animación son simulaciones exactas del OU discretizado \evS).
+
+\begin{ejemplo}
+A 300 K: $R=1$ M$\Omega$, $\Delta f=1$ MHz: $V_{\text{rms}}=\sqrt{4\cdot1{,}38\times10^{-23}\cdot300\cdot10^6\cdot10^6}\approx129\ \mu$V.
+$C=1$ fF: $\sqrt{\kB T/C}\approx2{,}0$ mV; $C=10$ fF: $0{,}64$ mV; $C=1$ pF: $64\ \mu$V.
+Nodo digital de 1 fF a 0,8 V: $\frac12CV^2=3{,}2\times10^{-16}$ J $\approx7{,}7\times10^4\,\kB T$.
+\end{ejemplo}
+
+\section{¿Problema o recurso?}
+En una regla logarítmica de energía: $\kB T\ln2\approx2{,}9\times10^{-21}$ J, $\kB T\approx4{,}1\times10^{-21}$ J,
+$40\,\kB T\approx1{,}7\times10^{-19}$ J (bit digital confiable, lección 0.2) y $\frac12CV^2\approx3{,}2\times10^{-16}$ J.
+La lógica digital vive muy por encima de $\kB T$ para que el ruido sea irrelevante; el cómputo termodinámico se
+ubica cerca de $\kB T$ para que el ruido muestree.
+
+\begin{aplicacion}
+Sensores y amplificadores (piso $\sqrt{4\kB TR\Delta f}$); convertidores y muestreo (precisión limitada por $kT/C$,
+Unidad 5.6); osciladores RC/LC acoplados de Normal Computing que muestrean gaussianas (Unidad 5.4); pbits (Unidad 5.2).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item En un RC, la varianza es $\kB T/C$ para cualquier $R$.
+\item Densidad espectral (V$^2$/Hz) $\neq$ varianza (V$^2$).
+\item $4\kB TR$ deja de valer si $hf\gtrsim\kB T$.
+\item Ruido térmico $\neq$ ruido de disparo ($S_I=2qI$) $\neq$ ruido $1/f$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$S_V=4\kB TR$; $\langle V^2\rangle_{RC}=\kB T/C$; 1 fF $\approx$ 2 mV; digital lejos de $\kB T$, termodinámico cerca.
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}, Springer.
+\bibitem[6]{conte} T. Conte et al., \emph{Thermodynamic Computing} (CCC workshop report), 2019.
+\bibitem[25]{melanson} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\end{thebibliography}
+\end{document}

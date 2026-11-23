@@ -1,0 +1,317 @@
+1
+00:00:00,350 --> 00:00:02,053
+Lección 5.3.
+
+2
+00:00:02,433 --> 00:00:04,059
+Los TSU de Extropic.
+
+3
+00:00:05,183 --> 00:00:10,016
+Extropic llama unidad de muestreo
+termodinámico, o TSU, a un chip que ejecuta
+
+4
+00:00:10,016 --> 00:00:14,347
+muestreo de Gibbs en hardware sobre
+un grafo de variables aleatorias.
+
+5
+00:00:14,727 --> 00:00:17,805
+Su programa es una energía,
+y su salida son muestras.
+
+6
+00:00:18,185 --> 00:00:23,863
+En esta lección recorremos sus piezas:
+las primitivas aleatorias, los chips de
+
+7
+00:00:23,863 --> 00:00:29,177
+prueba X0 y XTR-0, y el chip Z1, con
+más de doscientos sesenta mil pbits.
+
+8
+00:00:30,283 --> 00:00:32,585
+El TSU no solo tiene pbits.
+
+9
+00:00:32,965 --> 00:00:35,882
+Un pbit muestrea un bit
+con probabilidad sigmoide.
+
+10
+00:00:36,262 --> 00:00:39,021
+Un pdit muestrea una
+variable categórica de
+
+11
+00:00:39,021 --> 00:00:41,779
+varios valores, con
+probabilidades softmax.
+
+12
+00:00:42,159 --> 00:00:44,723
+Un pmode muestrea una variable continua
+
+13
+00:00:44,723 --> 00:00:47,813
+gaussiana, y un pmog,
+una mezcla de gaussianas.
+
+14
+00:00:48,193 --> 00:00:51,493
+Con estas cuatro piezas se
+construyen modelos discretos,
+
+15
+00:00:51,493 --> 00:00:54,793
+continuos e híbridos, siempre
+con condicionales locales.
+
+16
+00:00:55,917 --> 00:01:01,049
+Los primeros chips, X0 y XTR-0,
+sirvieron para validar las primitivas.
+
+17
+00:01:01,429 --> 00:01:04,699
+Usan muestreadores CMOS en
+régimen subumbral, donde
+
+18
+00:01:04,699 --> 00:01:07,649
+el ruido de los transistores
+es grande y útil.
+
+19
+00:01:08,029 --> 00:01:11,776
+Como cada dispositivo es algo
+distinto, cada pbit se calibra:
+
+20
+00:01:11,776 --> 00:01:15,647
+según el pensum, con optimización
+bayesiana se alcanza un error
+
+21
+00:01:15,647 --> 00:01:18,719
+de probabilidad de alrededor
+del cinco por ciento.
+
+22
+00:01:19,099 --> 00:01:22,758
+El sistema completo es un
+bucle: una CPU define el
+
+23
+00:01:22,758 --> 00:01:26,564
+problema, un FPGA traduce
+y lee, y el chip muestrea.
+
+24
+00:01:27,683 --> 00:01:31,769
+El chip Z1 tiene doscientos sesenta
+y nueve mil quinientos sesenta y
+
+25
+00:01:31,769 --> 00:01:35,553
+ocho pbits, cada uno con dieciséis
+acoplamientos a sus vecinos.
+
+26
+00:01:35,933 --> 00:01:39,915
+Funciona a más de cincuenta megahercios
+y consume menos de un vatio.
+
+27
+00:01:40,295 --> 00:01:43,890
+Eso da más de diez billones de
+actualizaciones por segundo, y
+
+28
+00:01:43,890 --> 00:01:47,366
+como máximo setenta y cuatro
+femtojulios por actualización.
+
+29
+00:01:47,746 --> 00:01:51,095
+Se ofrece en tarjetas M.2
+y PCIe, y en sistemas de
+
+30
+00:01:51,095 --> 00:01:54,041
+clúster que apuntan a
+mil millones de pbits.
+
+31
+00:01:55,150 --> 00:01:58,980
+Programar un TSU es escribir
+una energía sobre su grafo fijo.
+
+32
+00:01:59,360 --> 00:02:03,794
+Se cargan los acoplamientos y los
+campos en los registros de cada pbit, se
+
+33
+00:02:03,794 --> 00:02:07,628
+fija una temperatura efectiva, y
+se deja correr Gibbs cromático.
+
+34
+00:02:08,008 --> 00:02:10,130
+Algunas variables se pueden fijar como
+
+35
+00:02:10,130 --> 00:02:12,643
+evidencia, igual que en
+la lógica invertible.
+
+36
+00:02:13,023 --> 00:02:15,483
+Cada cierto número de
+barridos se leen muestras.
+
+37
+00:02:15,863 --> 00:02:19,315
+Si el modelo no cabe en un grafo
+de grado dieciséis, hay que
+
+38
+00:02:19,315 --> 00:02:22,536
+embeberlo, como veremos en
+la lección cinco punto siete.
+
+39
+00:02:23,650 --> 00:02:25,721
+Hagamos cuentas con las cifras declaradas.
+
+40
+00:02:26,101 --> 00:02:30,333
+Doscientos sesenta y nueve mil pbits
+a cincuenta megahercios son unos
+
+41
+00:02:30,333 --> 00:02:34,135
+uno coma tres por diez a la trece
+actualizaciones por segundo.
+
+42
+00:02:34,515 --> 00:02:41,033
+Con un vatio, la energía por actualización
+es como máximo 7,4 × 10⁻¹⁴ J.
+
+43
+00:02:41,413 --> 00:02:45,413
+Comparado con el límite de Landauer,
+es unos veintiséis millones
+
+44
+00:02:45,413 --> 00:02:49,038
+de veces más, pero comparado
+con una actualización digital
+
+45
+00:02:49,038 --> 00:02:52,538
+estimada de setenta picojulios,
+es unas mil veces menos.
+
+46
+00:02:53,650 --> 00:02:58,999
+En el curso usaremos THRML para simular
+programas de TSU en GPU, construiremos
+
+47
+00:02:58,999 --> 00:03:04,004
+modelos de eliminación de ruido que
+el TSU muestrea en la unidad nueve, y
+
+48
+00:03:04,004 --> 00:03:08,873
+veremos la arquitectura Z1T para
+modelos de lenguaje en la unidad diez.
+
+49
+00:03:09,253 --> 00:03:12,912
+En el laboratorio ocho construirás
+un grafo de grado dieciséis,
+
+50
+00:03:12,912 --> 00:03:16,280
+lo colorearás y estimarás las
+actualizaciones por segundo.
+
+51
+00:03:17,383 --> 00:03:21,737
+Cuidado: la cifra de setenta y cuatro
+femtojulios es una cota derivada
+
+52
+00:03:21,737 --> 00:03:25,407
+de la potencia y la frecuencia
+declaradas, no una medición.
+
+53
+00:03:25,787 --> 00:03:28,615
+El grafo del Z1 es fijo,
+de grado dieciséis.
+
+54
+00:03:28,995 --> 00:03:32,341
+La calibración deja un error
+del orden del cinco por ciento.
+
+55
+00:03:32,721 --> 00:03:37,326
+Y la energía por actualización no incluye
+la entrada, la salida ni el anfitrión.
+
+56
+00:03:38,450 --> 00:03:43,348
+En resumen: un TSU ejecuta Gibbs
+cromático en hardware sobre un
+
+57
+00:03:43,348 --> 00:03:48,013
+grafo fijo, con cuatro primitivas:
+pbit, pdit, pmode y pmog.
+
+58
+00:03:48,393 --> 00:03:53,778
+X0 y XTR-0 validaron los muestreadores
+subumbral y su calibración.
+
+59
+00:03:54,158 --> 00:03:58,284
+Z1 escala a doscientos sesenta y
+nueve mil pbits de grado dieciséis,
+
+60
+00:03:58,284 --> 00:04:02,106
+con una cota de setenta y cuatro
+femtojulios por actualización.
+
+61
+00:04:03,217 --> 00:04:07,078
+Para practicar: calcula las
+actualizaciones por segundo del Z1.
+
+62
+00:04:07,458 --> 00:04:10,099
+Elige la primitiva para
+una etiqueta de diez
+
+63
+00:04:10,099 --> 00:04:12,501
+clases y para la intensidad de un píxel.
+
+64
+00:04:12,881 --> 00:04:15,730
+Calcula los barridos por
+segundo con cuatro colores.
+
+65
+00:04:16,110 --> 00:04:19,608
+Y explica por qué cada pbit
+necesita su propia calibración.

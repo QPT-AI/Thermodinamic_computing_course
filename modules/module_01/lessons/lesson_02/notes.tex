@@ -1,0 +1,72 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.2}{Mecánica estadística y la distribución de Boltzmann}
+
+\noindent\textbf{Unidad 1.}\quad\textbf{Objetivos:} derivar $p(x)=e^{-\beta E(x)}/Z$; interpretar $Z$; entender el papel de $T$.
+\textbf{Prerrequisitos:} lecciones 1.1 y 0.3.
+
+\section{¿Por qué importa?}
+Un TSU recibe los parámetros de una energía y devuelve muestras de la distribución de Boltzmann asociada
+(pensum §2): es la fórmula central del curso \cite{peliti,extropic}.
+
+\section{Derivación: sistema en contacto con un baño}
+Sistema $\mathcal S$ (microestados $x$, energía $E(x)$) en contacto con un baño $\mathcal B$ enorme; energía total fija
+$E_{\text{tot}}$. Todos los microestados conjuntos son equiprobables (ensamble microcanónico). Entonces
+$p(x)\propto\Omega_B(E_{\text{tot}}-E(x))=e^{S_B(E_{\text{tot}}-E(x))/\kB}$. Como $E(x)\ll E_{\text{tot}}$:
+\[S_B(E_{\text{tot}}-E)\approx S_B(E_{\text{tot}})-\frac{\partial S_B}{\partial E}E=S_B(E_{\text{tot}})-\frac ET .\]
+\begin{resultado}[ (distribución de Boltzmann, ensamble canónico)]
+\begin{equation}p(x)=\frac{e^{-\beta E(x)}}{Z},\qquad Z=\sum_xe^{-\beta E(x)},\qquad\beta=\frac1{\kB T}.\end{equation}
+\end{resultado}
+La probabilidad de una \emph{energía} (macroestado) incluye la degeneración: $p(E)=\Omega(E)e^{-\beta E}/Z$.
+
+\section{El papel de la temperatura}
+$T$ alta: $e^{-\beta E}$ casi plana, el sistema explora. $T$ baja: la probabilidad se concentra en los valles y, cuando
+$T\to0$, en el mínimo global. La temperatura es una perilla entre exploración y optimización: base del recocido
+simulado (lección 4.4) y de la optimización con pbits (lección 4.10).
+
+\section{La función de partición}
+\begin{proposicion}
+$F=-\kB T\ln Z$, $\langle E\rangle=-\partial_\beta\ln Z$, $\Var(E)=\partial_\beta^2\ln Z=\kB T^2C_V$.
+\end{proposicion}
+\begin{proof}
+$-\partial_\beta\ln Z=\frac1Z\sum Ee^{-\beta E}=\langle E\rangle$; derivando otra vez, $\partial_\beta^2\ln Z=\langle E^2\rangle-\langle E\rangle^2$.
+Con $S=-\kB\sum p\ln p=\kB\sum p(\beta E+\ln Z)=\frac{\langle E\rangle}{T}+\kB\ln Z$, se obtiene
+$F=\langle E\rangle-TS=-\kB T\ln Z$.
+\end{proof}
+\textbf{Intratabilidad.} Para $N$ espines $\pm1$, $Z$ tiene $2^N$ términos ($2^{100}\approx1{,}3\times10^{30}$; para los 269\,568
+pbits de Z1, $2^{269568}$). Por eso no se calcula $Z$: se \emph{muestrea} (Unidad 4) --- exactamente lo que hace el hardware.
+
+\section{Máxima entropía}
+Maximizar $-\sum p\ln p$ con $\sum p=1$ y $\sum pE=\bar E$ con multiplicadores $\alpha,\beta$ da
+$-\ln p-1-\alpha-\beta E=0$, es decir $p\propto e^{-\beta E}$. Boltzmann es la distribución menos comprometida
+compatible con la energía media (Jaynes).
+
+\begin{ejemplo}
+Niveles $0,1,2$ (en $\kB T$): pesos $1;0{,}368;0{,}135$; $Z=1{,}503$; $p=(0{,}665;0{,}245;0{,}090)$;
+$\langle E\rangle=0{,}425$; $F=-\ln Z\approx-0{,}408$ (en $\kB T$).
+\end{ejemplo}
+
+\begin{aplicacion}
+TSU: energía $\to$ muestras. EBM: aprender $E_\theta$ (Unidad 4). Optimización: recocido. Caso cuadrático:
+$E=\frac12x^\top Ax-b^\top x\Rightarrow p=\N(A^{-1}b,\beta^{-1}A^{-1})$ (Unidad 6).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Microestado frente a macroestado (degeneración $\Omega(E)$).
+\item Sumar una constante a $E$ no cambia $p$ pero sí $F$.
+\item $\beta=1/\kB T$, no $1/T$.
+\item Boltzmann es una distribución de \emph{equilibrio}; fuera de él, Unidad 3.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+$p=e^{-\beta E}/Z$; $T$ controla exploración/optimización; $Z$ genera $F$ y los momentos de $E$; es máxima entropía.
+
+\begin{thebibliography}{9}\small
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[21]{extropic} Extropic, \emph{Thermodynamic Computing From Zero to One}, 2025.
+\end{thebibliography}
+\end{document}

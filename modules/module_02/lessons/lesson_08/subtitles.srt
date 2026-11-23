@@ -1,0 +1,315 @@
+1
+00:00:00,350 --> 00:00:02,007
+Lección 2.8.
+
+2
+00:00:02,387 --> 00:00:05,206
+Procesos de saltos de
+Markov en tiempo continuo.
+
+3
+00:00:06,317 --> 00:00:09,413
+No todo sistema ruidoso se
+mueve de forma continua.
+
+4
+00:00:09,793 --> 00:00:13,770
+Un pbit salta entre menos uno
+y más uno; una molécula se
+
+5
+00:00:13,770 --> 00:00:17,961
+fabrica o se degrada; un electrón
+entra o sale de una isla.
+
+6
+00:00:18,341 --> 00:00:21,623
+Son procesos de saltos en
+tiempo continuo: el estado es
+
+7
+00:00:21,623 --> 00:00:25,085
+discreto, pero los saltos
+ocurren en instantes aleatorios.
+
+8
+00:00:25,465 --> 00:00:28,760
+Son el lenguaje de los circuitos
+brownianos y de las redes de
+
+9
+00:00:28,760 --> 00:00:31,516
+reacciones químicas que
+veremos en la unidad cinco.
+
+10
+00:00:32,617 --> 00:00:36,732
+Piensa en un pbit como una moneda
+que, de vez en cuando, se voltea sola.
+
+11
+00:00:37,112 --> 00:00:41,297
+Desde el estado menos uno salta
+a más uno con una tasa k₊, es
+
+12
+00:00:41,297 --> 00:00:45,414
+decir, con probabilidad k₊ dt
+en cada intervalo diminuto dt.
+
+13
+00:00:45,794 --> 00:00:48,329
+Desde más uno vuelve con tasa k₋.
+
+14
+00:00:48,709 --> 00:00:52,366
+El tiempo de espera en cada estado
+es exponencial y sin memoria.
+
+15
+00:00:52,746 --> 00:00:59,166
+A largo plazo, la fracción de tiempo
+en el estado más uno es k₊/(k₊ + k₋).
+
+16
+00:01:00,283 --> 00:01:03,548
+Para la distribución completa,
+cada estado gana probabilidad
+
+17
+00:01:03,548 --> 00:01:06,594
+por los saltos que llegan y
+la pierde por los que salen.
+
+18
+00:01:06,974 --> 00:01:13,195
+Eso es la ecuación maestra: dp_i/dt
+= Σ_j (p_j Q_ji − p_i Q_ij).
+
+19
+00:01:13,575 --> 00:01:17,313
+En forma matricial, ṗ = p Q, donde Q es la
+
+20
+00:01:17,313 --> 00:01:21,050
+matriz de tasas, con filas que suman cero.
+
+21
+00:01:21,430 --> 00:01:26,113
+Es la versión en tiempo
+continuo de p_{n+1} =
+
+22
+00:01:26,113 --> 00:01:30,588
+p_n P, y su solución
+es p(t) = p(0) e^(Qt).
+
+23
+00:01:30,968 --> 00:01:35,105
+Las barras muestran cómo la distribución
+relaja hacia el estado estacionario.
+
+24
+00:01:36,617 --> 00:01:39,862
+¿Cómo se simula una trayectoria
+sin discretizar el tiempo?
+
+25
+00:01:40,242 --> 00:01:42,647
+Gillespie propuso dos sorteos por evento.
+
+26
+00:01:43,027 --> 00:01:46,688
+Primero, el tiempo hasta el
+próximo salto, exponencial con
+
+27
+00:01:46,688 --> 00:01:49,844
+tasa igual a la suma de
+todas las tasas de salida.
+
+28
+00:01:50,224 --> 00:01:54,613
+Segundo, cuál salto ocurre, con
+probabilidad proporcional a su tasa.
+
+29
+00:01:54,993 --> 00:01:57,822
+Es exacto: no hay paso de tiempo ni sesgo.
+
+30
+00:01:58,202 --> 00:02:01,079
+La animación lo aplica
+a una molécula que se
+
+31
+00:02:01,079 --> 00:02:04,023
+produce con tasa k y se
+degrada con tasa γ n.
+
+32
+00:02:04,403 --> 00:02:07,659
+El histograma del número
+de moléculas converge a
+
+33
+00:02:07,659 --> 00:02:10,509
+una distribución de Poisson con media k/γ.
+
+34
+00:02:11,617 --> 00:02:14,195
+Muchas preguntas de
+cómputo son de primer paso:
+
+35
+00:02:14,575 --> 00:02:17,628
+¿cuánto tarda el sistema en llegar
+por primera vez a un estado?
+
+36
+00:02:18,008 --> 00:02:22,241
+Por ejemplo, cuánto tarda un circuito
+browniano en completar un cálculo.
+
+37
+00:02:22,621 --> 00:02:28,742
+Si el cálculo requiere N saltos
+sucesivos, cada uno con tasa k, el tiempo
+
+38
+00:02:28,742 --> 00:02:34,779
+total es la suma de N exponenciales:
+su media es N/k y su varianza N/k².
+
+39
+00:02:35,159 --> 00:02:38,767
+La precisión relativa mejora
+como uno sobre raíz de N.
+
+40
+00:02:39,147 --> 00:02:42,658
+Los histogramas de Gillespie se
+estrechan a medida que N crece.
+
+41
+00:02:43,038 --> 00:02:45,313
+En la unidad tres
+veremos que esa precisión
+
+42
+00:02:45,313 --> 00:02:47,482
+tiene un costo en producción de entropía.
+
+43
+00:02:48,583 --> 00:02:53,749
+Producción con tasa diez por segundo y
+degradación de una por segundo por molécula:
+
+44
+00:02:53,749 --> 00:02:58,355
+el número medio en estado estacionario
+es diez, con varianza también diez.
+
+45
+00:02:58,735 --> 00:03:02,836
+Para el pbit con k₊ = 3 y
+k₋ = 1 por microsegundo,
+
+46
+00:03:02,836 --> 00:03:06,362
+la probabilidad de más
+uno es tres cuartos,
+
+47
+00:03:06,742 --> 00:03:11,306
+y la autocorrelación decae con tasa
+k₊ + k₋, cuatro por microsegundo:
+
+48
+00:03:11,306 --> 00:03:15,406
+un tiempo de correlación de
+doscientos cincuenta nanosegundos.
+
+49
+00:03:16,517 --> 00:03:20,191
+Los procesos de saltos describen
+la actualización de pbits en un
+
+50
+00:03:20,191 --> 00:03:24,153
+chip, los circuitos brownianos de
+tokens cuyo tiempo de cómputo es un
+
+51
+00:03:24,153 --> 00:03:27,483
+tiempo de primer paso, y las
+redes de reacciones químicas.
+
+52
+00:03:27,863 --> 00:03:30,259
+En la unidad tres los
+usaremos para enunciar
+
+53
+00:03:30,259 --> 00:03:32,546
+relaciones de incertidumbre termodinámica.
+
+54
+00:03:33,650 --> 00:03:37,530
+Errores frecuentes: confundir
+una tasa con una probabilidad.
+
+55
+00:03:37,910 --> 00:03:41,069
+Olvidar que las filas de la
+matriz de tasas suman cero.
+
+56
+00:03:41,449 --> 00:03:44,353
+Discretizar el tiempo
+cuando Gillespie es exacto.
+
+57
+00:03:44,733 --> 00:03:48,722
+Y reportar solo el tiempo medio de
+primer paso, sin su variabilidad.
+
+58
+00:03:49,850 --> 00:03:54,296
+En resumen: un proceso de
+saltos se describe con tasas; la
+
+59
+00:03:54,296 --> 00:03:58,053
+distribución obedece la
+ecuación maestra ṗ = p Q.
+
+60
+00:03:58,433 --> 00:04:02,281
+Gillespie simula trayectorias
+exactas con dos sorteos por evento.
+
+61
+00:04:02,661 --> 00:04:06,476
+Y los tiempos de primer paso,
+con su media y su varianza, miden
+
+62
+00:04:06,476 --> 00:04:09,928
+cuánto tarda y qué tan preciso
+es un cómputo estocástico.
+
+63
+00:04:11,050 --> 00:04:15,417
+Para practicar: resuelve la ecuación
+maestra del pbit, demuestra que la
+
+64
+00:04:15,417 --> 00:04:20,214
+distribución de Poisson es estacionaria,
+calcula media y varianza de un tiempo
+
+65
+00:04:20,214 --> 00:04:24,519
+de primer paso, y describe los dos
+sorteos del algoritmo de Gillespie.

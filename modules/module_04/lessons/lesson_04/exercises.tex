@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.4}{Diagnósticos de muestreo}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Una corrida de $10^5$ barridos tiene $\tau_{\text{int}}=250$ y $\mathrm{Var}(x)=0{,}04$. ESS y barra de error de la media.
+\item (B) ¿Por qué Gibbs local se desacelera cerca de $T_c$?
+\item (B) Derive la aceptación del intercambio del tempering paralelo a partir del balance detallado en el espacio producto.
+\item (B) Escalera geométrica de 8 réplicas de $T=1$ a $T=4$.
+\item (I) Para $\rho_k=r^k$, $\tau_{\text{int}}=(1+r)/(1-r)$. ¿Qué $r$ corresponde a $\tau_{\text{int}}=33$?
+\item (I) Si un TSU gasta 2 nJ por barrido, ¿cuánta energía cuesta una muestra independiente a $T=3{,}5$ y a $T=2{,}27$ (tabla de los apuntes)?
+\item (A) Implemente tempering paralelo para el vidrio $\pm J$ $16\times16$ con 8 réplicas y compare la mejor energía con el recocido de $10^4$ barridos.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\mathrm{ESS}=400$; $\sigma_{\bar x}=\sqrt{0{,}04/400}=0{,}01$.
+
+\textbf{E2.} Los dominios abarcan todo el sistema; voltear espines uno a uno los reorganiza con un tiempo que crece como $L^z$.
+
+\textbf{E3.} $\frac{A_{ij}}{A_{ji}}=\frac{e^{-\beta_iE_j-\beta_jE_i}}{e^{-\beta_iE_i-\beta_jE_j}}=e^{(\beta_i-\beta_j)(E_i-E_j)}$.
+
+\textbf{E4.} $T_k=4^{k/7}$: 1; 1,22; 1,49; 1,81; 2,21; 2,69; 3,28; 4.
+
+\textbf{E5.} $r=(\tau-1)/(\tau+1)=32/34=0{,}941$.
+
+\textbf{E6.} $2\times8{,}5=17$ nJ; $2\times2200=4{,}4\ \mu$J.
+
+\textbf{E7.} El tempering suele alcanzar energías $\le-1{,}37$ con un costo comparable; reportar la mejor energía y la fracción de réplicas que la encuentran.
+\end{solucion}
+\end{document}

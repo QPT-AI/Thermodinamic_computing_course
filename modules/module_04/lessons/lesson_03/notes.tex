@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.3}{MCMC: Metropolis--Hastings y Gibbs}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} cadenas con estacionaria de Boltzmann; balance detallado de Metropolis y Gibbs;
+Gibbs por bloques y cromático; por qué falla la actualización totalmente paralela.
+\textbf{Prerrequisitos:} 0.5 (cadenas de Markov), 4.1--4.2.
+
+\section{Metropolis--Hastings}
+Con una propuesta $q(s\to s')$ y aceptación
+\begin{equation}
+A(s\to s')=\min\Big(1,\ \frac{\pi(s')\,q(s'\to s)}{\pi(s)\,q(s\to s')}\Big),\qquad \pi\propto e^{-\beta E},
+\end{equation}
+la cadena cumple balance detallado $\pi(s)P(s\to s')=\pi(s')P(s'\to s)$ y, si es irreducible y aperiódica, converge a $\pi$. Con propuesta simétrica
+(voltear un espín al azar) $A=\min(1,e^{-\beta\Delta E})$: solo hacen falta diferencias de energía, nunca $Z$.
+
+\section{Muestreo de Gibbs}
+Se elige una variable y se la resortea desde su condicional $p(x_i\mid x_{-i})=p(x_i\mid x_{\mathcal N(i)})$. Es un caso de Metropolis--Hastings con
+aceptación 1. Para Ising,
+\begin{equation}
+P(s_i=+1\mid s_{-i})=\frac{e^{\beta u_i}}{e^{\beta u_i}+e^{-\beta u_i}}=\sigma(2\beta u_i),\qquad u_i=\sum_jJ_{ij}s_j+h_i,
+\end{equation}
+que es la regla de actualización de un pbit (lección 4.5).
+
+\section{Gibbs por bloques y cromático}
+Dos variables no vecinas tienen condicionales independientes entre sí, así que pueden actualizarse a la vez. Con un \emph{coloreo} del grafo
+(vecinos con colores distintos), se actualizan en paralelo todos los nodos de un color y luego los del siguiente. Una red cuadrada necesita 2
+colores (tablero de ajedrez); un grafo de grado máximo $d$ admite un coloreo con $\le d+1$ colores. Cada fase es un paso de Gibbs exacto, de modo
+que la cadena conserva $\pi$.
+\begin{ejemplo}
+Ising 2D $16\times16$, $T=3$, energía media por espín \evS: Gibbs cromático $-0{,}82$; Metropolis $-0{,}79$; actualización síncrona de todos los
+espines $+0{,}02$ (incorrecta). Al usar todos los valores viejos de los vecinos, la cadena síncrona deja de tener a Boltzmann como estacionaria.
+\end{ejemplo}
+\begin{ejemplo}
+Espín con 4 vecinos alineados, $T=3$: $\Delta E=8$, $A_{\text{Metropolis}}=e^{-8/3}=0{,}069$; Gibbs lo deja en contra con probabilidad
+$\sigma(-8/3)=0{,}065$. Pasos distintos, misma distribución estacionaria.
+\end{ejemplo}
+
+\begin{aplicacion}
+Chips de pbits y TSUs implementan Gibbs cromático en hardware (Unidad 5). THRML hace Gibbs por bloques en GPU (Unidad 11). Laboratorio L5: Gibbs
+cromático en JAX con \texttt{vmap} sobre los nodos de un color.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Actualizar vecinos a la vez. \quad Propuesta no simétrica sin la corrección de Hastings.
+\item Olvidar el factor 2 en $\sigma(2\beta u_i)$. \quad Confundir estacionaria correcta con mezcla rápida (lección 4.4).
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[3]{lpw} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, AMS, 2009.
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, 2022.
+\end{thebibliography}
+\end{document}

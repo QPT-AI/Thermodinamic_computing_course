@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.4}{K-FAC}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre $(A\otimes G)^{-1}=A^{-1}\otimes G^{-1}$.
+\item (B) Verifique $(A\otimes G)\mathrm{vec}(V)=\mathrm{vec}(GVA)$ para factores simétricos (convención de vectorización por columnas).
+\item (B) Costo de invertir los factores de una capa $d_\text{in}\times d_\text{out}$.
+\item (B) ¿Qué independencia supone K-FAC?
+\item (I) Para una capa con salida gaussiana (pérdida cuadrática), ¿cuánto vale $G$? ¿Es exacta la aproximación?
+\item (I) ¿Cuántos parámetros se almacenan en los factores de una capa $4096\times4096$, frente al bloque completo?
+\item (A) Implemente K-FAC con promedios móviles para un perceptrón de dos capas y compare con Adam.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $(A\otimes G)(A^{-1}\otimes G^{-1})=(AA^{-1})\otimes(GG^{-1})=I$.
+
+\textbf{E2.} Propiedad $(B^\top\otimes C)\mathrm{vec}(V)=\mathrm{vec}(CVB)$ con $B=A$ simétrica.
+
+\textbf{E3.} $O(d_\text{in}^3+d_\text{out}^3)$.
+
+\textbf{E4.} Independencia entre activaciones de entrada y gradientes de salida (y entre capas).
+
+\textbf{E5.} Con varianza unitaria, $H_L=I$ y la curvatura es $\mathbb E[aa^\top]\otimes I$: exacta para el GGN.
+
+\textbf{E6.} Factores: $2\cdot4096^2\approx3{,}4\times10^7$; bloque completo: $4096^4\approx2{,}8\times10^{14}$.
+
+\textbf{E7.} K-FAC suele necesitar menos iteraciones; el costo por iteración aumenta poco si los factores se invierten cada $T$ pasos.
+\end{solucion}
+\end{document}

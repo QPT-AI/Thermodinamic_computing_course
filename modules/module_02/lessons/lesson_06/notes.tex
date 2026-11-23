@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.6}{Ergodicidad}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} promedios temporales frente a de ensamble; autocorrelación y
+$\tau_{\text{int}}$; barras de error correctas. \textbf{Prerrequisitos:} 0.5, 2.4.
+
+\section{Ergodicidad}
+Un proceso estacionario es ergódico si $\bar x_T=\frac1T\int_0^Tx\,dt\to\E_\pi[x]$. En la práctica exige observar durante
+mucho más que el tiempo de mezcla: un pozo doble con barrera de $12\,\kB T$ no cruza en la ventana observada y su promedio
+temporal es engañoso (animación \evS).
+
+\section{Autocorrelación y tamaño efectivo}
+$\rho(\tau)=C(\tau)/C(0)$. Para muestras discretas, $\tau_{\text{int}}=1+2\sum_{k\ge1}\rho_k$ y $n_{\text{ef}}=n/\tau_{\text{int}}$.
+Para un OU muestreado, $\rho_k=r^k$ con $r=e^{-a\Delta t}$ y $\tau_{\text{int}}=\frac{1+r}{1-r}$.
+\begin{resultado}
+$\Var(\bar x)\approx\Var(x)\,\tau_{\text{int}}/n$, es decir $\sigma_{\bar x}\approx\sqrt{\Var(x)\tau_{\text{int}}/n}$.
+\end{resultado}
+Repitiendo 200 veces una serie AR(1) con $r=0{,}98$ ($\tau_{\text{int}}=99$), las barras ingenuas $2\sigma/\sqrt n$ cubren el valor
+verdadero en una fracción muy inferior al 95\,\%, mientras que las corregidas cubren $\approx95\,\%$ \evS.
+\textbf{Método de bloques:} dividir en bloques de longitud $\gg\tau_{\text{int}}$, promediar cada bloque y usar la dispersión
+de las medias de bloque. Para estimar $\tau_{\text{int}}$, truncar la suma con una ventana (la cola es ruidosa).
+
+\begin{ejemplo}
+OU con $a=0{,}1$ leído cada $\Delta t=0{,}1$: $r=e^{-0{,}01}$, $\tau_{\text{int}}\approx200$; con $n=10^4$, $n_{\text{ef}}\approx50$ y el
+error real es $\sqrt{200}\approx14$ veces el ingenuo.
+\end{ejemplo}
+
+\begin{aplicacion}
+Tiempo de integración del solucionador OU ($\tau_{\text{int}}\sim1/\lambda_{\min}$, Unidad 6); leer pbits más rápido que su
+correlación desperdicia E/S (Unidad 5); Gibbs cerca de $T_c$ (4.4); barras de error en todos los laboratorios.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $\sigma/\sqrt n$ con muestras correlacionadas. \quad Olvidar el burn-in.
+\item Ergodicidad teórica $\neq$ práctica. \quad Sumar toda la cola ruidosa de $\rho_k$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[3]{levin} D. A. Levin, Y. Peres y E. L. Wilmer, \emph{Markov Chains and Mixing Times}, 2009.
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, 2024.
+\end{thebibliography}
+\end{document}

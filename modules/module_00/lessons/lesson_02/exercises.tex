@@ -1,0 +1,55 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{0.2}{Mapa de paradigmas de cómputo}
+Constantes: $\kB=1{,}380649\times10^{-23}$ J/K, $h=6{,}626\times10^{-34}$ J\,s, $1$ eV $=1{,}602\times10^{-19}$ J.
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule $\kB T$ en meV a 4 K, 77 K y 300 K.
+\item ¿Qué barrera $E_b$ (en $\kB T$) da una probabilidad de error $10^{-9}$ por intento, usando $P\approx e^{-E_b/\kB T}$?
+\item ¿A qué temperatura equivale el cuanto de un oscilador de 10 GHz?
+\item Clasifique en el mapa: (a) red de resistencias que resuelve $Ax=b$ por las leyes de Kirchhoff; (b) arreglo de pbits; (c) GPU; (d) procesador de cúbits de trampa de iones.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Una memoria debe retener un bit 10 años con frecuencia de intento $10^9$ s$^{-1}$ y probabilidad total de error $<10^{-3}$. Estime $E_b/\kB T$.
+\item Un pbit con $E_b=\kB T$ y frecuencia de intento $10^9$ s$^{-1}$: estime el tiempo medio entre saltos. ¿Es útil como fuente de bits aleatorios a 1 GHz de lectura? Explique la autocorrelación.
+\item ¿Por qué un oscilador LC de 1 MHz a temperatura ambiente se comporta clásicamente? Calcule $hf/\kB T$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Para el potencial $V(x)=E_b(x^2-1)^2$, calcule la distribución de Boltzmann $p(x)\propto e^{-V/\kB T}$ y la probabilidad de encontrar la partícula cerca de la barrera ($|x|<0{,}2$) para $E_b=1$ y $E_b=8$ (numéricamente). Relacione con las trazas de la lección.
+\item Discuta el costo energético total de producir un bit aleatorio con xorshift en una CPU frente a leer un pbit: ¿qué términos dominan en cada caso? (Respuesta cualitativa con órdenes de magnitud de la lección 0.1.)
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} 4 K: 0,345 meV; 77 K: 6,64 meV; 300 K: 25,9 meV.
+
+\textbf{B2.} $E_b=\ln10^9\,\kB T\approx20{,}7\,\kB T$.
+
+\textbf{B3.} $hf/\kB=6{,}626\times10^{-34}\cdot10^{10}/1{,}381\times10^{-23}\approx0{,}48$ K.
+
+\textbf{B4.} (a) analógico; (b) termodinámico; (c) digital clásico; (d) cuántico.
+
+\textbf{I1.} Intentos en 10 años $\approx10^9\cdot3{,}15\times10^8=3{,}15\times10^{17}$. Se requiere $3{,}15\times10^{17}e^{-E_b/\kB T}<10^{-3}$, es decir $E_b/\kB T>\ln(3{,}15\times10^{20})\approx47{,}2$.
+
+\textbf{I2.} Tasa $\approx10^9e^{-1}\approx3{,}7\times10^8$ s$^{-1}$; tiempo medio entre saltos $\approx2{,}7$ ns. Leer a 1 GHz (cada 1 ns) da lecturas correlacionadas: bits consecutivos tienden a repetirse. Hay que leer con un periodo varias veces mayor que el tiempo de correlación o aceptar menos bits efectivos (Unidad 2.6).
+
+\textbf{I3.} $hf/\kB T=6{,}626\times10^{-34}\cdot10^6/(4{,}14\times10^{-21})\approx1{,}6\times10^{-7}\ll1$: muchos cuantos térmicos, comportamiento clásico.
+
+\textbf{A1.} Con $Z=\int e^{-E_b(x^2-1)^2}\dd x$: para $E_b=1$, la probabilidad en $|x|<0{,}2$ es $\approx0{,}077$; para $E_b=8$ cae a $\approx2{,}6\times10^{-4}$ (la densidad en $x=0$ está suprimida por $e^{-8}$ relativa a los mínimos, compensada parcialmente por el ancho de los pozos). Por eso con $E_b=8$ casi no se observan cruces.
+
+\textbf{A2.} CPU: varias operaciones enteras ($\sim$pJ cada una con movimiento de registros), más lectura/escritura de estado, más el costo de transportar el bit; total del orden de 1--10 pJ/bit \evE. Pbit: la «generación» la hace el baño térmico; el costo es leer y comunicar el bit (carga de un nodo, $\sim$fJ) más el pegamento digital. La comparación justa debe incluir E/S (Unidad 5.8).
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Implemente xorshift32 y mida bits/s en su CPU; estime J/bit con la potencia del paquete.
+\item Simule $\dot x=-V'(x)+\sqrt2\xi$ para $E_b\in\{0{,}5,1,2,4,8\}$ y grafique la tasa de saltos frente a $E_b$ en escala logarítmica. ¿Obtiene una recta?
+\item Ubique la computación óptica y la computación con ADN en el mapa. Justifique.
+\end{enumerate}
+\end{document}

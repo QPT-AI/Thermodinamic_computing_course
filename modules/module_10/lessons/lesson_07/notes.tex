@@ -1,0 +1,49 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.7}{La arquitectura Z1T}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} el modelo Z1T; la inferencia desagregada Z1 + FPGA; lectura crítica de sus tablas de energía y latencia.
+\textbf{Prerrequisitos:} 9.5, 10.2--10.6.
+
+\section{El modelo}
+Z1T (Extropic, septiembre de 2026): $L=4$, $D=512$, $T=1024$. Atención convolucional con compuertas (GCA, familia AFT, 10.2), normalización DyT (10.3), MLP con unidades
+tanh-lineales (10.6), proyecciones dispersas con $k=4$ entradas por salida (10.4), pesos de 4 bits y activaciones dy4p (\emph{dyadic}, 4 bits; 10.5). Cada pbit de salida
+gasta sus 16 acoplamientos en 4 valores $\times$ 4 pbits dy4p. Según el artículo, igualar la pérdida de GPT-2 small exige del orden de diez veces más FLOPs de
+entrenamiento.
+
+\section{Inferencia desagregada}
+Chip Z1: 8 núcleos, 269\,568 pbits, $>50$ MHz, $<1$ W; ejecuta las proyecciones muestreadas y DyT. FPGA: embedding, aritmética de GCA, residuos, codificación posicional,
+cabeza de vocabulario. La FPGA podría sustituirse por GPU/XPU (no medido).
+
+\section{Energía \evP}
+$E_{\text{token}}=8{,}74\ (\text{Z1})+285{,}78\ (\text{FPGA})=294{,}52$ nJ: 97\,\% FPGA. H100 en decode con lote 1: 40{,}9 / 8{,}17 / 4{,}09 $\mu$J por token con MFU
+10 / 50 / 100\,\%, es decir $\approx139\times$, $28\times$, $14\times$. Las capas de Z1 solas: $\approx4680\times$ / $935\times$ / $468\times$. El cuello de botella es la FPGA
+(Amdahl, 9.5).
+
+\section{Letra pequeña}
+\begin{itemize}[nosep]
+\item Cabeza de vocabulario excluida: con ella, $\approx136{,}4\ \mu$J por token ($\approx463\times$ el titular).
+\item No se cuentan el movimiento de datos Z1--FPGA ni el número de chips; no se cuantizan las activaciones en la figura de calidad.
+\item Latencia estimada $58{,}8\ \mu$s/token ($\approx17\,000$ tokens/s): 38{,}0 orquestación FPGA, 16{,}0 muestreo Z1 ($25\times32$ muestras a 50 MHz), 3{,}2 lectura,
+1{,}3 escritura, 0{,}3 resto; H100 compilada: 102 $\mu$s.
+\item Son proyecciones con lote 1, ancladas en experimentos con X0, no mediciones del sistema completo. Con lotes grandes la GPU sería mucho más eficiente.
+\end{itemize}
+
+\begin{aplicacion}
+Receta de diseño; contabilidad por dispositivo con cabeza incluida; reducir el pegamento. Laboratorio L29: registro de mapeo y proyección de J/token.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Citar $139\times$ sin el supuesto de MFU 10\,\%. \quad Ignorar la cabeza de vocabulario.
+\item Confundir la razón de las capas Z1 con la del sistema. \quad Tratar proyecciones como mediciones.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{z1t} Extropic, Z1T, \url{https://extropic.ai/writing/z1t} (septiembre de 2026).
+\bibitem{aft} S. Zhai et al., An attention free transformer, arXiv:2105.14103 (2021).
+\bibitem{dyt} J. Zhu et al., Transformers without normalization, \emph{CVPR} (2025).
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{9}{Quiz: modelos generativos termodinámicos}
+\noindent Preguntas guía: ¿qué aprende un modelo de difusión? ¿Por qué un EBM monolítico mezcla mal? ¿Cuánto cuesta generar y dónde se va la energía?
+\section*{Preguntas}
+\begin{enumerate}
+\item Un modelo de difusión aprende: (a) la densidad normalizada (b) el score $\nabla\log p_t$ (c) el hessiano (d) la partición $Z$.
+\item Predecir el ruido $\varepsilon$ equivale a estimar el score salvo el factor: (a) $\sigma_t$ (b) $-1/\sigma_t$ (c) $t$ (d) 1.
+\item En difusión enmascarada, la máscara es un estado: (a) transitorio (b) absorbente (c) periódico (d) inicial.
+\item Revelar muchos tokens correlacionados a la vez: (a) es exacto (b) los muestrea independientemente (c) aumenta el MFU sin costo (d) elimina el ruido.
+\item El compromiso mezcla--expresividad afecta a: (a) DTM (b) EBM monolíticos (c) GPU (d) Adam.
+\item En la DTCA la energía por muestra es: (a) $TK_{\text{mix}}L^2E_{\text{cell}}$ (b) $2N e_{\text{FLOP}}$ (c) $L^2$ (d) $k_BT\ln2$.
+\item El equilibrio de pasos entre difusión y AR en GPU es: (a) $\text{MFU}_{\text{AR}}/\text{MFU}_{\text{dif}}$ (b) $\text{MFU}_{\text{dif}}/\text{MFU}_{\text{AR}}$ (c) $N$ (d) 1.
+\item En Z1T, la fracción de energía de la FPGA es cercana a: (a) 3\,\% (b) 50\,\% (c) 97\,\% (d) 100\,\%.
+\item (Problema) Energía DTCA para $T=8$, $K_{\text{mix}}=250$, $L=70$, $E_{\text{cell}}=2$ fJ.
+\item (Problema) $e_{\text{pos}}$ en GPU para $N=10^9$, $e_{\text{FLOP}}=0{,}7$ pJ, MFU $=0{,}5$.
+\item (Problema) Ganancia máxima de Amdahl si el pegamento es el 90\,\%.
+\item (Problema) Marginal del proceso OU $x_t\mid x_0$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (b) · 5 (b) · 6 (a) · 7 (b) · 8 (c).
+\begin{enumerate}\setcounter{enumi}{8}
+\item $8\cdot250\cdot4900\cdot2\ \text{fJ}\approx19{,}6$ nJ.
+\item $2\cdot10^9\cdot0{,}7\ \text{pJ}/0{,}5=2{,}8$ mJ.
+\item $1/0{,}9\approx1{,}11$.
+\item $\N(e^{-t}x_0,\,1-e^{-2t})$.
+\end{enumerate}
+Aprobación 8/12; fallos en 4, 5 o 8 $\Rightarrow$ repasar 9.2, 9.3, 9.5.
+\end{document}

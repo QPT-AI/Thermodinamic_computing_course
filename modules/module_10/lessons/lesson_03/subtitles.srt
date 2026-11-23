@@ -1,0 +1,307 @@
+1
+00:00:00,350 --> 00:00:01,929
+Lección 10.3.
+
+2
+00:00:02,309 --> 00:00:03,837
+Normalización DyT.
+
+3
+00:00:04,950 --> 00:00:09,262
+La normalización de capa calcula la
+media y la varianza de cada vector de
+
+4
+00:00:09,262 --> 00:00:13,634
+activaciones: dos reducciones globales
+sobre toda la dimensión del modelo.
+
+5
+00:00:14,014 --> 00:00:18,610
+En hardware con conectividad local,
+sumar sobre miles de componentes es caro.
+
+6
+00:00:18,990 --> 00:00:22,998
+En dos mil veinticinco, Zhu y
+colaboradores mostraron que se puede
+
+7
+00:00:22,998 --> 00:00:27,491
+reemplazar por algo mucho más simple,
+una tangente hiperbólica escalada, y
+
+8
+00:00:27,491 --> 00:00:31,499
+esa tangente resulta ser justo lo
+que un pbit calcula en promedio.
+
+9
+00:00:32,617 --> 00:00:38,993
+La tangente dinámica, DyT, aplica
+a cada componente γ tanh(α x) +
+
+10
+00:00:38,993 --> 00:00:44,585
+β, con un escalar α aprendido
+y vectores γ y β por canal.
+
+11
+00:00:44,965 --> 00:00:49,023
+La motivación es empírica: en
+transformers entrenados, la relación
+
+12
+00:00:49,023 --> 00:00:53,205
+entre la entrada y la salida de la
+normalización de capa tiene forma
+
+13
+00:00:53,205 --> 00:00:56,465
+de S, lineal en el centro
+y saturada en los extremos.
+
+14
+00:00:56,845 --> 00:01:00,259
+DyT reproduce esa forma sin
+calcular estadísticas, y los
+
+15
+00:01:00,259 --> 00:01:03,734
+autores reportan calidad
+comparable en visión y lenguaje.
+
+16
+00:01:04,850 --> 00:01:08,700
+Recordemos el pbit: con
+entrada u, sale más uno con
+
+17
+00:01:08,700 --> 00:01:12,474
+probabilidad σ(2βu) y menos
+uno en caso contrario.
+
+18
+00:01:12,854 --> 00:01:20,227
+Su salida media es 2σ(2βu)
+− 1 = tanh(βu), exactamente.
+
+19
+00:01:20,607 --> 00:01:25,558
+Un pbit con ganancia β = α es,
+en promedio, una unidad DyT.
+
+20
+00:01:25,938 --> 00:01:28,666
+La normalización se
+vuelve un fenómeno físico
+
+21
+00:01:28,666 --> 00:01:31,213
+del dispositivo, sin reducciones globales.
+
+22
+00:01:32,317 --> 00:01:35,427
+Pero un pbit da una muestra
+binaria, no la media.
+
+23
+00:01:35,807 --> 00:01:38,472
+Para estimar la tangente
+hay que promediar S
+
+24
+00:01:38,472 --> 00:01:41,562
+muestras, y el error baja
+como uno sobre raíz de S.
+
+25
+00:01:41,942 --> 00:01:45,622
+Lo medimos: con una muestra,
+el error cuadrático medio es
+
+26
+00:01:45,622 --> 00:01:49,496
+cero coma cinco cuatro; con
+dieciséis, cero coma uno cuatro;
+
+27
+00:01:49,496 --> 00:01:52,918
+con doscientas cincuenta y
+seis, cero coma cero tres.
+
+28
+00:01:53,298 --> 00:01:56,496
+Cada factor cuatro en muestras
+divide el error por dos.
+
+29
+00:01:57,617 --> 00:02:01,144
+Aquí aparece una pregunta de
+diseño, si hace falta promediar.
+
+30
+00:02:01,524 --> 00:02:04,832
+Si la capa siguiente también
+es estocástica y suma muchas
+
+31
+00:02:04,832 --> 00:02:08,488
+entradas, el ruido de cada muestra
+se promedia de forma natural
+
+32
+00:02:08,488 --> 00:02:11,971
+en esa suma, como en las redes
+de pbits de la unidad cuatro.
+
+33
+00:02:12,351 --> 00:02:15,114
+Muchas veces basta con
+pocas muestras, o con una,
+
+34
+00:02:15,114 --> 00:02:18,160
+siempre que el entrenamiento
+tenga en cuenta el ruido.
+
+35
+00:02:18,540 --> 00:02:21,286
+La lección diez punto
+cinco cuantifica cuántos
+
+36
+00:02:21,286 --> 00:02:23,793
+bits efectivos da cada número de muestras.
+
+37
+00:02:24,917 --> 00:02:25,727
+Comparemos.
+
+38
+00:02:26,107 --> 00:02:30,449
+La normalización de capa necesita,
+por token, dos reducciones sobre
+
+39
+00:02:30,449 --> 00:02:34,532
+toda la dimensión del modelo,
+una raíz cuadrada y una división.
+
+40
+00:02:34,912 --> 00:02:38,556
+DyT necesita, por componente,
+una multiplicación, una
+
+41
+00:02:38,556 --> 00:02:42,407
+tangente y una suma, sin
+comunicación entre componentes.
+
+42
+00:02:42,787 --> 00:02:45,836
+En un TSU, la tangente
+la hace el propio pbit.
+
+43
+00:02:46,216 --> 00:02:49,927
+Por eso los modelos de lenguaje
+para chips probabilísticos,
+
+44
+00:02:49,927 --> 00:02:53,261
+como Z1T, usan DyT en lugar
+de normalización de capa.
+
+45
+00:02:54,383 --> 00:02:58,621
+En la práctica, reemplaza la
+normalización por DyT y ajusta el
+
+46
+00:02:58,621 --> 00:03:02,723
+valor inicial de α; mapea cada
+unidad a un pbit con ganancia
+
+47
+00:03:02,723 --> 00:03:06,550
+igual a α; y entrena con el
+ruido del muestreo incluido.
+
+48
+00:03:06,930 --> 00:03:10,381
+En el laboratorio veintinueve lo
+harás en un transformer pequeño.
+
+49
+00:03:11,483 --> 00:03:15,713
+Errores comunes: creer que DyT
+normaliza, cuando solo acota.
+
+50
+00:03:16,093 --> 00:03:20,388
+Confundir la sigmoide del pbit,
+cuyo argumento lleva un factor dos.
+
+51
+00:03:20,768 --> 00:03:24,368
+Promediar pocas muestras sin incluir
+el ruido en el entrenamiento.
+
+52
+00:03:24,748 --> 00:03:28,541
+Y olvidar que α se aprende y es
+sensible a la inicialización.
+
+53
+00:03:29,650 --> 00:03:33,628
+En resumen, DyT reemplaza
+la normalización de capa
+
+54
+00:03:33,628 --> 00:03:37,288
+por γ tanh(α x) + β, sin
+reducciones globales.
+
+55
+00:03:37,668 --> 00:03:41,657
+La salida media de un pbit
+es exactamente una tangente
+
+56
+00:03:41,657 --> 00:03:44,981
+hiperbólica, así que
+DyT es nativa de un TSU.
+
+57
+00:03:45,361 --> 00:03:48,930
+El precio es el ruido de
+muestreo, que cae como uno sobre
+
+58
+00:03:48,930 --> 00:03:51,936
+raíz de S y que el
+entrenamiento puede absorber.
+
+59
+00:03:53,050 --> 00:03:57,449
+Para practicar: demuestra la identidad
+entre la sigmoide y la tangente.
+
+60
+00:03:57,829 --> 00:04:00,313
+Calcula la varianza de
+una muestra de pbit.
+
+61
+00:04:00,693 --> 00:04:03,996
+Calcula las muestras para un
+error de cero coma cero cinco.
+
+62
+00:04:04,376 --> 00:04:06,711
+Y explica por qué DyT es más barata que la
+
+63
+00:04:06,711 --> 00:04:08,934
+normalización de capa en hardware local.

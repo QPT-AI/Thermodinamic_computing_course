@@ -1,0 +1,292 @@
+1
+00:00:00,350 --> 00:00:02,041
+Lección 4.2.
+
+2
+00:00:02,421 --> 00:00:03,703
+El modelo de Ising.
+
+3
+00:00:04,817 --> 00:00:09,154
+Si hubiera que elegir un solo modelo
+para este curso, sería el de Ising.
+
+4
+00:00:09,534 --> 00:00:13,481
+Espines que valen más uno o
+menos uno, acoplados de a pares.
+
+5
+00:00:13,861 --> 00:00:17,088
+Es el programa nativo de un
+chip de pbits, el corazón de las
+
+6
+00:00:17,088 --> 00:00:20,476
+redes de Hopfield y de las máquinas
+de Boltzmann, y el lenguaje
+
+7
+00:00:20,476 --> 00:00:23,435
+en el que se escriben muchos
+problemas de optimización.
+
+8
+00:00:24,550 --> 00:00:27,298
+Piensa en un imán como una
+red de pequeñas brújulas.
+
+9
+00:00:27,678 --> 00:00:31,834
+Cada una prefiere apuntar igual que sus
+vecinas, porque así baja la energía.
+
+10
+00:00:32,214 --> 00:00:34,327
+La temperatura las sacude al azar.
+
+11
+00:00:34,707 --> 00:00:37,725
+A baja temperatura gana el
+orden y aparecen grandes
+
+12
+00:00:37,725 --> 00:00:41,039
+dominios alineados; a alta
+temperatura gana el desorden.
+
+13
+00:00:41,419 --> 00:00:45,763
+Entre los dos regímenes hay un cambio
+brusco: una transición de fase.
+
+14
+00:00:46,883 --> 00:00:54,771
+La energía es E = −Σ
+J_ij s_i s_j − Σ h_i s_i.
+
+15
+00:00:55,151 --> 00:00:59,770
+Un acoplamiento positivo premia a los
+espines alineados: es ferromagnético.
+
+16
+00:01:00,150 --> 00:01:03,979
+Uno negativo premia a los
+opuestos: es antiferromagnético.
+
+17
+00:01:04,359 --> 00:01:07,462
+El campo h_i empuja a
+cada espín hacia un valor.
+
+18
+00:01:07,842 --> 00:01:13,445
+Lo que siente cada espín es su campo
+local, u_i = Σ_j J_ij s_j + h_i, y
+
+19
+00:01:13,445 --> 00:01:18,889
+veremos que un pbit es exactamente
+un espín que responde a ese campo.
+
+20
+00:01:20,017 --> 00:01:22,777
+Simulemos una red cuadrada
+de treinta y dos por
+
+21
+00:01:22,777 --> 00:01:25,537
+treinta y dos con
+acoplamiento uno y sin campo.
+
+22
+00:01:25,917 --> 00:01:29,836
+A temperatura uno coma cinco casi
+todos los espines apuntan igual.
+
+23
+00:01:30,216 --> 00:01:34,312
+Cerca de dos coma dos siete aparecen
+dominios de todos los tamaños.
+
+24
+00:01:34,691 --> 00:01:36,826
+A tres coma cinco el patrón es ruido.
+
+25
+00:01:37,206 --> 00:01:42,671
+La magnetización media cae desde
+uno hasta cero alrededor de la
+
+26
+00:01:42,671 --> 00:01:49,004
+temperatura crítica, que Onsager
+calculó exactamente: T_c = 2/ln(1 + √2).
+
+27
+00:01:50,117 --> 00:01:52,575
+Ahora pongamos tres
+espines en un triángulo
+
+28
+00:01:52,575 --> 00:01:54,747
+con acoplamientos antiferromagnéticos.
+
+29
+00:01:55,127 --> 00:01:58,395
+Cada par quiere ser opuesto,
+pero con tres espines es
+
+30
+00:01:58,395 --> 00:02:01,232
+imposible: al menos un
+par queda insatisfecho.
+
+31
+00:02:01,612 --> 00:02:04,085
+Eso se llama frustración, y produce muchos
+
+32
+00:02:04,085 --> 00:02:06,618
+estados fundamentales
+con la misma energía.
+
+33
+00:02:06,998 --> 00:02:11,421
+Si los acoplamientos son aleatorios
+en toda una red, tenemos un vidrio
+
+34
+00:02:11,421 --> 00:02:15,150
+de espín: un paisaje rugoso
+con muchísimos mínimos locales.
+
+35
+00:02:15,530 --> 00:02:19,615
+Encontrar su mínimo global es,
+en general, un problema difícil.
+
+36
+00:02:20,717 --> 00:02:22,644
+Comparemos simulación y teoría.
+
+37
+00:02:23,024 --> 00:02:26,679
+La temperatura crítica exacta
+es dos coma dos seis nueve.
+
+38
+00:02:27,059 --> 00:02:32,171
+A temperatura dos, la fórmula de Onsager
+da una magnetización de cero coma
+
+39
+00:02:32,171 --> 00:02:36,869
+nueve uno uno, y la simulación de
+Gibbs da cero coma nueve uno tres.
+
+40
+00:02:37,249 --> 00:02:42,232
+A uno coma cinco, cero coma nueve ocho
+seis frente a cero coma nueve ocho siete.
+
+41
+00:02:42,612 --> 00:02:45,828
+Cerca de la temperatura
+crítica la red finita redondea
+
+42
+00:02:45,828 --> 00:02:48,509
+la transición: es un
+efecto de tamaño finito.
+
+43
+00:02:49,617 --> 00:02:53,012
+El modelo de Ising es el programa
+de los chips de pbits, el
+
+44
+00:02:53,012 --> 00:02:56,579
+lenguaje de muchos problemas de
+optimización, y la base de las
+
+45
+00:02:56,579 --> 00:02:59,572
+memorias de Hopfield y de
+las máquinas de Boltzmann.
+
+46
+00:02:59,952 --> 00:03:03,100
+Y cerca de la temperatura
+crítica, como veremos en la
+
+47
+00:03:03,100 --> 00:03:06,487
+lección cuatro punto cuatro,
+el muestreo se vuelve lento.
+
+48
+00:03:07,617 --> 00:03:11,134
+Errores comunes: confundir el
+signo de los acoplamientos.
+
+49
+00:03:11,514 --> 00:03:13,092
+Contar dos veces cada par.
+
+50
+00:03:13,472 --> 00:03:16,443
+Esperar una transición
+abrupta en un sistema finito.
+
+51
+00:03:16,823 --> 00:03:19,176
+Y olvidar que la cadena unidimensional no
+
+52
+00:03:19,176 --> 00:03:21,473
+tiene transición a temperatura positiva.
+
+53
+00:03:22,583 --> 00:03:25,467
+En resumen: el modelo
+de Ising tiene espines
+
+54
+00:03:25,467 --> 00:03:28,351
+binarios, acoplamientos
+de a pares y campos.
+
+55
+00:03:28,731 --> 00:03:35,409
+En dos dimensiones tiene una transición
+entre orden y desorden en T_c ≈ 2,27.
+
+56
+00:03:35,789 --> 00:03:38,481
+Y con acoplamientos de
+signo mixto aparece la
+
+57
+00:03:38,481 --> 00:03:42,130
+frustración, que crea paisajes
+rugosos y problemas difíciles.
+
+58
+00:03:43,250 --> 00:03:45,751
+Para practicar: calcula un campo local.
+
+59
+00:03:46,131 --> 00:03:49,320
+Encuentra los estados fundamentales
+del triángulo frustrado.
+
+60
+00:03:49,700 --> 00:03:51,599
+Evalúa la fórmula de Onsager.
+
+61
+00:03:51,979 --> 00:03:55,289
+Y explica por qué la cadena
+unidimensional no se ordena.

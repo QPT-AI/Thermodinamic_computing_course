@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Evaluación --- Unidad}{2}{Quiz: dinámica estocástica}
+\noindent Preguntas guía: ¿cómo puede la \emph{media} de un proceso ruidoso resolver una ecuación determinista? ¿Qué limita su velocidad?
+\section*{Preguntas}
+\begin{enumerate}
+\item $W(t)-W(s)$ tiene distribución: (a) $\N(0,1)$ (b) $\N(0,t-s)$ (c) $\N(0,(t-s)^2)$ (d) uniforme.
+\item Por Itô, $d(W^2)=$ (a) $2W\,dW$ (b) $2W\,dW+dt$ (c) $W\,dW$ (d) $dt$.
+\item La relación de Einstein es: (a) $D=\mu/\kB T$ (b) $D=\mu\kB T$ (c) $\mu=D\kB T$ (d) $D=\kB T$.
+\item En equilibrio la corriente de Fokker--Planck es: (a) constante no nula (b) cero (c) máxima (d) indefinida.
+\item El OU $dx=-(Ax-b)dt+\sqrt{2\beta^{-1}}dW$ tiene covarianza estacionaria: (a) $A^{-1}$ (b) $\beta A^{-1}$ (c) $\beta^{-1}A^{-1}$ (d) $\beta^{-1}A^{-2}$.
+\item Euler--Maruyama es estable para $\dot x=-Ax$ si: (a) $\Delta t<1/\lambda_{\min}$ (b) $\Delta t<2/\lambda_{\max}$ (c) $\Delta t<\kappa$ (d) siempre.
+\item Con $\tau_{\text{int}}=200$ y $n=10^4$, $n_{\text{ef}}$ es: (a) $10^4$ (b) 200 (c) 50 (d) 100.
+\item En Gillespie el tiempo al próximo salto es: (a) fijo (b) uniforme (c) exponencial con la tasa total (d) gaussiano.
+\item (Problema) Para el OU 1D con $a=2$, $\beta=4$, $m=1$, $x_0=3$: media y varianza en $t=0{,}5$.
+\item (Problema) Demuestre que $p\propto e^{-V/\kB T}$ anula $J=\mu fp-D\partial_xp$ con $D=\mu\kB T$.
+\item (Problema) Varianza estacionaria de EM para el OU con $\lambda=4$, $\beta=1$, $\Delta t=0{,}1$.
+\item (Problema) TFD: para $C(t)=0{,}25e^{-2t}$ y $\beta=2$, respuesta a $F=0{,}1$.
+\end{enumerate}
+\newpage
+\section*{Clave}
+1 (b) · 2 (b) · 3 (b) · 4 (b) · 5 (c) · 6 (b) · 7 (c) · 8 (c).
+\begin{enumerate}\setcounter{enumi}{8}
+\item Media $1+2e^{-1}\approx1{,}74$; varianza $\frac1{\beta a}(1-e^{-2})=\frac18\cdot0{,}865\approx0{,}108$.
+\item $\partial_xp=-\beta V'p$; $J=-\mu V'p+\mu\kB T\beta V'p=0$.
+\item $\frac{1}{4(1-0{,}2)}=0{,}3125$ (exacta $0{,}25$).
+\item $\beta F[C(0)-C(t)]=0{,}05(1-e^{-2t})$.
+\end{enumerate}
+Aprobación 8/12; fallos en 5, 6 o 7 $\Rightarrow$ repasar 2.4, 2.6, 2.7.
+\end{document}

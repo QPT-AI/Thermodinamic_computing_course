@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.8}{Longitud termodinámica y compromisos energía--tiempo}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} tensor de fricción; longitud termodinámica y cota $\langle W_{\text{ex}}\rangle\ge\mathcal L^2/\tau$;
+protocolo óptimo a velocidad termodinámica constante.
+\textbf{Prerrequisitos:} 2.5 (fluctuación--disipación), 3.4--3.5 (límites de velocidad, diseño de protocolos).
+
+\section{Trabajo en exceso en respuesta lineal}
+Sea $V(x;\lambda)$ con parámetro de control $\lambda(t)$, $t\in[0,\tau]$, y la fuerza conjugada $X=-\partial_\lambda V$. Si el protocolo es lento
+comparado con la relajación, el trabajo medio se separa en $\Delta F$ más un exceso cuadrático en la velocidad \cite{sivak}:
+\begin{equation}
+\langle W\rangle=\Delta F+\langle W_{\text{ex}}\rangle,\qquad
+\langle W_{\text{ex}}\rangle\approx\int_0^\tau\dot\lambda\,\zeta(\lambda)\,\dot\lambda\,dt,\qquad
+\zeta(\lambda)=\beta\int_0^\infty\langle\delta X(t)\,\delta X(0)\rangle_\lambda\,dt .
+\end{equation}
+\begin{intuicion}
+$\zeta$ es la varianza de la fuerza por su tiempo de correlación: donde el sistema fluctúa mucho y se reacomoda despacio, mover el control
+deja al sistema atrás y disipa. Es la misma idea del teorema de fluctuación--disipación (lección 2.5).
+\end{intuicion}
+
+\section{Longitud termodinámica}
+\begin{definicion}[ (longitud termodinámica)]
+$\mathcal L=\int\sqrt{\dot\lambda\,\zeta\,\dot\lambda}\,dt=\int\sqrt{\zeta(\lambda)}\,|d\lambda|$: no depende de la velocidad con que se recorre el camino.
+\end{definicion}
+\begin{resultado}
+Por Cauchy--Schwarz, $\mathcal L^2=\big(\int_0^\tau\sqrt\zeta\,\dot\lambda\,dt\big)^2\le\tau\int_0^\tau\zeta\dot\lambda^2\,dt$, de donde
+\begin{equation}
+\langle W_{\text{ex}}\rangle\ \ge\ \frac{\mathcal L^2}{\tau},
+\end{equation}
+con igualdad si la velocidad termodinámica $\sqrt\zeta\,\dot\lambda$ es constante (geodésica a velocidad constante).
+\end{resultado}
+
+\section{Ejemplo: endurecer una trampa}
+Trampa sobreamortiguada $V=\kappa x^2/2$, $\mu=\kB T=1$, $\lambda=\kappa$. Entonces $X=-x^2/2$, $\mathrm{Var}(X)=\sigma^4/2=1/(2\kappa^2)$ y $x^2$
+se descorrelaciona con tasa $2\kappa$, así que $\zeta(\kappa)=1/(4\kappa^3)$ (en general $\kB T/(4\mu\kappa^3)$). Para $\kappa:1\to4$:
+$\mathcal L=\int_1^4\tfrac12\kappa^{-3/2}d\kappa=1-\tfrac12=\tfrac12$, y el protocolo óptimo hace lineal a $\kappa^{-1/2}$:
+$\kappa^*(t)=(1-t/2\tau)^{-2}$.
+\begin{ejemplo}
+Cálculo exacto con la EDO de la varianza $\dot v=-2\kappa v+2$ y $\langle W\rangle=\int\tfrac12\dot\kappa\,v\,dt$ \evS:
+\begin{center}\begin{tabular}{lccccc}\toprule
+$\tau$ & 1 & 2 & 4 & 8 & 16\\\midrule
+rampa lineal & 0,243 & 0,140 & 0,076 & 0,041 & 0,021\\
+óptimo $\kappa^*$ & 0,241 & 0,126 & 0,063 & 0,032 & 0,016\\
+$\mathcal L^2/\tau$ & 0,250 & 0,125 & 0,063 & 0,031 & 0,016\\\bottomrule\end{tabular}\end{center}
+Para $\tau\gtrsim2$ el protocolo óptimo satura la cota; la rampa lineal disipa $\approx20$--$30\,\%$ más. Para $\tau=1$ el régimen ya no es lineal
+y la cota deja de ser exacta.
+\end{ejemplo}
+
+\begin{aplicacion}
+Calendarios de recocido (lección 4.4): ir despacio donde $\zeta$ es grande, cerca de puntos críticos. Carga de acoplamientos de un TSU,
+protocolos de borrado y reinicio (lecciones 1.5, 3.7) y calendarios de ruido de los modelos de difusión (Unidad 9).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Usar $\mathcal L^2/\tau$ fuera del régimen lento. \quad Confundir $\mathcal L$ (espacio de parámetros) con $W_2$ (espacio de estados, 3.4).
+\item Creer que el óptimo es lineal en $\lambda$: es constante en $\sqrt\zeta\,\dot\lambda$. \quad Olvidar que $\zeta$ crece cerca de puntos críticos.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{sivak} D. A. Sivak y G. E. Crooks, Thermodynamic metrics and optimal paths, Phys. Rev. Lett. 108, 190602 (2012).
+\bibitem[42]{whitelam} S. Whitelam, The thermodynamic freedom of a thermodynamic computer, 2026.
+\bibitem[2]{pp} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\end{thebibliography}
+\end{document}

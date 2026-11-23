@@ -1,0 +1,335 @@
+1
+00:00:00,350 --> 00:00:02,092
+Lesson 1.7.
+
+2
+00:00:02,472 --> 00:00:03,489
+A historical arc.
+
+3
+00:00:04,617 --> 00:00:07,076
+The ideas of this course
+were not born together.
+
+4
+00:00:07,456 --> 00:00:11,598
+They come from three rivers that
+ran separately for more than a
+
+5
+00:00:11,598 --> 00:00:16,069
+century: the thermodynamics of steam
+engines, the information theory
+
+6
+00:00:16,069 --> 00:00:20,014
+of telecommunications, and
+physics-inspired neural networks.
+
+7
+00:00:20,394 --> 00:00:25,163
+In this lesson we walk the timeline
+and see how those rivers merge.
+
+8
+00:00:26,283 --> 00:00:32,359
+In 1824, Sadi Carnot asked how much
+work a steam engine can deliver.
+
+9
+00:00:32,739 --> 00:00:37,715
+His answer was universal: the maximum
+efficiency between two reservoirs depends only
+
+10
+00:00:37,715 --> 00:00:41,921
+on their temperatures, one minus the
+cold temperature over the hot one.
+
+11
+00:00:42,301 --> 00:00:46,808
+Clausius turned that intuition into
+the second law and defined entropy.
+
+12
+00:00:47,188 --> 00:00:50,021
+It was a science of engines,
+without atoms or bits.
+
+13
+00:00:51,150 --> 00:00:56,926
+Ludwig Boltzmann, in the 1870s,
+explained entropy by counting
+
+14
+00:00:56,926 --> 00:01:02,417
+microstates: S = k ln W, the
+formula engraved on his tomb.
+
+15
+00:01:02,797 --> 00:01:07,104
+Josiah Willard Gibbs, in
+1902, built statistical
+
+16
+00:01:07,104 --> 00:01:12,040
+ensembles and the distribution
+we use today, e^(−βE)/Z.
+
+17
+00:01:12,420 --> 00:01:17,808
+Thermodynamics became statistical:
+probabilities over microscopic states.
+
+18
+00:01:18,917 --> 00:01:22,590
+In 1948, Claude Shannon
+defined information and
+
+19
+00:01:22,590 --> 00:01:26,030
+its entropy to design
+communication systems.
+
+20
+00:01:26,410 --> 00:01:28,159
+The formula was Gibbs's.
+
+21
+00:01:28,539 --> 00:01:33,010
+In 1961, Rolf Landauer
+connected both worlds:
+
+22
+00:01:33,010 --> 00:01:36,786
+erasing a bit costs at least k T ln 2.
+
+23
+00:01:37,166 --> 00:01:40,569
+And Charles Bennett, in the
+following decades, showed that
+
+24
+00:01:40,569 --> 00:01:44,031
+computation can be reversible
+and resolved Maxwell's demon.
+
+25
+00:01:44,411 --> 00:01:46,230
+Information became physical.
+
+26
+00:01:47,350 --> 00:01:51,357
+In 1982, John Hopfield showed
+that a network of binary
+
+27
+00:01:51,357 --> 00:01:55,289
+neurons with symmetric
+connections is an Ising model:
+
+28
+00:01:55,289 --> 00:01:59,222
+associative memory is
+descending an energy landscape.
+
+29
+00:01:59,602 --> 00:02:03,866
+In 1985, Geoffrey Hinton, with
+Ackley and Sejnowski, added
+
+30
+00:02:03,866 --> 00:02:08,056
+temperature and sampling: the
+Boltzmann machine learns by
+
+31
+00:02:08,056 --> 00:02:11,585
+matching the model's
+correlations to the data's.
+
+32
+00:02:11,965 --> 00:02:16,556
+In 2024 both received the Nobel
+Prize in Physics for these ideas.
+
+33
+00:02:17,683 --> 00:02:22,203
+In 1997, Christopher Jarzynski
+discovered an exact equality:
+
+34
+00:02:22,203 --> 00:02:26,572
+the average of the exponential
+of minus the work gives the
+
+35
+00:02:26,572 --> 00:02:30,187
+free-energy difference,
+even for fast processes.
+
+36
+00:02:30,567 --> 00:02:34,507
+In 1999, Gavin Crooks
+generalized it by relating the
+
+37
+00:02:34,507 --> 00:02:38,597
+probabilities of a trajectory
+and of its time reverse.
+
+38
+00:02:38,977 --> 00:02:43,450
+Stochastic thermodynamics was
+born: the thermodynamics of small,
+
+39
+00:02:43,450 --> 00:02:47,783
+noisy systems far from equilibrium,
+like a thermodynamic chip.
+
+40
+00:02:48,883 --> 00:02:51,945
+The three rivers merge in
+thermodynamic computing.
+
+41
+00:02:52,325 --> 00:02:56,302
+From thermodynamics it takes free
+energy and efficiency limits.
+
+42
+00:02:56,682 --> 00:02:58,964
+From information, the cost of erasing and
+
+43
+00:02:58,964 --> 00:03:01,245
+the equivalence between bits and entropy.
+
+44
+00:03:01,625 --> 00:03:03,890
+From neural networks, the idea that
+
+45
+00:03:03,890 --> 00:03:06,801
+learning is fitting a
+Boltzmann distribution.
+
+46
+00:03:07,181 --> 00:03:10,626
+And from stochastic
+thermodynamics, the tools to
+
+47
+00:03:10,626 --> 00:03:13,497
+measure work and heat in a noisy device.
+
+48
+00:03:13,877 --> 00:03:15,802
+That is the intellectual
+map of the course.
+
+49
+00:03:16,917 --> 00:03:19,821
+Every name in this story
+is a tool of the course.
+
+50
+00:03:20,201 --> 00:03:22,606
+Carnot and Clausius give us the limits.
+
+51
+00:03:22,986 --> 00:03:26,814
+Boltzmann and Gibbs, the program
+a thermodynamic chip executes.
+
+52
+00:03:27,194 --> 00:03:30,763
+Shannon, Landauer and Bennett,
+the cost of information.
+
+53
+00:03:31,143 --> 00:03:34,925
+Hopfield and Hinton, the
+learning models of unit four.
+
+54
+00:03:35,305 --> 00:03:39,452
+And Jarzynski and Crooks, the
+way to extract free energies,
+
+55
+00:03:39,452 --> 00:03:43,177
+and even matrix determinants,
+from work measurements.
+
+56
+00:03:44,283 --> 00:03:45,737
+Some myths to avoid.
+
+57
+00:03:46,117 --> 00:03:50,494
+Shannon did not copy Gibbs: the formal
+coincidence was recognized later.
+
+58
+00:03:50,874 --> 00:03:54,437
+The demon was not resolved at
+measurement, but at erasure.
+
+59
+00:03:54,817 --> 00:03:59,243
+Boltzmann machines were not wrong: they
+were expensive to sample on digital
+
+60
+00:03:59,243 --> 00:04:03,019
+hardware, which is why thermodynamic
+hardware could revive them.
+
+61
+00:04:03,399 --> 00:04:07,497
+And the Jarzynski equality does not
+contradict the second law: it contains it.
+
+62
+00:04:08,617 --> 00:04:12,304
+In summary: thermodynamics
+was born with engines, became
+
+63
+00:04:12,304 --> 00:04:16,123
+statistical with Boltzmann and
+Gibbs, met information with
+
+64
+00:04:16,123 --> 00:04:20,403
+Shannon and Landauer, inspired
+learning with Hopfield and Hinton,
+
+65
+00:04:20,783 --> 00:04:23,683
+and became stochastic
+with Jarzynski and Crooks.
+
+66
+00:04:24,063 --> 00:04:28,407
+Thermodynamic computing is the
+point where all those lines cross.
+
+67
+00:04:29,517 --> 00:04:32,474
+To practice: compute a Carnot efficiency.
+
+68
+00:04:32,854 --> 00:04:35,321
+Explain the formula on Boltzmann's tomb.
+
+69
+00:04:35,701 --> 00:04:37,294
+Summarize Bennett's contribution.
+
+70
+00:04:37,674 --> 00:04:41,186
+And derive the second law
+from the Jarzynski equality.

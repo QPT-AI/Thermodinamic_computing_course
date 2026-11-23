@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.5}{El teorema de fluctuación--disipación}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Para el OU con $\kappa=2$, $\kB T=0{,}5$, $\mu=1$, escriba $C(t)$ y la respuesta a $F=0{,}1$.
+\item Derive $D=\mu\kB T$ desde el TFD para una partícula libre (use $\langle x^2\rangle\approx2Dt$ y la respuesta $\langle x\rangle_F=\mu Ft$).
+\item Calcule la rigidez de una trampa si $x_{\text{rms}}=20$ nm a 300 K.
+\item ¿Qué indica una temperatura efectiva mayor que la del baño?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Para el oscilador subamortiguado ($m$, $\gamma$, $\kappa$), use el TFD para relacionar $S_x(\omega)$ con $\mathrm{Im}\,\chi(\omega)$, $\chi(\omega)=1/(\kappa-m\omega^2-i\gamma\omega)$.
+\item Muestre que para el circuito RC el TFD da $S_V(\omega)=\frac{2\kB T}{\omega}\mathrm{Im}\,Z(\omega)$ y recupere $4\kB TR$ a baja frecuencia (convención unilateral).
+\item Un sistema muestra $C(0)=2\kB T\chi_0$. ¿Cuál es $T_{\text{ef}}$ estática?
+\end{enumerate}
+
+\section{Ejercicio avanzado}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Demuestre el TFD para un sistema con dinámica de Fokker--Planck en equilibrio: perturbe $V\to V-Fx$, linealice $p=p_{\text{eq}}+\delta p$ y muestre $\langle x\rangle_F(t)=\beta F[C(0)-C(t)]$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $C(t)=\frac{0{,}5}{2}e^{-2t}=0{,}25e^{-2t}$; $\langle x\rangle_F=\frac{0{,}1}{0{,}5}(0{,}25-0{,}25e^{-2t})=0{,}05(1-e^{-2t})=\frac F\kappa(1-e^{-\kappa t})$.
+
+\textbf{B2.} Para tiempos largos, $\frac{d}{dt}\langle x\rangle_F=\mu F$; el TFD en forma de velocidad da $\mu=\beta\int_0^\infty\langle v(0)v(t)\rangle dt=\beta D$, luego $D=\mu\kB T$.
+
+\textbf{B3.} $\kappa=\kB T/x_{\text{rms}}^2=4{,}14\times10^{-21}/(4\times10^{-16})\approx1{,}0\times10^{-5}$ N/m.
+
+\textbf{B4.} Fluctuaciones mayores que las que corresponderían a la respuesta medida: ruido adicional no térmico o forzamiento activo (fuera del equilibrio).
+
+\textbf{I1.} $\mathrm{Im}\chi=\frac{\gamma\omega}{(\kappa-m\omega^2)^2+\gamma^2\omega^2}$; $S_x(\omega)=\frac{2\kB T\gamma}{(\kappa-m\omega^2)^2+\gamma^2\omega^2}$ (bilateral).
+
+\textbf{I2.} Con la carga como coordenada y el voltaje como fuerza, la impedancia hace de respuesta; para $\omega\to0$ y una resistencia pura, la densidad bilateral $2\kB TR$ equivale a la unilateral $4\kB TR$.
+
+\textbf{I3.} $T_{\text{ef}}=2T$.
+
+\textbf{A1.} Con $\mathcal L_0p=\partial_x[\mu V'p+D\partial_xp]$ y $\mathcal L_0p_{\text{eq}}=0$, la perturbación añade la fuente $-\partial_x(\mu Fp_{\text{eq}})=\mu\beta FV'p_{\text{eq}}$. Un cálculo directo da $\mathcal L_0(xp_{\text{eq}})=D\,\partial_xp_{\text{eq}}=-D\beta V'p_{\text{eq}}$, de modo que la fuente es $-\beta F\,\mathcal L_0(xp_{\text{eq}})$ (usando $D=\mu\kB T$). A primer orden, $\delta p(t)=-\beta F\int_0^te^{\mathcal L_0(t-s)}\mathcal L_0(xp_{\text{eq}})\,ds$ y, con $C(u)=\int x\,e^{\mathcal L_0u}(xp_{\text{eq}})\,dx$ (media nula), $\langle x\rangle_F(t)=-\beta F\int_0^t\dot C(u)\,du=\beta F[C(0)-C(t)]$.
+\end{solucion}
+\end{document}

@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.4}{Transformers dispersos}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} capas dispersas de grado fijo; comparación a igual presupuesto de conexiones (iso-FLOP); mezcla de información en
+grafos de grado fijo.
+\textbf{Prerrequisitos:} 5.7, 10.2.
+
+\section{Capas dispersas}
+Cada unidad de salida se conecta con $k$ entradas según un patrón fijo (aleatorio, local, por bloques). Costo: $C=n\,k$ multiplicaciones-sumas frente a $n\,d$ de la capa
+densa. En un TSU, $k$ lo fija el chip.
+
+\section{Comparación iso-FLOP \evS}
+Experimento: $d=64$ entradas, presupuesto $C=8192$, características $\tanh$ dispersas aleatorias, lectura por regresión ridge sobre un maestro no lineal ($N=4000$ de
+entrenamiento, 2000 de prueba, 3 máscaras).
+\begin{center}\small\begin{tabular}{rrr}\toprule
+grado $k$ & ancho $n$ & ECM normalizado\\\midrule
+64 (densa) & 128 & 0{,}115\\ 32 & 256 & 0{,}092\\ 16 & 512 & 0{,}083\\ 8 & 1024 & 0{,}091\\ 4 & 2048 & 0{,}101\\ 2 & 4096 & 0{,}109\\\bottomrule
+\end{tabular}\end{center}
+Curva en U: con grado muy bajo cada unidad ve demasiado poco. El óptimo de este ejemplo no se generaliza sin más a modelos grandes; las leyes de escala dispersas
+(Frantar et al.) encuentran que, a igual cómputo, la dispersión ayuda con entrenamiento largo y que el óptimo depende del tamaño y los datos.
+
+\section{Mezcla en grafos de grado fijo}
+Campo receptivo tras $\ell$ capas: $r\approx\ell k$ con patrón local, $r\sim k^\ell$ con patrón de mundo pequeño (local más saltos largos). Con $k=16$ y 4096 entradas:
+unas 256 capas locales frente a 3 de mundo pequeño.
+
+\begin{aplicacion}
+Elegir $k$ según el hardware y ajustar el ancho a presupuesto fijo; máscaras estáticas desde el inicio. Laboratorio L30: barrido de grado en un modelo pequeño.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Comparar con distinto presupuesto. \quad Suponer que lo disperso es rápido en GPU.
+\item Patrones solo locales en redes poco profundas. \quad Generalizar el óptimo de un ejemplo pequeño.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{frantar} E. Frantar et al., Scaling laws for sparsely-connected foundation models, \emph{ICLR} (2024).
+\bibitem{child} R. Child et al., Generating long sequences with sparse transformers, arXiv:1904.10509 (2019).
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\end{thebibliography}
+\end{document}

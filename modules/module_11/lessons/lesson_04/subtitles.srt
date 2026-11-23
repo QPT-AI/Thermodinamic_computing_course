@@ -1,0 +1,335 @@
+1
+00:00:00,350 --> 00:00:02,147
+Lección 11.4.
+
+2
+00:00:02,527 --> 00:00:05,320
+Simuladores y flujos de
+investigación con agentes.
+
+3
+00:00:06,450 --> 00:00:08,925
+Hasta aquí hemos escrito
+los programas nosotros.
+
+4
+00:00:09,305 --> 00:00:14,332
+La siguiente idea es que un agente, un
+modelo de lenguaje con herramientas, proponga
+
+5
+00:00:14,332 --> 00:00:18,820
+experimentos, los ejecute en un simulador,
+lea los resultados y los mejore.
+
+6
+00:00:19,200 --> 00:00:23,220
+Para eso hace falta algo más que un
+simulador: hace falta convertir cada
+
+7
+00:00:23,220 --> 00:00:26,961
+experimento en una tarea que una
+máquina pueda calificar sin ayuda.
+
+8
+00:00:27,341 --> 00:00:28,976
+Hoy construimos esa pieza.
+
+9
+00:00:30,083 --> 00:00:32,396
+La capa de simulación tiene tres niveles.
+
+10
+00:00:32,776 --> 00:00:36,444
+THRML simula muestreo por bloques en GPU.
+
+11
+00:00:36,824 --> 00:00:39,633
+Torx describe y deriva
+programas estocásticos.
+
+12
+00:00:40,013 --> 00:00:43,798
+Y Extropic ofrece una interfaz de
+simulación en acceso anticipado,
+
+13
+00:00:43,798 --> 00:00:47,353
+pensada para que los agentes
+busquen algoritmos que compilen y
+
+14
+00:00:47,353 --> 00:00:50,736
+corran bien en su hardware; su
+documentación no es pública,
+
+15
+00:00:51,116 --> 00:00:53,756
+así que aquí trabajamos con
+las bibliotecas abiertas.
+
+16
+00:00:54,136 --> 00:00:56,644
+Lo importante es que el agente solo ve una
+
+17
+00:00:56,644 --> 00:00:59,510
+interfaz: código de
+entrada, métricas de salida.
+
+18
+00:01:00,617 --> 00:01:03,193
+Una tarea verificable tiene cuatro partes.
+
+19
+00:01:03,573 --> 00:01:06,972
+Un enunciado: estimar las
+magnetizaciones de un Ising de
+
+20
+00:01:06,972 --> 00:01:09,947
+cuatro por cuatro con un
+muestreador por bloques.
+
+21
+00:01:10,327 --> 00:01:13,309
+Una ejecución aislada: el
+código del agente corre
+
+22
+00:01:13,309 --> 00:01:15,865
+en un proceso separado, con tiempo límite.
+
+23
+00:01:16,245 --> 00:01:19,189
+Una métrica de referencia:
+error máximo de cero
+
+24
+00:01:19,189 --> 00:01:22,072
+coma cero tres frente a
+la enumeración exacta.
+
+25
+00:01:22,452 --> 00:01:26,569
+Y una rúbrica: que use un muestreador
+y que el coloreado sea válido.
+
+26
+00:01:26,948 --> 00:01:29,628
+La recompensa combina ejecución y rúbrica.
+
+27
+00:01:30,750 --> 00:01:35,403
+Un proponente programado, que hace las
+veces de agente, envía cinco soluciones.
+
+28
+00:01:35,783 --> 00:01:38,493
+El ejecutor da quince
+centésimas por correr y
+
+29
+00:01:38,493 --> 00:01:41,023
+ochenta y cinco por reproducir la métrica.
+
+30
+00:01:41,403 --> 00:01:44,742
+Gibbs cromático con treinta
+barridos: recompensa uno.
+
+31
+00:01:45,122 --> 00:01:48,753
+Con tres barridos corre pero
+no converge: cero coma cuatro.
+
+32
+00:01:49,133 --> 00:01:51,123
+Un error de sintaxis: cero.
+
+33
+00:01:51,503 --> 00:01:56,546
+Y una trampa, que calcula la respuesta
+por enumeración exacta: pasa la ejecución
+
+34
+00:01:56,546 --> 00:02:01,084
+con nota máxima, pero la rúbrica la
+detecta, y queda en cero coma siete.
+
+35
+00:02:02,217 --> 00:02:04,608
+La quinta propuesta da
+la lección más útil.
+
+36
+00:02:04,988 --> 00:02:09,516
+Actualizar todos los espines a la
+vez es un error clásico: no es Gibbs.
+
+37
+00:02:09,896 --> 00:02:14,095
+Y sin embargo pasa la métrica, con
+error de cero coma cero diecinueve.
+
+38
+00:02:14,475 --> 00:02:15,007
+¿Por qué?
+
+39
+00:02:15,387 --> 00:02:19,862
+En un grafo bipartito, la actualización
+simultánea equivale a dos cadenas
+
+40
+00:02:19,862 --> 00:02:24,277
+entrelazadas, cada una correcta, así
+que las magnetizaciones salen bien.
+
+41
+00:02:24,657 --> 00:02:28,416
+Pero las correlaciones entre
+vecinos tienen un error de cero coma
+
+42
+00:02:28,416 --> 00:02:31,713
+ocho, frente a cero coma cero
+cuatro con Gibbs cromático.
+
+43
+00:02:32,093 --> 00:02:35,897
+La métrica estaba mal especificada;
+solo la rúbrica lo notó.
+
+44
+00:02:37,017 --> 00:02:38,900
+De aquí salen reglas de diseño.
+
+45
+00:02:39,280 --> 00:02:42,364
+Mide todo lo que define
+el resultado, no solo lo
+
+46
+00:02:42,364 --> 00:02:45,321
+más fácil: momentos de
+primer y segundo orden.
+
+47
+00:02:45,701 --> 00:02:48,419
+Ejecuta el código en un
+entorno aislado y con
+
+48
+00:02:48,419 --> 00:02:51,318
+límite de tiempo, porque
+es código no confiable.
+
+49
+00:02:51,698 --> 00:02:54,439
+Da más peso a la ejecución,
+que es más difícil de
+
+50
+00:02:54,439 --> 00:02:57,628
+engañar, y usa la rúbrica para
+lo que la ejecución no ve.
+
+51
+00:02:58,008 --> 00:03:00,762
+Y guarda cada versión del
+entorno: cada cambio en
+
+52
+00:03:00,762 --> 00:03:03,349
+la recompensa cambia lo
+que el agente aprende.
+
+53
+00:03:04,450 --> 00:03:07,956
+En la práctica, empaqueta
+laboratorios anteriores como tareas
+
+54
+00:03:07,956 --> 00:03:11,404
+con métricas de referencia,
+califica la ejecución con quince
+
+55
+00:03:11,404 --> 00:03:14,565
+centésimas por correr y
+ochenta y cinco por reproducir,
+
+56
+00:03:14,945 --> 00:03:18,189
+y añade una rúbrica con
+reglas o con un modelo juez.
+
+57
+00:03:18,569 --> 00:03:21,930
+En el laboratorio treinta construirás
+un pequeño banco de pruebas.
+
+58
+00:03:23,050 --> 00:03:26,782
+Errores comunes: verificar
+solo la estadística más fácil.
+
+59
+00:03:27,162 --> 00:03:29,928
+Ejecutar código no
+confiable sin aislamiento.
+
+60
+00:03:30,308 --> 00:03:32,751
+Premiar la respuesta en lugar del método.
+
+61
+00:03:33,131 --> 00:03:35,879
+Y cambiar la recompensa
+sin versionar el entorno.
+
+62
+00:03:36,983 --> 00:03:42,549
+En resumen, un agente de investigación
+necesita un simulador y, sobre todo, tareas
+
+63
+00:03:42,549 --> 00:03:47,708
+verificables: enunciado, ejecución
+aislada, métrica de referencia y rúbrica.
+
+64
+00:03:48,088 --> 00:03:51,053
+En nuestro arnés, la rúbrica
+detectó tanto una trampa
+
+65
+00:03:51,053 --> 00:03:53,906
+como un algoritmo incorrecto
+que pasaba la métrica.
+
+66
+00:03:54,286 --> 00:03:57,688
+Diseñar la recompensa es diseñar
+lo que el agente aprenderá.
+
+67
+00:03:58,817 --> 00:04:03,532
+Para practicar: calcula la recompensa de
+una solución que corre sin reproducir.
+
+68
+00:04:03,912 --> 00:04:08,029
+Explica por qué la actualización
+simultánea acierta las magnetizaciones.
+
+69
+00:04:08,409 --> 00:04:10,608
+Propón la métrica que la habría detectado.
+
+70
+00:04:10,988 --> 00:04:13,314
+Y explica por qué hay
+que aislar la ejecución.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.4}{El teorema de búsqueda de orden por difusión}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Encuentre $t$ para $r=33$, $k=3$ en el lema de duplicación.
+\item (B) ¿Por qué recíprocos distintos $1/a$, $1/b$ con $a,b\le N$ difieren al menos en $1/N^2$?
+\item (B) Calcule $\ell_0$ para $N=1023$.
+\item (B) ¿Qué no dice el teorema sobre energía o área?
+\item (I) Demuestre $b_{t+1}=2b_t$ cuando $a_t>3r/4$.
+\item (I) ¿Por qué el redondeo es correcto si $|p-1/r|\le1/(4N^2)$? (Corolario 4.2: acote $|1/p-r|$.)
+\item (A) Para $N=299$, compare $\max_{k\ne0}\lambda_k$ con la cota $0{,}95$ y explique la diferencia con la estructura de los cosenos.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $3,6,12$: $12\in[8{,}25;\,24{,}75]$, $t=2$.
+
+\textbf{E2.} $|1/a-1/b|=|a-b|/(ab)\ge1/N^2$.
+
+\textbf{E3.} $M=10$; $\ell_0=4\cdot11\cdot(\log_21023+2)\approx528$.
+
+\textbf{E4.} Nada: cada paso actúa sobre $r$ nodos en paralelo; área, energía y precisión crecen con $r$ y $N$.
+
+\textbf{E5.} $2a_t\in(3r/2,2r)$, $a_{t+1}=2a_t-r\in(r/2,r)$ y $b_{t+1}=r-a_{t+1}=2(r-a_t)=2b_t$.
+
+\textbf{E6.} $p\ge1/r-1/(4N^2)>3/(4N)$; $|1/p-r|=r|1/r-p|/p\le N\cdot\frac1{4N^2}\cdot\frac{4N}3=\frac13<\frac12$.
+
+\textbf{E7.} La cota usa un solo coseno $\le0$; en realidad varios $t$ dan cosenos negativos, por eso el máximo real ($0{,}669$) es mucho menor.
+\end{solucion}
+\end{document}

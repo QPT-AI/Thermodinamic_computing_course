@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.8}{Procesos de saltos de Markov en tiempo continuo}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} matriz de tasas y ecuación maestra; algoritmo de Gillespie; tiempos de
+primer paso. \textbf{Prerrequisitos:} 0.5; distribuciones exponencial y de Poisson.
+
+\section{Procesos de saltos}
+Estado discreto $i$, saltos $i\to j$ con tasa $Q_{ij}\ge0$ ($i\ne j$): $P(\text{salto en }[t,t+dt])=Q_{ij}\,dt$. La diagonal es
+$Q_{ii}=-\sum_{j\ne i}Q_{ij}$ (filas suman cero). El tiempo de permanencia en $i$ es $\mathrm{Exp}(R_i)$ con $R_i=-Q_{ii}$ (sin memoria).
+Ejemplo: pbit con tasas $k_+$ ($-1\to+1$) y $k_-$: $P(+1)=k_+/(k_++k_-)$; autocorrelación $\propto e^{-(k_++k_-)t}$.
+
+\section{Ecuación maestra}
+\begin{equation}\dot p_i=\sum_j\big(p_jQ_{ji}-p_iQ_{ij}\big),\qquad\dot p=pQ,\qquad p(t)=p(0)e^{Qt}.\end{equation}
+Es el análogo en tiempo continuo de $p_{n+1}=p_nP$ (lección 0.5) y el análogo discreto de Fokker--Planck (2.3). Balance detallado:
+$\pi_iQ_{ij}=\pi_jQ_{ji}$.
+
+\section{Algoritmo de Gillespie}
+Desde el estado $i$: (1) sortear $\tau\sim\mathrm{Exp}(R_i)$; (2) elegir $j$ con probabilidad $Q_{ij}/R_i$; avanzar $t\to t+\tau$. Es exacto
+(sin $\Delta t$). Para producción $\varnothing\xrightarrow kM$ y degradación $M\xrightarrow{\gamma n}\varnothing$, la estacionaria es Poisson$(k/\gamma)$:
+la animación compara la fracción de tiempo en cada $n$ (simulación de duración 5000) con la distribución exacta \evS.
+
+\section{Tiempos de primer paso}
+$\tau_A=\inf\{t:x(t)\in A\}$. Para $N$ saltos sucesivos de tasa $k$, $\tau_N$ es Gamma$(N,k)$: $\langle\tau_N\rangle=N/k$, $\Var=N/k^2$, y la
+precisión relativa es $1/\sqrt N$. En general, $m_i=\E_i\tau_A$ satisface $\sum_jQ_{ij}m_j=-1$ para $i\notin A$, $m_i=0$ en $A$. La lección 3.6
+(relación de incertidumbre termodinámica) muestra que la precisión cuesta producción de entropía \cite{utsumi}.
+
+\begin{ejemplo}
+$k=10$ s$^{-1}$, $\gamma=1$ s$^{-1}$: $\langle n\rangle=\Var(n)=10$. Pbit con $k_+=3$, $k_-=1\ \mu$s$^{-1}$: $P(+1)=0{,}75$, $\tau_c=250$ ns.
+\end{ejemplo}
+
+\begin{aplicacion}
+Actualización de pbits (Unidades 4--5), circuitos brownianos de tokens (5.5; reto de L7: Gillespie de un semisumador y TUR), redes de
+reacciones químicas \cite{raux}.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Tasa $\neq$ probabilidad. \quad Filas de $Q$ suman 0.
+\item Gillespie es exacto; no discretizar sin necesidad. \quad Reportar la varianza del primer paso, no solo la media.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}.
+\bibitem[26]{utsumi} Y. Utsumi et al., Computation time and thermodynamic uncertainty relation of Brownian circuits, 2022.
+\bibitem[27]{raux} P. Raux, C. Goupil y G. Verley, Thermodynamic circuits..., 2025.
+\end{thebibliography}
+\end{document}

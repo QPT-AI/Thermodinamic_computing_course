@@ -1,0 +1,399 @@
+1
+00:00:00,350 --> 00:00:02,069
+Lesson 1.1.
+
+2
+00:00:02,449 --> 00:00:05,100
+Laws of thermodynamics and free energy.
+
+3
+00:00:06,217 --> 00:00:09,140
+A chip is a heat engine
+running in reverse: it
+
+4
+00:00:09,140 --> 00:00:12,190
+receives electrical work
+and turns it into heat.
+
+5
+00:00:12,570 --> 00:00:16,724
+If we want to compute with
+physics, and not in spite of it, we
+
+6
+00:00:16,724 --> 00:00:20,275
+need the rules that govern
+energy, heat and disorder.
+
+7
+00:00:20,655 --> 00:00:24,798
+In this lesson we review the laws
+of thermodynamics and introduce
+
+8
+00:00:24,798 --> 00:00:28,431
+the quantity we will use most
+in the course: free energy.
+
+9
+00:00:29,550 --> 00:00:33,931
+Let's put two boxes of particles
+in contact, one hot and one cold.
+
+10
+00:00:34,311 --> 00:00:39,063
+In each collision across the wall, two
+particles share their energy at random.
+
+11
+00:00:39,443 --> 00:00:42,883
+Nobody tells the energy
+where to go, and yet the mean
+
+12
+00:00:42,883 --> 00:00:46,258
+energy of the two boxes
+converges to the same value.
+
+13
+00:00:46,638 --> 00:00:50,912
+That final state, with no net
+flow, is thermal equilibrium, and
+
+14
+00:00:50,912 --> 00:00:54,507
+temperature is precisely
+the quantity that equalizes.
+
+15
+00:00:54,887 --> 00:00:59,295
+The arrow of time emerges on its own,
+from collisions that are symmetric.
+
+16
+00:01:00,417 --> 00:01:02,995
+The zeroth law says thermal equilibrium is
+
+17
+00:01:02,995 --> 00:01:05,941
+transitive, and that lets
+us define temperature.
+
+18
+00:01:06,321 --> 00:01:10,691
+The first law is energy conservation:
+the change in internal energy
+
+19
+00:01:10,691 --> 00:01:14,410
+is the heat that enters plus
+the work done on the system.
+
+20
+00:01:14,790 --> 00:01:19,018
+The second law says the total
+entropy of an isolated system never
+
+21
+00:01:19,018 --> 00:01:23,442
+decreases; for a system in contact
+with a bath at temperature T, the
+
+22
+00:01:23,442 --> 00:01:27,215
+entropy change is at least the
+heat received divided by T.
+
+23
+00:01:27,595 --> 00:01:30,670
+The third law sets the
+zero: entropy tends to
+
+24
+00:01:30,670 --> 00:01:33,336
+a minimum as temperature tends to zero.
+
+25
+00:01:34,450 --> 00:01:35,491
+What is entropy?
+
+26
+00:01:35,871 --> 00:01:40,494
+Boltzmann answered: S = k_B
+ln Ω, where Ω is the number
+
+27
+00:01:40,494 --> 00:01:44,445
+of microstates compatible
+with what we observe.
+
+28
+00:01:44,825 --> 00:01:46,043
+Think of a hundred coins.
+
+29
+00:01:46,423 --> 00:01:49,440
+The macrostate fifty heads
+can be achieved in vastly
+
+30
+00:01:49,440 --> 00:01:52,109
+more ways than the
+macrostate a hundred heads.
+
+31
+00:01:52,489 --> 00:01:56,481
+As the number of coins grows,
+the distribution concentrates
+
+32
+00:01:56,481 --> 00:02:00,676
+around one half: its relative
+width decays as one over root N.
+
+33
+00:02:01,056 --> 00:02:05,441
+The second law is statistical: the
+system ends up in the macrostates with
+
+34
+00:02:05,441 --> 00:02:09,645
+more microstates simply because they
+are overwhelmingly more probable.
+
+35
+00:02:10,750 --> 00:02:15,845
+At fixed temperature, the system neither
+minimizes its energy nor maximizes
+
+36
+00:02:15,845 --> 00:02:20,329
+its entropy separately: it minimizes
+the free energy, F = U − T S.
+
+37
+00:02:20,709 --> 00:02:21,866
+It is a competition.
+
+38
+00:02:22,246 --> 00:02:26,674
+Consider two states: one with low
+energy and a single microstate,
+
+39
+00:02:26,674 --> 00:02:30,761
+and another with energy ε higher
+but a thousand microstates.
+
+40
+00:02:31,141 --> 00:02:35,137
+At low temperature energy wins and
+the system prefers the low state.
+
+41
+00:02:35,517 --> 00:02:39,860
+As temperature rises, the entropy
+term, T S, grows until it dominates,
+
+42
+00:02:39,860 --> 00:02:43,582
+and the population flips to the
+state with many microstates.
+
+43
+00:02:43,962 --> 00:02:47,183
+The transition happens when
+the free energies are equal.
+
+44
+00:02:48,283 --> 00:02:50,969
+Free energy has an operational meaning.
+
+45
+00:02:51,349 --> 00:02:57,479
+In a constant-temperature process,
+the work needed to take a system from
+
+46
+00:02:57,479 --> 00:03:03,182
+one state to another is at least
+the change in free energy: W ≥ ΔF.
+
+47
+00:03:03,562 --> 00:03:07,212
+Equality is reached only with
+infinitely slow processes.
+
+48
+00:03:07,592 --> 00:03:11,722
+The difference, W minus ΔF,
+is work dissipated as heat,
+
+49
+00:03:11,722 --> 00:03:15,250
+and it is always greater
+than or equal to zero.
+
+50
+00:03:15,630 --> 00:03:20,825
+This inequality is what, in lesson
+1.5, gives the cost of erasing a bit.
+
+51
+00:03:21,950 --> 00:03:24,227
+Let's put numbers into
+the two-state system.
+
+52
+00:03:24,607 --> 00:03:29,095
+With an energy gap of 0.1 electronvolts
+and a thousand microstates,
+
+53
+00:03:29,095 --> 00:03:33,448
+the transition temperature is the
+energy divided by k_B times the
+
+54
+00:03:33,448 --> 00:03:37,199
+log of a thousand: about one
+hundred sixty-eight kelvin.
+
+55
+00:03:37,579 --> 00:03:42,003
+At three hundred kelvin the free-energy
+difference is negative, about
+
+56
+00:03:42,003 --> 00:03:46,428
+minus seventy-nine millielectronvolts,
+and the fraction of the system
+
+57
+00:03:46,428 --> 00:03:50,147
+in the many-microstate state
+is about ninety-five percent.
+
+58
+00:03:51,250 --> 00:03:53,996
+In a computer these
+laws are very concrete.
+
+59
+00:03:54,376 --> 00:03:58,898
+By the first law, all electrical power
+ends up as heat that must be removed.
+
+60
+00:03:59,278 --> 00:04:02,787
+By the second, erasing information
+requires expelling entropy.
+
+61
+00:04:03,167 --> 00:04:07,705
+And in a thermodynamic chip, thermal
+noise drives the system toward low
+
+62
+00:04:07,705 --> 00:04:11,540
+free-energy states: that is the
+basis of Boltzmann sampling.
+
+63
+00:04:12,650 --> 00:04:16,183
+In the next lesson we will go
+from counting microstates to
+
+64
+00:04:16,183 --> 00:04:19,776
+the Boltzmann distribution,
+and see that the free energy is
+
+65
+00:04:19,776 --> 00:04:22,943
+minus k_B T times the log
+of the partition function.
+
+66
+00:04:23,323 --> 00:04:27,001
+In unit three we will refine
+the work inequality with the
+
+67
+00:04:27,001 --> 00:04:30,615
+Jarzynski equality, which
+holds even for fast processes.
+
+68
+00:04:31,717 --> 00:04:36,795
+Beware of some confusions: heat is
+transferred energy, not temperature.
+
+69
+00:04:37,175 --> 00:04:40,328
+A system's entropy can
+decrease, as long as the
+
+70
+00:04:40,328 --> 00:04:43,079
+environment's increases at least as much.
+
+71
+00:04:43,459 --> 00:04:46,531
+Saying entropy is disorder
+is only a metaphor.
+
+72
+00:04:46,911 --> 00:04:49,707
+And pay attention to the
+sign convention for work.
+
+73
+00:04:50,817 --> 00:04:53,883
+In summary: equilibrium
+is the state with no net
+
+74
+00:04:53,883 --> 00:04:56,439
+flows, and temperature characterizes it.
+
+75
+00:04:56,819 --> 00:05:00,363
+Energy is conserved and total
+entropy does not decrease.
+
+76
+00:05:00,742 --> 00:05:06,206
+Entropy counts microstates, and at
+fixed temperature the system minimizes
+
+77
+00:05:06,206 --> 00:05:11,146
+the free energy, F = U − T S, which
+also bounds the required work.
+
+78
+00:05:12,250 --> 00:05:16,601
+To practice: count the microstates
+of fifty and of a hundred heads.
+
+79
+00:05:16,981 --> 00:05:20,556
+Compute the population of the
+two-state system at a hundred kelvin.
+
+80
+00:05:20,936 --> 00:05:23,935
+Apply the first law to
+a heat and work balance.
+
+81
+00:05:24,315 --> 00:05:27,171
+And explain why equality
+between work and free
+
+82
+00:05:27,171 --> 00:05:29,841
+energy requires an
+infinitely slow process.

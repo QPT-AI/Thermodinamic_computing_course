@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.3}{Caminatas aleatorias en grafos de Cayley}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba los vecinos del nodo $j$ en coordenadas de exponente.
+\item (B) Demuestre que $\chi_k$ es vector propio de $P$ y halle $\mu_k$.
+\item (B) ¿Por qué los valores propios de $W$ están en $[0,1]$?
+\item (B) Deduzca $p_\ell(e)=\frac1r\sum_k\lambda_k^\ell$.
+\item (I) Para el ciclo con $\pm1$, $\lambda_1=\cos^2(\pi/r)$. Estime cuántos pasos hacen falta para que $\lambda_1^\ell<10^{-3}$ como función de $r$.
+\item (I) Calcule $\lambda_k$ para $r=7$, $M=3$ y $k=1,\dots,6$. ¿Cuál es el máximo?
+\item (A) Implemente la caminata para $N=1\,022\,117$, $b=576$ ($r=5313$) y encuentre el primer $\ell$ con $\mathrm{round}(1/p_\ell(e))=r$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $j\pm2^t\pmod r$, $0\le t\le M$.
+
+\textbf{E2.} $\chi_k(j\pm2^t)=\chi_k(j)e^{\pm2\pi ik2^t/r}$; promediando, $\mu_k=\frac1{M+1}\sum_t\cos(2\pi k2^t/r)$.
+
+\textbf{E3.} $\mu_k\in[-1,1]\Rightarrow\lambda_k=(1+\mu_k)/2\in[0,1]$.
+
+\textbf{E4.} $\delta_0=\frac1r\sum_k\chi_k$, $W^\ell\chi_k=\lambda_k^\ell\chi_k$ y $\chi_k(0)=1$.
+
+\textbf{E5.} $\lambda_1\approx1-\pi^2/r^2$: $\ell\approx\frac{r^2}{\pi^2}\ln10^3\approx0{,}7r^2$ (para $r=33$: $\approx762$).
+
+\textbf{E6.} $\mu_k=\frac14\sum_{t=0}^3\cos(2\pi k2^t/7)$; como $2^3\equiv1$, los términos $t=0$ y $t=3$ coinciden. Resultan $\lambda_{1}=\lambda_6=0{,}515$, $\lambda_2=\lambda_5=0{,}410$, $\lambda_3=\lambda_4=0{,}325$: el máximo es $0{,}515$ ($k=1,6$).
+
+\textbf{E7.} Con $M=20$, el primer $\ell$ es $46$ (fórmula espectral), muy por debajo de la cota $4(M+1)(\log_2N+2)\approx1845$ del teorema (7.4); $\max_{k\ne0}\lambda_k=0{,}786$.
+\end{solucion}
+\end{document}

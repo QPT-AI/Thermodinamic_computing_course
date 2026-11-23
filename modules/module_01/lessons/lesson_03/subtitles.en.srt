@@ -1,0 +1,359 @@
+1
+00:00:00,350 --> 00:00:02,045
+Lesson 1.3.
+
+2
+00:00:02,425 --> 00:00:04,937
+Shannon entropy and Gibbs entropy.
+
+3
+00:00:06,050 --> 00:00:10,961
+Shannon, thinking about telegraph
+messages, wrote a formula for information.
+
+4
+00:00:11,341 --> 00:00:14,198
+Gibbs, seventy years
+earlier, had written the
+
+5
+00:00:14,198 --> 00:00:16,611
+same formula for the entropy of a gas.
+
+6
+00:00:16,991 --> 00:00:18,237
+Is it a coincidence?
+
+7
+00:00:18,617 --> 00:00:19,504
+Not at all.
+
+8
+00:00:19,884 --> 00:00:23,801
+In this lesson we will see that
+both measure the same thing,
+
+9
+00:00:23,801 --> 00:00:28,044
+uncertainty about a state, and
+that the constant converting them,
+
+10
+00:00:28,044 --> 00:00:31,895
+k_B ln 2, is the bridge between
+bits and joules per kelvin.
+
+11
+00:00:32,275 --> 00:00:35,786
+That is Landauer's phrase:
+information is physical.
+
+12
+00:00:36,917 --> 00:00:37,973
+Let's play a guessing game.
+
+13
+00:00:38,353 --> 00:00:41,000
+I hide one card among
+eight equally likely ones.
+
+14
+00:00:41,380 --> 00:00:46,184
+The best strategy is to split the set
+in half with each yes-or-no question.
+
+15
+00:00:46,564 --> 00:00:49,648
+With three questions I
+always find it: three bits.
+
+16
+00:00:50,028 --> 00:00:54,171
+Now suppose the cards are not
+equally likely: one comes up half
+
+17
+00:00:54,171 --> 00:00:57,657
+the time, another a quarter,
+and two one eighth each.
+
+18
+00:00:58,037 --> 00:01:00,581
+It pays to ask about the
+most likely one first.
+
+19
+00:01:00,961 --> 00:01:04,520
+The average number of
+questions drops to 1.75.
+
+20
+00:01:04,900 --> 00:01:08,780
+That figure is exactly the Shannon
+entropy of the distribution.
+
+21
+00:01:09,883 --> 00:01:15,274
+Shannon entropy is H = −Σ p log₂ p.
+
+22
+00:01:15,654 --> 00:01:19,579
+Each outcome of probability
+p contributes a surprise of
+
+23
+00:01:19,579 --> 00:01:23,431
+minus log p bits, and entropy
+is the average surprise.
+
+24
+00:01:23,811 --> 00:01:29,157
+Shannon's coding theorem says no
+code can use, on average, fewer than
+
+25
+00:01:29,157 --> 00:01:33,882
+H bits per symbol, and that you
+can get as close as you like.
+
+26
+00:01:34,262 --> 00:01:38,350
+In the question tree, the depth
+of each leaf is its surprise.
+
+27
+00:01:39,483 --> 00:01:46,106
+Gibbs entropy applies the same
+formula to physical microstates, with
+
+28
+00:01:46,106 --> 00:01:51,949
+the natural log and Boltzmann's
+constant: S = −k_B Σ p ln p.
+
+29
+00:01:52,329 --> 00:01:56,557
+If all accessible microstates
+are equally likely,
+
+30
+00:01:56,557 --> 00:02:00,352
+it reduces to k_B ln
+Ω, Boltzmann's formula.
+
+31
+00:02:00,732 --> 00:02:03,387
+And if the distribution
+is Boltzmann's, Gibbs
+
+32
+00:02:03,387 --> 00:02:05,628
+entropy matches the thermodynamic one.
+
+33
+00:02:06,008 --> 00:02:10,212
+Changing the log base is
+just changing units: one
+
+34
+00:02:10,212 --> 00:02:13,814
+bit is worth k_B ln 2 of physical entropy.
+
+35
+00:02:14,917 --> 00:02:19,466
+A memory is a physical system whose
+space of microstates is divided
+
+36
+00:02:19,466 --> 00:02:23,336
+into logical regions: the zero
+region and the one region.
+
+37
+00:02:23,716 --> 00:02:30,434
+The total physical entropy splits into two
+parts: the Shannon entropy of the logical
+
+38
+00:02:30,434 --> 00:02:36,273
+states, times k_B ln 2, plus the
+average internal entropy of each region.
+
+39
+00:02:36,654 --> 00:02:41,297
+When we erase, we merge the logical
+regions: the logical part disappears and,
+
+40
+00:02:41,297 --> 00:02:45,338
+by the second law, that entropy
+has to go out into the environment.
+
+41
+00:02:45,718 --> 00:02:48,983
+Bits are not abstractions:
+they count microstates.
+
+42
+00:02:50,083 --> 00:02:53,363
+A gigabyte of completely
+random data contains
+
+43
+00:02:53,363 --> 00:02:56,132
+eight billion bits of Shannon entropy.
+
+44
+00:02:56,512 --> 00:03:01,369
+As physical entropy, that is eight billion
+
+45
+00:03:01,369 --> 00:03:05,763
+times k_B ln 2: about 7.7 × 10⁻¹⁴ J/K.
+
+46
+00:03:06,143 --> 00:03:08,506
+It is tiny compared
+with the thermal entropy
+
+47
+00:03:08,506 --> 00:03:10,600
+of the chip itself, but it is not zero.
+
+48
+00:03:10,980 --> 00:03:14,269
+Erasing it at room temperature requires
+
+49
+00:03:14,269 --> 00:03:17,725
+expelling at least 2.3 × 10⁻¹¹ J of heat.
+
+50
+00:03:18,105 --> 00:03:21,183
+If the data were text
+compressible to two bits per
+
+51
+00:03:21,183 --> 00:03:24,753
+character, the minimum cost
+would be proportionally lower.
+
+52
+00:03:25,883 --> 00:03:34,033
+In practice, one bit is worth k_B ln
+2, about 9.6 × 10⁻²⁴ joules per kelvin.
+
+53
+00:03:34,413 --> 00:03:38,007
+Data compression sets how
+many bits must be stored and,
+
+54
+00:03:38,007 --> 00:03:41,013
+by Landauer, the minimum
+cost of erasing them.
+
+55
+00:03:41,393 --> 00:03:44,542
+And when a thermodynamic
+chip produces a sample, the
+
+56
+00:03:44,542 --> 00:03:47,812
+randomness it contains is
+borrowed from the heat bath.
+
+57
+00:03:48,917 --> 00:03:53,276
+In the next lesson Maxwell's demon
+will turn information into work.
+
+58
+00:03:53,656 --> 00:03:55,722
+Then we will see the cost of erasing it.
+
+59
+00:03:56,102 --> 00:04:00,522
+In unit three entropy will become
+a trajectory-level quantity, and in
+
+60
+00:04:00,522 --> 00:04:04,622
+unit eight the KL divergence will
+give the geometry of learning.
+
+61
+00:04:05,750 --> 00:04:08,547
+Common mistakes: mixing bits with nats.
+
+62
+00:04:08,927 --> 00:04:11,912
+Thinking one entropy is
+subjective and the other
+
+63
+00:04:11,912 --> 00:04:15,083
+objective, when both depend
+on how we group states.
+
+64
+00:04:15,463 --> 00:04:17,745
+Believing meaningful text has more entropy
+
+65
+00:04:17,745 --> 00:04:20,135
+than noise, when it is
+the other way around.
+
+66
+00:04:20,515 --> 00:04:23,688
+And forgetting the internal
+entropy of each logical state.
+
+67
+00:04:24,817 --> 00:04:28,121
+In summary: Shannon entropy
+is the average number
+
+68
+00:04:28,121 --> 00:04:30,954
+of binary questions, the average surprise.
+
+69
+00:04:31,334 --> 00:04:34,853
+Gibbs entropy is the same formula
+over physical microstates.
+
+70
+00:04:35,233 --> 00:04:40,048
+One bit is worth k_B ln 2 of
+physical entropy, and the entropy of
+
+71
+00:04:40,048 --> 00:04:44,197
+a memory splits into a logical
+part and an internal one.
+
+72
+00:04:44,577 --> 00:04:46,119
+Information is physical.
+
+73
+00:04:47,250 --> 00:04:50,893
+To practice: compute an
+entropy and its optimal code.
+
+74
+00:04:51,273 --> 00:04:54,861
+Count the questions needed to guess
+a number between one and a thousand.
+
+75
+00:04:55,241 --> 00:04:58,176
+Convert one nat to bits
+and to joules per kelvin.
+
+76
+00:04:58,556 --> 00:05:01,576
+And compute the logical
+entropy of a biased memory.

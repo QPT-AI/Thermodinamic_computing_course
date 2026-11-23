@@ -1,0 +1,368 @@
+1
+00:00:00,350 --> 00:00:02,033
+Lesson 2.4.
+
+2
+00:00:02,413 --> 00:00:04,394
+The Ornstein–Uhlenbeck process.
+
+3
+00:00:05,517 --> 00:00:07,843
+The Ornstein–Uhlenbeck process is the
+
+4
+00:00:07,843 --> 00:00:10,547
+Langevin equation in
+a quadratic potential.
+
+5
+00:00:10,927 --> 00:00:14,039
+It is the only diffusion
+process that is at once
+
+6
+00:00:14,039 --> 00:00:17,801
+stationary, Gaussian and Markov,
+and it is solved exactly.
+
+7
+00:00:18,181 --> 00:00:21,555
+But for us it is much more:
+its final state contains the
+
+8
+00:00:21,555 --> 00:00:24,930
+solution of a linear system
+and the inverse of a matrix.
+
+9
+00:00:25,310 --> 00:00:27,945
+It is the heart of
+thermodynamic linear algebra.
+
+10
+00:00:29,050 --> 00:00:32,144
+Imagine two masses connected
+to each other and to
+
+11
+00:00:32,144 --> 00:00:35,049
+the walls by springs,
+immersed in a hot fluid.
+
+12
+00:00:35,429 --> 00:00:40,227
+The springs define a quadratic
+energy: their stiffness is a matrix A,
+
+13
+00:00:40,227 --> 00:00:44,468
+and a constant external force
+b shifts the equilibrium point.
+
+14
+00:00:44,848 --> 00:00:49,386
+Without noise, the masses would stay
+at the minimum, which is at A⁻¹ b.
+
+15
+00:00:49,766 --> 00:00:52,341
+With noise, they jiggle around that point.
+
+16
+00:00:52,721 --> 00:00:56,725
+The average of the jiggle marks
+the solution, and the shape of the
+
+17
+00:00:56,725 --> 00:01:00,608
+jiggle, longer in the soft
+directions, reveals the inverse of A.
+
+18
+00:01:01,717 --> 00:01:08,497
+In one dimension, dx =
+−a(x − m) dt + √(2/β) dW.
+
+19
+00:01:08,877 --> 00:01:11,340
+The solution is the initial condition
+
+20
+00:01:11,340 --> 00:01:14,270
+forgetting exponentially,
+plus the center m,
+
+21
+00:01:14,650 --> 00:01:22,806
+plus filtered noise: x(t) = m + (x₀ −
+m) e^(−at) + ∫ e^(−a(t−s)) √(2/β) dW(s).
+
+22
+00:01:23,186 --> 00:01:26,846
+Trajectories start from
+different points, converge
+
+23
+00:01:26,846 --> 00:01:30,434
+toward m and keep jiggling
+with variance 1/(β a).
+
+24
+00:01:30,814 --> 00:01:34,151
+The autocorrelation decays as e^(−a τ).
+
+25
+00:01:35,283 --> 00:01:40,123
+In several dimensions:
+dx = −(A x − b) dt +
+
+26
+00:01:40,123 --> 00:01:45,300
+√(2/β) dW, with A symmetric
+positive definite.
+
+27
+00:01:45,680 --> 00:01:49,235
+The particle cloud starts
+from a point, drifts
+
+28
+00:01:49,235 --> 00:01:52,325
+toward A⁻¹ b and widens into an ellipse.
+
+29
+00:01:52,705 --> 00:01:56,334
+In the stationary state
+the distribution is
+
+30
+00:01:56,334 --> 00:02:00,384
+Gaussian with mean A⁻¹ b
+and covariance β⁻¹ A⁻¹.
+
+31
+00:02:00,764 --> 00:02:05,493
+The ellipse's axes are the eigenvectors
+of A, and they are longer in the
+
+32
+00:02:05,493 --> 00:02:10,025
+directions of small eigenvalues:
+the soft directions jiggle the most.
+
+33
+00:02:11,150 --> 00:02:12,407
+Why that covariance?
+
+34
+00:02:12,787 --> 00:02:22,736
+Using Itô's lemma, the covariance
+Σ(t) obeys dΣ/dt = −AΣ − ΣA + 2β⁻¹ I.
+
+35
+00:02:23,116 --> 00:02:26,678
+The first two terms shrink the cloud; the
+
+36
+00:02:26,678 --> 00:02:30,587
+last, which comes from
+(dW)² = dt, widens it.
+
+37
+00:02:30,967 --> 00:02:39,086
+In the stationary state they balance:
+AΣ + ΣA = 2β⁻¹ I, the Lyapunov equation.
+
+38
+00:02:39,466 --> 00:02:44,425
+Since A is symmetric, the
+solution is Σ = β⁻¹ A⁻¹.
+
+39
+00:02:44,805 --> 00:02:48,892
+The animation shows the ellipse
+of Σ(t) growing to that shape.
+
+40
+00:02:50,017 --> 00:02:51,280
+Now the key idea.
+
+41
+00:02:51,660 --> 00:02:55,637
+If we let a single physical
+system evolve and average its
+
+42
+00:02:55,637 --> 00:02:59,754
+position over time, by ergodicity
+that average converges to
+
+43
+00:02:59,754 --> 00:03:03,034
+the mean of the stationary
+distribution: A⁻¹ b.
+
+44
+00:03:03,414 --> 00:03:05,576
+The system solves the linear system.
+
+45
+00:03:05,956 --> 00:03:09,813
+And if we average the
+products of the deviations,
+
+46
+00:03:09,813 --> 00:03:13,435
+we get β⁻¹ A⁻¹: the
+system inverts the matrix.
+
+47
+00:03:13,815 --> 00:03:16,135
+The error of the averages
+decays as one over
+
+48
+00:03:16,135 --> 00:03:18,244
+the square root of the integration time.
+
+49
+00:03:18,624 --> 00:03:22,925
+That is the basis of the thermodynamic
+linear solver in lab three.
+
+50
+00:03:24,050 --> 00:03:30,704
+Let's take the matrix from lesson 0.4:
+three, one; one, two; and b = (1, 1).
+
+51
+00:03:31,084 --> 00:03:35,253
+Its inverse is one fifth times
+two, minus one; minus one, three.
+
+52
+00:03:35,633 --> 00:03:39,204
+So A⁻¹ b is 0.2 and 0.4.
+
+53
+00:03:39,584 --> 00:03:47,854
+With β = 1, the stationary
+covariance is 0.4, −0.2; −0.2, 0.6.
+
+54
+00:03:48,234 --> 00:03:52,406
+The simulation, with a time average
+over two thousand time units,
+
+55
+00:03:52,406 --> 00:03:56,065
+reproduces these numbers with
+errors of a few hundredths.
+
+56
+00:03:57,183 --> 00:04:01,055
+The Ornstein–Uhlenbeck process
+shows up again and again.
+
+57
+00:04:01,435 --> 00:04:05,284
+In unit six it will be the
+thermodynamic linear solver.
+
+58
+00:04:05,664 --> 00:04:10,517
+In unit eight, an OU with the curvature
+matrix computes the natural gradient.
+
+59
+00:04:10,897 --> 00:04:15,709
+Normal Computing's coupled oscillators
+implement an OU in hardware.
+
+60
+00:04:16,089 --> 00:04:19,960
+And the forward process of
+diffusion models is also an OU.
+
+61
+00:04:21,083 --> 00:04:24,508
+This lesson ties together
+several pieces: multivariate
+
+62
+00:04:24,508 --> 00:04:28,250
+Gaussians, the matrix exponential
+and the condition number.
+
+63
+00:04:28,630 --> 00:04:32,577
+The next question is how
+long to average for a given
+
+64
+00:04:32,577 --> 00:04:37,055
+precision; we will answer it
+with ergodicity in lesson 2.6.
+
+65
+00:04:38,183 --> 00:04:42,323
+Frequent mistakes: forgetting that
+the matrix must be positive definite.
+
+66
+00:04:42,703 --> 00:04:46,831
+Confusing the stationary covariance
+with wrong powers of the matrix.
+
+67
+00:04:47,211 --> 00:04:50,850
+Averaging from time zero without
+discarding the transient.
+
+68
+00:04:51,230 --> 00:04:54,124
+And treating consecutive
+samples as independent.
+
+69
+00:04:55,250 --> 00:05:02,006
+In summary: the Ornstein–Uhlenbeck process
+relaxes exponentially toward a Gaussian
+
+70
+00:05:02,006 --> 00:05:07,691
+with mean A⁻¹ b and covariance β⁻¹
+A⁻¹, set by the Lyapunov equation.
+
+71
+00:05:08,071 --> 00:05:10,730
+Time-averaging a single trajectory solves
+
+72
+00:05:10,730 --> 00:05:13,390
+the linear system and inverts the matrix.
+
+73
+00:05:14,517 --> 00:05:17,362
+To practice: derive the
+stationary distribution
+
+74
+00:05:17,362 --> 00:05:20,087
+and explain how it solves
+the linear problem.
+
+75
+00:05:20,467 --> 00:05:23,008
+Solve a diagonal Lyapunov equation.
+
+76
+00:05:23,388 --> 00:05:26,077
+Compute the autocorrelation
+in one dimension.
+
+77
+00:05:26,457 --> 00:05:30,626
+And explain why the time to solution
+grows with the condition number.

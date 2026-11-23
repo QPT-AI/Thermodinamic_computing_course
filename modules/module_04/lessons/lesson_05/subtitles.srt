@@ -1,0 +1,278 @@
+1
+00:00:00,350 --> 00:00:02,105
+Lección 4.5.
+
+2
+00:00:02,485 --> 00:00:04,639
+El pbit como neurona estocástica.
+
+3
+00:00:05,750 --> 00:00:09,272
+Un bit digital siempre vale lo
+mismo hasta que alguien lo cambia.
+
+4
+00:00:09,652 --> 00:00:14,168
+Un pbit, o bit probabilístico,
+fluctúa por sí solo entre menos uno y
+
+5
+00:00:14,168 --> 00:00:18,153
+más uno, y su entrada no fija
+su valor sino su probabilidad.
+
+6
+00:00:18,533 --> 00:00:22,722
+Es la pieza mínima del cómputo
+termodinámico discreto: una neurona
+
+7
+00:00:22,722 --> 00:00:26,911
+estocástica que, conectada con
+otras, muestrea un modelo de Ising.
+
+8
+00:00:28,017 --> 00:00:31,515
+Un pbit recibe una entrada
+u y produce un espín s.
+
+9
+00:00:31,895 --> 00:00:36,462
+La probabilidad de que valga
+más uno es la sigmoide σ(2βu).
+
+10
+00:00:36,842 --> 00:00:41,688
+Su valor medio es la tangente
+hiperbólica, tanh(βu).
+
+11
+00:00:42,068 --> 00:00:44,650
+Con entrada cero es una moneda justa; con
+
+12
+00:00:44,650 --> 00:00:47,674
+entrada grande y positiva
+casi siempre vale uno.
+
+13
+00:00:48,054 --> 00:00:51,571
+El parámetro β controla qué
+tan determinista es: con β
+
+14
+00:00:51,571 --> 00:00:55,089
+infinito, el pbit se vuelve
+un bit digital con umbral.
+
+15
+00:00:56,217 --> 00:00:57,340
+¿Cómo se construye?
+
+16
+00:00:57,720 --> 00:01:02,101
+Una forma muy usada compara
+la tangente hiperbólica de la
+
+17
+00:01:02,101 --> 00:01:06,405
+entrada con un número aleatorio
+uniforme entre menos uno
+
+18
+00:01:06,405 --> 00:01:09,941
+y uno, y toma el signo:
+s = sgn(tanh(βu) − r).
+
+19
+00:01:10,321 --> 00:01:14,932
+La probabilidad de que r quede
+por debajo de la tangente
+
+20
+00:01:14,932 --> 00:01:19,132
+es exactamente (1 + tanh
+βu)/2, que es la sigmoide.
+
+21
+00:01:19,512 --> 00:01:23,368
+En la simulación, con
+u = 0,5, la fracción de
+
+22
+00:01:23,368 --> 00:01:27,054
+unos es cero coma siete
+tres, igual a σ(1).
+
+23
+00:01:28,183 --> 00:01:29,754
+Ahora conectemos pbits.
+
+24
+00:01:30,134 --> 00:01:35,303
+Si la entrada de cada uno es su
+campo local, u_i = Σ_j J_ij s_j +
+
+25
+00:01:35,303 --> 00:01:40,074
+h_i, y los actualizamos en el
+orden de un coloreo del grafo,
+
+26
+00:01:40,454 --> 00:01:45,153
+la red entera hace muestreo de Gibbs del
+modelo de Ising con esos acoplamientos.
+
+27
+00:01:45,533 --> 00:01:48,676
+Los pbits no calculan la
+distribución: la habitan.
+
+28
+00:01:49,056 --> 00:01:52,348
+El histograma de los
+estados visitados reproduce
+
+29
+00:01:52,348 --> 00:01:55,846
+e^(−βE) sin calcular nunca
+la función de partición.
+
+30
+00:01:56,950 --> 00:01:59,410
+Mira la estructura: suma ponderada de
+
+31
+00:01:59,410 --> 00:02:02,601
+entradas, más un sesgo,
+pasada por una sigmoide.
+
+32
+00:02:02,981 --> 00:02:05,509
+Es la neurona de una
+red neuronal, pero con
+
+33
+00:02:05,509 --> 00:02:07,801
+salida aleatoria en lugar de un número.
+
+34
+00:02:08,181 --> 00:02:12,506
+Por eso las redes de pbits son el sustrato
+natural de las máquinas de Boltzmann.
+
+35
+00:02:12,886 --> 00:02:18,113
+Y si promediamos muchas lecturas, la
+salida media es tanh(βu): una neurona
+
+36
+00:02:18,113 --> 00:02:23,694
+determinista con activación tangente,
+que usaremos en la teoría de campo medio.
+
+37
+00:02:24,817 --> 00:02:27,936
+Comprobemos con doscientas mil
+actualizaciones por entrada.
+
+38
+00:02:28,316 --> 00:02:33,782
+Con entrada menos uno, la fracción de
+unos es cero coma uno dos, como σ(−2).
+
+39
+00:02:34,162 --> 00:02:35,530
+Con cero, un medio.
+
+40
+00:02:35,910 --> 00:02:38,562
+Con cero coma cinco, cero coma siete tres.
+
+41
+00:02:38,942 --> 00:02:41,720
+Con uno coma cinco, cero coma nueve cinco.
+
+42
+00:02:42,100 --> 00:02:45,894
+Y la media del espín sigue a la
+tangente hiperbólica con tres cifras.
+
+43
+00:02:47,017 --> 00:02:51,568
+Los pbits se construyen con uniones
+túnel magnéticas de barrera baja, que
+
+44
+00:02:51,568 --> 00:02:55,746
+fluctúan por el ruido térmico, o
+con circuitos CMOS que combinan un
+
+45
+00:02:55,746 --> 00:02:59,737
+generador aleatorio, una tabla
+para la tangente y un comparador.
+
+46
+00:03:00,117 --> 00:03:03,327
+El chip Z1 de Extropic tiene
+más de doscientos sesenta
+
+47
+00:03:03,327 --> 00:03:06,121
+mil pbits con dieciséis
+acoplamientos cada uno.
+
+48
+00:03:07,250 --> 00:03:11,811
+Cuidado con el factor dos en la sigmoide,
+con actualizar pbits vecinos a la
+
+49
+00:03:11,811 --> 00:03:15,824
+vez, con confundir la media con
+la probabilidad, y con generadores
+
+50
+00:03:15,824 --> 00:03:19,959
+aleatorios sesgados o correlacionados,
+que deforman la distribución.
+
+51
+00:03:21,083 --> 00:03:29,871
+En resumen: un pbit es un espín aleatorio
+con P(+1) = σ(2βu) y media tanh(βu).
+
+52
+00:03:30,251 --> 00:03:33,480
+Se implementa comparando la
+tangente con ruido uniforme.
+
+53
+00:03:33,860 --> 00:03:38,416
+Una red de pbits con entradas iguales
+a los campos locales hace muestreo de
+
+54
+00:03:38,416 --> 00:03:42,242
+Gibbs de un modelo de Ising, y
+es una red neuronal estocástica.
+
+55
+00:03:43,350 --> 00:03:46,229
+Para practicar: demuestra
+la regla de hardware.
+
+56
+00:03:46,609 --> 00:03:48,279
+Calcula la media del espín.
+
+57
+00:03:48,659 --> 00:03:51,494
+Encuentra la entrada que da
+noventa por ciento de unos.
+
+58
+00:03:51,874 --> 00:03:55,700
+Y calcula la probabilidad de que
+dos pbits acoplados coincidan.

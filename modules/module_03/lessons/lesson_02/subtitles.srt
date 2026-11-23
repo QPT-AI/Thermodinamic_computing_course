@@ -1,0 +1,330 @@
+1
+00:00:00,350 --> 00:00:02,007
+Lección 3.2.
+
+2
+00:00:02,387 --> 00:00:05,601
+Producción de entropía y la
+segunda ley para trayectorias.
+
+3
+00:00:06,717 --> 00:00:09,995
+La segunda ley dice que la
+entropía total no disminuye.
+
+4
+00:00:10,375 --> 00:00:12,732
+En la lección anterior vimos trayectorias
+
+5
+00:00:12,732 --> 00:00:15,953
+individuales con trabajo
+negativo, que parecen violarla.
+
+6
+00:00:16,333 --> 00:00:18,525
+¿Cuánto la violan, y con qué frecuencia?
+
+7
+00:00:18,905 --> 00:00:21,750
+La respuesta es una de
+las leyes más bellas de la
+
+8
+00:00:21,750 --> 00:00:24,305
+física moderna: los
+teoremas de fluctuación.
+
+9
+00:00:24,685 --> 00:00:27,849
+Convierten la desigualdad de
+la segunda ley en una igualdad
+
+10
+00:00:27,849 --> 00:00:30,960
+exacta sobre la distribución
+de la producción de entropía.
+
+11
+00:00:32,083 --> 00:00:35,996
+Imagina grabar en video una
+trayectoria y reproducirla hacia atrás.
+
+12
+00:00:36,376 --> 00:00:40,645
+Si el sistema está en equilibrio, la
+película al revés es igual de plausible.
+
+13
+00:00:41,025 --> 00:00:44,466
+Si hay una fuerza que lo
+empuja, la película al revés es
+
+14
+00:00:44,466 --> 00:00:47,599
+menos probable: la partícula
+sube contra la fuerza.
+
+15
+00:00:47,979 --> 00:00:52,298
+La producción de entropía mide
+exactamente eso: el logaritmo del cociente
+
+16
+00:00:52,298 --> 00:00:56,557
+entre la probabilidad de la trayectoria
+y la de su inversa en el tiempo.
+
+17
+00:00:56,937 --> 00:00:58,924
+Es una medida de irreversibilidad.
+
+18
+00:01:00,050 --> 00:01:05,138
+La producción total de entropía en una
+trayectoria, en unidades de k_B, es el cambio
+
+19
+00:01:05,138 --> 00:01:09,620
+de entropía del sistema más el calor
+entregado al baño dividido por k_B T.
+
+20
+00:01:10,000 --> 00:01:15,629
+Y es exactamente el logaritmo del
+cociente de probabilidades de la
+
+21
+00:01:15,629 --> 00:01:20,406
+trayectoria directa y de su
+inversa: Σ = ln P[x]/P̃[x̃].
+
+22
+00:01:20,786 --> 00:01:25,318
+En un estado estacionario, su tasa
+media se escribe con la corriente
+
+23
+00:01:25,318 --> 00:01:29,784
+de probabilidad: la integral de
+J²/(D p), que es positiva y solo se
+
+24
+00:01:29,784 --> 00:01:33,450
+anula si la corriente es
+cero, es decir, en equilibrio.
+
+25
+00:01:34,550 --> 00:01:40,233
+De esa definición sale una igualdad
+exacta: el promedio de e^(−Σ) es uno.
+
+26
+00:01:40,613 --> 00:01:43,709
+Siempre, para cualquier
+protocolo y cualquier duración.
+
+27
+00:01:44,089 --> 00:01:48,062
+Aplicando la desigualdad de
+Jensen, el promedio de Σ es mayor
+
+28
+00:01:48,062 --> 00:01:51,514
+o igual que cero: la segunda
+ley es una consecuencia.
+
+29
+00:01:51,894 --> 00:01:55,034
+Pero la igualdad dice más:
+para que el promedio de la
+
+30
+00:01:55,034 --> 00:01:58,884
+exponencial sea uno, tiene que
+haber trayectorias con Σ negativa.
+
+31
+00:01:59,264 --> 00:02:03,620
+Las violaciones individuales no
+son un accidente: son obligatorias.
+
+32
+00:02:04,750 --> 00:02:08,938
+En un estado estacionario hay
+una versión aún más fuerte: la
+
+33
+00:02:08,938 --> 00:02:13,195
+probabilidad de producir una
+cantidad Σ de entropía, dividida
+
+34
+00:02:13,195 --> 00:02:16,475
+por la de producir menos
+Σ, es exactamente e^Σ.
+
+35
+00:02:16,855 --> 00:02:21,220
+Comprobémoslo con una partícula en un
+anillo empujada por una fuerza constante.
+
+36
+00:02:21,600 --> 00:02:24,329
+El histograma de la
+entropía producida en un
+
+37
+00:02:24,329 --> 00:02:26,748
+intervalo es gaussiano y cruza el cero.
+
+38
+00:02:27,128 --> 00:02:31,323
+Al graficar el logaritmo del cociente
+entre la probabilidad de Σ y la
+
+39
+00:02:31,323 --> 00:02:34,970
+de menos Σ, los puntos caen
+sobre la recta de pendiente uno.
+
+40
+00:02:35,350 --> 00:02:37,771
+Las trayectorias que destruyen entropía
+
+41
+00:02:37,771 --> 00:02:40,317
+existen, pero son exponencialmente raras.
+
+42
+00:02:41,450 --> 00:02:46,776
+Con movilidad uno, k_B T uno, fuerza un
+medio y una ventana de tiempo dos, la
+
+43
+00:02:46,776 --> 00:02:52,103
+producción de entropía es gaussiana con
+media cero coma cinco y varianza uno.
+
+44
+00:02:52,483 --> 00:02:55,104
+La probabilidad de que
+una trayectoria destruya
+
+45
+00:02:55,104 --> 00:02:58,116
+entropía es de alrededor del
+treinta y uno por ciento.
+
+46
+00:02:58,496 --> 00:03:02,368
+Si alargamos la ventana a veinte,
+la media sube a cinco y esa
+
+47
+00:03:02,368 --> 00:03:06,621
+probabilidad cae a alrededor del
+seis por ciento; con doscientas, a
+
+48
+00:03:06,621 --> 00:03:11,001
+menos de una en un millón: la segunda
+ley emerge para tiempos largos.
+
+49
+00:03:12,117 --> 00:03:14,860
+La producción de entropía
+es el costo energético
+
+50
+00:03:14,860 --> 00:03:17,489
+irreducible de cualquier
+cómputo irreversible.
+
+51
+00:03:17,869 --> 00:03:21,494
+Gobierna la precisión de relojes
+y motores moleculares, puede
+
+52
+00:03:21,494 --> 00:03:24,822
+inferirse a partir de
+trayectorias medidas, y en un chip
+
+53
+00:03:24,822 --> 00:03:28,270
+forzado fuera del equilibrio
+se produce de forma continua.
+
+54
+00:03:29,383 --> 00:03:32,883
+Errores comunes: pensar que
+una trayectoria con producción
+
+55
+00:03:32,883 --> 00:03:36,081
+negativa viola la segunda
+ley, cuando es obligatoria.
+
+56
+00:03:36,461 --> 00:03:39,338
+Olvidar la entropía del
+sistema en los transitorios.
+
+57
+00:03:39,718 --> 00:03:42,683
+Aplicar el teorema detallado
+fuera de sus condiciones.
+
+58
+00:03:43,063 --> 00:03:45,744
+Y confundir la producción
+de entropía con el calor.
+
+59
+00:03:46,850 --> 00:03:50,971
+En resumen: la producción de entropía
+de una trayectoria es el logaritmo
+
+60
+00:03:50,971 --> 00:03:54,806
+del cociente entre su probabilidad
+y la de su inversa en el tiempo.
+
+61
+00:03:55,186 --> 00:04:01,253
+Cumple la igualdad ⟨e^(−Σ)⟩ = 1, de la
+que la segunda ley es una consecuencia.
+
+62
+00:04:01,633 --> 00:04:04,571
+En estado estacionario, la
+probabilidad de destruir
+
+63
+00:04:04,571 --> 00:04:07,796
+entropía es exponencialmente
+menor que la de producirla.
+
+64
+00:04:08,917 --> 00:04:12,673
+Para practicar: deduce la segunda
+ley de la igualdad integral.
+
+65
+00:04:13,053 --> 00:04:15,343
+Muestra que una producción gaussiana debe
+
+66
+00:04:15,343 --> 00:04:17,689
+tener varianza igual al doble de la media.
+
+67
+00:04:18,069 --> 00:04:20,328
+Calcula una tasa de
+producción de entropía.
+
+68
+00:04:20,708 --> 00:04:23,247
+Y evalúa un cociente
+del teorema detallado.

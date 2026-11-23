@@ -1,0 +1,67 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.9}{Matrices de conductancia de no equilibrio}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} fuerza y resistencia de una reacción; suma de resistencias en serie; matrices de
+conductancia y régimen lineal frente a no lineal.
+\textbf{Prerrequisitos:} 2.8 (procesos de saltos), 3.2 (producción de entropía), 1.6 (resistencias).
+
+\section{Fuerza, corriente y resistencia de una reacción}
+Para una reacción reversible $\rho$ con cinética de acción de masas en una red abierta (quimiostatos fijan algunas concentraciones),
+siguiendo a Raux, Goupil y Verley \cite{raux}:
+\begin{equation}
+j_\rho=k_\rho^+[Z]^{\nu_\rho^+}-k_\rho^-[Z]^{\nu_\rho^-},\qquad
+f_\rho=\kB T\ln\frac{k_\rho^+[Z]^{\nu_\rho^+}}{k_\rho^-[Z]^{\nu_\rho^-}}=-\Delta_\rho G,\qquad r_\rho=\frac{f_\rho}{j_\rho}.
+\end{equation}
+$f_\rho$ y $j_\rho$ tienen siempre el mismo signo: $f_\rho j_\rho/\kB T\ge0$ es la contribución de la reacción a la producción de entropía.
+\begin{resultado}[ (límite lineal)]
+Si el flujo de intercambio en equilibrio es $j^{\text{eq}}_\rho$ y la fuerza es pequeña, $j_\rho\approx j^{\text{eq}}_\rho f_\rho/\kB T$, es decir
+$r_\rho\approx\kB T/j^{\text{eq}}_\rho$: las reacciones rápidas conducen bien.
+\end{resultado}
+
+\section{Resistencias en serie}
+Cadena $A\rightleftarrows B\rightleftarrows C$ con $[A]=a$ y $[C]=c$ fijadas por quimiostatos. En el estado estacionario, $[B]$ se ajusta para que
+$j_1=j_2=j$, y las fuerzas se encadenan: $f=f_1+f_2=\kB T\ln\frac{k_1^+k_2^+a}{k_1^-k_2^-c}$ (no depende de $[B]$). Por lo tanto
+\begin{equation}
+R\equiv\frac fj=r_1+r_2,\qquad G=\frac1R,
+\end{equation}
+exactamente en cada estado estacionario, aunque cada $r_i$ dependa del estado.
+\begin{ejemplo}
+Todas las constantes iguales a 1, $c=1$, $\kB T=1$: $[B]=(a+1)/2$, $j=(a-1)/2$.
+\begin{center}\begin{tabular}{lcccccc}\toprule
+$a$ & $[B]$ & $j$ & $f_1$ & $f_2$ & $R=r_1+r_2$ & $G$\\\midrule
+1,1 & 1,05 & 0,05 & 0,047 & 0,049 & 1,91 & 0,52\\
+2 & 1,50 & 0,50 & 0,288 & 0,405 & 1,39 & 0,72\\
+5 & 3,00 & 2,00 & 0,511 & 1,099 & 0,80 & 1,24\\
+100 & 50,5 & 49,5 & 0,683 & 3,922 & 0,093 & 10,75\\\bottomrule\end{tabular}\end{center}
+Cerca del equilibrio $G\to\tfrac12$ (dos resistencias lineales $r_i=\kB T/j^{\text{eq}}_i=1$ en serie). Lejos del equilibrio la red conduce mucho más.
+\end{ejemplo}
+
+\section{Matrices de conductancia}
+En una red con varios ciclos independientes (matriz de ciclos $\mathcal C$), las fuerzas y corrientes de ciclo cumplen \cite{raux}
+\begin{equation}
+F=R\,J,\qquad R=\mathcal C^\top\,\mathrm{diag}(r_\rho)\,\mathcal C,\qquad G=R^{-1},
+\end{equation}
+evaluadas en el estado estacionario. $R$ es simétrica y semidefinida positiva, coherente con $J^\top F\ge0$. Los autores definen además
+conductancias a nivel de quimiostatos y muestran que, al conectar módulos en serie, las matrices se combinan como resistencias; el resultado
+coincide con el cálculo directo de la red completa en los ejemplos estudiados (módulos pseudolineales).
+
+\begin{aplicacion}
+Análisis modular de redes grandes; computadores químicos (lección 5.5) donde corrientes y fuerzas son señales; contabilidad de disipación
+$\dot\Sigma=F^\top G\,F/\kB T$. Reto del laboratorio L9 (Torx, \texttt{PJUMP}): comparar una corriente estacionaria con esta predicción.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Tratar $r_\rho$ como constante lejos del equilibrio. \quad Sumar fuerzas de reacciones que no están en serie.
+\item Olvidar que los quimiostatos fijan las fuerzas. \quad Confundir $j/f$ con la conductancia diferencial $\partial j/\partial f$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[27]{raux} P. Raux, C. Goupil y G. Verley, Thermodynamic circuits: modeling chemical reaction networks with nonequilibrium conductance
+matrices, 2025. arXiv:2412.15028.
+\bibitem[2]{pp} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\end{thebibliography}
+\end{document}

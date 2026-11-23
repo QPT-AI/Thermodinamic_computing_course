@@ -1,0 +1,288 @@
+1
+00:00:00,350 --> 00:00:01,929
+Lesson 10.3.
+
+2
+00:00:02,309 --> 00:00:03,837
+DyT normalization.
+
+3
+00:00:04,950 --> 00:00:09,559
+Layer normalization computes the
+mean and variance of each activation
+
+4
+00:00:09,559 --> 00:00:13,634
+vector: two global reductions
+over the whole model dimension.
+
+5
+00:00:14,014 --> 00:00:16,365
+On hardware with local
+connectivity, summing
+
+6
+00:00:16,365 --> 00:00:18,610
+over thousands of components is expensive.
+
+7
+00:00:18,990 --> 00:00:23,480
+In twenty twenty-five, Zhu and
+colleagues showed it can be replaced by
+
+8
+00:00:23,480 --> 00:00:27,907
+something much simpler, a scaled
+hyperbolic tangent, and that tangent
+
+9
+00:00:27,907 --> 00:00:31,499
+turns out to be exactly what
+a pbit computes on average.
+
+10
+00:00:32,617 --> 00:00:38,856
+Dynamic tanh, DyT, applies γ
+tanh(α x) + β to each component,
+
+11
+00:00:38,856 --> 00:00:44,585
+with a learned scalar α and
+per-channel vectors γ and β.
+
+12
+00:00:44,965 --> 00:00:48,508
+The motivation is empirical:
+in trained transformers, the
+
+13
+00:00:48,508 --> 00:00:52,673
+relationship between the input and
+output of layer normalization is
+
+14
+00:00:52,673 --> 00:00:56,465
+S-shaped, linear in the center
+and saturated at the extremes.
+
+15
+00:00:56,845 --> 00:01:00,461
+DyT reproduces that shape without
+computing statistics, and the
+
+16
+00:01:00,461 --> 00:01:03,734
+authors report comparable
+quality in vision and language.
+
+17
+00:01:04,850 --> 00:01:08,740
+Recall the pbit: with input
+u, it outputs plus one
+
+18
+00:01:08,740 --> 00:01:12,474
+with probability σ(2βu)
+and minus one otherwise.
+
+19
+00:01:12,854 --> 00:01:20,227
+Its mean output is 2σ(2βu)
+− 1 = tanh(βu), exactly.
+
+20
+00:01:20,607 --> 00:01:25,558
+A pbit with gain β = α is,
+on average, a DyT unit.
+
+21
+00:01:25,938 --> 00:01:28,638
+Normalization becomes
+a physical phenomenon
+
+22
+00:01:28,638 --> 00:01:31,213
+of the device, with no global reductions.
+
+23
+00:01:32,317 --> 00:01:35,427
+But a pbit gives a binary
+sample, not the mean.
+
+24
+00:01:35,807 --> 00:01:38,492
+To estimate the tangent one must average S
+
+25
+00:01:38,492 --> 00:01:41,562
+samples, and the error
+falls as one over root S.
+
+26
+00:01:41,942 --> 00:01:47,521
+We measure it: with one sample,
+the root-mean-square error is
+
+27
+00:01:47,521 --> 00:01:52,918
+0.54; with sixteen, 0.14; with
+two hundred fifty-six, 0.03.
+
+28
+00:01:53,298 --> 00:01:56,496
+Each factor of four in
+samples halves the error.
+
+29
+00:01:57,617 --> 00:02:01,144
+Here a design question appears,
+whether we need to average.
+
+30
+00:02:01,524 --> 00:02:07,082
+If the next layer is also stochastic and
+sums many inputs, the noise of each sample
+
+31
+00:02:07,082 --> 00:02:11,971
+averages out naturally in that sum,
+as in the pbit networks of unit four.
+
+32
+00:02:12,351 --> 00:02:15,426
+Often a few samples, or
+even one, suffice, as
+
+33
+00:02:15,426 --> 00:02:18,160
+long as training accounts for the noise.
+
+34
+00:02:18,540 --> 00:02:23,793
+Lesson 10.5 quantifies how many effective
+bits each number of samples gives.
+
+35
+00:02:24,917 --> 00:02:25,727
+Let's compare.
+
+36
+00:02:26,107 --> 00:02:30,655
+Layer normalization needs, per
+token, two reductions over the
+
+37
+00:02:30,655 --> 00:02:34,532
+whole model dimension, a
+square root and a division.
+
+38
+00:02:34,912 --> 00:02:38,853
+DyT needs, per component, one
+multiplication, one tangent and
+
+39
+00:02:38,853 --> 00:02:42,407
+one addition, with no
+communication between components.
+
+40
+00:02:42,787 --> 00:02:45,836
+On a TSU, the tangent is
+done by the pbit itself.
+
+41
+00:02:46,216 --> 00:02:49,738
+That is why language models
+for probabilistic chips,
+
+42
+00:02:49,738 --> 00:02:53,261
+such as Z1T, use DyT instead
+of layer normalization.
+
+43
+00:02:54,383 --> 00:02:58,538
+In practice, replace normalization
+with DyT and tune the
+
+44
+00:02:58,538 --> 00:03:02,915
+initial value of α; map each
+unit to a pbit with gain equal
+
+45
+00:03:02,915 --> 00:03:06,550
+to α; and train with the
+sampling noise included.
+
+46
+00:03:06,930 --> 00:03:10,381
+In lab twenty-nine you will
+do it on a small transformer.
+
+47
+00:03:11,483 --> 00:03:15,713
+Common mistakes: believing DyT
+normalizes, when it only bounds.
+
+48
+00:03:16,093 --> 00:03:20,388
+Confusing the pbit's sigmoid,
+whose argument has a factor of two.
+
+49
+00:03:20,768 --> 00:03:24,368
+Averaging few samples without
+including the noise in training.
+
+50
+00:03:24,748 --> 00:03:28,541
+And forgetting that α is learned
+and sensitive to initialization.
+
+51
+00:03:29,650 --> 00:03:33,718
+In summary: DyT replaces
+layer normalization with
+
+52
+00:03:33,718 --> 00:03:37,288
+γ tanh(α x) + β, with
+no global reductions.
+
+53
+00:03:37,668 --> 00:03:40,976
+The mean output of a pbit is exactly a
+
+54
+00:03:40,976 --> 00:03:44,981
+hyperbolic tangent, so
+DyT is native to a TSU.
+
+55
+00:03:45,361 --> 00:03:48,833
+The price is sampling
+noise, which falls as one
+
+56
+00:03:48,833 --> 00:03:51,936
+over root S and which training can absorb.
+
+57
+00:03:53,050 --> 00:03:57,449
+To practice: prove the identity
+between the sigmoid and the tangent.
+
+58
+00:03:57,829 --> 00:04:00,313
+Compute the variance of a pbit sample.
+
+59
+00:04:00,693 --> 00:04:03,996
+Compute the samples for an error of 0.05.
+
+60
+00:04:04,376 --> 00:04:08,934
+And explain why DyT is cheaper than
+layer normalization on local hardware.

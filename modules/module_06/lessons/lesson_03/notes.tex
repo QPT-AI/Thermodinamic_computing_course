@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.3}{Determinantes desde estadísticas de trabajo}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} relacionar $\ln\det A$ con la energía libre de un estado gaussiano; estimarlo con la igualdad de Jarzynski;
+ubicarlo en la jerarquía de momentos.
+\textbf{Prerrequisitos:} 3.4, 6.1, 6.2.
+
+\section{El determinante como energía libre}
+\[Z(A)=\int e^{-\frac\beta2x^\top Ax}dx=\Big(\tfrac{2\pi}\beta\Big)^{d/2}(\det A)^{-1/2},\qquad F=-\beta^{-1}\ln Z=\tfrac1{2\beta}\ln\det A+\text{cte}.\]
+Al pasar de $A_0$ (determinante conocido, p.\,ej.\ $I$) a $A$: $\Delta F=\tfrac1{2\beta}\ln(\det A/\det A_0)$.
+
+\section{Estimador de Jarzynski}
+\begin{definicion}[ (protocolo del determinante)]
+Partir del equilibrio con $A_0$; cambiar $A_\lambda=(1-\lambda)A_0+\lambda A$ durante $t_s$ midiendo
+$W=\int_0^1\tfrac12x_\lambda^\top(A-A_0)x_\lambda\,d\lambda$; repetir $N$ veces. Por Jarzynski, $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$, luego
+\[\ln\det A=\ln\det A_0-2\ln\big\langle e^{-\beta W}\big\rangle.\]
+\end{definicion}
+
+\section{Simulación \evS}
+$d=5$, Wishart (semilla 0), $\ln\det A=-3{,}40$, $\beta=1$, $dt=0{,}01$; 2000 trayectorias en 20 lotes de 100:
+\begin{center}\begin{tabular}{lccc}\toprule
+protocolo & Jarzynski (media $\pm$ d.e. de lotes) & $2\langle W\rangle$ & d.e. de $W$\\\midrule
+instantáneo & $-2{,}54\pm1{,}04$ & $-0{,}78$ & 1,13\\
+$t_s=10$ & $-3{,}18\pm0{,}32$ & $-2{,}47$ & 0,70\\
+$t_s=100$ & $-3{,}41\pm0{,}15$ & $-3{,}17$ & 0,43\\\bottomrule\end{tabular}\end{center}
+Segunda ley: $\langle W\rangle\ge\Delta F$, así que $2\beta\langle W\rangle\ge\ln\det A$; el exceso es el trabajo disipado. La exponencial pondera las trayectorias
+raras de poco trabajo y corrige el sesgo, pero con protocolos rápidos esas trayectorias son tan raras que el estimador es sesgado y ruidoso para $N$ finito.
+En la práctica se usa el estimador de Bennett (BAR), que combina trabajos de ida y vuelta.
+
+\section{Jerarquía de momentos y complejidad}
+\begin{center}\small\begin{tabular}{llll}\toprule
+estadístico & primitiva & termodinámico (Aifer et al.) & digital\\\midrule
+media & $Ax=b$ & $O(d\kappa^2\varepsilon^{-2})$ & $O(\min\{d^\omega,d^2\sqrt\kappa\})$\\
+covarianza & $A^{-1}$, Lyapunov & $O(d^2\kappa\varepsilon^{-2})$ & $O(d^\omega)$, $O(d^3)$\\
+trabajo (todos los momentos) & $\ln\det A$ & $O(d\kappa\ln(\kappa)^3\varepsilon^{-2})$ & $O(d^\omega)$\\\bottomrule\end{tabular}\end{center}
+
+\begin{aplicacion}
+Verosimilitud marginal de procesos gaussianos ($-\tfrac12\ln\det(K+\sigma^2I)$), flujos normalizantes, estimación de energías libres en física y química.
+Laboratorio L9: Jarzynski frente a BAR frente a Cholesky.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Usar $\langle W\rangle$ en vez de la exponencial. \quad Pocas repeticiones con protocolo rápido.
+\item No partir del equilibrio. \quad Errores de signo: $\ln\det A=2\beta\Delta F$ desde $A_0=I$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem{jarz} C. Jarzynski, Nonequilibrium equality for free energy differences, \emph{Phys. Rev. Lett.} 78, 2690 (1997).
+\bibitem{bennett} C. H. Bennett, Efficient estimation of free energy differences from Monte Carlo data, \emph{J. Comput. Phys.} 22, 245 (1976).
+\end{thebibliography}
+\end{document}

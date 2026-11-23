@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{7.2}{El algoritmo de Shor}
+
+\noindent\textbf{Unidad 7.}\quad\textbf{Objetivos:} las cuatro etapas de la búsqueda de orden de Shor; la distribución de medida de un ejemplo pequeño;
+recuperar $r$ con fracciones continuas.
+\textbf{Prerrequisitos:} 0.6, 7.1.
+
+\section{Las cuatro etapas}
+\begin{enumerate}[nosep]
+\item Superposición uniforme $\frac1{\sqrt Q}\sum_{x=0}^{Q-1}|x\rangle$, con $Q=2^q\ge N^2$.
+\item Exponenciación modular reversible: $|x\rangle|0\rangle\mapsto|x\rangle|a^x\bmod N\rangle$. Medir el segundo registro deja el primero en una superposición de
+exponentes separados por $r$.
+\item Transformada cuántica de Fourier (QFT): la periodicidad se vuelve picos de probabilidad en $y\approx kQ/r$; lo que no encaja se cancela por interferencia.
+\item Posprocesamiento: como $|y/Q-k/r|\le1/(2Q)\le1/(2N^2)$, $k/r$ es una reducida de la fracción continua de $y/Q$.
+\end{enumerate}
+
+\section{Ejemplo exacto \evS}
+$N=21$, $a=2$ ($r=6$), $Q=512$. Distribución calculada exactamente (FFT): picos en $y=0,85,171,256,341,427$ (múltiplos de $85{,}3$).
+\[\tfrac{85}{512}=[0;6,42,2]\to\tfrac16\Rightarrow r=6;\qquad\tfrac{171}{512}=[0;2,1,170]\to\tfrac13\ (\text{solo un divisor}).\]
+Una corrida da $r$ directamente con probabilidad $0{,}31$; el mínimo común múltiplo de varias corridas lo recupera ($\mathrm{mcm}(2,3)=6$). Siempre se verifica $a^r\equiv1$.
+
+\section{Costo}
+Exponenciación modular $O(n^3)$ compuertas (aritmética de escuela, $n=\lceil\log_2N\rceil$); QFT $O(n^2)$. Polinomial frente al costo subexponencial de la criba
+de cuerpos de números. El precio: miles de qubits lógicos con corrección de errores.
+
+\section{La analogía}
+Shor \emph{amplifica} picos de Fourier por interferencia. La difusión (7.3--7.4) \emph{amortigua} todos los modos de Fourier $k\ne0$; lo que sobrevive, la
+distribución uniforme, revela $r$.
+
+\begin{aplicacion}
+Amenaza a RSA y a curvas elípticas (estándares poscuánticos); logaritmos discretos y subgrupos ocultos. Laboratorio L10: simular la distribución y las fracciones continuas.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item «Prueba todos los exponentes y lee todas las respuestas». \quad Tomar el denominador como $r$ sin verificar.
+\item Olvidar que algunos $y$ dan solo un divisor. \quad Confundir qubits lógicos con físicos.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{shor} P. W. Shor, Polynomial-time algorithms for prime factorization and discrete logarithms on a quantum computer, \emph{SIAM J. Comput.} 26, 1484 (1997).
+\bibitem{nc} M. A. Nielsen e I. L. Chuang, \emph{Quantum Computation and Quantum Information}, §5.3, Cambridge (2010).
+\bibitem[32]{cadavid} C. A. Cadavid et al., An integer factorization algorithm which uses diffusion as a computational engine, 2023.
+\end{thebibliography}
+\end{document}

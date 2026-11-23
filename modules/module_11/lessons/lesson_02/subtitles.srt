@@ -1,0 +1,363 @@
+1
+00:00:00,350 --> 00:00:02,095
+Lección 11.2.
+
+2
+00:00:02,475 --> 00:00:05,445
+Torx: programación
+estocástica diferenciable.
+
+3
+00:00:06,550 --> 00:00:09,768
+THRML simula muestreo por bloques.
+
+4
+00:00:10,148 --> 00:00:13,259
+Pero muchos algoritmos son
+más generales: cadenas de
+
+5
+00:00:13,259 --> 00:00:16,429
+transiciones estocásticas
+con parámetros que queremos
+
+6
+00:00:16,429 --> 00:00:19,899
+entrenar, como un modelo de
+difusión o un paseo aleatorio.
+
+7
+00:00:20,279 --> 00:00:23,621
+En agosto de dos mil
+veintiséis, Extropic publicó los
+
+8
+00:00:23,621 --> 00:00:26,711
+circuitos estocásticos
+parametrizados y torx, una
+
+9
+00:00:26,711 --> 00:00:30,621
+biblioteca en JAX para construirlos,
+ejecutarlos y derivarlos.
+
+10
+00:00:31,001 --> 00:00:34,805
+La idea es la misma que la de los
+circuitos cuánticos: un lenguaje de
+
+11
+00:00:34,805 --> 00:00:38,168
+compuertas cercano a lo que el
+hardware hace de forma nativa.
+
+12
+00:00:39,283 --> 00:00:43,963
+Un circuito tiene cables con tipo:
+binarios, categóricos o continuos.
+
+13
+00:00:44,343 --> 00:00:48,001
+Cada compuerta es una matriz
+estocástica local con parámetros.
+
+14
+00:00:48,381 --> 00:00:51,301
+La más simple es el NOT probabilístico,
+
+15
+00:00:51,301 --> 00:00:54,445
+PNOT: invierte un pbit con probabilidad p.
+
+16
+00:00:54,825 --> 00:00:57,070
+Es una mezcla de la identidad y del NOT.
+
+17
+00:00:57,450 --> 00:00:59,848
+El intercambio probabilístico y el NOT
+
+18
+00:00:59,848 --> 00:01:02,939
+controlado probabilístico
+siguen la misma receta.
+
+19
+00:01:03,319 --> 00:01:05,532
+El circuito completo es el producto de sus
+
+20
+00:01:05,532 --> 00:01:08,114
+compuertas aplicado a la
+distribución de entrada.
+
+21
+00:01:09,217 --> 00:01:12,952
+Reproducimos el primer ejemplo
+del artículo con nuestra propia
+
+22
+00:01:12,952 --> 00:01:17,109
+implementación mínima en NumPy,
+escrita a partir de sus definiciones.
+
+23
+00:01:17,489 --> 00:01:20,798
+Un PNOT, un intercambio y
+un NOT controlado actúan
+
+24
+00:01:20,798 --> 00:01:23,578
+sobre dos pbits que empiezan en cero cero.
+
+25
+00:01:23,958 --> 00:01:28,880
+Queremos la distribución mitad cero cero,
+mitad uno uno, correlación perfecta.
+
+26
+00:01:29,260 --> 00:01:33,068
+Tras tres mil pasos de Adam, la
+pérdida baja de cero coma tres
+
+27
+00:01:33,068 --> 00:01:36,999
+tres a dos por diez a la menos
+cinco, y la distribución final es
+
+28
+00:01:36,999 --> 00:01:40,562
+cero coma cuatro nueve ocho
+en cada estado correlacionado.
+
+29
+00:01:41,683 --> 00:01:45,227
+En hardware no tenemos la
+distribución exacta, solo muestras.
+
+30
+00:01:45,607 --> 00:01:48,792
+Para las compuertas de
+mezcla con p = σ(θ),
+
+31
+00:01:49,172 --> 00:01:52,870
+la derivada de la compuerta es
+la diferencia de dos compuertas
+
+32
+00:01:52,870 --> 00:01:56,210
+de la misma familia: la
+original y otra con un parámetro
+
+33
+00:01:56,210 --> 00:01:59,550
+desplazado, cuyo valor de p
+es el cuadrado del original.
+
+34
+00:01:59,930 --> 00:02:03,180
+Verificamos la identidad con
+error de diez a la menos once.
+
+35
+00:02:03,560 --> 00:02:06,921
+El gradiente se estima con la
+diferencia de dos promedios de
+
+36
+00:02:06,921 --> 00:02:10,785
+ejecuciones del circuito: es la
+regla de desplazamiento de parámetro.
+
+37
+00:02:11,917 --> 00:02:14,942
+Comparamos con REINFORCE,
+el estimador de función de
+
+38
+00:02:14,942 --> 00:02:18,201
+puntuación, que usa la
+trayectoria interna del circuito.
+
+39
+00:02:18,581 --> 00:02:22,573
+Con mil ejecuciones, ambos son
+insesgados: el gradiente exacto es
+
+40
+00:02:22,573 --> 00:02:26,504
+menos cero coma cero cuatro dos
+ocho, y los promedios coinciden.
+
+41
+00:02:26,884 --> 00:02:29,960
+En este ejemplo, REINFORCE
+tuvo menos varianza.
+
+42
+00:02:30,340 --> 00:02:34,318
+La ventaja del desplazamiento de
+parámetro es otra: solo necesita
+
+43
+00:02:34,318 --> 00:02:38,174
+ejecutar el circuito y leer la
+salida, sin observar los estados
+
+44
+00:02:38,174 --> 00:02:41,480
+intermedios, que en un chip
+no siempre son accesibles.
+
+45
+00:02:42,583 --> 00:02:46,295
+Otra familia de compuertas sale de
+exponenciar una matriz de tasas.
+
+46
+00:02:46,675 --> 00:02:51,233
+PIsing aplica durante un tiempo la dinámica
+de Glauber de dos espines acoplados.
+
+47
+00:02:51,613 --> 00:02:55,263
+Desde la distribución uniforme,
+con acoplamiento uno y beta
+
+48
+00:02:55,263 --> 00:02:58,789
+dos, a tiempo cinco alcanza
+la distribución de Boltzmann:
+
+49
+00:02:58,789 --> 00:03:02,005
+cero coma cuatro nueve uno
+en los estados alineados.
+
+50
+00:03:02,385 --> 00:03:05,638
+Pero cuidado: aplicar PIsing
+arista por arista en un
+
+51
+00:03:05,638 --> 00:03:09,079
+anillo de ocho espines no
+muestrea el Ising del anillo.
+
+52
+00:03:09,460 --> 00:03:13,295
+En nuestro caso queda a una
+distancia de variación total de cero
+
+53
+00:03:13,295 --> 00:03:16,709
+coma ocho cuatro, mientras
+que Gibbs cromático es exacto.
+
+54
+00:03:17,089 --> 00:03:19,112
+El artículo encuentra el mismo efecto.
+
+55
+00:03:20,217 --> 00:03:24,434
+Los circuitos estocásticos sirven
+para paseos aleatorios, difusión
+
+56
+00:03:24,434 --> 00:03:28,523
+discreta, redes estocásticas sobre
+grafos y difusión con saltos.
+
+57
+00:03:28,903 --> 00:03:34,214
+El mismo circuito corre con aleatoriedad
+de software o de hardware: el artículo usa
+
+58
+00:03:34,214 --> 00:03:38,821
+pbits del chip X0 y obtiene estimaciones
+consistentes con la referencia.
+
+59
+00:03:39,201 --> 00:03:43,825
+Y al compilar, usa compuertas de
+Gibbs nativas, no PIsing por aristas.
+
+60
+00:03:44,950 --> 00:03:47,234
+Errores comunes: suponer que componer
+
+61
+00:03:47,234 --> 00:03:49,951
+equilibrios locales da
+el equilibrio global.
+
+62
+00:03:50,331 --> 00:03:54,041
+Usar REINFORCE cuando los estados
+internos no se pueden observar.
+
+63
+00:03:54,421 --> 00:03:58,591
+Llevar las probabilidades a cero o
+uno, donde la puntuación diverge.
+
+64
+00:03:58,971 --> 00:04:01,635
+E ignorar el error de
+calibración de los pbits
+
+65
+00:04:01,635 --> 00:04:04,067
+reales, de alrededor del cinco por ciento.
+
+66
+00:04:05,183 --> 00:04:09,017
+En resumen, un circuito
+estocástico parametrizado compone
+
+67
+00:04:09,017 --> 00:04:13,522
+compuertas locales con tipo, y torx
+lo construye, ejecuta y deriva.
+
+68
+00:04:13,902 --> 00:04:17,309
+La identidad de desplazamiento
+convierte la derivada en la
+
+69
+00:04:17,309 --> 00:04:21,068
+diferencia de dos ejecuciones,
+útil cuando solo vemos la salida.
+
+70
+00:04:21,448 --> 00:04:24,920
+Las compuertas derivadas de
+generadores, como PIsing, son
+
+71
+00:04:24,920 --> 00:04:28,939
+potentes, pero componerlas por
+aristas no da el equilibrio global.
+
+72
+00:04:30,050 --> 00:04:33,089
+Para practicar: escribe
+la matriz del PNOT.
+
+73
+00:04:33,469 --> 00:04:36,087
+Demuestra la relación
+del parámetro desplazado.
+
+74
+00:04:36,467 --> 00:04:40,011
+Explica por qué el desplazamiento
+de parámetro conviene al hardware.
+
+75
+00:04:40,391 --> 00:04:43,313
+Y explica por qué PIsing
+por aristas no es Gibbs.

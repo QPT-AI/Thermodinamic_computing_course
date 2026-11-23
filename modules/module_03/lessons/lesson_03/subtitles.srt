@@ -1,0 +1,331 @@
+1
+00:00:00,350 --> 00:00:02,016
+Lección 3.3.
+
+2
+00:00:02,396 --> 00:00:03,785
+Teoremas de fluctuación:
+
+3
+00:00:04,165 --> 00:00:05,460
+Crooks y Jarzynski.
+
+4
+00:00:06,583 --> 00:00:11,509
+Durante un siglo, para medir una diferencia
+de energía libre había que hacer un
+
+5
+00:00:11,509 --> 00:00:16,185
+proceso infinitamente lento, porque
+solo entonces el trabajo es igual a ΔF.
+
+6
+00:00:16,565 --> 00:00:20,921
+En 1997 Christopher Jarzynski
+mostró algo sorprendente: se
+
+7
+00:00:20,921 --> 00:00:25,276
+puede obtener ΔF exactamente
+a partir de procesos rápidos,
+
+8
+00:00:25,276 --> 00:00:29,556
+irreversibles, si promediamos
+la exponencial del trabajo.
+
+9
+00:00:29,936 --> 00:00:32,599
+Dos años después, Gavin
+Crooks dio la relación
+
+10
+00:00:32,599 --> 00:00:35,377
+detallada entre el proceso
+directo y el inverso.
+
+11
+00:00:36,483 --> 00:00:39,309
+Endurecemos una trampa
+armónica: la rigidez
+
+12
+00:00:39,309 --> 00:00:41,806
+pasa de uno a cuatro en medio segundo.
+
+13
+00:00:42,186 --> 00:00:47,185
+Como la trampa más rígida confina
+más a la partícula, la energía
+
+14
+00:00:47,185 --> 00:00:51,559
+libre sube ½ ln 4, unos cero
+coma sesenta y nueve k_B T.
+
+15
+00:00:51,939 --> 00:00:56,619
+Pero el proceso es rápido: el trabajo
+medio es mayor, uno coma cero ocho.
+
+16
+00:00:56,999 --> 00:01:00,597
+Algunas trayectorias, sin
+embargo, gastan menos que ΔF.
+
+17
+00:01:00,977 --> 00:01:04,272
+La igualdad de Jarzynski
+pondera esas trayectorias raras
+
+18
+00:01:04,272 --> 00:01:07,742
+exactamente lo necesario para
+recuperar el valor verdadero.
+
+19
+00:01:08,850 --> 00:01:15,182
+La igualdad dice: ⟨e^(−βW)⟩ = e^(−βΔF).
+
+20
+00:01:15,562 --> 00:01:19,344
+El promedio es sobre trayectorias
+que empiezan en equilibrio con el
+
+21
+00:01:19,344 --> 00:01:23,126
+parámetro inicial; el estado final
+no necesita estar en equilibrio.
+
+22
+00:01:23,506 --> 00:01:27,522
+Es una consecuencia del teorema de
+fluctuación integral de la lección anterior.
+
+23
+00:01:27,902 --> 00:01:34,034
+Con la desigualdad de Jensen
+recupera la segunda ley, ⟨W⟩ ≥ ΔF.
+
+24
+00:01:34,414 --> 00:01:39,812
+Y con nuestra simulación de cien mil
+trayectorias, el estimador de Jarzynski da cero
+
+25
+00:01:39,812 --> 00:01:44,375
+coma seis nueve tres, frente al valor
+exacto cero coma seis nueve tres.
+
+26
+00:01:45,483 --> 00:01:47,929
+Crooks compara el proceso directo con el
+
+27
+00:01:47,929 --> 00:01:50,618
+inverso: ablandar la
+trampa de cuatro a uno.
+
+28
+00:01:50,998 --> 00:01:55,244
+La distribución del trabajo
+directo, dividida por la del
+
+29
+00:01:55,244 --> 00:01:59,187
+trabajo inverso cambiado
+de signo, es e^(β(W − ΔF)).
+
+30
+00:01:59,567 --> 00:02:05,445
+Consecuencia visible: los dos histogramas
+se cruzan exactamente en W = ΔF.
+
+31
+00:02:05,825 --> 00:02:09,602
+Además, la energía libre queda
+encerrada entre los trabajos
+
+32
+00:02:09,602 --> 00:02:13,698
+medios: entre menos el trabajo
+medio inverso, cero coma cuarenta
+
+33
+00:02:13,698 --> 00:02:17,282
+y nueve, y el trabajo medio
+directo, uno coma cero ocho.
+
+34
+00:02:18,383 --> 00:02:19,720
+Hay una trampa práctica.
+
+35
+00:02:20,100 --> 00:02:24,642
+El promedio exponencial está dominado
+por trayectorias raras con trabajo bajo.
+
+36
+00:02:25,022 --> 00:02:27,868
+Con pocas trayectorias,
+es probable no haber
+
+37
+00:02:27,868 --> 00:02:30,779
+visto ninguna, y el
+estimador sobreestima ΔF.
+
+38
+00:02:31,159 --> 00:02:35,627
+Con cinco trayectorias, el estimador
+promedia cero coma setenta y tres;
+
+39
+00:02:35,627 --> 00:02:39,779
+con veinte, cero coma setenta; con
+mil, cero coma seis nueve tres.
+
+40
+00:02:40,159 --> 00:02:43,534
+El sesgo y la varianza caen al
+aumentar el número de muestras.
+
+41
+00:02:43,914 --> 00:02:47,672
+El estimador de Bennett, que usa
+a la vez trayectorias directas e
+
+42
+00:02:47,672 --> 00:02:51,082
+inversas, es el de mínima
+varianza y necesita muchas menos.
+
+43
+00:02:52,183 --> 00:02:54,056
+Resumamos los números del ejemplo.
+
+44
+00:02:54,436 --> 00:02:57,290
+Energía libre exacta:
+un medio del logaritmo
+
+45
+00:02:57,290 --> 00:02:59,690
+de cuatro, cero coma seis nueve tres.
+
+46
+00:03:00,070 --> 00:03:03,095
+Trabajo medio directo:
+uno coma cero ocho, es
+
+47
+00:03:03,095 --> 00:03:06,320
+decir, cero coma tres
+nueve de trabajo disipado.
+
+48
+00:03:06,700 --> 00:03:10,302
+Menos el trabajo medio inverso:
+cero coma cuarenta y nueve.
+
+49
+00:03:10,682 --> 00:03:14,012
+La segunda ley se cumple en
+ambos sentidos, y Jarzynski
+
+50
+00:03:14,012 --> 00:03:17,220
+acierta con tres cifras
+usando cien mil trayectorias.
+
+51
+00:03:18,350 --> 00:03:21,995
+Jarzynski y Crooks se usan en
+biofísica para medir energías
+
+52
+00:03:21,995 --> 00:03:25,332
+libres de plegamiento estirando
+moléculas rápidamente.
+
+53
+00:03:25,712 --> 00:03:28,988
+En este curso los usaremos
+para calcular el logaritmo del
+
+54
+00:03:28,988 --> 00:03:32,264
+determinante de una matriz a
+partir del trabajo entre dos
+
+55
+00:03:32,264 --> 00:03:36,287
+potenciales cuadráticos, en el
+laboratorio cuatro y en la unidad seis.
+
+56
+00:03:37,417 --> 00:03:40,172
+Errores comunes: no empezar en equilibrio.
+
+57
+00:03:40,552 --> 00:03:43,500
+Usar pocas trayectorias en
+procesos muy disipativos.
+
+58
+00:03:43,880 --> 00:03:47,793
+Confundir el promedio de la exponencial
+con la exponencial del promedio.
+
+59
+00:03:48,173 --> 00:03:50,879
+Y creer que Jarzynski
+contradice la segunda ley.
+
+60
+00:03:51,983 --> 00:03:52,816
+En resumen:
+
+61
+00:03:53,196 --> 00:03:58,039
+Jarzynski da la energía
+libre exacta a partir
+
+62
+00:03:58,039 --> 00:04:02,558
+de procesos rápidos, ⟨e^(−βW)⟩ = e^(−βΔF).
+
+63
+00:04:02,938 --> 00:04:05,540
+Crooks relaciona los trabajos directo e
+
+64
+00:04:05,540 --> 00:04:08,609
+inverso, cuyas distribuciones
+se cruzan en ΔF.
+
+65
+00:04:08,989 --> 00:04:12,255
+En la práctica, el estimador
+tiene un sesgo que decrece
+
+66
+00:04:12,255 --> 00:04:15,282
+con el número de trayectorias,
+y Bennett lo reduce.
+
+67
+00:04:16,383 --> 00:04:19,957
+Para practicar: calcula la
+energía libre de endurecer una
+
+68
+00:04:19,957 --> 00:04:23,531
+trampa, demuestra que Crooks
+implica Jarzynski, aplica la
+
+69
+00:04:23,531 --> 00:04:26,729
+fórmula gaussiana y explica
+el sesgo del estimador.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.2}{Matrices de curvatura}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Cuál es el rango de $G$ para lote $b$ y salida $d_z$?
+\item (B) Escriba la fórmula de Woodbury para $(UV+\lambda I)^{-1}v$.
+\item (B) ¿Por qué CG puede converger en $b\,d_z+1$ iteraciones sin importar $\kappa$?
+\item (B) ¿Cuándo coinciden el Fisher empírico y el GGN en regresión logística?
+\item (I) Para regresión logística, escriba $H_L$ y demuestre que $G=X^\top\mathrm{diag}(p(1-p))X/b$.
+\item (I) Compare el costo de Woodbury para $b=32$, $d_z=10$ y para $b=32$, $d_z=3\times10^4$ con $N=10^6$.
+\item (A) Implemente NGD-CG con productos jacobiano--vector en PyTorch o JAX y compare con Woodbury en un perceptrón pequeño.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} A lo sumo $b\,d_z$.
+
+\textbf{E2.} $\lambda^{-1}v-\lambda^{-2}U(I+\lambda^{-1}VU)^{-1}Vv$.
+
+\textbf{E3.} $G+\lambda I$ tiene $\lambda$ con multiplicidad $N-bd_z$ y a lo sumo $bd_z$ valores más: CG termina en tantas iteraciones como valores propios distintos.
+
+\textbf{E4.} Cuando $(p_i-y_i)^2=p_i(1-p_i)$ para todo $i$, p.\,ej.\ en $w=0$ ($p=\frac12$, $y\in\{0,1\}$).
+
+\textbf{E5.} $L=-y\log p-(1-y)\log(1-p)$, $\partial^2L/\partial z^2=p(1-p)$, $J_f=x^\top$.
+
+\textbf{E6.} $d_z=10$: $b^2d_z^2N\approx10^{11}$, $b^3d_z^3\approx3\times10^7$; $d_z=3\times10^4$: $b^2d_z^2N\approx9\times10^{17}$ y $b^3d_z^3\approx9\times10^{17}$: intratable.
+
+\textbf{E7.} CG necesita pocas iteraciones con amortiguamiento razonable; Woodbury es exacto pero su costo crece con $b\,d_z$.
+\end{solucion}
+\end{document}

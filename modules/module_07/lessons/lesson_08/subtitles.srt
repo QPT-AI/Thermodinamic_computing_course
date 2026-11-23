@@ -1,0 +1,322 @@
+1
+00:00:00,350 --> 00:00:01,981
+Lección 7.8.
+
+2
+00:00:02,361 --> 00:00:03,716
+Complejidad comparada.
+
+3
+00:00:04,817 --> 00:00:06,610
+Cerramos la unidad comparando.
+
+4
+00:00:06,990 --> 00:00:09,917
+Hemos visto tres maneras
+de encontrar un orden:
+
+5
+00:00:09,917 --> 00:00:13,841
+interferencia cuántica, difusión
+física y colisiones digitales.
+
+6
+00:00:14,221 --> 00:00:17,001
+Cada una cuenta pasos
+distintos, y un paso de
+
+7
+00:00:17,001 --> 00:00:19,659
+una no cuesta lo mismo
+que un paso de otra.
+
+8
+00:00:20,039 --> 00:00:24,282
+Comparar en serio exige preguntar
+qué recurso físico consume cada paso.
+
+9
+00:00:25,383 --> 00:00:30,998
+Un paso cuántico es una compuerta sobre
+unos pocos qubits; el algoritmo usa del
+
+10
+00:00:30,998 --> 00:00:35,760
+orden de n qubits lógicos y n³
+compuertas, con n el número de bits.
+
+11
+00:00:36,140 --> 00:00:40,626
+Un paso de difusión es un promedio
+simultáneo sobre todos los
+
+12
+00:00:40,626 --> 00:00:45,111
+nodos: solo hacen falta O(n²)
+pasos, pero sobre una red de al
+
+13
+00:00:45,111 --> 00:00:48,787
+menos r nodos leída con
+unos 2n bits de precisión.
+
+14
+00:00:49,167 --> 00:00:52,867
+Un paso digital es una operación
+de palabra: barata, pero los
+
+15
+00:00:52,867 --> 00:00:56,687
+mejores algoritmos necesitan un
+número subexponencial de ellas.
+
+16
+00:00:57,817 --> 00:01:00,864
+Pongamos números para un
+número de dos mil cuarenta y
+
+17
+00:01:00,864 --> 00:01:03,739
+ocho bits, como estimaciones
+de orden de magnitud.
+
+18
+00:01:04,119 --> 00:01:06,801
+Shor: unos cuatro mil
+cien qubits lógicos y
+
+19
+00:01:06,801 --> 00:01:09,172
+unos nueve mil millones de compuertas.
+
+20
+00:01:09,552 --> 00:01:14,365
+Difusión: unos diecisiete millones de
+pasos, pero una red de hasta dos a la dos
+
+21
+00:01:14,365 --> 00:01:18,508
+mil cuarenta y ocho nodos y cuatro
+mil bits de precisión de lectura.
+
+22
+00:01:18,888 --> 00:01:21,462
+La criba de cuerpos de
+números: del orden de
+
+23
+00:01:21,462 --> 00:01:23,744
+dos a la ciento diecisiete operaciones.
+
+24
+00:01:24,124 --> 00:01:26,701
+Rho de Pollard: dos a la quinientos doce.
+
+25
+00:01:27,817 --> 00:01:31,466
+La lección es que la dificultad
+no desaparece: se traslada.
+
+26
+00:01:31,846 --> 00:01:34,988
+Shor la paga en coherencia
+cuántica y corrección de errores.
+
+27
+00:01:35,368 --> 00:01:39,351
+La difusión la paga en área, en
+número de nodos y en precisión
+
+28
+00:01:39,351 --> 00:01:42,693
+analógica, que crecen
+exponencialmente con los bits.
+
+29
+00:01:43,073 --> 00:01:44,824
+Lo digital la paga en tiempo.
+
+30
+00:01:45,204 --> 00:01:48,880
+Interferencia que amplifica
+frente a disipación que borra: la
+
+31
+00:01:48,880 --> 00:01:53,160
+disipación es barata por paso, pero
+necesita representar todo el grupo.
+
+32
+00:01:54,283 --> 00:01:56,957
+La misma comparación
+aparece en álgebra lineal.
+
+33
+00:01:57,337 --> 00:02:01,508
+El algoritmo cuántico HHL
+resuelve A x = b en un tiempo
+
+34
+00:02:01,508 --> 00:02:05,147
+que crece solo con el
+logaritmo de la dimensión,
+
+35
+00:02:05,527 --> 00:02:10,065
+pero exige una matriz dispersa accesible
+por un oráculo y entrega un estado
+
+36
+00:02:10,065 --> 00:02:14,299
+cuántico, no el vector: leer todas
+las entradas cuesta lo que se ganó.
+
+37
+00:02:14,679 --> 00:02:20,061
+El álgebra lineal termodinámica de
+la unidad seis entrega el vector
+
+38
+00:02:20,061 --> 00:02:24,719
+clásico, escala con d κ² ε⁻²
+y paga la carga de la matriz.
+
+39
+00:02:25,099 --> 00:02:27,994
+Distintas promesas,
+distintas letras pequeñas.
+
+40
+00:02:29,117 --> 00:02:32,535
+Para cualquier afirmación de
+ventaja, pregunta cuatro cosas.
+
+41
+00:02:32,915 --> 00:02:35,539
+¿Qué es un paso, y cuánto
+cuesta físicamente?
+
+42
+00:02:35,919 --> 00:02:40,083
+¿Cómo crecen el área, la energía y la
+precisión con el tamaño del problema?
+
+43
+00:02:40,463 --> 00:02:43,054
+¿Qué se entrega al final,
+y cuánto cuesta leerlo?
+
+44
+00:02:43,434 --> 00:02:47,012
+¿Contra qué algoritmo clásico se
+compara, y en qué condiciones?
+
+45
+00:02:47,392 --> 00:02:51,688
+Con esas preguntas, los resultados de
+esta unidad quedan en su lugar: ideas
+
+46
+00:02:51,688 --> 00:02:56,041
+profundas sobre la estructura de los
+grupos, no atajos para la criptografía.
+
+47
+00:02:57,150 --> 00:03:00,659
+Usa esta comparación para
+evaluar afirmaciones con modelos
+
+48
+00:03:00,659 --> 00:03:04,290
+explícitos de tiempo, área,
+energía y precisión, etiquetando
+
+49
+00:03:04,290 --> 00:03:07,194
+cada número como en la
+lección cinco punto ocho.
+
+50
+00:03:07,574 --> 00:03:11,395
+En el proyecto final incluirás una
+tabla de recursos como la de hoy.
+
+51
+00:03:12,517 --> 00:03:15,251
+Errores comunes: comparar
+números de pasos de
+
+52
+00:03:15,251 --> 00:03:17,925
+modelos distintos como
+si costaran lo mismo.
+
+53
+00:03:18,305 --> 00:03:21,446
+Ignorar que la difusión
+necesita del orden de r nodos.
+
+54
+00:03:21,826 --> 00:03:25,926
+Ignorar el oráculo de entrada
+y la salida cuántica de HHL.
+
+55
+00:03:26,306 --> 00:03:28,745
+Y confundir qubits físicos con lógicos.
+
+56
+00:03:29,850 --> 00:03:32,997
+En resumen: un paso
+cuántico, uno de difusión y
+
+57
+00:03:32,997 --> 00:03:35,676
+uno digital consumen recursos distintos.
+
+58
+00:03:36,056 --> 00:03:39,956
+Para dos mil cuarenta y ocho
+bits, Shor usa miles de qubits
+
+59
+00:03:39,956 --> 00:03:44,054
+lógicos, la difusión pocos pasos
+pero una red exponencialmente
+
+60
+00:03:44,054 --> 00:03:47,755
+grande y precisa, y lo digital
+un tiempo subexponencial.
+
+61
+00:03:48,135 --> 00:03:50,740
+La dificultad se traslada, no desaparece.
+
+62
+00:03:51,120 --> 00:03:54,001
+Y la misma lectura cuidadosa vale para HHL
+
+63
+00:03:54,001 --> 00:03:56,677
+frente al álgebra lineal termodinámica.
+
+64
+00:03:57,783 --> 00:04:01,264
+Para practicar: di qué recurso
+consume cada tipo de paso.
+
+65
+00:04:01,644 --> 00:04:05,168
+Calcula la cota de difusión para
+dos mil cuarenta y ocho bits.
+
+66
+00:04:05,548 --> 00:04:09,532
+Explica por qué leer la salida
+de HHL anula su ventaja.
+
+67
+00:04:09,912 --> 00:04:13,299
+Y escribe las cuatro preguntas para
+cualquier afirmación de ventaja.

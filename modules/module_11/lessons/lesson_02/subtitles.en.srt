@@ -1,0 +1,329 @@
+1
+00:00:00,350 --> 00:00:02,095
+Lesson 11.2.
+
+2
+00:00:02,475 --> 00:00:05,445
+Torx: stochastic
+differentiable programming.
+
+3
+00:00:06,550 --> 00:00:09,768
+THRML simulates block sampling.
+
+4
+00:00:10,148 --> 00:00:15,227
+But many algorithms are more general:
+chains of stochastic transitions with
+
+5
+00:00:15,227 --> 00:00:19,899
+parameters we want to train, like
+a diffusion model or a random walk.
+
+6
+00:00:20,279 --> 00:00:25,343
+In August twenty twenty-six, Extropic
+published parametrized stochastic
+
+7
+00:00:25,343 --> 00:00:30,621
+circuits and torx, a JAX library to
+build, execute and differentiate them.
+
+8
+00:00:31,001 --> 00:00:34,689
+The idea is the same as with
+quantum circuits: a gate
+
+9
+00:00:34,689 --> 00:00:38,168
+language close to what the
+hardware does natively.
+
+10
+00:00:39,283 --> 00:00:43,963
+A circuit has typed wires:
+binary, categorical or continuous.
+
+11
+00:00:44,343 --> 00:00:48,001
+Each gate is a local stochastic
+matrix with parameters.
+
+12
+00:00:48,381 --> 00:00:54,445
+The simplest is the probabilistic NOT,
+PNOT: it flips a pbit with probability p.
+
+13
+00:00:54,825 --> 00:00:57,070
+It is a mixture of the
+identity and the NOT.
+
+14
+00:00:57,450 --> 00:01:00,396
+The probabilistic swap
+and the probabilistic
+
+15
+00:01:00,396 --> 00:01:02,939
+controlled NOT follow the same recipe.
+
+16
+00:01:03,319 --> 00:01:05,775
+The complete circuit is the product of its
+
+17
+00:01:05,775 --> 00:01:08,114
+gates applied to the input distribution.
+
+18
+00:01:09,217 --> 00:01:13,450
+We reproduce the paper's first
+example with our own minimal
+
+19
+00:01:13,450 --> 00:01:17,109
+NumPy implementation,
+written from its definitions.
+
+20
+00:01:17,489 --> 00:01:23,578
+A PNOT, a swap and a controlled NOT
+act on two pbits starting at zero zero.
+
+21
+00:01:23,958 --> 00:01:28,880
+We want the distribution half zero
+zero, half one one, perfect correlation.
+
+22
+00:01:29,260 --> 00:01:35,217
+After three thousand Adam steps,
+the loss falls from 0.33 to 2·10⁻⁵,
+
+23
+00:01:35,217 --> 00:01:40,562
+and the final distribution is
+0.498 in each correlated state.
+
+24
+00:01:41,683 --> 00:01:45,227
+In hardware we do not have the
+exact distribution, only samples.
+
+25
+00:01:45,607 --> 00:01:48,792
+For mixture gates with p = σ(θ),
+
+26
+00:01:49,172 --> 00:01:52,751
+the derivative of the gate is
+the difference of two gates of
+
+27
+00:01:52,751 --> 00:01:56,091
+the same family: the original
+and another with a shifted
+
+28
+00:01:56,091 --> 00:01:59,550
+parameter, whose value of p
+is the square of the original.
+
+29
+00:01:59,930 --> 00:02:03,180
+We verify the identity with an
+error of ten to the minus eleven.
+
+30
+00:02:03,560 --> 00:02:07,007
+The gradient is estimated
+with the difference of two
+
+31
+00:02:07,007 --> 00:02:10,785
+averages of circuit runs: it
+is the parameter-shift rule.
+
+32
+00:02:11,917 --> 00:02:14,716
+We compare with REINFORCE,
+the score-function
+
+33
+00:02:14,716 --> 00:02:18,201
+estimator, which uses the
+circuit's internal trajectory.
+
+34
+00:02:18,581 --> 00:02:22,795
+With a thousand runs, both
+are unbiased: the exact
+
+35
+00:02:22,795 --> 00:02:26,504
+gradient is −0.0428,
+and the averages agree.
+
+36
+00:02:26,884 --> 00:02:29,960
+In this example, REINFORCE
+had lower variance.
+
+37
+00:02:30,340 --> 00:02:34,214
+The advantage of the parameter
+shift is different: it only needs
+
+38
+00:02:34,214 --> 00:02:37,665
+to run the circuit and read
+the output, without observing
+
+39
+00:02:37,665 --> 00:02:41,480
+intermediate states, which on a
+chip are not always accessible.
+
+40
+00:02:42,583 --> 00:02:46,295
+Another family of gates comes
+from exponentiating a rate matrix.
+
+41
+00:02:46,675 --> 00:02:51,233
+PIsing applies for a time the Glauber
+dynamics of two coupled spins.
+
+42
+00:02:51,613 --> 00:02:57,102
+From the uniform distribution, with
+coupling one and beta two, at time five
+
+43
+00:02:57,102 --> 00:03:02,005
+it reaches the Boltzmann distribution:
+0.491 in the aligned states.
+
+44
+00:03:02,385 --> 00:03:05,828
+But careful: applying PIsing
+edge by edge on a ring of
+
+45
+00:03:05,828 --> 00:03:09,079
+eight spins does not sample
+the ring's Ising model.
+
+46
+00:03:09,460 --> 00:03:12,763
+In our case it stays at a total variation
+
+47
+00:03:12,763 --> 00:03:16,709
+distance of 0.84, while
+chromatic Gibbs is exact.
+
+48
+00:03:17,089 --> 00:03:19,112
+The paper finds the same effect.
+
+49
+00:03:20,217 --> 00:03:24,263
+Stochastic circuits are useful
+for random walks, discrete
+
+50
+00:03:24,263 --> 00:03:28,523
+diffusion, stochastic networks
+on graphs and jump diffusion.
+
+51
+00:03:28,903 --> 00:03:34,264
+The same circuit runs with software or
+hardware randomness: the paper uses pbits
+
+52
+00:03:34,264 --> 00:03:38,821
+from the X0 chip and obtains estimates
+consistent with the baseline.
+
+53
+00:03:39,201 --> 00:03:43,825
+And when compiling, use native
+Gibbs gates, not edge-tiled PIsing.
+
+54
+00:03:44,950 --> 00:03:47,625
+Common mistakes: assuming
+that composing local
+
+55
+00:03:47,625 --> 00:03:49,951
+equilibria gives the global equilibrium.
+
+56
+00:03:50,331 --> 00:03:54,041
+Using REINFORCE when the internal
+states cannot be observed.
+
+57
+00:03:54,421 --> 00:03:58,591
+Pushing probabilities to zero or
+one, where the score diverges.
+
+58
+00:03:58,971 --> 00:04:04,067
+And ignoring the calibration error
+of real pbits, around five percent.
+
+59
+00:04:05,183 --> 00:04:09,318
+In summary, a parametrized
+stochastic circuit composes typed
+
+60
+00:04:09,318 --> 00:04:13,522
+local gates, and torx builds,
+executes and differentiates it.
+
+61
+00:04:13,902 --> 00:04:17,117
+The shift identity turns
+the derivative into the
+
+62
+00:04:17,117 --> 00:04:21,068
+difference of two runs, useful
+when we only see the output.
+
+63
+00:04:21,448 --> 00:04:25,506
+Generator-derived gates, like
+PIsing, are powerful, but composing
+
+64
+00:04:25,506 --> 00:04:28,939
+them edge by edge does not
+give the global equilibrium.
+
+65
+00:04:30,050 --> 00:04:33,089
+To practice: write the PNOT matrix.
+
+66
+00:04:33,469 --> 00:04:36,087
+Prove the relation of
+the shifted parameter.
+
+67
+00:04:36,467 --> 00:04:40,011
+Explain why the parameter
+shift suits hardware.
+
+68
+00:04:40,391 --> 00:04:43,313
+And explain why edge-tiled
+PIsing is not Gibbs.

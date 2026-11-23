@@ -1,0 +1,304 @@
+1
+00:00:00,350 --> 00:00:02,903
+Lesson 5.2.
+
+2
+00:00:03,283 --> 00:00:04,949
+p-bits: MTJ and CMOS.
+
+3
+00:00:06,050 --> 00:00:09,288
+In unit four the pbit was
+an abstraction: a spin
+
+4
+00:00:09,288 --> 00:00:12,392
+that equals plus one
+with sigmoid probability.
+
+5
+00:00:12,772 --> 00:00:14,576
+Now let's see how it is built.
+
+6
+00:00:14,956 --> 00:00:15,918
+There are two paths.
+
+7
+00:00:16,298 --> 00:00:21,023
+One is physical: a magnet so tiny and
+unstable that heat flips it on its own.
+
+8
+00:00:21,403 --> 00:00:26,898
+The other is digital: a random generator,
+a table and a comparator on an FPGA.
+
+9
+00:00:27,278 --> 00:00:29,240
+Both lead to p-computers.
+
+10
+00:00:30,350 --> 00:00:34,936
+A magnetic tunnel junction has two
+magnetic layers separated by an insulator.
+
+11
+00:00:35,316 --> 00:00:38,072
+If the magnetizations are parallel, the
+
+12
+00:00:38,072 --> 00:00:40,969
+resistance is low; if antiparallel, high.
+
+13
+00:00:41,349 --> 00:00:44,738
+In a magnetic memory, the
+free layer has a barrier of
+
+14
+00:00:44,738 --> 00:00:48,128
+about forty k_B T so that
+it does not flip for years.
+
+15
+00:00:48,508 --> 00:00:52,582
+In a pbit we do the opposite: a
+free layer with a barrier on the
+
+16
+00:00:52,582 --> 00:00:56,466
+order of k_B T, which thermal
+noise flips within nanoseconds.
+
+17
+00:00:56,846 --> 00:01:00,660
+We read the resistance, and
+its voltage is a random bit.
+
+18
+00:01:01,783 --> 00:01:07,285
+The mean time between flips
+follows the Néel–Arrhenius law, τ =
+
+19
+00:01:07,285 --> 00:01:11,913
+τ₀ e^(Δ/k_B T), with τ₀ on
+the order of a nanosecond.
+
+20
+00:01:12,293 --> 00:01:15,306
+With a barrier of forty
+k_B T, the magnet stays
+
+21
+00:01:15,306 --> 00:01:17,998
+put for about seven years: it is a memory.
+
+22
+00:01:18,378 --> 00:01:20,082
+With twenty, half a second.
+
+23
+00:01:20,462 --> 00:01:24,424
+With a single k_B T, less than
+three nanoseconds: it is a pbit.
+
+24
+00:01:24,804 --> 00:01:27,436
+The same device goes from memory to random
+
+25
+00:01:27,436 --> 00:01:30,318
+generator just by changing
+the barrier height.
+
+26
+00:01:31,450 --> 00:01:35,147
+To be a pbit, the input must
+control the probability.
+
+27
+00:01:35,527 --> 00:01:40,726
+A current or voltage tilts the double
+well: it favors one state over the other.
+
+28
+00:01:41,106 --> 00:01:45,078
+The fraction of time in the high
+state follows a sigmoid of the input.
+
+29
+00:01:45,458 --> 00:01:49,115
+In the typical circuit, the junction
+is connected to a transistor
+
+30
+00:01:49,115 --> 00:01:52,716
+and an inverter: the input is the
+gate voltage and the output is
+
+31
+00:01:52,716 --> 00:01:55,586
+a bit that fluctuates with
+the desired probability.
+
+32
+00:01:55,967 --> 00:02:00,723
+The jump rates, and therefore the
+speed, stay in the nanoseconds.
+
+33
+00:02:01,850 --> 00:02:05,926
+The digital path emulates the same
+behavior with standard circuits.
+
+34
+00:02:06,306 --> 00:02:12,222
+A pseudorandom generator produces a number,
+a table stores the hyperbolic tangent,
+
+35
+00:02:12,222 --> 00:02:17,488
+and a comparator decides the sign,
+exactly the rule we saw in lesson 4.5.
+
+36
+00:02:17,868 --> 00:02:22,484
+It does not save the energy of randomness,
+but it can be built today on an FPGA,
+
+37
+00:02:22,484 --> 00:02:26,523
+with hundreds of thousands of pbits
+and whatever connectivity we want.
+
+38
+00:02:26,903 --> 00:02:30,191
+It is the platform on which
+p-computers were developed.
+
+39
+00:02:31,317 --> 00:02:34,174
+A p-computer connects
+many pbits according to a
+
+40
+00:02:34,174 --> 00:02:36,850
+graph and updates them
+with chromatic Gibbs.
+
+41
+00:02:37,230 --> 00:02:41,137
+The key to its speed is
+sparsity: if each pbit has few
+
+42
+00:02:41,137 --> 00:02:45,478
+neighbors, the graph is colored
+with few colors, and in each
+
+43
+00:02:45,478 --> 00:02:49,385
+clock phase all pbits of one
+color update in parallel.
+
+44
+00:02:49,765 --> 00:02:55,253
+Sparse Ising machines on FPGA reach
+billions of flips per second, several
+
+45
+00:02:55,253 --> 00:03:00,591
+orders of magnitude more than a CPU
+going through the spins one by one.
+
+46
+00:03:01,717 --> 00:03:06,373
+Stochastic tunnel junctions give
+nanosecond flips and tunable probability,
+
+47
+00:03:06,373 --> 00:03:10,841
+although each device is somewhat
+different and they must be calibrated.
+
+48
+00:03:11,221 --> 00:03:14,771
+FPGA p-computers already
+solve optimization,
+
+49
+00:03:14,771 --> 00:03:17,919
+sampling and invertible-logic problems.
+
+50
+00:03:18,298 --> 00:03:23,414
+In lab eight you will simulate pbit
+circuits and measure their transfer curve.
+
+51
+00:03:24,517 --> 00:03:28,484
+Common mistakes: using a memory
+junction, which never flips.
+
+52
+00:03:28,864 --> 00:03:31,413
+Ignoring device-to-device variability.
+
+53
+00:03:31,793 --> 00:03:33,903
+Updating neighbors in the same phase.
+
+54
+00:03:34,284 --> 00:03:36,819
+And counting flips per
+second without checking
+
+55
+00:03:36,819 --> 00:03:39,079
+that the sampled distribution is correct.
+
+56
+00:03:40,183 --> 00:03:44,180
+In summary: a magnetic tunnel
+junction with a barrier on the order
+
+57
+00:03:44,180 --> 00:03:47,996
+of k_B T is a physical pbit that
+fluctuates within nanoseconds,
+
+58
+00:03:47,996 --> 00:03:51,326
+and an input that tilts its
+well tunes the probability.
+
+59
+00:03:51,706 --> 00:03:55,229
+A digital pbit combines a
+generator, a table and a comparator.
+
+60
+00:03:55,609 --> 00:04:00,081
+Connected in sparse, colored
+graphs, they form fast p-computers.
+
+61
+00:04:01,183 --> 00:04:05,019
+To practice: compute the
+barrier for a given flip time.
+
+62
+00:04:05,399 --> 00:04:08,320
+Compare the barriers
+of a pbit and a memory.
+
+63
+00:04:08,700 --> 00:04:10,671
+Count the colors of a square lattice.
+
+64
+00:04:11,051 --> 00:04:15,169
+And explain what a digital pbit spends
+energy on that a magnetic one does not.

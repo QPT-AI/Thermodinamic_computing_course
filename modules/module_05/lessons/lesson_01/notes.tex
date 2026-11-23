@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.1}{Por qué el hardware digital es ineficiente para la IA probabilística}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} desglosar la energía de una actualización de Gibbs en digital; entender por qué el muestreo está limitado
+por memoria y por qué los márgenes de ruido cuestan; estimar la brecha frente a un pbit físico.
+\textbf{Prerrequisitos:} 0.1 (energía y roofline), 4.3 y 4.5 (Gibbs y pbits).
+
+\section{Anatomía de una actualización}
+Una actualización de un espín de grado 16 lee 16 estados y 16 acoplamientos, suma el campo local, evalúa una sigmoide, genera un número aleatorio,
+compara y escribe. La aritmética es mínima ($\sim30$ operaciones); el costo está en mover datos. Con la tabla de 45 nm (lección 0.1): suma FP
+$\approx0{,}9$ pJ, lectura SRAM de 32 bits $\approx5$ pJ, lectura DRAM $\approx640$ pJ.
+
+\section{Muestreo limitado por memoria}
+Con $\sim1$ FLOP por byte, la actualización está muy a la izquierda del codo del roofline: las unidades aritméticas esperan datos. El grafo disperso
+de un modelo de Ising tampoco permite la reutilización en caché de una multiplicación densa.
+
+\section{El costo de la aleatoriedad y de los márgenes}
+Los generadores pseudoaleatorios (Philox, xorshift) gastan varias operaciones por palabra. Un generador de solo transistores basado en ruido de disparo
+produce un bit aleatorio con cientos de attojulios (pensum, Unidad 5). Además, cada bit digital se guarda con barreras de decenas de $\kB T$
+(lección 0.2): se paga por eliminar el ruido y luego por fabricarlo.
+
+\begin{ejemplo}[ (estimación de orden de magnitud \evE)]
+Digital: $12\times5$ pJ (SRAM) $+\ 3$ pJ (PRNG) $+\ 5$ pJ (ALU) $\approx70$ pJ por actualización. Z1: $1\ \text{W}/(269\,568\times50\ \text{MHz})\approx74$ fJ.
+Cociente $\approx10^3$, sin contar la memoria externa. Ambas cifras son cotas o estimaciones; la comparación justa es por muestra independiente y a nivel
+de sistema (lección 5.8).
+\end{ejemplo}
+
+\begin{aplicacion}
+Diseño: acoplamientos junto a cada pbit (cómputo en memoria), ruido físico en lugar de PRNG, lecturas poco frecuentes. Laboratorio L7: medir J/muestra de
+Gibbs en GPU y compararlo con la estimación para pbits.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Comparar FLOPs en lugar de bytes movidos. \quad Comparar energía de tejido de un chip con energía de sistema de una GPU.
+\item Ignorar costo y calidad del PRNG. \quad Tratar estimaciones \evE{} como mediciones.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[21]{e1} Extropic, Thermodynamic Computing From Zero to One, 2025.
+\bibitem[22]{e2} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\bibitem{horowitz} M. Horowitz, Computing's energy problem (and what we can do about it), ISSCC 2014.
+\end{thebibliography}
+\end{document}

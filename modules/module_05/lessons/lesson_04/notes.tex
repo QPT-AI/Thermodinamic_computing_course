@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.4}{Unidades de procesamiento estocástico continuo}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} osciladores RLC acoplados como Langevin en un potencial cuadrático; estadísticas estacionarias y
+convergencia $1/\sqrt T$; la SPU de Normal Computing.
+\textbf{Prerrequisitos:} 2.2, 2.4 (Langevin, OU), 1.6 (ruido de Nyquist).
+
+\section{Una celda oscilante}
+Un circuito RLC: el voltaje del capacitor oscila, la resistencia amortigua y, por Nyquist, inyecta ruido térmico. La dinámica es Langevin subamortiguada
+$m\ddot x=-\kappa x-\gamma\dot x+\sqrt{2\gamma\kB T}\,\xi(t)$ con potencial cuadrático; sola, cada celda muestrea una gaussiana.
+
+\section{Celdas acopladas}
+Con capacitores de acoplamiento, la energía total es
+\begin{equation}
+U(x)=\tfrac12x^\top Ax-b^\top x,\qquad x_\infty\sim\N\big(A^{-1}b,\ \kB T\,A^{-1}\big),
+\end{equation}
+con $A$ (simétrica definida positiva) codificando capacitancias y acoplamientos y $b$ voltajes de sesgo \cite{melanson,aifer}. Promediar en el tiempo
+los voltajes y sus productos da $A^{-1}b$ y $A^{-1}$ (lecciones 2.4 y 6.1--6.2).
+\begin{ejemplo}
+8 celdas, $A=GG^\top/8+I$ ($\kappa\approx3{,}8$), $\gamma=m=\kB T=1$, $dt=0{,}01$, calentamiento de 20 unidades \evS. Error relativo de $\hat\Sigma$:
+29\,\% ($T=100$), 8\,\% ($T=1000$), 5\,\% ($T=4000$): $\propto1/\sqrt T$ (lección 2.6).
+\end{ejemplo}
+
+\section{De la placa al chip}
+Primer prototipo: placa de circuito impreso con 8 celdas acopladas (muestreo gaussiano e inversión de matrices pequeñas); siguiente paso: chip integrado
+con constantes de tiempo de nanosegundos y muchas más celdas. Con $L=1\ \mu$H y $C=1$ nF, $f_0=1/(2\pi\sqrt{LC})\approx5$ MHz; $10^3$ tiempos de
+relajación de $\sim1\ \mu$s dan $\sim1$ ms en la placa; con fF en un chip, $\sim\mu$s \evE.
+
+\begin{aplicacion}
+Sistemas lineales e inversas (Unidad 6), muestreo gaussiano, gradiente natural (TNGD, Unidad 8). Límites: precisión analógica, desajuste y costo de
+DAC/ADC (lecciones 5.6 y 6.5).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $A$ no SPD: el circuito es inestable. \quad Promediar sin descartar el transitorio.
+\item Esperar precisión digital (error $\propto1/\sqrt T$). \quad Ignorar el costo de cargar $A$ y leer $x$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[25]{melanson} D. Melanson et al., Thermodynamic computing system for AI applications, Nat. Commun. 16, 3757 (2025).
+\bibitem[30]{aifer} M. Aifer et al., Thermodynamic linear algebra, npj Unconv. Comput. 1, 13 (2024).
+\bibitem[29]{asic} M. Aifer et al., Solving the compute crisis with physics-based ASICs, 2025.
+\end{thebibliography}
+\end{document}

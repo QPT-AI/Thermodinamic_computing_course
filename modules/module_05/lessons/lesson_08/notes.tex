@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.8}{Contabilidad energética en sistemas heterogéneos}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} dividir la energía de un sistema TSU + GPU/XPU + FPGA en tejido, E/S y pegamento digital; construir un
+modelo de costo explícito por muestra; etiquetar cada cifra como medida, simulada, proyectada o estimada.
+\textbf{Prerrequisitos:} 5.3, 5.7.
+
+\section{Tres términos}
+\[E_{\text{total}}=\underbrace{NKe_{\text{act}}}_{\text{tejido}}+\underbrace{Nb\,e_{\text{bit}}}_{\text{E/S}}+\underbrace{Nm\,e_{\text{MAC}}}_{\text{pegamento}}\]
+con $N$ pbits, $K$ barridos por muestra, $b$ bits que cruzan la frontera del chip por pbit y $m$ multiplicaciones-sumas digitales por sesgo.
+
+\section{Costos de referencia \evE}
+Horowitz (ISSCC 2014), proceso de 45 nm: multiplicación fp32 3,7 pJ; suma fp32 0,9 pJ; multiplicación int8 0,2 pJ; suma int8 0,03 pJ; lectura DRAM de 32 bits
+$\approx640$ pJ. Mover datos cuesta mucho más que operar con ellos. Para E/S fuera del chip suponemos $e_{\text{bit}}=10$ pJ/bit (supuesto del modelo).
+Del Z1 (lección 5.3): $e_{\text{act}}\le1\,\text{W}/(269\,568\times50\,\text{MHz})\approx74$ fJ, cota derivada de especificaciones.
+
+\section{Una muestra, contada \evE}
+$K=1000$, $b=9$ (8 bits de sesgo que entran y 1 bit de estado que sale), $m=100$:
+\begin{center}\begin{tabular}{lrrr}\toprule
+término & fp32 & int8 & \\\midrule
+tejido & 20\ \textmu J & 20\ \textmu J & \\
+E/S & 24\ \textmu J & 24\ \textmu J & \\
+pegamento & 124\ \textmu J & 6\ \textmu J & \\\midrule
+total & 168\ \textmu J & 50\ \textmu J & \\
+fracción del tejido & 12\,\% & 40\,\% & \\\bottomrule\end{tabular}\end{center}
+Equilibrio tejido--E/S: $K^\ast=b\,e_{\text{bit}}/e_{\text{act}}\approx9\times10\,\text{pJ}/74\,\text{fJ}\approx1{,}2\times10^3$ barridos.
+
+\section{Reducir lo que no es tejido}
+Pegamento de baja precisión; amortizar la E/S con más barridos por lectura; leer resúmenes (pocas salidas) en vez de estados completos; a largo plazo, llevar
+funciones al chip para eliminar el pegamento digital (problema abierto, Unidad 11).
+
+\section{Etiquetas de evidencia}
+\begin{definicion}[ (RA7)]
+\evM\ medido con instrumento en un dispositivo real; \evS\ simulado con un modelo físico; \evP\ proyectado a partir de un diseño que aún no existe;
+\evE\ estimado (cálculo de orden de magnitud). Nunca presentar \evP\ o \evE\ como \evM.
+\end{definicion}
+
+\begin{aplicacion}
+Antes de cualquier afirmación: escribir los tres términos, reportar energía por muestra con $K$ y la precisión del pegamento, y comparar con una línea base digital en
+la misma tarea y calidad (Unidad 6). En el proyecto final cada cifra lleva su etiqueta.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Citar la energía del tejido como la del sistema. \quad Ignorar la red que calcula los sesgos.
+\item Comparar con calidades o tareas distintas. \quad Presentar un estimado como medición.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{horowitz} M. Horowitz, Computing's energy problem (and what we can do about it), ISSCC 2014.
+\bibitem[22]{z1} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\bibitem[48]{jel} A. Jelinčič et al., An efficient probabilistic hardware architecture for diffusion-like models, 2026.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.8}{Procesos de saltos de Markov en tiempo continuo}
+
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba $Q$ para el pbit y resuelva $p(t)$ desde $p(0)=(1,0)$.
+\item (B) Muestre que Poisson$(k/\gamma)$ es estacionaria para producción $k$ y degradación $\gamma n$.
+\item (B) Media y varianza del tiempo para completar $N=100$ saltos de tasa $k=10^6$ s$^{-1}$.
+\item (B) Describa los dos sorteos de Gillespie.
+\item (I) Caminata con saltos $+1$ (tasa $a$) y $-1$ (tasa $b$), $a>b$, desde 0 hasta $N$: muestre $\langle\tau\rangle=N/(a-b)$.
+\item (I) Verifique balance detallado para el proceso de nacimiento y muerte con la Poisson.
+\item (A) Implemente Gillespie en JAX para el pbit y estime $\tau_c$ de la autocorrelación.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $Q=\begin{pmatrix}-k_+&k_+\\k_-&-k_-\end{pmatrix}$; $p_{+}(t)=\frac{k_+}{k_++k_-}\big(1-e^{-(k_++k_-)t}\big)$, $p_-=1-p_+$.
+
+\textbf{E2.} Balance de flujos entre $n$ y $n+1$: $\pi_nk=\pi_{n+1}\gamma(n+1)\Rightarrow\pi_{n+1}/\pi_n=\frac{k/\gamma}{n+1}$, que es Poisson.
+
+\textbf{E3.} $\langle\tau\rangle=10^{-4}$ s; $\Var=10^{-10}$ s$^2$ ($\sigma=10\ \mu$s, 10\,\% de la media).
+
+\textbf{E4.} Tiempo $\sim\mathrm{Exp}(R)$; destino con probabilidad $Q_{ij}/R$.
+
+\textbf{E5.} $m_n$ cumple $a(m_{n+1}-m_n)+b(m_{n-1}-m_n)=-1$; con deriva positiva, $m_n=(N-n)/(a-b)$ (despreciando la frontera inferior si es reflectante y lejana); desde $0$: $N/(a-b)$.
+
+\textbf{E6.} Es la misma ecuación de E2: $\pi_nQ_{n,n+1}=\pi_{n+1}Q_{n+1,n}$.
+
+\textbf{E7.} (Abierto.) Debe obtenerse $\tau_c\approx1/(k_++k_-)$.
+\end{solucion}
+\end{document}

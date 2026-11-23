@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.5}{El pbit como neurona estocástica}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre que $P(\tanh(\beta u)>r)=\sigma(2\beta u)$ si $r\sim U(-1,1)$.
+\item (B) Demuestre que $\mathbb E[s]=\tanh(\beta u)$.
+\item (B) ¿Qué entrada $u$ da $P(s=+1)=0{,}9$ con $\beta=1$?
+\item (B) Dos pbits con $J_{12}=1$, $h=0$, $\beta=1$: calcule $P(s_1=s_2)$.
+\item (I) Un pbit físico salta $-\to+$ con tasa $k_+$ y $+\to-$ con $k_-$. ¿Qué relación entre tasas da $P(+1)=\sigma(2\beta u)$? Proponga
+$k_\pm=\nu\,\sigma(\pm2\beta u)$ y compruebe.
+\item (I) Si el RNG tiene un sesgo y produce $r\sim U(-1+\delta,1+\delta)$, ¿qué entrada efectiva ve el pbit?
+\item (A) Simule la cadena de 3 pbits de los apuntes y calcule la distancia de variación total con Boltzmann frente al número de barridos.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $P(r<a)=(a+1)/2$ para $a\in[-1,1]$; con $a=\tanh x$, $(1+\tanh x)/2=\sigma(2x)$.
+
+\textbf{E2.} $\mathbb E[s]=\sigma(2\beta u)-\sigma(-2\beta u)=\tanh(\beta u)$.
+
+\textbf{E3.} $\sigma(2u)=0{,}9\Rightarrow2u=\ln9$, $u=1{,}10$.
+
+\textbf{E4.} $P(s_1=s_2)=e^{1}/(e^1+e^{-1})=0{,}881$.
+
+\textbf{E5.} Estacionaria $k_+/(k_++k_-)$; con $k_\pm=\nu\sigma(\pm2\beta u)$ da $\sigma(2\beta u)$, y la tasa de relajación $k_++k_-=\nu$ es independiente de $u$.
+
+\textbf{E6.} $P(+1)=(1+\tanh\beta u-\delta)/2$: equivale a $\tanh\beta u_{\text{ef}}=\tanh\beta u-\delta$, un sesgo de campo $\approx-\delta/(\beta(1-\tanh^2\beta u))$.
+
+\textbf{E7.} La distancia decae como $\approx\sqrt{8/(\pi\,\mathrm{ESS})}$ para un estimador de 8 categorías; con $6\times10^4$ barridos es $<10^{-2}$.
+\end{solucion}
+\end{document}

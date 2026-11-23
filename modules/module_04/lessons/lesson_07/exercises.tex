@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.7}{Máquinas de Boltzmann y su regla de aprendizaje}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Derive $\partial\ln Z/\partial J_{ij}=\beta\langle s_is_j\rangle_{\text{modelo}}$.
+\item (B) Muestre que maximizar $\mathcal L$ equivale a minimizar $\mathrm{KL}(p_{\text{datos}}\|p_\theta)$.
+\item (B) ¿Por qué el gradiente se anula cuando coinciden las correlaciones?
+\item (B) ¿Cuántos estados hay que enumerar con 30 neuronas? ¿Cuál es la alternativa?
+\item (I) Muestre que $\mathcal L$ es cóncava en $(J,h)$ para una máquina totalmente visible (Hessiano $=-\beta^2$ covarianza de $s_is_j$).
+\item (I) Con gradientes estimados por $K$ muestras del modelo, ¿cómo escala el ruido del gradiente con $K$ y con $\tau_{\text{int}}$?
+\item (A) Reproduzca el experimento de los apuntes con gradientes estimados por Gibbs ($K=100$ barridos por paso) y compare la curva de KL.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\partial_{J_{ij}}\ln\sum_se^{-\beta E}=\frac1Z\sum_s\beta s_is_je^{-\beta E}$.
+
+\textbf{E2.} $\mathrm{KL}=\sum p_{\text{d}}\ln p_{\text{d}}-\sum p_{\text{d}}\ln p_\theta$; el primer término no depende de $\theta$.
+
+\textbf{E3.} Ambos términos se igualan; además, por concavidad (E5), es el máximo global.
+
+\textbf{E4.} $2^{30}\approx1{,}1\times10^9$; muestrear con MCMC o con hardware de pbits.
+
+\textbf{E5.} $\ln Z$ es convexa (cumulante); $\mathcal L=$ lineal $-\ln Z$.
+
+\textbf{E6.} Varianza $\propto\tau_{\text{int}}/K$: error estándar $\propto\sqrt{\tau_{\text{int}}/K}$.
+
+\textbf{E7.} La KL baja más lentamente y se estanca en un piso fijado por el ruido del gradiente.
+\end{solucion}
+\end{document}

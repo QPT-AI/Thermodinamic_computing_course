@@ -1,0 +1,596 @@
+1
+00:00:00,350 --> 00:00:02,061
+Lesson 1.5.
+
+2
+00:00:02,441 --> 00:00:03,934
+Landauer's principle.
+
+3
+00:00:05,050 --> 00:00:07,144
+Your phone heats up when it works.
+
+4
+00:00:07,524 --> 00:00:12,790
+Every operation a processor performs
+ends up, sooner or later, as heat.
+
+5
+00:00:13,170 --> 00:00:16,514
+The question of this lesson
+is surprisingly deep:
+
+6
+00:00:16,894 --> 00:00:21,414
+is there a minimum cost, imposed by
+physics, for processing information?
+
+7
+00:00:21,794 --> 00:00:26,101
+In 1961 Rolf Landauer
+gave a precise answer.
+
+8
+00:00:26,481 --> 00:00:30,531
+Not every operation costs
+something, but one does: erasing.
+
+9
+00:00:30,911 --> 00:00:33,777
+Erasing a bit has a
+minimum price in energy,
+
+10
+00:00:33,777 --> 00:00:36,577
+and that price depends
+only on temperature.
+
+11
+00:00:37,683 --> 00:00:40,903
+Picture the simplest
+possible memory: a box with
+
+12
+00:00:40,903 --> 00:00:43,787
+a single particle and
+a wall in the middle.
+
+13
+00:00:44,167 --> 00:00:46,816
+If the particle is on the left, the bit is
+
+14
+00:00:46,816 --> 00:00:49,275
+zero; if it is on the right, it is one.
+
+15
+00:00:49,655 --> 00:00:53,559
+Erasing means leaving the bit at zero
+regardless of its previous value.
+
+16
+00:00:53,939 --> 00:00:56,484
+One way to do it is to remove the wall and
+
+17
+00:00:56,484 --> 00:00:59,088
+push a piston from the
+right to the middle.
+
+18
+00:00:59,468 --> 00:01:02,280
+At the end, the particle
+is always on the left.
+
+19
+00:01:02,660 --> 00:01:06,481
+Notice what happened: the
+available space was cut in half.
+
+20
+00:01:06,861 --> 00:01:10,376
+Compressing something in contact
+with a heat bath requires
+
+21
+00:01:10,376 --> 00:01:13,769
+work, and that work leaves
+as heat into the environment.
+
+22
+00:01:14,883 --> 00:01:18,639
+Now a more realistic version:
+a double-well potential.
+
+23
+00:01:19,019 --> 00:01:23,144
+Each amber dot is a copy of the
+memory, a particle jittering
+
+24
+00:01:23,144 --> 00:01:26,788
+from thermal noise, simulated
+with Langevin dynamics.
+
+25
+00:01:27,168 --> 00:01:30,926
+At the start, half the
+copies are in the left well
+
+26
+00:01:30,926 --> 00:01:34,082
+and half in the right: the bit is unknown.
+
+27
+00:01:34,462 --> 00:01:36,868
+The erasure protocol has three steps.
+
+28
+00:01:37,248 --> 00:01:41,061
+First we lower the barrier,
+and the particles mix freely.
+
+29
+00:01:41,441 --> 00:01:46,914
+Then we tilt the potential to the left,
+and they all slide into the zero well.
+
+30
+00:01:47,294 --> 00:01:49,410
+Finally we raise the barrier again.
+
+31
+00:01:49,790 --> 00:01:53,057
+The green histogram shows
+the distribution: it started
+
+32
+00:01:53,057 --> 00:01:56,021
+with two equal peaks and
+ended with a single one.
+
+33
+00:01:56,401 --> 00:01:58,238
+We lost one bit of uncertainty.
+
+34
+00:01:59,350 --> 00:02:01,035
+Let's put numbers on that loss.
+
+35
+00:02:01,415 --> 00:02:07,673
+The entropy of the memory
+is S = −k_B Σ p ln p.
+
+36
+00:02:08,053 --> 00:02:15,255
+Before erasure, each state has probability
+one half, so the entropy is k_B ln 2.
+
+37
+00:02:15,635 --> 00:02:20,118
+Afterwards, state zero has probability
+one, and the entropy is zero.
+
+38
+00:02:20,498 --> 00:02:24,090
+The memory lost k_B ln 2 of entropy.
+
+39
+00:02:24,470 --> 00:02:26,627
+But the second law requires that the total
+
+40
+00:02:26,627 --> 00:02:28,783
+entropy of the universe does not decrease.
+
+41
+00:02:29,163 --> 00:02:32,740
+Therefore the environment must
+gain at least that amount.
+
+42
+00:02:33,120 --> 00:02:38,030
+An environment at temperature T that
+receives heat Q gains entropy Q/T.
+
+43
+00:02:38,410 --> 00:02:44,534
+Solving, the dissipated heat
+satisfies Q ≥ k_B T ln 2.
+
+44
+00:02:44,914 --> 00:02:46,613
+This is the Landauer bound.
+
+45
+00:02:47,717 --> 00:02:53,050
+We can reach the same result
+with the free energy, F = U − TS.
+
+46
+00:02:53,430 --> 00:02:56,309
+In an isothermal process,
+the work we do on the
+
+47
+00:02:56,309 --> 00:02:59,066
+system is at least the
+change in free energy.
+
+48
+00:02:59,446 --> 00:03:04,850
+Since the two wells are symmetric, the
+internal energy does not change: ΔU = 0.
+
+49
+00:03:05,230 --> 00:03:09,193
+So the change in free
+energy is minus T times the
+
+50
+00:03:09,193 --> 00:03:12,672
+change in entropy,
+which equals k_B T ln 2.
+
+51
+00:03:13,052 --> 00:03:15,907
+And since the internal
+energy did not change, all
+
+52
+00:03:15,907 --> 00:03:18,530
+that work becomes heat
+flowing into the bath.
+
+53
+00:03:18,910 --> 00:03:23,699
+Both routes, entropy and free
+energy, give the same bound.
+
+54
+00:03:24,817 --> 00:03:26,030
+Let's compute the number.
+
+55
+00:03:26,410 --> 00:03:33,811
+Boltzmann's constant is
+1.380649 × 10⁻²³ J/K.
+
+56
+00:03:34,191 --> 00:03:40,570
+At room temperature, three hundred
+kelvin, and with the natural
+
+57
+00:03:40,570 --> 00:03:46,140
+log of two, about 0.693, we
+get 2.87 × 10⁻²¹ J per bit.
+
+58
+00:03:46,520 --> 00:03:50,055
+The bound grows linearly
+with temperature: cooling the
+
+59
+00:03:50,055 --> 00:03:53,787
+system to four kelvin lowers
+it about seventy-five times.
+
+60
+00:03:54,167 --> 00:03:55,623
+Let's compare with hardware.
+
+61
+00:03:56,003 --> 00:04:00,545
+According to the syllabus,
+one pbit update on a
+
+62
+00:04:00,545 --> 00:04:04,507
+Z1-type chip costs at most 7.4 × 10⁻¹⁴ J.
+
+63
+00:04:04,887 --> 00:04:08,312
+That is about twenty-six million
+times the Landauer bound.
+
+64
+00:04:08,692 --> 00:04:12,441
+Today's devices are very far
+from the fundamental limit.
+
+65
+00:04:13,550 --> 00:04:15,736
+Which operations are forced to pay?
+
+66
+00:04:16,116 --> 00:04:19,014
+The logically irreversible
+ones, that is, those
+
+67
+00:04:19,014 --> 00:04:21,911
+that merge several inputs
+into the same output.
+
+68
+00:04:22,291 --> 00:04:25,602
+The NOT gate is a bijection:
+the input can be recovered
+
+69
+00:04:25,602 --> 00:04:28,492
+from the output, and it
+requires no dissipation.
+
+70
+00:04:28,872 --> 00:04:33,531
+The AND gate, in contrast, sends
+three different inputs to output zero.
+
+71
+00:04:33,911 --> 00:04:39,432
+With uniform inputs, two bits of
+information go in and only 0.81 come out.
+
+72
+00:04:39,812 --> 00:04:44,814
+About 1.19 bits are lost, and
+that has a minimum Landauer cost.
+
+73
+00:04:45,194 --> 00:04:49,749
+Charles Bennett showed the way
+out: compute reversibly, copy the
+
+74
+00:04:49,749 --> 00:04:53,664
+result, then uncompute,
+undoing the intermediate steps.
+
+75
+00:04:54,044 --> 00:04:57,044
+That way, mandatory erasure
+is kept to a minimum.
+
+76
+00:04:58,150 --> 00:05:01,406
+There is a hidden condition:
+the Landauer bound is
+
+77
+00:05:01,406 --> 00:05:04,206
+reached only if erasure
+is infinitely slow.
+
+78
+00:05:04,586 --> 00:05:08,021
+If the protocol lasts a finite
+time τ, the system cannot
+
+79
+00:05:08,021 --> 00:05:11,333
+keep up with equilibrium and
+extra work is dissipated.
+
+80
+00:05:11,713 --> 00:05:15,554
+For slow protocols, that
+excess decays as one over τ.
+
+81
+00:05:15,934 --> 00:05:19,386
+The amber curve shows the
+mean work versus protocol
+
+82
+00:05:19,386 --> 00:05:23,311
+duration: it approaches the
+Landauer line, but from above.
+
+83
+00:05:23,691 --> 00:05:27,723
+This is the first example of a
+fundamental trade-off of the course,
+
+84
+00:05:27,723 --> 00:05:31,515
+which we study in unit three:
+computing fast costs more energy.
+
+85
+00:05:32,617 --> 00:05:35,531
+So why do chips spend
+millions of times more?
+
+86
+00:05:35,911 --> 00:05:40,274
+First, reliability: the probability
+that thermal noise flips
+
+87
+00:05:40,274 --> 00:05:44,347
+a bit decays exponentially
+with the barrier height, so a
+
+88
+00:05:44,347 --> 00:05:48,057
+robust digital bit needs
+barriers of tens of k_B T.
+
+89
+00:05:48,436 --> 00:05:52,259
+Second, communication:
+moving a bit along a wire
+
+90
+00:05:52,259 --> 00:05:56,242
+costs on the order of C
+V², unrelated to Landauer.
+
+91
+00:05:56,622 --> 00:06:00,926
+That is why thermodynamic computing does
+not try to reach the Landauer limit,
+
+92
+00:06:00,926 --> 00:06:04,615
+but to stop paying for suppressing
+noise and use it as a resource.
+
+93
+00:06:04,995 --> 00:06:07,721
+In lab two you will
+simulate this erasure and
+
+94
+00:06:07,721 --> 00:06:10,871
+measure the work as a
+function of protocol duration.
+
+95
+00:06:11,983 --> 00:06:14,224
+This principle appears
+throughout the course.
+
+96
+00:06:14,604 --> 00:06:19,530
+It resolves the Maxwell's demon paradox
+from the previous lesson: the demon must
+
+97
+00:06:19,530 --> 00:06:23,962
+erase its memory, and that erasure
+pays back exactly what it had gained.
+
+98
+00:06:24,342 --> 00:06:28,204
+In unit three we will see work
+and heat at the level of a
+
+99
+00:06:28,204 --> 00:06:31,659
+single trajectory, the
+Jarzynski equality and speed
+
+100
+00:06:31,659 --> 00:06:35,182
+limits, which make the cost
+of fast erasure precise.
+
+101
+00:06:35,562 --> 00:06:40,288
+And in unit five we will compare the
+real energy of a pbit with this bound.
+
+102
+00:06:41,417 --> 00:06:42,878
+Four frequent mistakes.
+
+103
+00:06:43,258 --> 00:06:47,843
+First, believing every
+operation costs k_B T ln 2: only
+
+104
+00:06:47,843 --> 00:06:52,011
+logically irreversible
+erasure has a minimum cost.
+
+105
+00:06:52,391 --> 00:06:55,606
+Second, thinking the cost is
+paid when measuring: in the
+
+106
+00:06:55,606 --> 00:06:58,879
+Landauer and Bennett formulation
+it is paid when erasing.
+
+107
+00:06:59,259 --> 00:07:03,298
+Third, forgetting that the bound
+assumes a completely unknown bit;
+
+108
+00:07:03,298 --> 00:07:06,910
+if the bit is already known,
+there is no entropy to remove.
+
+109
+00:07:07,290 --> 00:07:11,419
+And fourth, believing Landauer
+is what limits chips today;
+
+110
+00:07:11,419 --> 00:07:15,051
+what dominates are noise
+margins and data movement.
+
+111
+00:07:16,183 --> 00:07:17,025
+Let's summarize.
+
+112
+00:07:17,405 --> 00:07:22,240
+Erasing a bit reduces the
+memory's entropy by k_B ln 2.
+
+113
+00:07:22,620 --> 00:07:28,267
+The second law forces at
+least k_B T ln 2 of heat to be
+
+114
+00:07:28,267 --> 00:07:33,503
+expelled, about 2.87 ×
+10⁻²¹ J at room temperature.
+
+115
+00:07:33,883 --> 00:07:36,997
+Only logically irreversible
+operations pay, and
+
+116
+00:07:36,997 --> 00:07:40,044
+the bound is reached
+only with slow protocols.
+
+117
+00:07:40,424 --> 00:07:41,967
+Information is physical.
+
+118
+00:07:43,083 --> 00:07:45,722
+Before moving on, test your understanding.
+
+119
+00:07:46,102 --> 00:07:50,164
+Compute the minimum heat to erase
+one gigabyte at three hundred kelvin.
+
+120
+00:07:50,544 --> 00:07:55,504
+Compute the cost of resetting a bit that
+is already zero with probability 0.9.
+
+121
+00:07:55,884 --> 00:08:00,661
+Explain why the NOT gate has no
+Landauer cost and the AND gate does.
+
+122
+00:08:01,041 --> 00:08:03,594
+And think about what
+happens to the erasure
+
+123
+00:08:03,594 --> 00:08:06,146
+work if the protocol
+runs ten times faster.
+
+124
+00:08:06,526 --> 00:08:09,726
+The solutions are in this
+lesson's exercise sheet.

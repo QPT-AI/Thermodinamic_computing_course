@@ -1,0 +1,285 @@
+1
+00:00:00,350 --> 00:00:02,089
+Lección 9.5.
+
+2
+00:00:02,469 --> 00:00:05,812
+Análisis de eficiencia:
+ruta A frente a ruta B.
+
+3
+00:00:06,917 --> 00:00:10,523
+Si queremos generar con hardware
+termodinámico, hay dos caminos.
+
+4
+00:00:10,903 --> 00:00:15,986
+La ruta A toma un modelo de difusión
+neuronal existente, como un transformer de
+
+5
+00:00:15,986 --> 00:00:21,005
+difusión o un modelo de lenguaje
+enmascarado, y lo porta a un sistema con TSU.
+
+6
+00:00:21,385 --> 00:00:24,408
+La ruta B diseña desde
+cero un modelo nativo,
+
+7
+00:00:24,408 --> 00:00:26,962
+como una DTM, que vive en el hardware.
+
+8
+00:00:27,342 --> 00:00:28,971
+Hoy las comparamos con números.
+
+9
+00:00:30,083 --> 00:00:34,021
+La ventaja de la ruta A es que
+reutiliza modelos que ya funcionan.
+
+10
+00:00:34,401 --> 00:00:37,784
+El problema es que un
+transformer es, sobre todo,
+
+11
+00:00:37,784 --> 00:00:42,755
+multiplicaciones de matrices, y un
+TSU no multiplica matrices: muestrea.
+
+12
+00:00:43,135 --> 00:00:47,096
+Las partes deterministas
+quedan en lógica digital, una
+
+13
+00:00:47,096 --> 00:00:50,983
+FPGA o un acelerador, y el
+TSU solo hace el muestreo.
+
+14
+00:00:51,363 --> 00:00:55,494
+En la cifra que Extropic reporta
+para su modelo Z1T, de doscientos
+
+15
+00:00:55,494 --> 00:00:59,500
+noventa y cuatro nanojulios por
+token, doscientos ochenta y seis
+
+16
+00:00:59,500 --> 00:01:02,879
+son trabajo de la FPGA: el
+noventa y siete por ciento.
+
+17
+00:01:03,983 --> 00:01:05,851
+La ley de Amdahl pone el límite.
+
+18
+00:01:06,231 --> 00:01:10,828
+Si el noventa y siete por ciento de la
+energía es pegamento digital, hacer gratis
+
+19
+00:01:10,828 --> 00:01:14,687
+la parte termodinámica mejora el
+total a lo sumo un tres por ciento.
+
+20
+00:01:15,067 --> 00:01:18,391
+Para acercarse a ganancias de
+mil veces hay que atacar el
+
+21
+00:01:18,391 --> 00:01:22,239
+pegamento: llevar más funciones
+al chip probabilístico, reducir la
+
+22
+00:01:22,239 --> 00:01:25,796
+precisión de lo digital o cambiar
+la arquitectura del modelo.
+
+23
+00:01:26,917 --> 00:01:31,380
+La ruta B invierte la lógica: el modelo
+entero se diseña como una cadena de
+
+24
+00:01:31,380 --> 00:01:35,605
+modelos de energía condicionales que
+el hardware muestrea directamente.
+
+25
+00:01:35,985 --> 00:01:40,292
+Casi no hay pegamento: en la DTM
+de la lección nueve punto tres, la
+
+26
+00:01:40,292 --> 00:01:44,342
+energía es la de las celdas, unos
+veinte nanojulios por imagen.
+
+27
+00:01:44,722 --> 00:01:49,538
+El precio es la expresividad: estos
+modelos son más limitados, y para conjuntos
+
+28
+00:01:49,538 --> 00:01:54,171
+de datos grandes hacen falta híbridos
+con una red neuronal, que reintroducen
+
+29
+00:01:54,171 --> 00:01:58,012
+parte del pegamento, aunque con
+una red diez veces más pequeña.
+
+30
+00:01:59,117 --> 00:02:00,063
+Comparémoslas.
+
+31
+00:02:00,443 --> 00:02:04,049
+La ruta A tiene modelos maduros
+y calidad conocida, pero su
+
+32
+00:02:04,049 --> 00:02:07,656
+ganancia energética está limitada
+por el pegamento digital.
+
+33
+00:02:08,036 --> 00:02:13,207
+La ruta B tiene una ventaja energética
+potencial de órdenes de magnitud, pero con
+
+34
+00:02:13,207 --> 00:02:17,867
+modelos jóvenes, bancos de prueba
+pequeños y estimaciones, no mediciones.
+
+35
+00:02:18,247 --> 00:02:20,793
+Ninguna es mejor en todo: depende de si el
+
+36
+00:02:20,793 --> 00:02:23,522
+cuello de botella es la
+calidad o la energía.
+
+37
+00:02:24,650 --> 00:02:26,029
+Una lista para decidir.
+
+38
+00:02:26,409 --> 00:02:30,923
+Primero, mide la fracción de pegamento
+digital de la ruta A: si pasa del
+
+39
+00:02:30,923 --> 00:02:34,936
+noventa por ciento, la ganancia
+máxima es de diez veces o menos.
+
+40
+00:02:35,316 --> 00:02:37,542
+Segundo, pregunta si existe un modelo
+
+41
+00:02:37,542 --> 00:02:40,130
+nativo de calidad
+suficiente para tu tarea.
+
+42
+00:02:40,510 --> 00:02:44,549
+Tercero, cuenta toda la energía,
+incluida la entrada y la salida.
+
+43
+00:02:44,929 --> 00:02:49,818
+Y cuarto, etiqueta cada cifra como
+medida, simulada, proyectada o estimada.
+
+44
+00:02:50,950 --> 00:02:54,444
+Este análisis sirve para
+planificar productos, orientar la
+
+45
+00:02:54,444 --> 00:02:58,059
+investigación hacia modelos
+nativos de calidad y decidir qué
+
+46
+00:02:58,059 --> 00:03:01,975
+funciones llevar al chip, como
+veremos en la unidad diez con Z1T.
+
+47
+00:03:02,355 --> 00:03:06,389
+En el proyecto ocho construirás un
+planificador de inferencia heterogénea.
+
+48
+00:03:07,517 --> 00:03:11,784
+Errores comunes: citar la energía
+del TSU como la del sistema.
+
+49
+00:03:12,164 --> 00:03:16,203
+Comparar un modelo nativo con uno
+de GPU con calidades distintas.
+
+50
+00:03:16,583 --> 00:03:19,302
+Suponer que los híbridos
+no tienen costo digital.
+
+51
+00:03:19,682 --> 00:03:21,851
+Y tratar proyecciones como mediciones.
+
+52
+00:03:22,983 --> 00:03:27,290
+En resumen: la ruta A porta modelos
+maduros pero queda limitada por el
+
+53
+00:03:27,290 --> 00:03:32,026
+pegamento digital, que en Z1T es el
+noventa y siete por ciento de la energía.
+
+54
+00:03:32,406 --> 00:03:37,296
+La ruta B, nativa, promete órdenes de
+magnitud con modelos todavía jóvenes.
+
+55
+00:03:37,676 --> 00:03:41,660
+La ley de Amdahl y una contabilidad
+completa deciden en cada caso.
+
+56
+00:03:42,783 --> 00:03:46,815
+Para practicar: calcula la
+fracción de la FPGA en Z1T.
+
+57
+00:03:47,195 --> 00:03:50,448
+Calcula la ganancia máxima
+si el TSU fuera gratis.
+
+58
+00:03:50,828 --> 00:03:53,442
+Di qué debe cambiar para
+acercarse a mil veces.
+
+59
+00:03:53,822 --> 00:03:56,359
+Y explica cuándo
+elegirías igual la ruta A.

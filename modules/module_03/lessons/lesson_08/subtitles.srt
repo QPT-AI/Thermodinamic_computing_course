@@ -1,0 +1,308 @@
+1
+00:00:00,350 --> 00:00:01,965
+Lección 3.8.
+
+2
+00:00:02,345 --> 00:00:05,766
+Longitud termodinámica y
+compromisos energía–tiempo.
+
+3
+00:00:06,883 --> 00:00:11,200
+En la lección anterior vimos que cargar
+un problema lentamente disipa menos.
+
+4
+00:00:11,580 --> 00:00:13,994
+Pero con un tiempo fijo
+hay infinitas maneras
+
+5
+00:00:13,994 --> 00:00:16,086
+de ir de la energía inicial a la final.
+
+6
+00:00:16,466 --> 00:00:17,535
+¿Cuál disipa menos?
+
+7
+00:00:17,915 --> 00:00:22,303
+La respuesta es geométrica: el espacio
+de parámetros de control tiene una
+
+8
+00:00:22,303 --> 00:00:26,690
+métrica, y el mejor protocolo recorre
+su geodésica a velocidad constante.
+
+9
+00:00:27,070 --> 00:00:29,764
+Esa métrica define la
+longitud termodinámica.
+
+10
+00:00:30,883 --> 00:00:35,386
+Imagina cruzar un terreno con barro de
+profundidad variable en un tiempo fijo.
+
+11
+00:00:35,766 --> 00:00:38,063
+Cada tramo cuesta más cuanto más rápido lo
+
+12
+00:00:38,063 --> 00:00:40,305
+cruzas y cuanto más profundo es el barro.
+
+13
+00:00:40,685 --> 00:00:44,967
+Si vas a la misma velocidad todo el
+camino, pagas mucho en las zonas profundas.
+
+14
+00:00:45,347 --> 00:00:49,783
+Conviene ir despacio donde el barro
+es profundo y rápido donde es firme.
+
+15
+00:00:50,163 --> 00:00:53,526
+En un sistema físico, el barro
+es la fricción: lo lento que
+
+16
+00:00:53,526 --> 00:00:56,375
+el sistema se reacomoda
+cuando movemos el control.
+
+17
+00:00:57,483 --> 00:01:03,968
+Sea λ el parámetro de control y
+X = −∂_λ V la fuerza conjugada.
+
+18
+00:01:04,348 --> 00:01:09,997
+Cerca del equilibrio, el trabajo
+en exceso es ⟨W_ex⟩ ≈ ∫ λ̇
+
+19
+00:01:09,997 --> 00:01:14,880
+ζ(λ) λ̇ dt, cuadrático en
+la velocidad del control.
+
+20
+00:01:15,260 --> 00:01:20,391
+El coeficiente es el tensor de
+fricción, ζ = β ∫ ⟨δX(t) δX(0)⟩ dt: la
+
+21
+00:01:20,391 --> 00:01:25,149
+varianza de la fuerza multiplicada
+por su tiempo de correlación.
+
+22
+00:01:25,529 --> 00:01:29,295
+Es otra cara del teorema de
+fluctuación y disipación: donde las
+
+23
+00:01:29,295 --> 00:01:33,121
+fluctuaciones son grandes y lentas,
+mover el control disipa más.
+
+24
+00:01:34,250 --> 00:01:36,417
+El tensor de fricción es una métrica.
+
+25
+00:01:36,797 --> 00:01:42,059
+Con ella definimos la
+longitud termodinámica, ℒ
+
+26
+00:01:42,059 --> 00:01:46,537
+= ∫ √ζ , que no depende de la velocidad.
+
+27
+00:01:46,917 --> 00:01:53,348
+La desigualdad de Cauchy y
+Schwarz da la cota ⟨W_ex⟩ ≥ ℒ²/τ.
+
+28
+00:01:53,728 --> 00:02:00,116
+La igualdad se alcanza cuando la velocidad
+termodinámica, √ζ λ̇, es constante.
+
+29
+00:02:00,496 --> 00:02:03,675
+El protocolo óptimo va
+despacio donde la fricción es
+
+30
+00:02:03,675 --> 00:02:06,792
+alta y rápido donde es
+baja, igual que en el barro.
+
+31
+00:02:07,917 --> 00:02:11,479
+Volvamos a la trampa que
+endurecemos de rigidez uno a cuatro.
+
+32
+00:02:11,859 --> 00:02:14,803
+Aquí X = −x²/2,
+
+33
+00:02:15,183 --> 00:02:20,837
+y con μ = k_B T = 1 el tensor de
+fricción es ζ(κ) = 1/(4κ³): la
+
+34
+00:02:20,837 --> 00:02:26,672
+trampa blanda es lenta y fluctúa
+mucho, así que es cara de mover.
+
+35
+00:02:27,052 --> 00:02:34,844
+La longitud termodinámica es 1/√κᵢ
+− 1/√κ_f, exactamente un medio.
+
+36
+00:02:35,224 --> 00:02:40,136
+El protocolo óptimo es κ(t)
+= (1 − t/2τ)⁻²: empieza
+
+37
+00:02:40,136 --> 00:02:45,820
+despacio y acelera al final,
+cuando la trampa ya es rígida.
+
+38
+00:02:46,950 --> 00:02:50,334
+Comparemos con el cálculo exacto
+de la varianza de la partícula.
+
+39
+00:02:50,714 --> 00:02:54,246
+Con τ = 4, la rampa lineal
+disipa cero coma cero
+
+40
+00:02:54,246 --> 00:02:57,777
+siete seis k_B T en exceso;
+el protocolo óptimo,
+
+41
+00:02:58,157 --> 00:03:04,256
+cero coma cero seis tres; y la cota
+ℒ²/τ es cero coma cero seis dos cinco.
+
+42
+00:03:04,636 --> 00:03:07,507
+El protocolo óptimo casi
+la satura, y la rampa
+
+43
+00:03:07,507 --> 00:03:09,941
+lineal disipa un veinte por ciento más.
+
+44
+00:03:10,321 --> 00:03:13,188
+Duplicar el tiempo divide
+el exceso a la mitad:
+
+45
+00:03:13,188 --> 00:03:15,872
+ese es el compromiso
+entre energía y tiempo.
+
+46
+00:03:16,983 --> 00:03:21,248
+La longitud termodinámica guía el
+diseño de calendarios de recocido, que
+
+47
+00:03:21,248 --> 00:03:25,808
+deben ir despacio cerca de los puntos
+críticos, la carga de los acoplamientos
+
+48
+00:03:25,808 --> 00:03:29,658
+de un chip termodinámico, y los
+protocolos de borrado y reinicio.
+
+49
+00:03:30,038 --> 00:03:33,051
+En la unidad nueve veremos
+que el calendario de ruido
+
+50
+00:03:33,051 --> 00:03:35,722
+de un modelo de difusión
+cumple el mismo papel.
+
+51
+00:03:36,850 --> 00:03:40,726
+Cuidado: la cota vale en el
+régimen lento de respuesta lineal.
+
+52
+00:03:41,106 --> 00:03:45,544
+No confundas la longitud termodinámica,
+que vive en el espacio de parámetros,
+
+53
+00:03:45,544 --> 00:03:49,406
+con la distancia de Wasserstein,
+que vive en el espacio de estados.
+
+54
+00:03:49,786 --> 00:03:52,049
+El protocolo óptimo no es lineal en el
+
+55
+00:03:52,049 --> 00:03:54,788
+parámetro, sino en la
+velocidad termodinámica.
+
+56
+00:03:55,168 --> 00:03:59,431
+Y cerca de un punto crítico la
+fricción crece, y con ella el costo.
+
+57
+00:04:00,550 --> 00:04:04,797
+En resumen: cerca del equilibrio, el
+trabajo en exceso es cuadrático en
+
+58
+00:04:04,797 --> 00:04:08,685
+la velocidad del control, con el
+tensor de fricción como métrica.
+
+59
+00:04:09,065 --> 00:04:15,354
+La longitud termodinámica acota el
+exceso, ⟨W_ex⟩ ≥ ℒ²/τ, y el protocolo
+
+60
+00:04:15,354 --> 00:04:20,944
+óptimo recorre la geodésica a
+velocidad termodinámica constante.
+
+61
+00:04:22,050 --> 00:04:25,943
+Para practicar: deriva el tensor
+de fricción de la trampa armónica.
+
+62
+00:04:26,323 --> 00:04:30,368
+Calcula la longitud y el exceso
+mínimo para otro cambio de rigidez.
+
+63
+00:04:30,748 --> 00:04:33,042
+Escribe el protocolo óptimo general.
+
+64
+00:04:33,422 --> 00:04:37,932
+Y explica por qué el recocido debe ir
+despacio cerca de la temperatura crítica.

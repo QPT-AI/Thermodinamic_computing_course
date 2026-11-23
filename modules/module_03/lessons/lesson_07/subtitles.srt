@@ -1,0 +1,411 @@
+1
+00:00:00,350 --> 00:00:02,066
+Lección 3.7.
+
+2
+00:00:02,446 --> 00:00:05,514
+Termodinámica del reinicio
+y de la lectura sin errores.
+
+3
+00:00:06,617 --> 00:00:09,871
+Todo computador repite un
+ciclo: pone su memoria en
+
+4
+00:00:09,871 --> 00:00:12,871
+un estado conocido,
+calcula y lee el resultado.
+
+5
+00:00:13,251 --> 00:00:16,257
+En la lección uno punto
+cinco vimos el costo de
+
+6
+00:00:16,257 --> 00:00:18,815
+borrar un bit completamente desconocido.
+
+7
+00:00:19,195 --> 00:00:22,660
+Pero en la práctica la memoria
+casi nunca es uniforme, el
+
+8
+00:00:22,660 --> 00:00:26,308
+reinicio nunca es perfecto y
+la lectura también tiene ruido.
+
+9
+00:00:26,688 --> 00:00:29,419
+Esta lección pone precio a las tres cosas:
+
+10
+00:00:29,419 --> 00:00:32,476
+reiniciar, conservar y
+leer un bit sin errores.
+
+11
+00:00:33,583 --> 00:00:36,107
+Supongamos que la memoria vale uno con
+
+12
+00:00:36,107 --> 00:00:39,494
+probabilidad p y cero con
+probabilidad uno menos p.
+
+13
+00:00:39,874 --> 00:00:45,418
+Reiniciarla a cero elimina su entropía
+de Shannon, así que la cota de
+
+14
+00:00:45,418 --> 00:00:51,202
+Landauer generalizada es W ≥ k_B T
+H(p), con la entropía medida en nats.
+
+15
+00:00:51,582 --> 00:00:56,117
+La curva muestra esa cota:
+vale k_B T ln 2 cuando el bit
+
+16
+00:00:56,117 --> 00:01:00,328
+es uniforme y cae a cero
+cuando ya sabemos su valor.
+
+17
+00:01:00,708 --> 00:01:04,274
+Reiniciar un bit que casi
+siempre vale cero es casi gratis.
+
+18
+00:01:05,383 --> 00:01:08,890
+Ningún reinicio real es
+perfecto: al final queda una
+
+19
+00:01:08,890 --> 00:01:12,261
+probabilidad de error ε
+de que el bit siga en uno.
+
+20
+00:01:12,641 --> 00:01:17,590
+La memoria final todavía
+tiene entropía H(ε), y la
+
+21
+00:01:17,590 --> 00:01:22,043
+cota se convierte en W
+≥ k_B T (H(p) − H(ε)).
+
+22
+00:01:22,423 --> 00:01:26,417
+Con un bit uniforme y un error
+de uno por ciento, el mínimo baja
+
+23
+00:01:26,417 --> 00:01:29,786
+de cero coma seis nueve a
+cero coma seis cuatro k_B T.
+
+24
+00:01:30,166 --> 00:01:33,579
+Aceptar errores abarata el
+reinicio, pero muy poco.
+
+25
+00:01:33,959 --> 00:01:36,623
+Y si el protocolo dura
+un tiempo finito, se
+
+26
+00:01:36,623 --> 00:01:39,224
+suma el exceso que decae como uno sobre τ.
+
+27
+00:01:40,350 --> 00:01:43,143
+Un bit reiniciado también
+tiene que quedarse quieto.
+
+28
+00:01:43,523 --> 00:01:47,810
+En un pozo doble, el ruido
+térmico lo hace saltar la
+
+29
+00:01:47,810 --> 00:01:52,097
+barrera con la tasa de
+Arrhenius, ν₀ e^(−E_b/k_B T).
+
+30
+00:01:52,477 --> 00:01:58,058
+Para que la probabilidad de un
+salto en un tiempo t sea menor
+
+31
+00:01:58,058 --> 00:02:03,181
+que ε, la barrera debe cumplir
+E_b ≥ k_B T ln(ν₀ t / ε).
+
+32
+00:02:03,561 --> 00:02:07,585
+Con una frecuencia de intento
+de 10¹² Hz y un error de uno en
+
+33
+00:02:07,585 --> 00:02:11,741
+mil millones, conservar el bit
+un segundo exige unos cuarenta y
+
+34
+00:02:11,741 --> 00:02:14,973
+ocho k_B T; diez años
+exigen unos sesenta y ocho.
+
+35
+00:02:15,353 --> 00:02:18,568
+La retención crece exponencialmente
+con la barrera, pero
+
+36
+00:02:18,568 --> 00:02:21,438
+la barrera solo crece con
+el logaritmo del tiempo.
+
+37
+00:02:22,550 --> 00:02:23,708
+Ahora leamos el bit.
+
+38
+00:02:24,088 --> 00:02:27,721
+El sensor es un nodo de
+capacidad C cuyo voltaje
+
+39
+00:02:27,721 --> 00:02:30,748
+tiene ruido térmico de varianza k_B T/C.
+
+40
+00:02:31,128 --> 00:02:33,539
+Un comparador decide cero o uno según el
+
+41
+00:02:33,539 --> 00:02:36,130
+voltaje supere un umbral
+a mitad de camino.
+
+42
+00:02:36,510 --> 00:02:41,021
+La probabilidad de error es la
+cola de la gaussiana, Q(V/σ).
+
+43
+00:02:41,401 --> 00:02:46,718
+Para un error de uno en mil millones,
+la señal debe ser seis desviaciones
+
+44
+00:02:46,718 --> 00:02:52,253
+estándar, y la energía de la señal, ½
+C V², resulta de unos dieciocho k_B T.
+
+45
+00:02:52,633 --> 00:02:57,504
+En general esa energía crece
+como k_B T ln(1/ε): cada factor
+
+46
+00:02:57,504 --> 00:03:01,888
+diez de confiabilidad cuesta
+un poco más de dos k_B T.
+
+47
+00:03:03,017 --> 00:03:05,169
+¿Dónde está el costo inevitable de leer?
+
+48
+00:03:05,549 --> 00:03:08,572
+Como en el demonio de
+Maxwell, copiar el bit a una
+
+49
+00:03:08,572 --> 00:03:11,535
+memoria limpia puede
+hacerse de forma reversible.
+
+50
+00:03:11,915 --> 00:03:15,976
+Lo que no puede evitarse es reiniciar
+esa memoria para la siguiente lectura.
+
+51
+00:03:16,356 --> 00:03:20,180
+Si el resultado se descarta,
+cada lectura paga al menos
+
+52
+00:03:20,180 --> 00:03:23,588
+la entropía del resultado,
+k_B T H, al reiniciar.
+
+53
+00:03:23,968 --> 00:03:28,351
+Por eso un chip que lee pbits millones
+de veces por segundo gasta energía de
+
+54
+00:03:28,351 --> 00:03:32,619
+lectura y de reinicio que puede superar
+con creces la del propio muestreo.
+
+55
+00:03:33,750 --> 00:03:36,282
+Reunamos los números a trescientos kelvin.
+
+56
+00:03:36,662 --> 00:03:41,824
+Reiniciar un bit uniforme con un
+error del uno por ciento cuesta
+
+57
+00:03:41,824 --> 00:03:46,664
+como mínimo cero coma seis
+cuatro k_B T, unos 2,6 × 10⁻²¹ J.
+
+58
+00:03:47,044 --> 00:03:51,500
+Leerlo con un error de uno
+en mil millones exige una
+
+59
+00:03:51,500 --> 00:03:55,357
+señal de dieciocho k_B
+T, unos 7,5 × 10⁻²⁰ J.
+
+60
+00:03:55,737 --> 00:03:59,734
+Y conservarlo diez años exige una
+barrera de sesenta y ocho k_B T.
+
+61
+00:04:00,114 --> 00:04:04,170
+La lectura confiable cuesta casi
+treinta veces más que el reinicio ideal.
+
+62
+00:04:05,283 --> 00:04:07,784
+En hardware estas cuentas
+deciden el diseño.
+
+63
+00:04:08,164 --> 00:04:11,936
+En un chip termodinámico, la
+energía de entrada y salida para
+
+64
+00:04:11,936 --> 00:04:15,522
+leer pbits suele dominar sobre
+la del tejido que muestrea.
+
+65
+00:04:15,902 --> 00:04:19,926
+Leer con menos frecuencia, espaciando
+las lecturas más que el tiempo
+
+66
+00:04:19,926 --> 00:04:23,358
+de autocorrelación, ahorra
+energía sin perder información.
+
+67
+00:04:23,738 --> 00:04:27,772
+En Torx, cada actualización de
+Gibbs es un reinicio seguido de una
+
+68
+00:04:27,772 --> 00:04:32,171
+compuerta, y veremos la diferencia
+entre un reinicio ideal y uno finito.
+
+69
+00:04:33,283 --> 00:04:36,803
+Errores frecuentes: usar
+k_B T ln 2 para cualquier
+
+70
+00:04:36,803 --> 00:04:40,955
+reinicio, cuando la cota depende
+de la distribución previa.
+
+71
+00:04:41,335 --> 00:04:45,123
+Confundir la barrera que conserva
+el bit con el costo de reiniciarlo.
+
+72
+00:04:45,503 --> 00:04:48,897
+Creer que leer es gratis porque
+la copia puede ser reversible.
+
+73
+00:04:49,277 --> 00:04:50,848
+Y mezclar bits con nats.
+
+74
+00:04:51,950 --> 00:04:56,599
+En resumen: reiniciar cuesta
+al menos k_B T (H(p) − H(ε)),
+
+75
+00:04:56,599 --> 00:05:00,927
+que depende de lo que ya
+sabemos y del error aceptado.
+
+76
+00:05:01,307 --> 00:05:03,776
+Conservar un bit exige
+una barrera que crece
+
+77
+00:05:03,776 --> 00:05:06,076
+con el logaritmo del tiempo de retención.
+
+78
+00:05:06,456 --> 00:05:12,348
+Leer con error ε exige una
+señal de unos k_B T ln(1/ε).
+
+79
+00:05:12,728 --> 00:05:14,996
+Y el costo inevitable de leer aparece al
+
+80
+00:05:14,996 --> 00:05:17,830
+reiniciar la memoria donde
+se guardó el resultado.
+
+81
+00:05:18,950 --> 00:05:23,601
+Para practicar: calcula el costo de
+reiniciar un bit sesgado con un error dado.
+
+82
+00:05:23,981 --> 00:05:26,978
+Encuentra la barrera para
+conservar un bit una hora.
+
+83
+00:05:27,358 --> 00:05:30,572
+Calcula la energía y el voltaje
+de una lectura confiable.
+
+84
+00:05:30,952 --> 00:05:33,713
+Y explica por qué leer en
+cada barrido desperdicia
+
+85
+00:05:33,713 --> 00:05:36,474
+energía cuando las muestras
+están correlacionadas.

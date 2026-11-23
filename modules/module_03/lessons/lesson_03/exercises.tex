@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.3}{Teoremas de fluctuación: Crooks y Jarzynski}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Calcule $\Delta F$ al pasar la rigidez de $\kappa_i$ a $\kappa_f$ (1D) y en $d$ dimensiones con $A_0\to A_1$.
+\item (B) Muestre que Crooks implica Jarzynski.
+\item (B) $W$ gaussiano con media 2 y varianza 2 ($\kB T=1$): ¿$\Delta F$?
+\item (B) ¿Por qué el estimador de Jarzynski sobreestima $\Delta F$ con pocas muestras?
+\item (I) Para la trampa arrastrada de 3.1 ($\Delta F=0$), verifique Jarzynski con la distribución gaussiana.
+\item (I) Laboratorio L4, tarea 2: muestre que $\ln\det A$ se obtiene del trabajo al pasar de $\frac12x^\top x$ a $\frac12x^\top Ax$.
+\item (A) Derive la ecuación de autoconsistencia de BAR maximizando la verosimilitud de la etiqueta directa/inversa.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\Delta F=\frac{\kB T}2\ln\frac{\kappa_f}{\kappa_i}$; en $d$ dimensiones, $\frac{\kB T}2\ln\frac{\det A_1}{\det A_0}$ (cociente de las normalizaciones gaussianas).
+
+\textbf{E2.} $\langle e^{-\beta W}\rangle_F=\int P_F(W)e^{-\beta W}dW=e^{-\beta\Delta F}\int P_R(-W)dW=e^{-\beta\Delta F}$.
+
+\textbf{E3.} $\Delta F=2-\frac12\cdot2=1$.
+
+\textbf{E4.} $-\ln$ es convexa: $\E[-\ln\bar X]\ge-\ln\E\bar X$; además las trayectorias raras con $W$ pequeño suelen faltar.
+
+\textbf{E5.} $\langle e^{-W}\rangle=e^{-\mu+\sigma^2/2}$ con $\sigma^2=2\mu$: $=1=e^{0}$.
+
+\textbf{E6.} $Z_A=\int e^{-\frac\beta2x^\top Ax}dx=(2\pi/\beta)^{d/2}(\det A)^{-1/2}$ y $\Delta F=-\kB T\ln(Z_A/Z_I)=\frac{\kB T}2\ln\det A$.
+
+\textbf{E7.} La probabilidad de que una muestra con trabajo $W$ provenga del proceso directo es la función logística de $\beta(\Delta F-W)+\ln(n_F/n_R)$; igualar a cero la derivada de la log-verosimilitud respecto de $\Delta F$ da la ecuación de Bennett.
+\end{solucion}
+\end{document}

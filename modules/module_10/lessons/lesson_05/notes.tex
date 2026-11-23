@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.5}{Codificar números en pbits}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} representar números como medias de muestras de pbits (enteros probabilísticos); la ley de bits efectivos
+$b_{\text{eff}}\approx b_1+\tfrac12\log_2S$; precisión a demanda y su costo.
+\textbf{Prerrequisitos:} 5.6, 10.3.
+
+\section{Enteros probabilísticos}
+Un entero probabilístico es una variable aleatoria entera cuya media es el valor deseado. Un pbit con $P(1)=x$; un grupo de $n$ pbits, con suma en $\{0,\dots,n\}$ y media
+$nx$; o un redondeo estocástico a $2^{b}$ niveles (5.6). En el temario, esta familia aparece como \emph{dy4p}; aquí se estudia el principio general, independiente de una
+implementación concreta.
+
+\section{Bits efectivos}
+Un cuantizador uniforme de $b$ bits tiene error rms $2^{-b}/\sqrt{12}$; por eso se define $b_{\text{eff}}=-\log_2(\sqrt{12}\,\mathrm{rms})$. Si una muestra da $b_1$ bits
+efectivos y las muestras son independientes, promediar $S$ divide el rms por $\sqrt S$:
+\[b_{\text{eff}}(S)=b_1+\tfrac12\log_2S.\]
+Para un grupo de $n$ pbits, $\mathrm{Var}=x(1-x)/(nS)$: solo cuenta el producto $nS$ (espacio frente a tiempo).
+
+\section{Verificación \evS}
+20\,000 valores uniformes, redondeo estocástico a 16 niveles: $3{,}42$, $4{,}41$, $5{,}41$, $6{,}41$, $7{,}41$ bits con $S=1,4,16,64,256$. Pbits binarios:
+$-0{,}49$ ($n=S=1$), $1{,}50$ ($n=1$, $S=16$), $3{,}50$ ($n=S=16$).
+
+\section{Precisión a demanda}
+Cada capa o token puede pedir sus bits, pero un bit más exige $4\times$ muestras: costo $\propto4^b$, frente a $\propto b^2$ de un multiplicador digital. Con pocos bits gana
+el muestreo; con muchos, lo digital. Los modelos para TSU se entrenan para pocos bits efectivos.
+
+\begin{aplicacion}
+Codificar activaciones como frecuencias; repartir muestras por capa; entrenar con el ruido. Laboratorio L29: exactitud frente a $S$ y bits efectivos.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Contar niveles como bits efectivos. \quad Esperar ganancias lineales ($+1$ bit $=4\times$).
+\item Ignorar correlaciones entre muestras. \quad Reportar bits sin definir el error.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\bibitem{gaines} B. R. Gaines, Stochastic computing systems, \emph{Adv. Inf. Syst. Sci.} 2, 37 (1969).
+\bibitem{alaghi} A. Alaghi y J. P. Hayes, Survey of stochastic computing, \emph{ACM TECS} 12, 92 (2013).
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,258 @@
+1
+00:00:00,350 --> 00:00:01,962
+Lesson 10.6.
+
+2
+00:00:02,343 --> 00:00:05,679
+Tanh-linear units on a degree-16 graph.
+
+3
+00:00:06,783 --> 00:00:10,960
+We already have the pieces: the
+tangent a pbit computes, sparse
+
+4
+00:00:10,960 --> 00:00:15,402
+fixed-degree layers and the encoding
+of numbers in groups of pbits.
+
+5
+00:00:15,782 --> 00:00:19,129
+Today we put them together
+into the basic unit of a
+
+6
+00:00:19,129 --> 00:00:22,607
+language model for a pbit
+chip: the tanh-linear unit.
+
+7
+00:00:22,987 --> 00:00:25,757
+And we will see how it
+fits in a graph where
+
+8
+00:00:25,757 --> 00:00:28,275
+each pbit has exactly sixteen neighbors.
+
+9
+00:00:29,383 --> 00:00:35,680
+A tanh-linear unit
+computes tanh(Σ wⱼ xⱼ + b).
+
+10
+00:00:36,060 --> 00:00:38,867
+It is a classical neuron
+with tangent activation.
+
+11
+00:00:39,247 --> 00:00:43,367
+In a pbit, the local field is the
+weighted sum of the neighbors'
+
+12
+00:00:43,367 --> 00:00:47,550
+states, and the mean output is
+exactly the tangent of that field.
+
+13
+00:00:47,930 --> 00:00:52,198
+The tanh-linear unit is therefore
+the pbit seen on average.
+
+14
+00:00:53,317 --> 00:00:54,180
+Now the graph.
+
+15
+00:00:54,560 --> 00:00:56,613
+Each pbit has sixteen neighbors.
+
+16
+00:00:56,993 --> 00:01:01,412
+If each input is encoded with a
+group of four pbits, a unit can
+
+17
+00:01:01,412 --> 00:01:05,270
+read four inputs: four times
+four, sixteen connections.
+
+18
+00:01:05,650 --> 00:01:09,264
+The four pbits of an input
+share the same weight, so
+
+19
+00:01:09,264 --> 00:01:12,949
+their sum acts as a five-level
+probabilistic integer.
+
+20
+00:01:14,050 --> 00:01:15,125
+There is a subtlety.
+
+21
+00:01:15,505 --> 00:01:18,317
+The mean output is the
+mean of the tangent of the
+
+22
+00:01:18,317 --> 00:01:21,015
+noisy field, not the
+tangent of the mean field.
+
+23
+00:01:21,395 --> 00:01:25,375
+Since the tangent is curved, the
+noise of the inputs produces a bias.
+
+24
+00:01:25,755 --> 00:01:32,948
+We measure it with four thousand random
+units: with one pbit per input, the
+
+25
+00:01:32,948 --> 00:01:39,662
+root-mean-square bias is 0.197; with
+four, 0.085; with sixteen, 0.036.
+
+26
+00:01:40,783 --> 00:01:43,642
+With a fixed degree of sixteen, more pbits
+
+27
+00:01:43,642 --> 00:01:46,228
+per input means fewer inputs per unit.
+
+28
+00:01:46,608 --> 00:01:50,850
+Fewer inputs forces more layers
+to mix all the information: for a
+
+29
+00:01:50,850 --> 00:01:55,157
+dimension of one thousand twenty-four,
+with fan-in sixteen two and
+
+30
+00:01:55,157 --> 00:01:58,615
+a half layers suffice; with
+fan-in four, five layers.
+
+31
+00:01:58,995 --> 00:02:03,931
+Four by four is a compromise:
+moderate bias, reasonable depth.
+
+32
+00:02:04,311 --> 00:02:08,130
+Moreover, training with noise
+absorbs much of the bias.
+
+33
+00:02:09,250 --> 00:02:10,880
+This is how tokens enter the chip.
+
+34
+00:02:11,260 --> 00:02:14,918
+Each token's embedding
+vector, computed digitally,
+
+35
+00:02:14,918 --> 00:02:18,210
+is written as biases on
+groups of four pbits.
+
+36
+00:02:18,590 --> 00:02:21,372
+From there, tanh-linear
+layers with fan-in four
+
+37
+00:02:21,372 --> 00:02:24,272
+project and mix the
+information inside the graph.
+
+38
+00:02:24,652 --> 00:02:28,235
+The output is read by averaging
+samples, as in the previous
+
+39
+00:02:28,235 --> 00:02:31,576
+lesson, and returns to digital
+for the vocabulary head.
+
+40
+00:02:32,683 --> 00:02:38,939
+In practice: use tangent in the MLP and
+DyT as normalization, mask the projections
+
+41
+00:02:38,939 --> 00:02:44,431
+to fan-in four with groups of four
+pbits, and train with sampled passes.
+
+42
+00:02:44,811 --> 00:02:49,506
+In lab twenty-nine you will convert
+a small model and measure the price.
+
+43
+00:02:50,617 --> 00:02:55,503
+Common mistakes: assuming the mean of
+the tangent is the tangent of the mean.
+
+44
+00:02:55,883 --> 00:02:59,420
+Spending the sixteen connections
+on single-pbit inputs.
+
+45
+00:02:59,800 --> 00:03:02,852
+Forgetting that a small
+fan-in costs depth.
+
+46
+00:03:03,232 --> 00:03:07,113
+And training deterministically
+to deploy stochastically.
+
+47
+00:03:08,217 --> 00:03:12,378
+In summary, the tanh-linear unit
+is the pbit seen on average.
+
+48
+00:03:12,758 --> 00:03:18,373
+In a degree-sixteen graph, four inputs
+times four pbits balance the noise
+
+49
+00:03:18,373 --> 00:03:23,143
+bias, which we measured at 0.085,
+and the depth needed to mix.
+
+50
+00:03:23,523 --> 00:03:27,372
+Embeddings enter as biases and
+the output is read by averaging.
+
+51
+00:03:28,483 --> 00:03:33,282
+To practice: explain why a pbit
+implements a tanh-linear unit.
+
+52
+00:03:33,662 --> 00:03:36,341
+Count the levels of the sum of four pbits.
+
+53
+00:03:36,721 --> 00:03:40,606
+Compute the layers to mix a dimension
+of four thousand ninety-six.
+
+54
+00:03:40,986 --> 00:03:42,810
+And explain the origin of the bias.

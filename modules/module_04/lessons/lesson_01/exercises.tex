@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.1}{Modelos basados en energía y modelos gráficos}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Dibuje el grafo de factores de $E=-s_1s_2-s_2s_3-s_1s_2s_3-hs_3$.
+\item (B) ¿Cuál es la manta de Markov de un espín en una red cuadrada 2D con vecinos más cercanos?
+\item (B) Demuestre que en la cadena $s_1-s_2-s_3$, $\mathrm{Cov}(s_1,s_3\mid s_2)=0$.
+\item (B) ¿Cuántos términos tiene $Z$ para una red de $10\times10$ espines?
+\item (I) Para la cadena abierta de $N$ espines con $\beta J$, muestre que $\langle s_1s_N\rangle=\tanh^{N-1}(\beta J)$.
+\item (I) Reescriba el término $-Ks_1s_2s_3$ con un espín auxiliar e interacciones de a pares que reproduzcan la misma marginal (indique la idea).
+\item (A) Calcule por enumeración $Z$ y $\langle s_1s_3\rangle$ para la cadena de tres espines con $\beta J=0{,}5$ y campo $h=0{,}2$ en $s_3$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Tres variables; factores $\{s_1,s_2\}$, $\{s_2,s_3\}$, $\{s_1,s_2,s_3\}$ (hiperarista) y $\{s_3\}$ (campo).
+
+\textbf{E2.} Sus cuatro vecinos (norte, sur, este, oeste).
+
+\textbf{E3.} Con $s_2$ fijo, $p\propto e^{\beta Js_1s_2}e^{\beta Js_2s_3}$ se factoriza en $s_1$ y $s_3$.
+
+\textbf{E4.} $2^{100}\approx1{,}3\times10^{30}$.
+
+\textbf{E5.} Con variables de arista $\tau_k=s_ks_{k+1}$ independientes y $\langle\tau_k\rangle=\tanh\beta J$; $s_1s_N=\prod_k\tau_k$.
+
+\textbf{E6.} Se introduce $a$ y un término cuadrático tal que, minimizando o marginalizando sobre $a$, se recupera $-Ks_1s_2s_3$ (reducción de orden;
+la construcción exacta depende de si se exige igualdad de energía mínima o de marginal).
+
+\textbf{E7.} Sumar $e^{0{,}5(s_1s_2+s_2s_3)+0{,}2s_3}$ sobre los 8 estados; con campo la simetría se rompe y $\langle s_3\rangle\neq0$.
+\end{solucion}
+\end{document}

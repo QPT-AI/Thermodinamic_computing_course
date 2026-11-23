@@ -1,0 +1,285 @@
+1
+00:00:00,350 --> 00:00:01,914
+Lesson 10.1.
+
+2
+00:00:02,294 --> 00:00:03,865
+Transformer review.
+
+3
+00:00:04,983 --> 00:00:09,304
+Before taking a language model to
+thermodynamic hardware, we must know
+
+4
+00:00:09,304 --> 00:00:13,624
+precisely what a transformer does
+and where it spends time and energy.
+
+5
+00:00:14,004 --> 00:00:18,061
+This lesson is a targeted review:
+the parts of the block, how many
+
+6
+00:00:18,061 --> 00:00:22,486
+operations each token costs, the cache
+memory and the crucial difference
+
+7
+00:00:22,486 --> 00:00:26,174
+between processing the prompt
+and generating token by token.
+
+8
+00:00:27,283 --> 00:00:29,539
+A transformer is a stack of identical
+
+9
+00:00:29,539 --> 00:00:32,160
+blocks on a residual
+stream of dimension d.
+
+10
+00:00:32,540 --> 00:00:36,119
+Each block has a normalization,
+an attention that mixes
+
+11
+00:00:36,119 --> 00:00:39,828
+information across positions,
+another normalization and a
+
+12
+00:00:39,828 --> 00:00:44,253
+two-layer network, the MLP, that
+processes each position separately.
+
+13
+00:00:44,633 --> 00:00:48,381
+Attention computes queries,
+keys and values, and weights the
+
+14
+00:00:48,381 --> 00:00:52,315
+values with a softmax of the
+products between queries and keys.
+
+15
+00:00:53,417 --> 00:00:57,437
+Each block has about 12 d²
+parameters: four in the attention
+
+16
+00:00:57,437 --> 00:01:01,457
+projections and eight in the
+MLP with a four-fold expansion.
+
+17
+00:01:01,837 --> 00:01:05,249
+Processing a token costs about
+two operations per parameter.
+
+18
+00:01:05,629 --> 00:01:10,794
+Attention adds a term that grows
+with the context L: 4 L d per block.
+
+19
+00:01:11,174 --> 00:01:14,601
+For d = 4096 and a context
+of four thousand, that is
+
+20
+00:01:14,601 --> 00:01:18,094
+sixty-seven million attention
+operations against four
+
+21
+00:01:18,094 --> 00:01:21,785
+hundred million for the
+matrices: the matrices dominate.
+
+22
+00:01:22,917 --> 00:01:26,644
+When generating, the keys and
+values of previous tokens do
+
+23
+00:01:26,644 --> 00:01:30,050
+not change, so they are
+stored: that is the KV cache.
+
+24
+00:01:30,430 --> 00:01:32,916
+Its size per token is
+two times the number of
+
+25
+00:01:32,916 --> 00:01:35,236
+layers times d times the bytes per number.
+
+26
+00:01:35,616 --> 00:01:39,419
+In a seven-billion-parameter
+model with thirty-two layers and
+
+27
+00:01:39,419 --> 00:01:43,595
+sixteen-bit precision, that is half
+a megabyte per token: with four
+
+28
+00:01:43,595 --> 00:01:47,648
+thousand tokens of context, more
+than two gigabytes per sequence.
+
+29
+00:01:48,750 --> 00:01:52,022
+Processing the prompt,
+the prefill, performs many
+
+30
+00:01:52,022 --> 00:01:55,829
+operations per byte of weights
+read: it is compute-bound.
+
+31
+00:01:56,209 --> 00:01:59,226
+Generating token by token,
+the decode, reads all the
+
+32
+00:01:59,226 --> 00:02:01,952
+weights to produce a
+single token per sequence.
+
+33
+00:02:02,332 --> 00:02:06,132
+With the roofline model, a modern
+GPU needs about two hundred
+
+34
+00:02:06,132 --> 00:02:09,745
+ninety-five operations per
+byte to run at full throughput.
+
+35
+00:02:10,125 --> 00:02:15,762
+With batch one, decode does one: its
+maximum utilization is 0.3 percent.
+
+36
+00:02:16,142 --> 00:02:21,279
+With batch sixteen, five percent;
+with sixty-four, twenty-two.
+
+37
+00:02:22,383 --> 00:02:23,946
+Here the opportunity appears.
+
+38
+00:02:24,326 --> 00:02:27,939
+In a spatial TSU, the weights
+live on the chip itself as
+
+39
+00:02:27,939 --> 00:02:32,068
+couplings, so they need not be
+read from memory for every token.
+
+40
+00:02:32,448 --> 00:02:35,707
+Batch-one decode, the
+worst case for a GPU,
+
+41
+00:02:35,707 --> 00:02:38,587
+does not penalize a TSU's utilization.
+
+42
+00:02:38,967 --> 00:02:43,898
+In contrast, prefill, which the GPU does
+very well, offers no clear advantage.
+
+43
+00:02:44,278 --> 00:02:49,602
+That is why thermodynamic language models
+aim mainly at interactive generation.
+
+44
+00:02:50,717 --> 00:02:54,675
+With these counts one estimates
+operations per token, sizes the
+
+45
+00:02:54,675 --> 00:02:58,131
+cache and predicts utilization
+with the roofline model.
+
+46
+00:02:58,511 --> 00:03:02,381
+In lab twenty-eight you will measure
+prefill and decode on your GPU.
+
+47
+00:03:03,483 --> 00:03:08,380
+Common mistakes: using prefill
+utilization to estimate decode energy.
+
+48
+00:03:08,760 --> 00:03:11,154
+Ignoring the cache in the memory budget.
+
+49
+00:03:11,534 --> 00:03:14,738
+Assuming attention dominates
+at moderate context.
+
+50
+00:03:15,118 --> 00:03:19,113
+And claiming a TSU advantage
+for prefill-dominated workloads.
+
+51
+00:03:20,217 --> 00:03:24,018
+In summary: a block has about
+12 d² parameters and each
+
+52
+00:03:24,018 --> 00:03:27,888
+token costs two operations
+per parameter plus attention.
+
+53
+00:03:28,268 --> 00:03:33,037
+The KV cache takes half a megabyte
+per token in a seven-billion model.
+
+54
+00:03:33,417 --> 00:03:39,116
+Prefill is compute-bound and decode
+memory-bound, with very low utilization at small
+
+55
+00:03:39,116 --> 00:03:44,137
+batch: exactly where a TSU, with the
+weights on chip, has its opportunity.
+
+56
+00:03:45,250 --> 00:03:48,247
+To practice: count the
+parameters of a block.
+
+57
+00:03:48,627 --> 00:03:50,313
+Compute the cache per token.
+
+58
+00:03:50,693 --> 00:03:54,408
+Compute the maximum decode
+utilization with batch thirty-two.
+
+59
+00:03:54,788 --> 00:03:58,152
+And explain why prefill is compute-bound.

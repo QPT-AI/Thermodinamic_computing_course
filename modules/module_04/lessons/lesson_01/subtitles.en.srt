@@ -1,0 +1,288 @@
+1
+00:00:00,350 --> 00:00:02,005
+Lesson 4.1.
+
+2
+00:00:02,385 --> 00:00:05,347
+Energy-based models and graphical models.
+
+3
+00:00:06,450 --> 00:00:09,982
+In unit one we saw that a
+system at equilibrium visits
+
+4
+00:00:09,982 --> 00:00:13,318
+each state with probability
+proportional to e^(−E).
+
+5
+00:00:13,698 --> 00:00:16,328
+If we read it the other
+way around, any energy
+
+6
+00:00:16,328 --> 00:00:18,844
+function defines a
+probability distribution.
+
+7
+00:00:19,224 --> 00:00:21,149
+That is an energy-based model.
+
+8
+00:00:21,529 --> 00:00:24,684
+And it is exactly the
+program a thermodynamic chip
+
+9
+00:00:24,684 --> 00:00:27,903
+runs: we give it an energy,
+and it returns samples.
+
+10
+00:00:29,017 --> 00:00:30,866
+Think of the energy as a landscape.
+
+11
+00:00:31,246 --> 00:00:35,486
+Valleys are likely configurations
+and mountains, unlikely ones.
+
+12
+00:00:35,866 --> 00:00:38,319
+Learning a model is
+sculpting the landscape
+
+13
+00:00:38,319 --> 00:00:40,431
+so that the valleys fall on the data.
+
+14
+00:00:40,811 --> 00:00:43,575
+Parameters set the shape
+of the landscape, and
+
+15
+00:00:43,575 --> 00:00:47,181
+temperature decides how much
+we explore outside the valleys.
+
+16
+00:00:48,283 --> 00:00:53,949
+A useful energy is written as a sum of
+local terms, each over a few variables.
+
+17
+00:00:54,329 --> 00:00:59,134
+Then the probability factorizes into
+a product of factors, one per term.
+
+18
+00:00:59,514 --> 00:01:02,389
+We draw one node per
+variable and connect those
+
+19
+00:01:02,389 --> 00:01:05,264
+that share a term: that
+is the graphical model.
+
+20
+00:01:05,644 --> 00:01:09,687
+The key consequence is the Markov
+blanket: the distribution of a
+
+21
+00:01:09,687 --> 00:01:13,603
+variable, given all the others,
+depends only on its neighbors.
+
+22
+00:01:14,717 --> 00:01:18,844
+The factor graph makes the
+terms explicit: it is bipartite,
+
+23
+00:01:18,844 --> 00:01:22,412
+with circles for variables
+and squares for factors.
+
+24
+00:01:22,792 --> 00:01:25,850
+A two-variable factor is an ordinary edge.
+
+25
+00:01:26,230 --> 00:01:30,347
+A factor of three or more
+variables, like s₁ s₂
+
+26
+00:01:30,347 --> 00:01:34,378
+s₃, is a hyperedge: the
+model is a hypergraph.
+
+27
+00:01:34,758 --> 00:01:38,662
+Current hardware implements
+mostly pairwise interactions, so
+
+28
+00:01:38,662 --> 00:01:42,437
+higher-order terms are rewritten
+with auxiliary variables.
+
+29
+00:01:43,550 --> 00:01:47,943
+Let's see it in a chain
+of three spins with
+
+30
+00:01:47,943 --> 00:01:52,337
+energy E = −s₁s₂ − s₂s₃
+at temperature one.
+
+31
+00:01:52,717 --> 00:01:58,454
+The ends do not interact,
+but they are correlated: the
+
+32
+00:01:58,454 --> 00:02:04,085
+correlation between s₁ and
+s₃ is tanh² 1, about 0.58.
+
+33
+00:02:04,465 --> 00:02:08,745
+If we fix the middle spin, the
+correlation vanishes exactly.
+
+34
+00:02:09,125 --> 00:02:13,570
+Information travels through the graph,
+and knowing the neighbor cuts the path.
+
+35
+00:02:14,683 --> 00:02:17,679
+With only eight configurations
+we can compute everything.
+
+36
+00:02:18,059 --> 00:02:21,237
+The partition function is 19.05.
+
+37
+00:02:21,617 --> 00:02:25,935
+The two aligned configurations
+have probability 0.39 each,
+
+38
+00:02:25,935 --> 00:02:29,806
+and together add up to
+almost seventy-eight percent.
+
+39
+00:02:30,186 --> 00:02:33,162
+Those with the middle spin against both
+
+40
+00:02:33,162 --> 00:02:36,976
+neighbors are the least
+likely, under one percent.
+
+41
+00:02:37,356 --> 00:02:41,508
+For a hundred spins we could no longer
+enumerate: we will have to sample.
+
+42
+00:02:42,617 --> 00:02:45,385
+In practice, a program for a thermodynamic
+
+43
+00:02:45,385 --> 00:02:48,088
+chip is a factor graph of bounded degree.
+
+44
+00:02:48,468 --> 00:02:53,496
+Libraries like THRML work
+directly with factor graphs.
+
+45
+00:02:53,876 --> 00:02:57,872
+And in machine learning,
+Boltzmann machines and the
+
+46
+00:02:57,872 --> 00:03:02,104
+denoising models of unit
+nine are energy-based models.
+
+47
+00:03:03,217 --> 00:03:07,473
+Common mistakes: believing two variables
+without an edge are independent.
+
+48
+00:03:07,853 --> 00:03:11,052
+Confusing the interaction graph
+with the correlation graph.
+
+49
+00:03:11,432 --> 00:03:15,303
+Thinking the partition function is
+easy because each factor is local.
+
+50
+00:03:15,683 --> 00:03:18,334
+And forgetting that
+pairwise hardware needs
+
+51
+00:03:18,334 --> 00:03:20,985
+auxiliary variables
+for higher-order terms.
+
+52
+00:03:22,117 --> 00:03:27,456
+In summary: an energy-based
+model defines p ∝ e^(−E).
+
+53
+00:03:27,836 --> 00:03:30,623
+If the energy is a sum of local terms, the
+
+54
+00:03:30,623 --> 00:03:34,207
+probability factorizes and
+is drawn as a factor graph.
+
+55
+00:03:34,587 --> 00:03:37,653
+Each variable depends only
+on its Markov blanket, and
+
+56
+00:03:37,653 --> 00:03:40,430
+conditional independence
+is read from the graph.
+
+57
+00:03:41,550 --> 00:03:46,022
+To practice: draw a factor
+graph with a three-body term.
+
+58
+00:03:46,402 --> 00:03:49,257
+Find the Markov blanket
+in a square lattice.
+
+59
+00:03:49,637 --> 00:03:52,588
+Prove conditional
+independence in the chain.
+
+60
+00:03:52,968 --> 00:03:56,981
+And count the terms in the partition
+function of a ten-by-ten lattice.

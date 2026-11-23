@@ -1,0 +1,339 @@
+1
+00:00:00,350 --> 00:00:02,051
+Lección 3.9.
+
+2
+00:00:02,431 --> 00:00:04,897
+Matrices de conductancia de no equilibrio.
+
+3
+00:00:06,017 --> 00:00:10,222
+Una red de reacciones químicas abierta,
+alimentada por quimiostatos que
+
+4
+00:00:10,222 --> 00:00:14,073
+fijan algunas concentraciones, se
+parece a un circuito eléctrico.
+
+5
+00:00:14,453 --> 00:00:16,806
+Las corrientes son
+flujos de reacción y los
+
+6
+00:00:16,806 --> 00:00:19,323
+voltajes son diferencias
+de potencial químico.
+
+7
+00:00:19,703 --> 00:00:23,512
+Raux, Goupil y Verley mostraron
+que esa analogía puede hacerse
+
+8
+00:00:23,512 --> 00:00:26,831
+precisa con matrices de
+conductancia de no equilibrio.
+
+9
+00:00:27,211 --> 00:00:31,492
+Así, una red grande se analiza
+conectando módulos, como resistencias.
+
+10
+00:00:32,617 --> 00:00:36,133
+Tomemos una reacción reversible
+con cinética de acción de masas.
+
+11
+00:00:36,513 --> 00:00:43,433
+La corriente es el flujo directo
+menos el inverso, j = k⁺[A] − k⁻[B].
+
+12
+00:00:43,813 --> 00:00:48,229
+La fuerza termodinámica es k_B T por
+el logaritmo del cociente entre ambos
+
+13
+00:00:48,229 --> 00:00:51,990
+flujos, que es menos el cambio
+de energía libre de la reacción.
+
+14
+00:00:52,370 --> 00:00:56,002
+Corriente y fuerza tienen siempre
+el mismo signo: su producto
+
+15
+00:00:56,002 --> 00:00:59,098
+es la producción de entropía,
+que nunca es negativa.
+
+16
+00:01:00,217 --> 00:01:03,893
+Definimos la resistencia
+de la reacción como el
+
+17
+00:01:03,893 --> 00:01:07,178
+cociente r = f/j, igual que la ley de Ohm.
+
+18
+00:01:07,558 --> 00:01:11,880
+Cerca del equilibrio, la
+fuerza es pequeña y la
+
+19
+00:01:11,880 --> 00:01:16,386
+corriente es proporcional
+a ella: r ≈ k_B T/j_eq,
+
+20
+00:01:16,766 --> 00:01:21,931
+donde j_eq es el flujo de intercambio,
+lo que va y viene en cada sentido.
+
+21
+00:01:22,311 --> 00:01:26,696
+Una reacción rápida conduce bien;
+una lenta es una resistencia grande.
+
+22
+00:01:27,076 --> 00:01:29,818
+Lejos del equilibrio
+la resistencia ya no es
+
+23
+00:01:29,818 --> 00:01:32,498
+constante: depende del
+estado estacionario.
+
+24
+00:01:33,617 --> 00:01:37,100
+Ahora conectemos dos
+reacciones en serie: A ⇄ B
+
+25
+00:01:37,100 --> 00:01:40,064
+⇄ C, con A y C fijadas por quimiostatos.
+
+26
+00:01:40,444 --> 00:01:43,482
+En el estado estacionario la
+concentración de B se ajusta
+
+27
+00:01:43,482 --> 00:01:46,415
+hasta que por ambas reacciones
+pasa la misma corriente.
+
+28
+00:01:46,795 --> 00:01:51,158
+Las fuerzas se suman, porque las diferencias
+de potencial químico se encadenan.
+
+29
+00:01:51,538 --> 00:01:57,102
+Con la misma corriente y fuerzas
+que se suman, las resistencias se
+
+30
+00:01:57,102 --> 00:02:02,161
+suman: R = r₁ + r₂, y la
+conductancia del módulo es G = 1/R.
+
+31
+00:02:02,541 --> 00:02:05,620
+Es la ley de suma de
+resistencias, ahora para química.
+
+32
+00:02:06,750 --> 00:02:08,917
+En una red con varios ciclos y varios
+
+33
+00:02:08,917 --> 00:02:11,904
+quimiostatos, las resistencias
+se vuelven matrices.
+
+34
+00:02:12,284 --> 00:02:16,756
+Cada ciclo tiene su corriente,
+y la matriz de resistencias
+
+35
+00:02:16,756 --> 00:02:20,611
+de ciclos relaciona fuerzas
+y corrientes: F = R J.
+
+36
+00:02:20,991 --> 00:02:23,142
+Su inversa es la matriz de conductancia.
+
+37
+00:02:23,522 --> 00:02:26,282
+Es simétrica y semidefinida
+positiva, porque la
+
+38
+00:02:26,282 --> 00:02:28,925
+producción de entropía
+no puede ser negativa.
+
+39
+00:02:29,305 --> 00:02:33,579
+Al conectar módulos en serie, sus
+matrices se combinan como resistencias,
+
+40
+00:02:33,579 --> 00:02:37,209
+y el resultado coincide con el
+cálculo directo de toda la red.
+
+41
+00:02:38,317 --> 00:02:40,948
+Con todas las constantes iguales a uno y C
+
+42
+00:02:40,948 --> 00:02:43,831
+fijada en uno, variemos
+la concentración de A.
+
+43
+00:02:44,211 --> 00:02:48,427
+Cerca del equilibrio, con A en
+uno coma uno, la conductancia vale
+
+44
+00:02:48,427 --> 00:02:52,189
+cero coma cinco dos, muy cerca
+del valor lineal, un medio.
+
+45
+00:02:52,569 --> 00:02:56,600
+Con A igual a cinco, la corriente
+es dos, la fuerza total uno
+
+46
+00:02:56,600 --> 00:03:00,169
+coma seis k_B T y la
+conductancia uno coma dos cuatro.
+
+47
+00:03:00,549 --> 00:03:03,392
+Con A igual a cien, la
+conductancia supera diez.
+
+48
+00:03:03,772 --> 00:03:06,920
+Lejos del equilibrio la red
+conduce mucho más de lo que
+
+49
+00:03:06,920 --> 00:03:10,183
+predice la respuesta lineal,
+pero la suma de resistencias
+
+50
+00:03:10,183 --> 00:03:12,931
+sigue siendo exacta en
+cada estado estacionario.
+
+51
+00:03:14,050 --> 00:03:18,570
+Esta teoría de circuitos permite analizar
+redes grandes por módulos, diseñar
+
+52
+00:03:18,570 --> 00:03:23,329
+computadores químicos donde corrientes y
+fuerzas son señales, y llevar la cuenta
+
+53
+00:03:23,329 --> 00:03:27,492
+de la disipación, que es una forma
+cuadrática positiva en las fuerzas.
+
+54
+00:03:27,872 --> 00:03:31,273
+En un reto de laboratorio compararás
+una corriente estacionaria
+
+55
+00:03:31,273 --> 00:03:34,296
+simulada con la predicción
+de la matriz de conductancia.
+
+56
+00:03:35,417 --> 00:03:40,165
+Errores frecuentes: tratar la resistencia
+como constante lejos del equilibrio.
+
+57
+00:03:40,545 --> 00:03:43,402
+Sumar fuerzas de reacciones
+que no están en serie.
+
+58
+00:03:43,782 --> 00:03:46,906
+Olvidar que son los quimiostatos
+los que fijan las fuerzas.
+
+59
+00:03:47,287 --> 00:03:50,954
+Y confundir la conductancia,
+corriente sobre fuerza, con la
+
+60
+00:03:50,954 --> 00:03:54,311
+conductancia diferencial,
+la derivada de la corriente.
+
+61
+00:03:55,417 --> 00:04:00,069
+En resumen: cada reacción tiene una
+fuerza, k_B T por el logaritmo del
+
+62
+00:04:00,069 --> 00:04:04,190
+cociente de flujos, y una
+resistencia, fuerza sobre corriente.
+
+63
+00:04:04,570 --> 00:04:08,785
+En serie, las resistencias se suman
+exactamente en el estado estacionario.
+
+64
+00:04:09,165 --> 00:04:12,814
+En redes con varios ciclos, matrices
+de conductancia simétricas y
+
+65
+00:04:12,814 --> 00:04:16,745
+positivas generalizan la ley de Ohm
+a la química fuera del equilibrio.
+
+66
+00:04:17,850 --> 00:04:22,668
+Para practicar: calcula fuerza,
+corriente y resistencia de una reacción.
+
+67
+00:04:23,048 --> 00:04:24,632
+Demuestra el límite lineal.
+
+68
+00:04:25,012 --> 00:04:27,081
+Encuentra el estado estacionario de la
+
+69
+00:04:27,081 --> 00:04:29,367
+cadena y verifica la suma de resistencias.
+
+70
+00:04:29,747 --> 00:04:33,918
+Y explica por qué la matriz de
+conductancia es semidefinida positiva.

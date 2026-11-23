@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.7}{Entrenamiento consciente del hardware}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) ¿Qué hace el estimador directo en el paso hacia atrás?
+\item (B) ¿Por qué la inyección de ruido favorece soluciones planas?
+\item (B) ¿Por qué fijar la máscara de dispersión desde el paso 0?
+\item (B) Diseñe la evaluación de un método consciente del hardware.
+\item (I) Para un peso $w$ con ruido $w(1+\sigma\xi)$, calcule el aumento esperado de una pérdida cuadrática $\frac12(wx-y)^2$ y relaciónelo con un término de regularización.
+\item (I) ¿Cuántos niveles tiene un cuantizador simétrico de 4 bits sin el valor $-8$? ¿Cuál es el error máximo de redondeo relativo al peso máximo?
+\item (A) Repita el experimento con 2, 3 y 8 bits y con $\sigma\in\{0,\,0{,}1,\,0{,}3\}$; grafique la ganancia del entrenamiento consciente.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Trata el redondeo como identidad: pasa el gradiente respecto de $\hat W$ a la copia en coma flotante $W$.
+
+\textbf{E2.} Minimiza la pérdida esperada bajo perturbaciones: penaliza la curvatura (soluciones donde pequeños cambios de los pesos no cambian la salida).
+
+\textbf{E3.} Los pesos se adaptan a la conectividad real; podar después elimina pesos que la red usaba sin darle ocasión de compensar.
+
+\textbf{E4.} Precisión en hardware simulado (bits, ruido, máscara) frente al despliegue ingenuo, varias semillas y varios sorteos de ruido.
+
+\textbf{E5.} $\mathbb E[\frac12(w(1+\sigma\xi)x-y)^2]=\frac12(wx-y)^2+\frac12\sigma^2w^2x^2$: regularización $L_2$ ponderada por $x^2$.
+
+\textbf{E6.} 15 niveles ($-7\dots7$); error máximo $\frac12\cdot\frac17\approx7\,\%$ del peso máximo.
+
+\textbf{E7.} La ganancia crece cuando el hardware es más agresivo (pocos bits, mucho ruido).
+\end{solucion}
+\end{document}

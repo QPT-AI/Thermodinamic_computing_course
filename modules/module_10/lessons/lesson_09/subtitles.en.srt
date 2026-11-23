@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:02,130
+Lesson 10.9.
+
+2
+00:00:02,510 --> 00:00:06,886
+Case study: an AFT
+language model end to end.
+
+3
+00:00:08,017 --> 00:00:12,110
+We close the unit with a
+real case study, end to end.
+
+4
+00:00:12,490 --> 00:00:16,108
+We train a small language model,
+of about one hundred thirteen
+
+5
+00:00:16,108 --> 00:00:19,260
+thousand parameters, on the
+very text of this course's
+
+6
+00:00:19,260 --> 00:00:22,937
+narrations: three hundred forty
+thousand characters in Spanish.
+
+7
+00:00:23,317 --> 00:00:27,337
+We use all the pieces of the unit
+and measure four variants with
+
+8
+00:00:27,337 --> 00:00:30,980
+the same data, the same seed
+and the same number of steps.
+
+9
+00:00:32,083 --> 00:00:34,488
+The model has two blocks of dimension
+
+10
+00:00:34,488 --> 00:00:37,867
+sixty-four, with a context
+of sixty-four characters.
+
+11
+00:00:38,247 --> 00:00:42,372
+Mixing is causal AFT with
+learned local biases in
+
+12
+00:00:42,372 --> 00:00:45,907
+a window of four positions, like AFT-conv.
+
+13
+00:00:46,287 --> 00:00:50,550
+Normalization is DyT and
+the MLP uses tangent.
+
+14
+00:00:50,930 --> 00:00:54,407
+For masked diffusion,
+mixing is bidirectional:
+
+15
+00:00:54,407 --> 00:00:57,808
+the average of a forward
+and a backward pass.
+
+16
+00:00:58,917 --> 00:01:00,320
+A lesson from the process.
+
+17
+00:01:00,700 --> 00:01:03,633
+In the first version, the
+diffusion model learned
+
+18
+00:01:03,633 --> 00:01:06,268
+nothing beyond the
+frequency of each letter.
+
+19
+00:01:06,648 --> 00:01:11,414
+The cause: a masked position only receives
+information from its neighbors, and
+
+20
+00:01:11,414 --> 00:01:15,937
+with global mixing that information
+is diluted among sixty-four positions.
+
+21
+00:01:16,317 --> 00:01:20,290
+The gradient of the local
+biases was too noisy to grow.
+
+22
+00:01:20,670 --> 00:01:25,028
+Initializing those biases with a
+preference for nearby neighbors solved it.
+
+23
+00:01:25,408 --> 00:01:27,050
+Initialization matters.
+
+24
+00:01:28,150 --> 00:01:30,518
+The results, in bits per character on
+
+25
+00:01:30,518 --> 00:01:33,333
+validation text, after
+three thousand steps.
+
+26
+00:01:33,713 --> 00:01:36,799
+Autoregressive with Adam: 1.98.
+
+27
+00:01:37,179 --> 00:01:42,598
+With natural gradient, solved with
+conjugate gradient: 1.94, and at
+
+28
+00:01:42,598 --> 00:01:47,532
+five hundred steps the advantage
+was larger, 2.2 versus 2.32.
+
+29
+00:01:47,912 --> 00:01:53,373
+With sparse masks of degree
+four: 2.32, the sparsity tax.
+
+30
+00:01:53,753 --> 00:01:59,682
+And masked diffusion gives a bound of
+3.18: at this scale, clearly worse.
+
+31
+00:02:00,783 --> 00:02:04,805
+Natural gradient wins per step,
+but on the GPU it took fifty-two
+
+32
+00:02:04,805 --> 00:02:09,078
+seconds against nine and a half for
+Adam, because each step solves a
+
+33
+00:02:09,078 --> 00:02:12,597
+linear system with ten
+iterations of conjugate gradient.
+
+34
+00:02:12,977 --> 00:02:16,521
+That solve is exactly
+what TNGD delegates to a
+
+35
+00:02:16,521 --> 00:02:20,141
+thermodynamic circuit,
+as we saw in lesson 8.3.
+
+36
+00:02:20,521 --> 00:02:23,282
+If the analog solve were fast and cheap,
+
+37
+00:02:23,282 --> 00:02:26,250
+natural gradient would
+also win per second.
+
+38
+00:02:27,383 --> 00:02:28,769
+We log the energy.
+
+39
+00:02:29,149 --> 00:02:34,003
+The dense model costs about two
+hundred seven thousand operations per
+
+40
+00:02:34,003 --> 00:02:38,857
+token; at ten percent utilization
+and 0.177 picojoules per operation,
+
+41
+00:02:39,237 --> 00:02:43,669
+about three hundred sixty-six
+nanojoules on the GPU, an estimate.
+
+42
+00:02:44,049 --> 00:02:48,446
+The degree-four model uses twenty-one
+times fewer weights in the projections.
+
+43
+00:02:48,826 --> 00:02:52,738
+Its mapping record: four
+thousand six hundred eight
+
+44
+00:02:52,738 --> 00:02:57,034
+pbits, degree sixteen, eight
+sequential sampling layers;
+
+45
+00:02:57,034 --> 00:03:01,022
+AFT mixing, the embedding
+and the head stay digital.
+
+46
+00:03:02,150 --> 00:03:04,902
+The code is in the lesson's data folder.
+
+47
+00:03:05,282 --> 00:03:10,471
+You can swap the optimizer, including
+a TNGD simulator, and log in each
+
+48
+00:03:10,471 --> 00:03:15,148
+run bits per character, time,
+operations and the mapping record.
+
+49
+00:03:15,528 --> 00:03:18,469
+In labs twenty-eight
+and twenty-nine you will
+
+50
+00:03:18,469 --> 00:03:21,476
+extend it with sampled
+layers and dy4p inputs.
+
+51
+00:03:22,583 --> 00:03:25,667
+Common mistakes: comparing
+the autoregressive
+
+52
+00:03:25,667 --> 00:03:29,503
+likelihood with a diffusion
+bound as if both were exact.
+
+53
+00:03:29,883 --> 00:03:33,534
+Judging natural gradient only
+by its time on digital hardware.
+
+54
+00:03:33,914 --> 00:03:36,906
+Changing seeds, data or
+steps between variants.
+
+55
+00:03:37,286 --> 00:03:39,924
+And reporting energy without
+utilization or scope.
+
+56
+00:03:41,050 --> 00:03:45,584
+In summary, a small AFT model
+with DyT and tangent learns
+
+57
+00:03:45,584 --> 00:03:49,403
+the course text down to
+1.98 bits per character.
+
+58
+00:03:49,783 --> 00:03:55,153
+Natural gradient wins per step, and
+TNGD could make it win per second.
+
+59
+00:03:55,533 --> 00:03:58,688
+Degree-four sparsity costs
+a third of a bit, and
+
+60
+00:03:58,688 --> 00:04:01,580
+masked diffusion falls
+behind at this scale.
+
+61
+00:04:01,960 --> 00:04:05,977
+Everything is logged: quality,
+time, operations and mapping.
+
+62
+00:04:07,083 --> 00:04:11,522
+To practice: explain why the first
+diffusion only learned frequencies.
+
+63
+00:04:11,902 --> 00:04:15,427
+Compute the weight ratio between
+the dense and the sparse model.
+
+64
+00:04:15,807 --> 00:04:18,501
+Say what would make natural
+gradient win in time.
+
+65
+00:04:18,881 --> 00:04:21,874
+And explain why the
+diffusion figure is a bound.

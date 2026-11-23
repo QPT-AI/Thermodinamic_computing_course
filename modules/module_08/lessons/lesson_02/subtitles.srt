@@ -1,0 +1,300 @@
+1
+00:00:00,350 --> 00:00:02,010
+Lección 8.2.
+
+2
+00:00:02,390 --> 00:00:03,750
+Matrices de curvatura.
+
+3
+00:00:04,883 --> 00:00:07,930
+El gradiente natural necesita
+una matriz de curvatura.
+
+4
+00:00:08,310 --> 00:00:12,567
+La información de Fisher verdadera exige
+muestrear del modelo, así que en la
+
+5
+00:00:12,567 --> 00:00:16,711
+práctica se usan aproximaciones
+calculables con diferenciación automática.
+
+6
+00:00:17,091 --> 00:00:20,527
+Hoy vemos las dos más comunes,
+el Fisher empírico y el
+
+7
+00:00:20,527 --> 00:00:24,408
+Gauss-Newton generalizado, y
+dos formas digitales de resolver
+
+8
+00:00:24,408 --> 00:00:28,161
+el sistema: gradiente conjugado
+y la identidad de Woodbury.
+
+9
+00:00:29,283 --> 00:00:32,091
+El Fisher empírico promedia el producto
+
+10
+00:00:32,091 --> 00:00:35,330
+exterior de los gradientes
+por ejemplo: J Jᵀ.
+
+11
+00:00:35,710 --> 00:00:41,932
+El Gauss-Newton generalizado usa el
+jacobiano de la salida de la red y el
+
+12
+00:00:41,932 --> 00:00:47,387
+hessiano de la pérdida respecto
+de esa salida: G = J_f H_L J_fᵀ.
+
+13
+00:00:47,767 --> 00:00:50,547
+Para pérdidas de la
+familia exponencial, el
+
+14
+00:00:50,547 --> 00:00:52,938
+GGN coincide con el Fisher verdadero.
+
+15
+00:00:53,318 --> 00:00:56,550
+El empírico, en cambio, puede
+ser muy distinto: en una
+
+16
+00:00:56,550 --> 00:00:59,721
+regresión logística con
+pesos no nulos, la diferencia
+
+17
+00:00:59,721 --> 00:01:03,192
+relativa entre ambos es del
+doscientos treinta por ciento.
+
+18
+00:01:04,317 --> 00:01:09,772
+Un detalle crucial: con un lote de b
+ejemplos y salida de dimensión d_z, la matriz
+
+19
+00:01:09,772 --> 00:01:14,495
+tiene rango a lo sumo b d_z, mucho
+menor que el número de parámetros N.
+
+20
+00:01:14,875 --> 00:01:17,593
+En nuestro ejemplo,
+doscientos parámetros y
+
+21
+00:01:17,593 --> 00:01:20,565
+treinta y dos ejemplos
+dan rango treinta y dos.
+
+22
+00:01:20,945 --> 00:01:27,922
+La matriz es singular, así que se
+amortigua: se resuelve (G + λI) g̃ = ∇ℓ.
+
+23
+00:01:29,050 --> 00:01:33,006
+El gradiente conjugado resuelve
+el sistema usando solo productos
+
+24
+00:01:33,006 --> 00:01:37,023
+matriz-vector, y el producto del
+GGN por un vector se calcula con
+
+25
+00:01:37,023 --> 00:01:41,102
+productos jacobiano-vector en
+tiempo O(b N), sin formar la matriz.
+
+26
+00:01:41,482 --> 00:01:45,091
+Como la matriz amortiguada
+tiene a lo sumo b + 1 valores
+
+27
+00:01:45,091 --> 00:01:48,894
+propios distintos, el gradiente
+conjugado converge en pocas
+
+28
+00:01:48,894 --> 00:01:52,116
+iteraciones: veintiuna a
+veintitrés en el ejemplo,
+
+29
+00:01:52,496 --> 00:01:54,942
+aunque el número de
+condición llegue a siete mil.
+
+30
+00:01:55,322 --> 00:01:59,801
+Su punto débil es que las iteraciones
+son secuenciales y no se paralelizan.
+
+31
+00:02:00,917 --> 00:02:05,706
+La identidad de Woodbury explota
+el rango bajo: invertir G + λI
+
+32
+00:02:05,706 --> 00:02:09,964
+se reduce a invertir una
+matriz pequeña de tamaño b d_z.
+
+33
+00:02:10,344 --> 00:02:12,781
+En el ejemplo, el
+resultado coincide con la
+
+34
+00:02:12,781 --> 00:02:15,276
+solución directa hasta
+diez a la menos doce.
+
+35
+00:02:15,656 --> 00:02:19,634
+El costo es O(b² d_z² N + b³ d_z³):
+
+36
+00:02:19,634 --> 00:02:24,862
+excelente si el lote y
+la salida son pequeños,
+
+37
+00:02:25,242 --> 00:02:30,019
+pero intratable cuando d_z es el tamaño
+de un vocabulario, de decenas de miles.
+
+38
+00:02:31,150 --> 00:02:33,929
+Así queda la tabla de
+Donatella y colaboradores.
+
+39
+00:02:34,309 --> 00:02:38,501
+Adam y el descenso estocástico
+cuestan O(b N) por iteración.
+
+40
+00:02:38,881 --> 00:02:43,680
+El gradiente natural directo
+cuesta O(N³) y memoria N².
+
+41
+00:02:44,060 --> 00:02:48,072
+Con gradiente conjugado, c veces el
+costo de primer orden, secuencial.
+
+42
+00:02:48,452 --> 00:02:51,996
+Con Woodbury, lineal en
+N pero cúbico en b d_z.
+
+43
+00:02:52,376 --> 00:02:55,324
+En la próxima lección
+veremos que la versión
+
+44
+00:02:55,324 --> 00:02:59,076
+termodinámica cuesta O(b d_z
+N) más el tiempo analógico.
+
+45
+00:03:00,183 --> 00:03:03,540
+En la práctica, prefiere el
+GGN al Fisher empírico; usa
+
+46
+00:03:03,540 --> 00:03:06,652
+Woodbury cuando el lote
+por la salida es pequeño, y
+
+47
+00:03:06,652 --> 00:03:10,191
+gradiente conjugado truncado
+cuando hay muchos parámetros.
+
+48
+00:03:10,571 --> 00:03:13,992
+En el laboratorio once
+implementarás ambos en MNIST.
+
+49
+00:03:15,117 --> 00:03:19,156
+Errores comunes: usar el Fisher
+empírico como si fuera el verdadero.
+
+50
+00:03:19,536 --> 00:03:22,985
+Formar la matriz completa cuando
+basta su producto por un vector.
+
+51
+00:03:23,365 --> 00:03:25,604
+Llevar el gradiente conjugado hasta la
+
+52
+00:03:25,604 --> 00:03:28,491
+convergencia total, cuando
+se trunca a propósito.
+
+53
+00:03:28,871 --> 00:03:32,532
+Y aplicar Woodbury con una salida
+del tamaño de un vocabulario.
+
+54
+00:03:33,650 --> 00:03:38,418
+En resumen: el GGN es la curvatura
+preferida y coincide con el Fisher en
+
+55
+00:03:38,418 --> 00:03:42,590
+la familia exponencial; el Fisher
+empírico puede diferir mucho.
+
+56
+00:03:42,970 --> 00:03:45,635
+La matriz tiene rango bajo y se amortigua.
+
+57
+00:03:46,015 --> 00:03:51,224
+Gradiente conjugado y Woodbury la resuelven
+en digital, cada uno con su límite: el
+
+58
+00:03:51,224 --> 00:03:55,607
+primero es secuencial, el segundo
+explota con la dimensión de salida.
+
+59
+00:03:56,717 --> 00:03:59,618
+Para practicar: calcula el rango del GGN.
+
+60
+00:03:59,998 --> 00:04:01,774
+Escribe la fórmula de Woodbury.
+
+61
+00:04:02,154 --> 00:04:05,934
+Explica por qué el gradiente conjugado
+converge en pocas iteraciones.
+
+62
+00:04:06,314 --> 00:04:10,827
+Y di cuándo coinciden el Fisher empírico
+y el GGN en la regresión logística.

@@ -1,0 +1,73 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.7}{Termodinámica del reinicio y de la lectura sin errores}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} costo mínimo de reiniciar con distribución previa arbitraria y error residual;
+barrera para conservar un bit; energía de una lectura confiable.
+\textbf{Prerrequisitos:} 1.5 (Landauer), 1.6 (ruido $kT/C$), 3.2 (producción de entropía).
+
+\section{Reinicio con distribución previa}
+Una memoria de un bit vale 1 con probabilidad $p$. Reiniciarla a 0 elimina su entropía de Shannon $H(p)=-p\ln p-(1-p)\ln(1-p)$ (en nats).
+\begin{resultado}[ (Landauer generalizado)]
+Para un reinicio isotérmico a temperatura $T$ que deja un error residual $\varepsilon$ (probabilidad de que el bit siga en 1),
+\begin{equation}
+W_{\text{reset}}\ \ge\ \kB T\,\big[H(p)-H(\varepsilon)\big].
+\end{equation}
+\end{resultado}
+\noindent Casos: $p=\tfrac12$, $\varepsilon\to0$ da $\kB T\ln2$ (lección 1.5); $p\to0$ da costo nulo; con $p=\tfrac12$ y $\varepsilon=0{,}01$,
+$H(\varepsilon)=0{,}056$ y $W_{\min}=0{,}637\,\kB T$. Aceptar errores abarata poco el reinicio. Un protocolo de duración finita $\tau$ añade un exceso
+$\propto1/\tau$ (lecciones 1.5 y 3.4).
+
+\begin{intuicion}
+El costo de Landauer es el costo de \emph{olvidar lo que no sabemos}. Si ya sabemos casi con certeza el valor del bit, hay poca entropía que
+expulsar al baño, y el reinicio es casi gratis.
+\end{intuicion}
+
+\section{Retención: barrera y ley de Arrhenius}
+En un pozo doble con barrera $E_b$, el ruido térmico produce saltos con tasa $\Gamma=\nu_0e^{-E_b/\kB T}$ (Arrhenius--Kramers). Para que la
+probabilidad de un salto en un tiempo $t$ no supere $\varepsilon$ ($\Gamma t\le\varepsilon$):
+\begin{equation}
+E_b\ \ge\ \kB T\ln\frac{\nu_0\,t}{\varepsilon}.
+\end{equation}
+\begin{ejemplo}
+$\nu_0=10^{12}$ Hz, $\varepsilon=10^{-9}$: un segundo exige $E_b\approx48\,\kB T$; diez años ($3{,}2\times10^8$ s), $E_b\approx68\,\kB T$.
+La barrera crece solo con el logaritmo del tiempo de retención.
+\end{ejemplo}
+
+\section{Lectura sin errores}
+Un sensor de capacidad $C$ tiene ruido de voltaje gaussiano con $\sigma^2=\kB T/C$ (lección 1.6). Con niveles $\pm V$ y umbral en 0, la
+probabilidad de error es $\varepsilon=Q(V/\sigma)$, con $Q$ la cola gaussiana. La energía de la señal es
+\begin{equation}
+E_{\text{read}}=\tfrac12CV^2=\tfrac{\kB T}{2}\,Q^{-1}(\varepsilon)^2\ \approx\ \kB T\ln\frac1\varepsilon\quad(\varepsilon\to0).
+\end{equation}
+\begin{center}\begin{tabular}{lcccc}\toprule
+$\varepsilon$ & $10^{-3}$ & $10^{-6}$ & $10^{-9}$ & $10^{-12}$\\\midrule
+$V/\sigma$ & 3,09 & 4,75 & 6,00 & 7,03\\
+$E_{\text{read}}/\kB T$ & 4,8 & 11,3 & 18,0 & 24,7\\\bottomrule\end{tabular}\end{center}
+Cada factor 10 de confiabilidad cuesta $\approx\ln10\approx2{,}3\,\kB T$ adicionales.
+
+\section{El ciclo lectura--reinicio}
+Copiar el bit a una memoria limpia puede ser reversible (Bennett). El costo inevitable aparece al reiniciar esa memoria: si el resultado se
+descarta, cada lectura paga al menos $\kB T\,H(x)$. En un chip que lee pbits $10^6$ veces por segundo, la energía de E/S y de reinicio puede
+superar la del tejido de muestreo.
+
+\begin{aplicacion}
+Contabilidad de un TSU (Unidad 5): $E_{\text{total}}=E_{\text{tejido}}+E_{\text{E/S}}+E_{\text{digital}}$; leer solo cada
+$\tau_{\text{int}}$ barridos (lección 2.6) reduce $E_{\text{E/S}}$ sin perder información. En Torx (Unidad 11), cada actualización de Gibbs
+es un \texttt{PReset} seguido de un \texttt{PNOT}.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Usar $\kB T\ln2$ para todo reinicio: depende de $p$ y de $\varepsilon$. \quad Confundir retención (barrera) con costo de reinicio (entropía).
+\item Creer que leer es gratis porque la copia es reversible. \quad Mezclar bits y nats.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[9]{bennett} C. H. Bennett, Notes on Landauer's principle, reversible computation and Maxwell's demon, 2003.
+\bibitem[10]{wolpert} D. H. Wolpert, The stochastic thermodynamics of computation, J. Phys. A 52, 193001 (2019).
+\bibitem[54]{torx} G. Verdon et al., A framework for stochastic differentiable programming (Torx), 2026.
+\end{thebibliography}
+\end{document}

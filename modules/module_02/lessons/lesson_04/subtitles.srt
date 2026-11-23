@@ -1,0 +1,398 @@
+1
+00:00:00,350 --> 00:00:02,033
+Lección 2.4.
+
+2
+00:00:02,413 --> 00:00:04,394
+El proceso de Ornstein–Uhlenbeck.
+
+3
+00:00:05,517 --> 00:00:07,803
+El proceso de Ornstein y Uhlenbeck es la
+
+4
+00:00:07,803 --> 00:00:10,547
+ecuación de Langevin en
+un potencial cuadrático.
+
+5
+00:00:10,927 --> 00:00:13,864
+Es el único proceso de
+difusión que es a la vez
+
+6
+00:00:13,864 --> 00:00:17,801
+estacionario, gaussiano y de
+Markov, y se resuelve exactamente.
+
+7
+00:00:18,181 --> 00:00:21,642
+Pero para nosotros es mucho
+más: su estado final contiene la
+
+8
+00:00:21,642 --> 00:00:24,930
+solución de un sistema lineal
+y la inversa de una matriz.
+
+9
+00:00:25,310 --> 00:00:27,945
+Es el corazón del álgebra
+lineal termodinámica.
+
+10
+00:00:29,050 --> 00:00:32,112
+Imagina dos masas unidas
+entre sí y a las paredes
+
+11
+00:00:32,112 --> 00:00:35,049
+por resortes, sumergidas
+en un fluido caliente.
+
+12
+00:00:35,429 --> 00:00:40,311
+Los resortes definen una energía
+cuadrática: su rigidez es una matriz A, y
+
+13
+00:00:40,311 --> 00:00:44,468
+una fuerza externa constante b
+desplaza el punto de equilibrio.
+
+14
+00:00:44,848 --> 00:00:49,386
+Sin ruido, las masas se quedarían
+en el mínimo, que está en A⁻¹ b.
+
+15
+00:00:49,766 --> 00:00:52,341
+Con ruido, tiemblan
+alrededor de ese punto.
+
+16
+00:00:52,721 --> 00:00:56,820
+El promedio del temblor marca la
+solución, y la forma del temblor,
+
+17
+00:00:56,820 --> 00:01:00,608
+más largo en las direcciones
+blandas, revela la inversa de A.
+
+18
+00:01:01,717 --> 00:01:08,497
+En una dimensión, dx =
+−a(x − m) dt + √(2/β) dW.
+
+19
+00:01:08,877 --> 00:01:11,506
+La solución es la condición inicial que
+
+20
+00:01:11,506 --> 00:01:14,270
+olvida exponencialmente, más el centro m,
+
+21
+00:01:14,650 --> 00:01:22,806
+más ruido filtrado: x(t) = m + (x₀ − m)
+e^(−at) + ∫ e^(−a(t−s)) √(2/β) dW(s).
+
+22
+00:01:23,186 --> 00:01:26,879
+Las trayectorias salen de
+distintos puntos, convergen
+
+23
+00:01:26,879 --> 00:01:30,434
+hacia m y se quedan temblando
+con varianza 1/(β a).
+
+24
+00:01:30,814 --> 00:01:34,151
+La autocorrelación decae como e^(−a τ).
+
+25
+00:01:35,283 --> 00:01:40,178
+En varias dimensiones:
+dx = −(A x − b) dt +
+
+26
+00:01:40,178 --> 00:01:45,300
+√(2/β) dW, con A simétrica
+definida positiva.
+
+27
+00:01:45,680 --> 00:01:49,068
+La nube de partículas parte
+de un punto, se desplaza
+
+28
+00:01:49,068 --> 00:01:52,325
+hacia A⁻¹ b y se ensancha
+hasta formar una elipse.
+
+29
+00:01:52,705 --> 00:01:56,418
+En el estado estacionario
+la distribución es
+
+30
+00:01:56,418 --> 00:02:00,384
+gaussiana con media A⁻¹
+b y covarianza β⁻¹ A⁻¹.
+
+31
+00:02:00,764 --> 00:02:04,020
+Los ejes de la elipse son los
+vectores propios de A, y son
+
+32
+00:02:04,020 --> 00:02:07,275
+más largos en las direcciones
+de valores propios pequeños:
+
+33
+00:02:07,275 --> 00:02:10,025
+las direcciones blandas
+son las que más tiemblan.
+
+34
+00:02:11,150 --> 00:02:12,407
+¿Por qué esa covarianza?
+
+35
+00:02:12,787 --> 00:02:22,736
+Usando el lema de Itô, la covarianza
+Σ(t) obedece dΣ/dt = −AΣ − ΣA + 2β⁻¹ I.
+
+36
+00:02:23,116 --> 00:02:26,893
+Los dos primeros términos
+contraen la nube; el
+
+37
+00:02:26,893 --> 00:02:30,587
+último, que viene de
+(dW)² = dt, la ensancha.
+
+38
+00:02:30,967 --> 00:02:35,225
+En el estado estacionario
+se equilibran: AΣ
+
+39
+00:02:35,225 --> 00:02:39,086
++ ΣA = 2β⁻¹ I, la ecuación de Lyapunov.
+
+40
+00:02:39,466 --> 00:02:44,425
+Como A es simétrica, la
+solución es Σ = β⁻¹ A⁻¹.
+
+41
+00:02:44,805 --> 00:02:48,892
+La animación muestra la elipse de
+Σ(t) creciendo hasta esa forma.
+
+42
+00:02:50,017 --> 00:02:51,280
+Ahora la idea clave.
+
+43
+00:02:51,660 --> 00:02:55,689
+Si dejamos que un solo sistema
+físico evolucione y promediamos
+
+44
+00:02:55,689 --> 00:02:59,784
+su posición en el tiempo, por
+ergodicidad ese promedio converge
+
+45
+00:02:59,784 --> 00:03:03,034
+a la media de la distribución
+estacionaria: A⁻¹ b.
+
+46
+00:03:03,414 --> 00:03:05,576
+El sistema resuelve el sistema lineal.
+
+47
+00:03:05,956 --> 00:03:09,770
+Y si promediamos los
+productos de las desviaciones,
+
+48
+00:03:09,770 --> 00:03:13,435
+obtenemos β⁻¹ A⁻¹: el
+sistema invierte la matriz.
+
+49
+00:03:13,815 --> 00:03:16,029
+El error de los promedios decae como uno
+
+50
+00:03:16,029 --> 00:03:18,244
+sobre la raíz del tiempo de integración.
+
+51
+00:03:18,624 --> 00:03:22,925
+Esa es la base del solucionador lineal
+termodinámico del laboratorio tres.
+
+52
+00:03:24,050 --> 00:03:27,377
+Tomemos la matriz de la lección cero punto
+
+53
+00:03:27,377 --> 00:03:30,704
+cuatro: tres, uno; uno, dos; y b = (1, 1).
+
+54
+00:03:31,084 --> 00:03:35,253
+Su inversa es un quinto por
+dos, menos uno; menos uno, tres.
+
+55
+00:03:35,633 --> 00:03:39,204
+Entonces A⁻¹ b es cero coma
+dos y cero coma cuatro.
+
+56
+00:03:39,584 --> 00:03:43,755
+Con β = 1, la covarianza
+estacionaria es cero coma cuatro,
+
+57
+00:03:43,755 --> 00:03:47,854
+menos cero coma dos; menos
+cero coma dos, cero coma seis.
+
+58
+00:03:48,234 --> 00:03:52,033
+La simulación, con un promedio
+temporal sobre dos mil unidades de
+
+59
+00:03:52,033 --> 00:03:56,065
+tiempo, reproduce estos números con
+errores de unos pocos centésimos.
+
+60
+00:03:57,183 --> 00:04:01,055
+El proceso de Ornstein y Uhlenbeck
+reaparece una y otra vez.
+
+61
+00:04:01,435 --> 00:04:05,284
+En la unidad seis será el
+solucionador lineal termodinámico.
+
+62
+00:04:05,664 --> 00:04:08,151
+En la unidad ocho, un OU con la matriz de
+
+63
+00:04:08,151 --> 00:04:10,517
+curvatura calcula el gradiente natural.
+
+64
+00:04:10,897 --> 00:04:15,709
+Los osciladores acoplados de Normal
+Computing implementan un OU en hardware.
+
+65
+00:04:16,089 --> 00:04:19,960
+Y el proceso directo de los modelos
+de difusión también es un OU.
+
+66
+00:04:21,083 --> 00:04:24,952
+Esta lección une varias piezas:
+las gaussianas multivariadas,
+
+67
+00:04:24,952 --> 00:04:28,250
+la exponencial de matrices
+y el número de condición.
+
+68
+00:04:28,630 --> 00:04:32,930
+La próxima pregunta es cuánto hay que
+promediar para obtener una precisión
+
+69
+00:04:32,930 --> 00:04:37,055
+dada; la responderemos con la
+ergodicidad en la lección dos punto seis.
+
+70
+00:04:38,183 --> 00:04:42,323
+Errores frecuentes: olvidar que la
+matriz debe ser definida positiva.
+
+71
+00:04:42,703 --> 00:04:46,831
+Confundir la covarianza estacionaria
+con potencias equivocadas de la matriz.
+
+72
+00:04:47,211 --> 00:04:50,850
+Promediar desde el instante cero
+sin descartar el transitorio.
+
+73
+00:04:51,230 --> 00:04:54,124
+Y tratar muestras consecutivas
+como independientes.
+
+74
+00:04:55,250 --> 00:04:59,320
+En resumen: el proceso de
+Ornstein y Uhlenbeck relaja
+
+75
+00:04:59,320 --> 00:05:03,467
+exponencialmente hacia una
+gaussiana con media A⁻¹ b y
+
+76
+00:05:03,467 --> 00:05:07,691
+covarianza β⁻¹ A⁻¹, fijada
+por la ecuación de Lyapunov.
+
+77
+00:05:08,071 --> 00:05:10,584
+Promediar en el tiempo
+una sola trayectoria
+
+78
+00:05:10,584 --> 00:05:13,390
+resuelve el sistema lineal
+e invierte la matriz.
+
+79
+00:05:14,517 --> 00:05:17,539
+Para practicar: deriva la
+distribución estacionaria
+
+80
+00:05:17,539 --> 00:05:20,087
+y explica cómo resuelve
+el problema lineal.
+
+81
+00:05:20,467 --> 00:05:23,008
+Resuelve una ecuación
+de Lyapunov diagonal.
+
+82
+00:05:23,388 --> 00:05:26,077
+Calcula la autocorrelación
+en una dimensión.
+
+83
+00:05:26,457 --> 00:05:30,626
+Y explica por qué el tiempo hasta la
+solución crece con el número de condición.

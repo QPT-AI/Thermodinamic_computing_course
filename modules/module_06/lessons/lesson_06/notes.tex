@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.6}{Panorama: inferencia y más allá}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} muestrear una posterior gaussiana exacta con un dispositivo OU; resolver programas cuadráticos con
+restricciones de caja por Langevin proyectado; estimar exponenciales de matrices desde autocorrelaciones; la hipótesis del paralelismo termodinámico.
+\textbf{Prerrequisitos:} 1.6, 6.1--6.3.
+
+\section{Inferencia bayesiana termodinámica}
+Prior $x\sim\N(0,I)$, observaciones $y=Hx+\varepsilon$, $\varepsilon\sim\N(0,\sigma^2I)$:
+\[p(x\mid y)=\N\big(\Lambda^{-1}H^\top y/\sigma^2,\ \Lambda^{-1}\big),\qquad\Lambda=I+H^\top H/\sigma^2.\]
+Con $A=\Lambda$, $b=H^\top y/\sigma^2$ y $\beta=1$, el equilibrio del dispositivo \emph{es} la posterior: cada instante es una muestra. Aifer et al.\ (2024)
+proponen circuitos para este modelo y para regresión logística bayesiana (validados en simulación) y argumentan, bajo supuestos razonables, tiempo de muestreo
+$\propto\ln d$ y energía $\propto d\ln d$ en el caso gaussiano.
+
+\begin{ejemplo}
+$d=2$, tres observaciones, $\sigma=0{,}5$ \evS: varianzas posteriores exactas $0{,}27$ y $0{,}64$; estimadas $0{,}28$ y $0{,}67$; media $x_1$: $1{,}34$ frente a $1{,}32$.
+\end{ejemplo}
+
+\section{Programación cuadrática con restricciones}
+\[\min_{0\le x\le1}\tfrac12x^\top Ax-b^\top x:\qquad x\leftarrow\Pi_{[0,1]}\big(x-(Ax-b)\,dt+\sqrt{2k_BT\,dt}\,\xi\big).\]
+Las paredes son la proyección; a baja temperatura el promedio converge al óptimo. Ejemplo \evS: $A=\begin{pmatrix}2&0{,}8\\0{,}8&1\end{pmatrix}$, $b=(2;\,1{,}6)$,
+óptimo $(0{,}6;\,1)$; con $k_BT=0{,}001$: $(0{,}602;\,0{,}994)$; con $0{,}01$: $(0{,}62;\,0{,}95)$: la pared sesga el promedio hacia adentro.
+
+\section{Exponenciales de matrices}
+Para el OU $dx=-Ax\,dt+\sqrt{2/\beta}\,dW$ con $A$ simétrica:
+\[C(s)=\langle x(t+s)x(t)^\top\rangle=e^{-As}\Sigma=\beta^{-1}e^{-As}A^{-1}\ \Rightarrow\ e^{-As}=\beta\,C(s)\,A.\]
+Con $d=5$, $T=2\times10^4$ y $s=1$, el error relativo es del 5\,\% \evS. Duffield et al.\ (2023) muestran una ganancia asintótica lineal en $d$ para simular
+sistemas dinámicos lineales.
+
+\section{Paralelismo termodinámico}
+Hipótesis (Duffield et al.): el ruido empuja al sistema en todas las direcciones a la vez; una sola trayectoria explora todos los modos y estima muchas
+cantidades en paralelo. El ruido, enemigo en lo digital, es aquí un recurso. Es una hipótesis, no un teorema (Unidad 11).
+
+\begin{aplicacion}
+Aprendizaje profundo bayesiano (posteriores gaussianas de última capa, Laplace); QP en finanzas y control; modelos de espacio de estados; gradiente natural (Unidad 8).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Muestrear la posterior con $\beta\ne1$. \quad Resolver un QP a temperatura alta.
+\item Retardos $s\gg\tau_r$ al estimar $e^{-As}$ (la señal se pierde). \quad Tratar el paralelismo termodinámico como probado.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{tbi} M. Aifer et al., Thermodynamic Bayesian inference, arXiv:2410.01793 (2024).
+\bibitem{tme} S. Duffield et al., Thermodynamic matrix exponentials and thermodynamic parallelism, arXiv:2311.12759 (2023).
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,52 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.4}{Complejidad de los algoritmos termodinámicos}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} supuestos de la complejidad analógica; por qué aparece $\kappa$ (sobreamortiguado) o $\sqrt\kappa$ (subamortiguado);
+la cota energía--tiempo.
+\textbf{Prerrequisitos:} 2.6, 6.1--6.3.
+
+\section{Supuestos}
+(1) El dispositivo tiene $d$ osciladores y hasta $d^2$ acoplamientos que evolucionan en paralelo: el hardware crece con el problema. (2) La escala física es
+$\tau_r=\gamma/\|A\|$, fijada por el modo más rápido. (3) Se cuenta el tiempo total en unidades de $\tau_r$, sin la carga de la matriz (lección 6.5). Los propios
+autores advierten que la complejidad analógica es sutil.
+
+\section{Por qué aparece \texorpdfstring{$\kappa$}{kappa}}
+Cada modo propio relaja como $e^{-\lambda_it/\gamma}$. El modo lento tarda $\gamma/\lambda_{\min}=\kappa\tau_r$: equilibrar cuesta $t_0\sim\kappa\tau_r\ln(\cdot)$. Una matriz
+mal condicionada es un sistema físico con modos muy lentos.
+
+\section{Sobreamortiguado frente a subamortiguado \evS}
+Media sin ruido, $A$ normalizada a $\lambda_{\max}=1$ (de la lección 6.1, $d=50$), y una copia con espectro estirado:
+\[\text{SA: }\dot x=-(Ax-b);\qquad\text{subA: }\ddot x=-(Ax-b)-2\sqrt{\lambda_{\min}}\,\dot x.\]
+\begin{center}\begin{tabular}{lcc}\toprule
+tiempo hasta error $10^{-3}$ ($\tau_r$) & $\kappa=34$ & $\kappa=344$\\\midrule
+sobreamortiguado & 207 & 2372\\
+subamortiguado (amortiguamiento ajustado) & 49 & 172\\\bottomrule\end{tabular}\end{center}
+SA crece $\times11{,}5\approx\kappa$; subA $\times3{,}5\approx\sqrt\kappa$: la aceleración del método de la bola pesada (Polyak).
+
+\section{Tabla de complejidades (sistemas lineales)}
+Sobreamortiguado $O(d\kappa^2\varepsilon^{-2})$; subamortiguado $O(\gamma d\kappa^{3/2}\varepsilon^{-2})$; gradiente conjugado $O(d^2\sqrt\kappa)$; directo $O(d^\omega)$.
+Ganancia lineal en $d$, peor dependencia en $\kappa$ y $\varepsilon$. Aifer et al.\ encuentran ventaja práctica para $d\approx1000$--$5000$ y precisión modesta.
+
+\section{Cota energía--tiempo}
+Escalar $b\to cb$ reduce $\tau\propto1/c^2$, pero la energía de inicialización $\propto b^\top A^{-1}b\propto c^2$. Lo acotado es el producto:
+\[E\,\tau\ \ge\ \frac{2\kappa^2d}{\varepsilon^2(1-P_\varepsilon)}\,\beta^{-1}\tau_r\qquad(\text{sobreamortiguado}).\]
+
+\begin{aplicacion}
+Ante una afirmación de complejidad: ¿en qué unidades? ¿cómo crece el hardware? ¿qué $\kappa$ y $\varepsilon$ tiene la carga real? ¿incluye carga y lectura?
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Comparar $\tau_r$ con flops sin modelo de tiempo. \quad Olvidar que el hardware crece como $d^2$.
+\item Ignorar $\kappa^2$ y $\varepsilon^{-2}$. \quad Escalar $b$ sin contar la energía.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem{polyak} B. T. Polyak, Some methods of speeding up the convergence of iteration methods, \emph{USSR Comput. Math. Math. Phys.} 4, 1 (1964).
+\bibitem[29]{asic} M. Aifer et al., Solving the compute crisis with physics-based ASICs, 2025.
+\end{thebibliography}
+\end{document}

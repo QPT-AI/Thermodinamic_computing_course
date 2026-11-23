@@ -1,0 +1,379 @@
+1
+00:00:00,350 --> 00:00:02,002
+Lección 2.6.
+
+2
+00:00:02,382 --> 00:00:03,327
+Ergodicidad.
+
+3
+00:00:04,450 --> 00:00:08,458
+Un computador termodinámico casi
+nunca devuelve una muestra aislada:
+
+4
+00:00:08,458 --> 00:00:12,761
+devuelve un promedio de muchas lecturas
+consecutivas de un mismo sistema.
+
+5
+00:00:13,141 --> 00:00:15,398
+¿Ese promedio en el
+tiempo da lo mismo que el
+
+6
+00:00:15,398 --> 00:00:17,605
+promedio sobre muchas
+copias independientes?
+
+7
+00:00:17,985 --> 00:00:19,438
+¿Y cuánto confiamos en él?
+
+8
+00:00:19,818 --> 00:00:24,606
+La respuesta tiene dos partes: la
+ergodicidad y el tiempo de autocorrelación.
+
+9
+00:00:24,986 --> 00:00:27,527
+Sin ellas, nuestras
+barras de error mienten.
+
+10
+00:00:28,650 --> 00:00:30,876
+Mira dos partículas en un pozo doble.
+
+11
+00:00:31,256 --> 00:00:36,261
+La de la izquierda tiene una barrera baja:
+salta de un pozo a otro muchas veces, y
+
+12
+00:00:36,261 --> 00:00:40,716
+su fracción de tiempo en cada pozo
+converge a un medio, como el ensamble.
+
+13
+00:00:41,096 --> 00:00:43,742
+La de la derecha tiene
+una barrera enorme: en
+
+14
+00:00:43,742 --> 00:00:46,387
+todo el tiempo que la
+observamos nunca cruza.
+
+15
+00:00:46,767 --> 00:00:49,901
+Su promedio temporal dice que
+el sistema está siempre en
+
+16
+00:00:49,901 --> 00:00:52,755
+el pozo derecho, lo cual
+es falso para el ensamble.
+
+17
+00:00:53,135 --> 00:00:55,584
+En la práctica, un
+sistema es ergódico si lo
+
+18
+00:00:55,584 --> 00:00:58,590
+observamos durante más tiempo
+que su tiempo de mezcla.
+
+19
+00:00:59,717 --> 00:01:04,216
+Aunque el sistema sea ergódico, muestras
+consecutivas no son independientes.
+
+20
+00:01:04,596 --> 00:01:08,866
+La autocorrelación mide
+cuánto se parece el valor
+
+21
+00:01:08,866 --> 00:01:13,486
+actual al valor de un rato
+después: ρ(τ) = C(τ)/C(0).
+
+22
+00:01:13,866 --> 00:01:17,834
+Para el proceso de Ornstein y
+Uhlenbeck decae como una exponencial.
+
+23
+00:01:18,214 --> 00:01:20,723
+La curva medida en la simulación sigue la
+
+24
+00:01:20,723 --> 00:01:23,293
+exponencial teórica, con ruido en la cola.
+
+25
+00:01:23,673 --> 00:01:26,926
+El área bajo la curva,
+multiplicada por dos, es el tiempo
+
+26
+00:01:26,926 --> 00:01:29,837
+de autocorrelación integrado:
+cuánto tiempo hay que
+
+27
+00:01:29,837 --> 00:01:32,863
+esperar para obtener una
+muestra efectivamente nueva.
+
+28
+00:01:33,983 --> 00:01:37,823
+Si tomamos n muestras
+espaciadas por un paso Δt, y el
+
+29
+00:01:37,823 --> 00:01:41,879
+tiempo de autocorrelación
+integrado, en pasos, es τ_int,
+
+30
+00:01:42,259 --> 00:01:44,839
+solo tenemos unas n/τ_int muestras
+
+31
+00:01:44,839 --> 00:01:48,328
+independientes: el tamaño
+efectivo de muestra.
+
+32
+00:01:48,708 --> 00:01:51,277
+Muestrear más rápido
+que la autocorrelación
+
+33
+00:01:51,277 --> 00:01:53,725
+no aporta información nueva, solo copias.
+
+34
+00:01:54,105 --> 00:01:58,019
+La varianza del promedio es
+la varianza de una muestra
+
+35
+00:01:58,019 --> 00:02:01,425
+multiplicada por τ_int/n,
+y no por uno sobre n.
+
+36
+00:02:02,550 --> 00:02:05,663
+Comprobémoslo repitiendo el
+experimento doscientas veces.
+
+37
+00:02:06,043 --> 00:02:09,541
+Cada punto es el promedio de una
+corrida, con su barra de error.
+
+38
+00:02:09,921 --> 00:02:13,050
+Si ignoramos la correlación,
+las barras naranjas son
+
+39
+00:02:13,050 --> 00:02:16,479
+demasiado cortas: muchas no
+contienen el valor verdadero.
+
+40
+00:02:16,859 --> 00:02:20,266
+Con la corrección por el tiempo
+de autocorrelación, las barras
+
+41
+00:02:20,266 --> 00:02:23,672
+verdes contienen el valor verdadero
+en la proporción esperada,
+
+42
+00:02:23,672 --> 00:02:26,804
+alrededor del noventa y cinco
+por ciento para dos sigmas.
+
+43
+00:02:27,184 --> 00:02:31,571
+Una herramienta práctica para estimarlas
+es el método de bloques: promediar por
+
+44
+00:02:31,571 --> 00:02:35,903
+bloques más largos que la autocorrelación
+y usar la dispersión de los bloques.
+
+45
+00:02:37,017 --> 00:02:41,352
+Un proceso de Ornstein y
+Uhlenbeck con tasa cero coma uno,
+
+46
+00:02:41,352 --> 00:02:45,089
+leído cada cero coma uno
+unidades de tiempo, tiene
+
+47
+00:02:45,089 --> 00:02:49,649
+autocorrelación e^(−0,01 k)
+entre lecturas separadas k pasos.
+
+48
+00:02:50,029 --> 00:02:53,115
+Su tiempo integrado es
+uno más ese número entre
+
+49
+00:02:53,115 --> 00:02:56,004
+uno menos ese número:
+unos doscientos pasos.
+
+50
+00:02:56,384 --> 00:03:00,662
+Con diez mil lecturas, el tamaño efectivo
+de muestra es solo de unas cincuenta.
+
+51
+00:03:01,043 --> 00:03:04,770
+La barra de error real es unas
+catorce veces mayor que la ingenua.
+
+52
+00:03:05,883 --> 00:03:08,354
+En hardware esto tiene
+consecuencias directas.
+
+53
+00:03:08,734 --> 00:03:12,721
+El tiempo que debe integrar el
+solucionador lineal crece con el tiempo
+
+54
+00:03:12,721 --> 00:03:16,309
+de correlación, que es el inverso
+del valor propio más pequeño.
+
+55
+00:03:16,689 --> 00:03:19,541
+Leer un chip de pbits más
+rápido que su tiempo de
+
+56
+00:03:19,541 --> 00:03:22,567
+correlación desperdicia
+energía de entrada y salida.
+
+57
+00:03:22,947 --> 00:03:27,429
+Cerca de una transición de fase, el
+tiempo de correlación de Gibbs se dispara.
+
+58
+00:03:27,809 --> 00:03:30,206
+Y en todos los laboratorios, las barras de
+
+59
+00:03:30,206 --> 00:03:32,431
+error deben incluir la autocorrelación.
+
+60
+00:03:33,550 --> 00:03:36,222
+El tiempo de autocorrelación
+está acotado por la
+
+61
+00:03:36,222 --> 00:03:38,893
+brecha espectral de la
+lección cero punto cinco.
+
+62
+00:03:39,273 --> 00:03:41,818
+La autocorrelación es
+también la respuesta,
+
+63
+00:03:41,818 --> 00:03:44,364
+por el teorema de
+fluctuación y disipación.
+
+64
+00:03:44,744 --> 00:03:48,701
+Y en la unidad cuatro la usaremos
+como diagnóstico de los muestreadores.
+
+65
+00:03:49,817 --> 00:03:52,480
+Errores frecuentes: usar
+la fórmula de muestras
+
+66
+00:03:52,480 --> 00:03:54,803
+independientes con datos correlacionados.
+
+67
+00:03:55,183 --> 00:03:56,879
+No descartar el transitorio.
+
+68
+00:03:57,259 --> 00:04:00,060
+Confundir la ergodicidad
+teórica con la práctica.
+
+69
+00:04:00,440 --> 00:04:04,614
+Y estimar el tiempo integrado sumando
+toda la cola ruidosa sin truncarla.
+
+70
+00:04:05,717 --> 00:04:08,822
+En resumen: un sistema es
+ergódico en la práctica si lo
+
+71
+00:04:08,822 --> 00:04:11,420
+observamos más tiempo
+que su tiempo de mezcla.
+
+72
+00:04:11,800 --> 00:04:15,452
+Las muestras consecutivas están
+correlacionadas, y el tiempo de
+
+73
+00:04:15,452 --> 00:04:19,394
+autocorrelación integrado dice
+cuántas son realmente independientes.
+
+74
+00:04:19,774 --> 00:04:24,495
+La barra de error correcta es la raíz
+de la varianza por τ_int sobre n.
+
+75
+00:04:25,617 --> 00:04:30,204
+Para practicar: calcula el tiempo integrado
+de una autocorrelación geométrica.
+
+76
+00:04:30,584 --> 00:04:32,623
+Obtén un tamaño efectivo de muestra.
+
+77
+00:04:33,003 --> 00:04:35,085
+Explica por qué un pozo con barrera de
+
+78
+00:04:35,085 --> 00:04:37,552
+cuarenta k_B T no es
+ergódico en la práctica.
+
+79
+00:04:37,932 --> 00:04:39,774
+Y describe el método de bloques.

@@ -1,0 +1,300 @@
+1
+00:00:00,350 --> 00:00:02,116
+Lesson 11.1.
+
+2
+00:00:02,496 --> 00:00:06,123
+THRML: simulating TSUs on GPUs.
+
+3
+00:00:07,250 --> 00:00:09,859
+Before having a chip, one
+must be able to program it.
+
+4
+00:00:10,239 --> 00:00:16,202
+THRML is Extropic's library for simulating
+probabilistic computers on GPUs.
+
+5
+00:00:16,582 --> 00:00:21,377
+It is built on JAX and serves as a
+scaffold for implementing block sampling
+
+6
+00:00:21,377 --> 00:00:26,683
+algorithms on sparse, heterogeneous graphical
+models, like those its hardware runs.
+
+7
+00:00:27,063 --> 00:00:31,526
+Today we use it for real: we check
+its exactness and measure its speed.
+
+8
+00:00:32,650 --> 00:00:37,070
+The starting point is a
+factorized energy-based model: the
+
+9
+00:00:37,070 --> 00:00:41,719
+energy is a sum of factors, each
+over a few nearby variables.
+
+10
+00:00:42,099 --> 00:00:45,393
+Sampling uses Gibbs: each
+variable is updated according
+
+11
+00:00:45,393 --> 00:00:48,328
+to its distribution
+conditioned on its neighbors.
+
+12
+00:00:48,708 --> 00:00:53,263
+Since the conditional only depends on
+the factors touching that variable,
+
+13
+00:00:53,263 --> 00:00:57,382
+the update is local, exactly what
+a chip can do with short wiring.
+
+14
+00:00:58,483 --> 00:01:01,394
+THRML organizes this into pieces.
+
+15
+00:01:01,774 --> 00:01:07,346
+Nodes represent variables of different
+types: spins, categorical, continuous.
+
+16
+00:01:07,726 --> 00:01:11,750
+Blocks group nodes that do not
+interact with each other and can
+
+17
+00:01:11,750 --> 00:01:15,390
+be updated at once, for example
+the two colors of a grid.
+
+18
+00:01:15,770 --> 00:01:18,618
+Factors define the energy, and conditional
+
+19
+00:01:18,618 --> 00:01:21,669
+samplers say how to
+update each type of node.
+
+20
+00:01:22,049 --> 00:01:25,964
+A sampling program puts everything
+together, and a schedule sets the
+
+21
+00:01:25,964 --> 00:01:29,533
+warm-up, the number of samples
+and the sweeps between samples.
+
+22
+00:01:30,650 --> 00:01:34,401
+We check it with a four-by-four
+grid, sixteen spins with
+
+23
+00:01:34,401 --> 00:01:38,085
+random couplings and fields,
+where we can enumerate all
+
+24
+00:01:38,085 --> 00:01:41,501
+sixty-five thousand five
+hundred thirty-six states.
+
+25
+00:01:41,881 --> 00:01:46,903
+With twenty thousand chains and
+two colors, after one sweep the
+
+26
+00:01:46,903 --> 00:01:51,686
+maximum error in the magnetizations
+is 0.4; after ten, 0.04;
+
+27
+00:01:51,686 --> 00:01:56,150
+after thirty, 0.01, the
+statistical floor of the chains.
+
+28
+00:01:56,530 --> 00:01:59,202
+The sampler converges to
+the correct distribution.
+
+29
+00:02:00,317 --> 00:02:01,444
+Now the speed.
+
+30
+00:02:01,824 --> 00:02:05,598
+We simulate a grid of two
+hundred sixty-two thousand
+
+31
+00:02:05,598 --> 00:02:09,082
+spins, the size of a Z1
+chip, on a consumer GPU.
+
+32
+00:02:09,462 --> 00:02:12,218
+We get between 5.8 and 7.5 flips per
+
+33
+00:02:12,218 --> 00:02:15,740
+nanosecond, depending
+on the number of chains.
+
+34
+00:02:16,120 --> 00:02:19,852
+An FPGA that hard-wires the
+problem achieves about sixty.
+
+35
+00:02:20,232 --> 00:02:23,532
+And the Z1 specification, two
+hundred sixty-nine thousand
+
+36
+00:02:23,532 --> 00:02:27,122
+pbits at fifty megahertz, implies
+about thirteen thousand five
+
+37
+00:02:27,122 --> 00:02:30,191
+hundred, almost two thousand
+times more than our GPU.
+
+38
+00:02:31,317 --> 00:02:35,074
+THRML does not try to compete
+in speed with the chip.
+
+39
+00:02:35,454 --> 00:02:38,839
+It is for designing and debugging
+algorithms before having
+
+40
+00:02:38,839 --> 00:02:42,282
+hardware, for training energy-based
+models with contrastive
+
+41
+00:02:42,282 --> 00:02:46,310
+divergence, and for validating that
+a program samples what it should.
+
+42
+00:02:46,690 --> 00:02:50,270
+Its programs use the same
+abstractions as the hardware:
+
+43
+00:02:50,270 --> 00:02:53,785
+blocks, local conditionals
+and schedules, so that what
+
+44
+00:02:53,785 --> 00:02:57,171
+works in simulation can be
+carried over to the chip.
+
+45
+00:02:58,283 --> 00:03:03,472
+Use THRML to prototype block samplers,
+train energy-based models with
+
+46
+00:03:03,472 --> 00:03:08,586
+clamped and free phases, validate
+first against exact enumeration on
+
+47
+00:03:08,586 --> 00:03:13,173
+small graphs, and scale with
+many chains and several devices.
+
+48
+00:03:14,283 --> 00:03:18,184
+Common mistakes: putting
+interacting nodes in the same block.
+
+49
+00:03:18,564 --> 00:03:20,756
+Using few warm-up sweeps.
+
+50
+00:03:21,136 --> 00:03:24,181
+Comparing flips per nanosecond
+without declaring sizes.
+
+51
+00:03:24,561 --> 00:03:27,762
+And skipping the exact
+check on a small graph.
+
+52
+00:03:28,883 --> 00:03:34,077
+In summary, THRML simulates on GPU
+the block sampling the hardware
+
+53
+00:03:34,077 --> 00:03:38,955
+runs, with nodes, blocks, factors,
+conditionals and schedules.
+
+54
+00:03:39,335 --> 00:03:42,493
+We verified it against exact
+enumeration, with error
+
+55
+00:03:42,493 --> 00:03:45,226
+at the statistical floor
+after thirty sweeps.
+
+56
+00:03:45,606 --> 00:03:48,934
+In speed, a consumer GPU
+gives about seven flips per
+
+57
+00:03:48,934 --> 00:03:52,646
+nanosecond, against thirteen
+thousand five hundred implied
+
+58
+00:03:52,646 --> 00:03:56,165
+by Z1: simulation is for
+designing, not for production.
+
+59
+00:03:57,283 --> 00:04:02,033
+To practice: explain why same-color
+nodes are updated in parallel.
+
+60
+00:04:02,413 --> 00:04:04,096
+Compute the statistical floor.
+
+61
+00:04:04,476 --> 00:04:06,870
+Compute Z1's flips per nanosecond.
+
+62
+00:04:07,250 --> 00:04:09,707
+And say what a sampling
+schedule specifies.

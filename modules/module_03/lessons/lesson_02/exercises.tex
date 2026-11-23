@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.2}{Producción de entropía y la segunda ley para trayectorias}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca $\langle\Sigma\rangle\ge0$ de $\langle e^{-\Sigma}\rangle=1$.
+\item (B) Para $\Sigma\sim\N(\mu,\sigma^2)$, muestre que el TF integral exige $\sigma^2=2\mu$.
+\item (B) Anillo con $F=1$, $\mu=\kB T=1$: tasa media de producción de entropía.
+\item (B) ¿Cuánto vale $P(\Sigma=3)/P(\Sigma=-3)$ en estado estacionario?
+\item (I) Use $\langle e^{-\Sigma}\rangle=1$ para acotar $P(\Sigma<-a)\le e^{-a}$.
+\item (I) Para la cadena cíclica de 3 estados (lección 0.5, A2), calcule $\langle\dot\Sigma\rangle$ por paso como $\sum_{i<j}(J_{ij})\ln\frac{\pi_iP_{ij}}{\pi_jP_{ji}}$.
+\item (A) Demuestre $\langle\dot\Sigma\rangle=\int J^2/(Dp)\,dx$ para Fokker--Planck 1D en estado estacionario.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Jensen: $e^{-\langle\Sigma\rangle}\le\langle e^{-\Sigma}\rangle=1$.
+
+\textbf{E2.} $\langle e^{-\Sigma}\rangle=e^{-\mu+\sigma^2/2}=1$.
+
+\textbf{E3.} $\langle\dot\Sigma\rangle=F\langle\dot\theta\rangle/\kB T=F^2\mu/\kB T=1$ por unidad de tiempo.
+
+\textbf{E4.} $e^3\approx20$.
+
+\textbf{E5.} $P(\Sigma<-a)e^{a}\le\langle e^{-\Sigma}\rangle=1$.
+
+\textbf{E6.} Corriente $\frac{0{,}7}{3}$ por arista y $\ln8$: total $0{,}7\ln8\approx1{,}46$ por paso.
+
+\textbf{E7.} Escriba $\dot\Sigma=\dot\Sigma_{\text{medio}}+\dot\Sigma_{\text{sist}}$ con $\langle\dot\Sigma_{\text{medio}}\rangle=\frac1{\kB T}\int fJ\,dx$ y $\langle\dot\Sigma_{\text{sist}}\rangle=-\int J\,\partial_x\ln p\,dx$ (estacionario). Sumando, $\int J\big(\frac{f}{\kB T}-\frac{\partial_xp}{p}\big)dx=\int\frac{J}{Dp}(\mu fp-D\partial_xp)\,dx=\int\frac{J^2}{Dp}\,dx$, usando $D=\mu\kB T$.
+\end{solucion}
+\end{document}

@@ -1,0 +1,300 @@
+1
+00:00:00,350 --> 00:00:02,041
+Lesson 6.5.
+
+2
+00:00:02,421 --> 00:00:03,600
+Timing models.
+
+3
+00:00:04,717 --> 00:00:08,901
+The complexity in the previous lesson
+counted only the analog evolution.
+
+4
+00:00:09,281 --> 00:00:13,861
+But the matrix lives in a digital computer,
+and the solution must return to it.
+
+5
+00:00:14,241 --> 00:00:17,686
+An honest timing model adds
+three parts: loading the
+
+6
+00:00:17,686 --> 00:00:21,530
+problem, letting the system
+evolve and reading the result.
+
+7
+00:00:21,910 --> 00:00:26,090
+Today we will see that the first part,
+compilation, is often the most expensive.
+
+8
+00:00:27,217 --> 00:00:32,418
+First, compilation: each of the
+d² entries of A goes through a
+
+9
+00:00:32,418 --> 00:00:36,948
+digital-to-analog converter,
+a DAC, to set a coupling.
+
+10
+00:00:37,328 --> 00:00:41,164
+Second, the analog dynamics:
+equilibrate and average, a
+
+11
+00:00:41,164 --> 00:00:44,583
+time proportional to d
+times the relaxation time.
+
+12
+00:00:44,963 --> 00:00:48,441
+Third, readout: the d
+values of the solution go
+
+13
+00:00:48,441 --> 00:00:51,920
+through an analog-to-digital
+converter, an ADC.
+
+14
+00:00:52,300 --> 00:00:55,689
+Compilation grows as d²;
+digital methods do not need
+
+15
+00:00:55,689 --> 00:00:58,948
+it, because the matrix is
+already in their memory.
+
+16
+00:01:00,050 --> 00:01:02,657
+What sets the relaxation
+time in a circuit?
+
+17
+00:01:03,037 --> 00:01:06,810
+The RC constant, resistance
+times capacitance.
+
+18
+00:01:07,190 --> 00:01:11,301
+With one microsecond, the analog
+core is slow compared with loading.
+
+19
+00:01:11,681 --> 00:01:14,810
+With ten nanoseconds,
+typical of a small integrated
+
+20
+00:01:14,810 --> 00:01:17,754
+circuit, the dynamics is
+a hundred times faster.
+
+21
+00:01:18,134 --> 00:01:23,508
+Paradoxically, the faster the analog
+core, the more the digital part weighs.
+
+22
+00:01:24,617 --> 00:01:28,910
+Let's run numbers with explicit
+assumptions: a billion values per
+
+23
+00:01:28,910 --> 00:01:33,468
+second in the converters, and dynamics
+of twenty relaxation times per
+
+24
+00:01:33,468 --> 00:01:37,365
+dimension, a scale taken from
+the simulation in lesson 6.1.
+
+25
+00:01:37,745 --> 00:01:42,116
+With dimension one thousand and an
+RC of one microsecond, loading takes
+
+26
+00:01:42,116 --> 00:01:46,118
+one millisecond and the dynamics
+twenty: loading is five percent.
+
+27
+00:01:46,497 --> 00:01:50,110
+With ten nanoseconds, the
+dynamics drops to two tenths of a
+
+28
+00:01:50,110 --> 00:01:53,357
+millisecond and loading
+becomes eighty-three percent.
+
+29
+00:01:53,737 --> 00:01:56,666
+The crossover occurs at a
+dimension of twenty thousand in
+
+30
+00:01:56,666 --> 00:01:59,442
+the first case, and of only
+two hundred in the second.
+
+31
+00:02:00,550 --> 00:02:02,708
+The classic solution is to amortize.
+
+32
+00:02:03,088 --> 00:02:06,519
+If the matrix does not change
+and many systems with different
+
+33
+00:02:06,519 --> 00:02:09,837
+right-hand sides must be solved,
+it is loaded once and then
+
+34
+00:02:09,837 --> 00:02:12,874
+each solution costs only the
+dynamics and the readout.
+
+35
+00:02:13,253 --> 00:02:18,626
+With a hundred right-hand sides, in the
+fast case, the time per solution drops
+
+36
+00:02:18,626 --> 00:02:23,723
+from 1.2 milliseconds to 0.21, and
+loading becomes less than five percent.
+
+37
+00:02:24,103 --> 00:02:27,030
+Conversely, in a Newton
+method where the matrix
+
+38
+00:02:27,030 --> 00:02:30,143
+changes at every step,
+compilation is always paid.
+
+39
+00:02:31,250 --> 00:02:35,279
+Aifer and colleagues built a
+complete timing model, with
+
+40
+00:02:35,279 --> 00:02:39,523
+all digital, conversion and
+analog operations, and compared
+
+41
+00:02:39,523 --> 00:02:43,048
+it with conjugate gradient
+and Cholesky on a GPU.
+
+42
+00:02:43,428 --> 00:02:46,722
+In dimension one hundred, the
+thermodynamic method loses.
+
+43
+00:02:47,102 --> 00:02:50,918
+In dimensions of a thousand and five
+thousand it becomes competitive,
+
+44
+00:02:50,918 --> 00:02:54,237
+especially early on, when an
+approximate solution is enough.
+
+45
+00:02:54,617 --> 00:02:58,398
+And they warn that their model does
+not yet include analog imprecision.
+
+46
+00:02:59,517 --> 00:03:04,422
+To design around compilation: reuse
+the matrix with many right-hand sides,
+
+47
+00:03:04,422 --> 00:03:08,797
+update only low-dimensional parts
+instead of reloading everything,
+
+48
+00:03:09,177 --> 00:03:13,365
+use parallel banks of converters
+and on-chip coupling memory.
+
+49
+00:03:13,745 --> 00:03:18,178
+In lab nine you will add a timing
+model and find the crossover.
+
+50
+00:03:19,283 --> 00:03:22,439
+Common mistakes: reporting
+only the analog time.
+
+51
+00:03:22,818 --> 00:03:26,624
+Assuming a faster core
+always helps end to end.
+
+52
+00:03:27,004 --> 00:03:30,250
+Forgetting that the digital
+baseline pays no transfer.
+
+53
+00:03:30,630 --> 00:03:34,154
+And reloading the whole matrix when
+only the right-hand side changed.
+
+54
+00:03:35,283 --> 00:03:39,373
+In summary: total time is loading
+plus dynamics plus readout.
+
+55
+00:03:39,753 --> 00:03:44,613
+Loading grows as d² and
+dominates when the analog core is
+
+56
+00:03:44,613 --> 00:03:49,216
+fast; in our model, the
+crossover is at d* = 20 τ_r B.
+
+57
+00:03:49,596 --> 00:03:52,427
+Amortizing over many
+right-hand sides solves it.
+
+58
+00:03:53,550 --> 00:03:57,512
+To practice: write the total time
+as a function of the dimension.
+
+59
+00:03:57,892 --> 00:03:59,039
+Find the crossover.
+
+60
+00:03:59,419 --> 00:04:02,517
+Compute the time per solution
+with several right-hand sides.
+
+61
+00:04:02,897 --> 00:04:06,863
+And explain why a faster core
+makes compilation dominate.

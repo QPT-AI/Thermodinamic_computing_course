@@ -1,0 +1,317 @@
+1
+00:00:00,350 --> 00:00:02,028
+Lección 4.8.
+
+2
+00:00:02,408 --> 00:00:05,584
+RBMs y divergencia contrastiva.
+
+3
+00:00:06,717 --> 00:00:10,462
+La máquina de Boltzmann general
+es difícil de entrenar: cada paso
+
+4
+00:00:10,462 --> 00:00:13,977
+exige muestras de equilibrio de
+una red totalmente conectada.
+
+5
+00:00:14,357 --> 00:00:18,877
+En dos mil dos, Hinton propuso dos
+simplificaciones que la volvieron práctica.
+
+6
+00:00:19,257 --> 00:00:22,339
+Restringir la arquitectura,
+y no esperar al equilibrio.
+
+7
+00:00:22,719 --> 00:00:26,136
+El resultado, la máquina de
+Boltzmann restringida entrenada
+
+8
+00:00:26,136 --> 00:00:29,379
+con divergencia contrastiva,
+impulsó el renacimiento del
+
+9
+00:00:29,379 --> 00:00:32,101
+aprendizaje profundo a
+mediados de los dos mil.
+
+10
+00:00:33,217 --> 00:00:37,002
+Una RBM tiene una capa
+visible y una capa oculta, con
+
+11
+00:00:37,002 --> 00:00:40,859
+conexiones solo entre capas,
+nunca dentro de una capa.
+
+12
+00:00:41,239 --> 00:00:47,051
+La energía es E = −vᵀWh − bᵀv − cᵀh.
+
+13
+00:00:47,431 --> 00:00:50,467
+Como el grafo es bipartito,
+dadas las visibles, las
+
+14
+00:00:50,467 --> 00:00:53,325
+ocultas son independientes
+entre sí, y al revés.
+
+15
+00:00:53,705 --> 00:01:08,032
+Cada condicional es un producto
+de sigmoides: p(h_j = 1 .
+
+16
+00:01:08,412 --> 00:01:12,376
+Es un grafo de dos colores: el
+Gibbs por bloques es perfecto aquí.
+
+17
+00:01:13,483 --> 00:01:16,100
+La regla exacta sigue
+siendo correlaciones de
+
+18
+00:01:16,100 --> 00:01:18,483
+los datos menos correlaciones del modelo.
+
+19
+00:01:18,863 --> 00:01:22,130
+La idea de la divergencia
+contrastiva es aproximar el
+
+20
+00:01:22,130 --> 00:01:25,828
+término del modelo empezando
+la cadena de Gibbs en un dato y
+
+21
+00:01:25,828 --> 00:01:29,156
+dando solo k pasos, en lugar
+de esperar al equilibrio.
+
+22
+00:01:29,536 --> 00:01:34,452
+Con k igual a uno: dato, ocultas,
+reconstrucción, ocultas otra vez.
+
+23
+00:01:34,833 --> 00:01:38,991
+El gradiente queda sesgado, pero
+tiene poca varianza y es muy barato.
+
+24
+00:01:39,371 --> 00:01:42,624
+En la variante persistente, la
+cadena no se reinicia en los
+
+25
+00:01:42,624 --> 00:01:45,381
+datos: sigue corriendo
+entre pasos de aprendizaje.
+
+26
+00:01:46,483 --> 00:01:50,313
+Entrenemos una RBM de nueve
+visibles y doce ocultas con los
+
+27
+00:01:50,313 --> 00:01:53,818
+catorce patrones de barras
+y franjas de tres por tres.
+
+28
+00:01:54,198 --> 00:01:57,855
+Con nueve visibles podemos calcular
+la log-verosimilitud exacta.
+
+29
+00:01:58,235 --> 00:02:01,537
+El óptimo, repartir la
+probabilidad por igual entre los
+
+30
+00:02:01,537 --> 00:02:04,419
+catorce patrones, es menos
+dos coma seis cuatro.
+
+31
+00:02:04,799 --> 00:02:08,607
+Tras seis mil pasos, CD
+uno llega a menos tres coma
+
+32
+00:02:08,607 --> 00:02:12,190
+uno cinco y CD diez, a
+menos dos coma ocho tres.
+
+33
+00:02:12,570 --> 00:02:16,070
+Más pasos de Gibbs reducen el
+sesgo y dan un modelo mejor.
+
+34
+00:02:17,183 --> 00:02:22,428
+Las RBM se pueden apilar: las ocultas
+de una son las visibles de la siguiente.
+
+35
+00:02:22,808 --> 00:02:26,929
+Entrenando capa por capa se obtiene
+una red de creencia profunda, que en
+
+36
+00:02:26,929 --> 00:02:30,535
+dos mil seis mostró que las redes
+profundas se podían entrenar.
+
+37
+00:02:30,915 --> 00:02:34,849
+El algoritmo de vigilia y sueño
+y las máquinas de Helmholtz son
+
+38
+00:02:34,849 --> 00:02:38,970
+parientes cercanos: una red de
+reconocimiento que infiere causas y
+
+39
+00:02:38,970 --> 00:02:42,591
+una red generativa que sueña
+datos, entrenadas por turnos.
+
+40
+00:02:43,717 --> 00:02:45,725
+Un paso de CD uno con números.
+
+41
+00:02:46,105 --> 00:02:51,091
+Supongamos un peso con
+correlación de datos ⟨v_i
+
+42
+00:02:51,091 --> 00:02:55,766
+h_j⟩ = 0,62 y, tras una
+reconstrucción, 0,41.
+
+43
+00:02:56,146 --> 00:03:00,863
+Con tasa de aprendizaje cero coma tres,
+el peso sube cero coma cero seis tres.
+
+44
+00:03:01,243 --> 00:03:06,125
+En hardware de pbits, cada paso de Gibbs
+por bloques es una sola actualización
+
+45
+00:03:06,125 --> 00:03:10,694
+paralela de una capa: un paso de CD
+uno son cuatro medias fases de reloj.
+
+46
+00:03:11,817 --> 00:03:15,181
+Las RBM son ideales para
+hardware de pbits, porque
+
+47
+00:03:15,181 --> 00:03:18,277
+su grafo bipartito se
+actualiza capa por capa.
+
+48
+00:03:18,657 --> 00:03:22,090
+Se han usado para aprender
+características, en sistemas de
+
+49
+00:03:22,090 --> 00:03:25,109
+recomendación y para
+representar estados cuánticos.
+
+50
+00:03:25,489 --> 00:03:28,695
+En el laboratorio seis
+compararás CD y su versión
+
+51
+00:03:28,695 --> 00:03:31,574
+persistente con la
+log-verosimilitud exacta.
+
+52
+00:03:32,683 --> 00:03:36,400
+Errores comunes: creer que CD
+sigue el gradiente verdadero.
+
+53
+00:03:36,780 --> 00:03:41,613
+Usar tasas grandes con CD persistente,
+porque las cadenas no alcanzan a seguir al
+
+54
+00:03:41,613 --> 00:03:46,028
+modelo y el entrenamiento diverge; lo
+vimos en nuestro propio experimento.
+
+55
+00:03:46,408 --> 00:03:50,730
+Muestrear las ocultas en la fase
+positiva en lugar de usar probabilidades.
+
+56
+00:03:51,110 --> 00:03:54,765
+Y vigilar el error de reconstrucción
+en lugar de la verosimilitud.
+
+57
+00:03:55,883 --> 00:03:59,683
+En resumen: la RBM restringe
+las conexiones a un grafo
+
+58
+00:03:59,683 --> 00:04:03,763
+bipartito, y sus condicionales
+se factorizan en sigmoides.
+
+59
+00:04:04,143 --> 00:04:08,279
+La divergencia contrastiva
+aproxima la fase del modelo con k
+
+60
+00:04:08,279 --> 00:04:11,932
+pasos de Gibbs desde los
+datos: sesgada, pero barata.
+
+61
+00:04:12,312 --> 00:04:16,187
+Apilar RBM dio las primeras
+redes profundas entrenables.
+
+62
+00:04:17,317 --> 00:04:20,573
+Para practicar: deriva la
+condicional de las ocultas.
+
+63
+00:04:20,953 --> 00:04:23,172
+Escribe la energía libre de las visibles.
+
+64
+00:04:23,552 --> 00:04:25,130
+Explica el sesgo de CD.
+
+65
+00:04:25,510 --> 00:04:29,848
+Y cuenta los estados necesarios para la
+función de partición con nueve visibles.

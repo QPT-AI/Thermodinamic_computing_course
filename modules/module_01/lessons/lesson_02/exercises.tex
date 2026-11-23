@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.2}{Mecánica estadística y la distribución de Boltzmann}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule $Z$, $p_i$ y $\langle E\rangle$ para dos niveles $0$ y $\varepsilon$ a temperatura $T$.
+\item Muestre $\langle E\rangle=-\partial_\beta\ln Z$ y $\Var(E)=\partial_\beta^2\ln Z$.
+\item ¿Cuántos términos tiene $Z$ para 100 espines $\pm1$? ¿Y para el chip Z1 (269\,568 pbits)? Exprese en potencias de 10.
+\item Para $E(x)=\frac12kx^2$, ¿qué distribución da Boltzmann? Calcule $\langle x^2\rangle$ y $\langle E\rangle$.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Dos espines $s_1,s_2\in\{\pm1\}$ con $E=-Js_1s_2$. Calcule $Z$, $P(s_1=s_2)$ y $\langle s_1s_2\rangle$.
+\item Un espín en campo $h$: $E=-hs$. Muestre que $P(s=+1)=\sigma(2\beta h)$ y $\E[s]=\tanh(\beta h)$ (anticipo del pbit, lección 4.5).
+\item Para $E=\frac12x^\top Ax-b^\top x$ con $A$ SPD, complete el cuadrado y muestre que $p=\N(A^{-1}b,\beta^{-1}A^{-1})$.
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Muestre que para cualquier distribución $q$, $\langle E\rangle_q-TS[q]\ge F$, con igualdad sii $q=p_{\text{Boltzmann}}$. (Pista: $\langle E\rangle_q-TS[q]-F=\kB T\,\KL(q\|p)$.) Interprete como principio variacional (base del campo medio, lección 4.9).
+\item Estime la temperatura a la que un pozo doble con barrera $E_b=0{,}5$ eV pasa de «bit estable» a «bit aleatorio» en una escala de 1 s con frecuencia de intento $10^{12}$ s$^{-1}$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $Z=1+e^{-\beta\varepsilon}$, $p_0=1/Z$, $p_1=e^{-\beta\varepsilon}/Z$, $\langle E\rangle=\varepsilon/(e^{\beta\varepsilon}+1)$.
+
+\textbf{B2.} Véanse las notas.
+
+\textbf{B3.} $2^{100}\approx1{,}27\times10^{30}$; $2^{269568}=10^{269568\log_{10}2}\approx10^{81148}$.
+
+\textbf{B4.} $p(x)\propto e^{-\beta kx^2/2}$: $\N(0,\kB T/k)$; $\langle x^2\rangle=\kB T/k$; $\langle E\rangle=\frac12\kB T$ (equipartición).
+
+\textbf{I1.} $Z=2e^{\beta J}+2e^{-\beta J}=4\cosh\beta J$; $P(s_1=s_2)=\frac{e^{\beta J}}{2\cosh\beta J}$; $\langle s_1s_2\rangle=\tanh\beta J$.
+
+\textbf{I2.} $P(+1)=\frac{e^{\beta h}}{e^{\beta h}+e^{-\beta h}}=\frac1{1+e^{-2\beta h}}=\sigma(2\beta h)$; $\E[s]=\tanh\beta h$.
+
+\textbf{I3.} $\frac12x^\top Ax-b^\top x=\frac12(x-A^{-1}b)^\top A(x-A^{-1}b)-\frac12b^\top A^{-1}b$; con $\beta$: covarianza $(\beta A)^{-1}$.
+
+\textbf{A1.} $\KL(q\|p)=\sum q\ln q-\sum q\ln p=-S[q]/\kB+\beta\langle E\rangle_q+\ln Z$; multiplicando por $\kB T$: $\langle E\rangle_q-TS[q]+\kB T\ln Z=\langle E\rangle_q-TS[q]-F\ge0$.
+
+\textbf{A2.} Se necesita $\nu\,\tau\,e^{-E_b/\kB T}\sim1$: $E_b/\kB T\approx\ln(10^{12})=27{,}6\Rightarrow T\approx0{,}5/(27{,}6\cdot8{,}617\times10^{-5})\approx210$ K. Por encima de unos 210 K el bit se vuelve aleatorio en escalas de 1 s.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Para el paisaje $E(x)$ de la animación, calcule numéricamente la fracción de probabilidad en cada valle en función de $T$.
+\item Enumere los $2^{10}$ estados de una cadena de Ising de 10 espines, calcule $Z(\beta)$ y grafique $\langle E\rangle$ y $\Var(E)$ frente a $T$.
+\end{enumerate}
+\end{document}

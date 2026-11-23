@@ -1,0 +1,322 @@
+1
+00:00:00,350 --> 00:00:01,979
+Lesson 2.2.
+
+2
+00:00:02,359 --> 00:00:03,900
+The Langevin equation.
+
+3
+00:00:05,017 --> 00:00:06,437
+We already have pure noise.
+
+4
+00:00:06,817 --> 00:00:10,358
+Now let's add physics:
+forces, friction and mass.
+
+5
+00:00:10,738 --> 00:00:13,354
+The result is the Langevin equation, the
+
+6
+00:00:13,354 --> 00:00:16,493
+equation of motion of a
+particle in a heat bath.
+
+7
+00:00:16,873 --> 00:00:20,541
+It is the equation obeyed by
+the voltages of a noisy circuit,
+
+8
+00:00:20,541 --> 00:00:24,149
+the oscillators of a thermodynamic
+chip and, as we will see,
+
+9
+00:00:24,149 --> 00:00:26,976
+the one algorithms use
+to sample distributions.
+
+10
+00:00:28,083 --> 00:00:31,994
+Imagine a marble in a bowl full
+of honey that is also shaking.
+
+11
+00:00:32,374 --> 00:00:36,993
+Three things act on it: the slope of
+the bowl pushes it toward the bottom,
+
+12
+00:00:36,993 --> 00:00:41,050
+the honey slows its motion, and
+the shaking jostles it at random.
+
+13
+00:00:41,430 --> 00:00:45,373
+If the honey is thin, the marble
+oscillates before stopping.
+
+14
+00:00:45,753 --> 00:00:48,119
+If it is very thick,
+the marble simply creeps
+
+15
+00:00:48,119 --> 00:00:50,169
+toward the bottom, without oscillating.
+
+16
+00:00:50,549 --> 00:00:53,013
+In both cases it never sits still: the
+
+17
+00:00:53,013 --> 00:00:55,994
+shaking keeps it exploring
+around the minimum.
+
+18
+00:00:57,117 --> 00:01:02,820
+In equations: mass times acceleration
+equals the force from the potential,
+
+19
+00:01:02,820 --> 00:01:08,139
+minus the friction γ v, plus a random
+force of strength √(2 γ k_B T).
+
+20
+00:01:08,519 --> 00:01:11,810
+On the left you see
+position versus time; on the
+
+21
+00:01:11,810 --> 00:01:14,965
+right, phase space,
+position against velocity.
+
+22
+00:01:15,345 --> 00:01:18,320
+The trajectory spirals
+toward the minimum, but
+
+23
+00:01:18,320 --> 00:01:20,842
+the noise keeps it circling in a cloud.
+
+24
+00:01:21,222 --> 00:01:24,737
+That cloud is the Boltzmann
+distribution in phase space.
+
+25
+00:01:25,850 --> 00:01:29,453
+When friction dominates,
+inertia becomes irrelevant:
+
+26
+00:01:29,453 --> 00:01:32,502
+the velocity adjusts
+instantly to the force.
+
+27
+00:01:32,882 --> 00:01:39,314
+We drop the mass and get the
+overdamped equation: ẋ = μ
+
+28
+00:01:39,314 --> 00:01:44,927
+f(x) + √(2 μ k_B T) ξ(t),
+with mobility μ = 1/γ.
+
+29
+00:01:45,307 --> 00:01:49,243
+Both simulations use the same
+potential; with high friction, the
+
+30
+00:01:49,243 --> 00:01:53,733
+underdamped trajectory becomes
+indistinguishable from the overdamped one.
+
+31
+00:01:54,113 --> 00:01:57,448
+This is the equation we will
+use almost always: it is the one
+
+32
+00:01:57,448 --> 00:02:00,345
+for Landauer's double well
+and for the linear solver.
+
+33
+00:02:01,450 --> 00:02:04,034
+Why does the noise have
+exactly that strength?
+
+34
+00:02:04,414 --> 00:02:08,654
+If it were larger, the system would
+heat up; if smaller, it would cool down.
+
+35
+00:02:09,034 --> 00:02:12,365
+Only with strength 2 μ
+k_B T is the stationary
+
+36
+00:02:12,365 --> 00:02:15,262
+distribution Boltzmann at temperature T.
+
+37
+00:02:15,642 --> 00:02:21,847
+The diffusion coefficient is then
+D = μ k_B T: the Einstein relation.
+
+38
+00:02:22,227 --> 00:02:26,850
+Friction and noise are not independent;
+the same temperature fixes both.
+
+39
+00:02:27,230 --> 00:02:31,153
+The simulation histogram matches e^(−βV).
+
+40
+00:02:32,283 --> 00:02:33,203
+There are two clocks.
+
+41
+00:02:33,583 --> 00:02:39,207
+The inertial time, m/γ, says how long
+the velocity takes to forget its value.
+
+42
+00:02:39,587 --> 00:02:43,759
+The relaxation time, γ/κ, with κ
+the stiffness of the potential,
+
+43
+00:02:43,759 --> 00:02:47,539
+says how long the position
+takes to return to the minimum.
+
+44
+00:02:47,919 --> 00:02:52,478
+If the first is much shorter, the
+overdamped description is exact.
+
+45
+00:02:52,858 --> 00:02:55,934
+For a one-micrometer sphere
+in water, the inertial
+
+46
+00:02:55,934 --> 00:02:58,518
+time is about two tenths of a microsecond.
+
+47
+00:02:58,898 --> 00:03:02,837
+In a circuit, the role of
+γ/κ is played by R C: with
+
+48
+00:03:02,837 --> 00:03:06,246
+one kilohm and one
+picofarad, one nanosecond.
+
+49
+00:03:07,350 --> 00:03:13,072
+This equation will appear in every lab
+of the first half: Landauer erasure, the
+
+50
+00:03:13,072 --> 00:03:18,359
+Ornstein–Uhlenbeck linear solver,
+Normal Computing's coupled oscillators.
+
+51
+00:03:18,739 --> 00:03:21,786
+And it is also an algorithm:
+to sample a Boltzmann
+
+52
+00:03:21,786 --> 00:03:25,199
+distribution we only need the
+gradient of the potential.
+
+53
+00:03:26,317 --> 00:03:30,945
+In the next lesson we will write the
+Fokker–Planck equation for the density.
+
+54
+00:03:31,325 --> 00:03:36,362
+Then we will study the quadratic case,
+the Ornstein–Uhlenbeck process, and the
+
+55
+00:03:36,362 --> 00:03:40,948
+fluctuation–dissipation theorem,
+which justifies the Einstein relation.
+
+56
+00:03:42,050 --> 00:03:45,809
+Frequent mistakes: choosing the
+noise without relating it to
+
+57
+00:03:45,809 --> 00:03:49,630
+friction, using the overdamped
+equation when inertia matters,
+
+58
+00:03:49,630 --> 00:03:52,825
+forgetting the factor of
+two in the noise strength,
+
+59
+00:03:53,205 --> 00:03:56,328
+and confusing mobility with
+the diffusion coefficient.
+
+60
+00:03:57,450 --> 00:04:02,074
+In summary: the Langevin equation
+combines force, friction and noise.
+
+61
+00:04:02,454 --> 00:04:08,906
+In the high-friction regime it
+reduces to ẋ = μ f + √(2 μ k_B T) ξ.
+
+62
+00:04:09,286 --> 00:04:14,892
+The Einstein relation, D = μ k_B T,
+guarantees that the stationary state is the
+
+63
+00:04:14,892 --> 00:04:20,499
+Boltzmann distribution, and device time
+scales decide which description to use.
+
+64
+00:04:21,617 --> 00:04:26,484
+To practice: write the equation for a
+quadratic potential and its variance.
+
+65
+00:04:26,864 --> 00:04:30,289
+Compute the inertial time for
+a hundred-nanometer sphere.
+
+66
+00:04:30,669 --> 00:04:34,205
+Show that a miscalibrated noise is
+equivalent to another temperature.
+
+67
+00:04:34,585 --> 00:04:37,145
+And compute an RC relaxation time.

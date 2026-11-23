@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{4.8}{RBMs y divergencia contrastiva}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Derive $p(h_j=1\mid v)=\sigma(c_j+v^\top W_{:j})$.
+\item (B) Derive la energía libre $F(v)=-b^\top v-\sum_j\ln(1+e^{c_j+v^\top W_{:j}})$.
+\item (B) ¿Por qué CD-$k$ es sesgada y qué ocurre cuando $k\to\infty$?
+\item (B) ¿Cuántos estados hay que sumar para $Z$ con 9 visibles (sumando las ocultas analíticamente)?
+\item (I) Muestre que $\partial F(v)/\partial W_{ij}=-v_i\,\sigma(c_j+v^\top W_{:j})$ y escriba el gradiente exacto de la log-verosimilitud con $F$.
+\item (I) ¿Cuántas fases de reloj usa un paso de CD-10 en hardware de pbits con una capa por fase?
+\item (A) Reproduzca las curvas CD-1 y CD-10 y añada PCD con $\eta=0{,}01$ y 20\,000 pasos. ¿Supera a CD-10?
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Los términos con $h_j$ son $h_j(c_j+v^\top W_{:j})$; $p(h_j=1)/p(h_j=0)=e^{c_j+v^\top W_{:j}}$.
+
+\textbf{E2.} $\sum_he^{-E}=e^{b^\top v}\prod_j(1+e^{c_j+v^\top W_{:j}})$.
+
+\textbf{E3.} La cadena no alcanza el equilibrio en $k$ pasos; con $k\to\infty$ el término converge a $\langle vh^\top\rangle_{\text{modelo}}$.
+
+\textbf{E4.} $2^9=512$.
+
+\textbf{E5.} $\nabla\mathcal L=-\overline{\nabla F}_{\text{datos}}+\langle\nabla F\rangle_{p(v)}$.
+
+\textbf{E6.} $2k+2=22$ medias fases (más la lectura de estadísticas).
+
+\textbf{E7.} Con tasa pequeña PCD suele igualar o superar a CD-10 en verosimilitud, a cambio de más pasos.
+\end{solucion}
+\end{document}

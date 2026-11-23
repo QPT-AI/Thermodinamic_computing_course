@@ -1,0 +1,287 @@
+1
+00:00:00,350 --> 00:00:02,101
+Lesson 3.6.
+
+2
+00:00:02,481 --> 00:00:04,934
+Thermodynamic uncertainty relations.
+
+3
+00:00:06,050 --> 00:00:10,867
+A clock, a molecular motor or a circuit
+that counts steps have something in
+
+4
+00:00:10,867 --> 00:00:15,492
+common: they produce a current, a
+number of events that grows with time.
+
+5
+00:00:15,872 --> 00:00:18,805
+But in a small system
+that current fluctuates.
+
+6
+00:00:19,185 --> 00:00:20,812
+How much does it cost to make it precise?
+
+7
+00:00:21,192 --> 00:00:24,184
+Thermodynamic uncertainty
+relations answer:
+
+8
+00:00:24,184 --> 00:00:27,385
+precision is paid for
+with entropy production.
+
+9
+00:00:28,517 --> 00:00:32,202
+Let's take the simplest
+model: a counter that jumps
+
+10
+00:00:32,202 --> 00:00:35,599
+forward with rate k₊ and
+backward with rate k₋.
+
+11
+00:00:35,979 --> 00:00:41,802
+Each forward jump dissipates the
+log of k₊ over k₋, in units of k_B.
+
+12
+00:00:42,182 --> 00:00:45,821
+If the rates are nearly equal,
+the counter advances little
+
+13
+00:00:45,821 --> 00:00:49,085
+and erratically; if backward
+jumps are very rare, it
+
+14
+00:00:49,085 --> 00:00:52,662
+advances regularly, but each
+step costs a lot of entropy.
+
+15
+00:00:53,042 --> 00:00:57,051
+Here you see trajectories simulated
+with Gillespie for two different biases.
+
+16
+00:00:58,183 --> 00:01:01,343
+The thermodynamic
+uncertainty relation, proven
+
+17
+00:01:01,343 --> 00:01:04,022
+for Markov processes in a steady state,
+
+18
+00:01:04,402 --> 00:01:10,381
+says that the relative variance
+of any current is at least two
+
+19
+00:01:10,381 --> 00:01:15,877
+divided by the total entropy
+produced: Var(J)/⟨J⟩² ≥ 2/Σ.
+
+20
+00:01:16,257 --> 00:01:20,747
+To halve the relative error,
+you must quadruple the entropy.
+
+21
+00:01:21,127 --> 00:01:26,555
+For the counter, the
+product of relative variance
+
+22
+00:01:26,555 --> 00:01:31,539
+and entropy is (k₊ +
+k₋) ln(k₊/k₋)/(k₊ − k₋),
+
+23
+00:01:31,919 --> 00:01:35,269
+which never drops below two and
+reaches it near equilibrium.
+
+24
+00:01:36,383 --> 00:01:40,311
+There is a second bound, which
+uses not entropy but activity:
+
+25
+00:01:40,311 --> 00:01:43,723
+the mean total number of
+jumps, forward and backward.
+
+26
+00:01:44,103 --> 00:01:48,824
+The kinetic bound says the relative
+variance is at least one over the activity.
+
+27
+00:01:49,204 --> 00:01:54,244
+The two bounds are complementary: the
+thermodynamic one is tight near equilibrium;
+
+28
+00:01:54,244 --> 00:01:58,546
+the kinetic one, far from it, when
+there are almost no backward jumps.
+
+29
+00:01:58,926 --> 00:02:01,357
+There are also mixed bounds that combine
+
+30
+00:02:01,357 --> 00:02:04,030
+entropy and activity
+in a single inequality.
+
+31
+00:02:05,150 --> 00:02:08,065
+For a computation, what
+matters is the time to
+
+32
+00:02:08,065 --> 00:02:11,107
+finish: the instant the
+counter reaches N steps.
+
+33
+00:02:11,487 --> 00:02:15,352
+The same bounds hold for the
+relative variance of that time, with
+
+34
+00:02:15,352 --> 00:02:18,623
+the entropy and activity
+accumulated until it finishes.
+
+35
+00:02:19,003 --> 00:02:23,817
+With a hundred steps and k₊ =
+3, k₋ = 1, the simulation gives
+
+36
+00:02:23,817 --> 00:02:28,000
+a mean time of fifty and a
+relative variance of 0.02.
+
+37
+00:02:28,380 --> 00:02:35,471
+The thermodynamic bound requires at
+least 0.018; the kinetic one, 0.005.
+
+38
+00:02:35,851 --> 00:02:40,999
+With k₊ = 20, the relative
+variance is 0.011, and now
+
+39
+00:02:40,999 --> 00:02:45,370
+the kinetic bound, 0.009,
+is the tighter one.
+
+40
+00:02:46,483 --> 00:02:50,020
+Let's compare the three simulated
+biases, always with a hundred steps.
+
+41
+00:02:50,400 --> 00:02:55,792
+With k₊ equal to 1.2, almost at
+equilibrium, the relative variance is
+
+42
+00:02:55,792 --> 00:03:00,324
+0.11 and the thermodynamic
+bound is 0.11: it is saturated.
+
+43
+00:03:00,704 --> 00:03:03,397
+With three, the thermodynamic
+bound is still close.
+
+44
+00:03:03,776 --> 00:03:05,730
+With twenty, the kinetic one dominates.
+
+45
+00:03:06,110 --> 00:03:09,481
+In every case, the simulation
+respects both bounds.
+
+46
+00:03:10,583 --> 00:03:13,866
+These bounds apply to the
+computation time of Brownian
+
+47
+00:03:13,866 --> 00:03:16,723
+circuits, to the precision
+of molecular clocks,
+
+48
+00:03:17,103 --> 00:03:21,228
+and in reverse: measuring the
+fluctuations of a current gives a lower
+
+49
+00:03:21,228 --> 00:03:25,054
+bound on dissipation, without
+knowing the details of the system.
+
+50
+00:03:26,183 --> 00:03:30,425
+Watch the domain of validity,
+using the rate instead of the total
+
+51
+00:03:30,425 --> 00:03:35,058
+entropy, the factor of two, and
+assuming the bound is always saturated.
+
+52
+00:03:36,183 --> 00:03:41,235
+In summary: the precision of
+any current is limited by the
+
+53
+00:03:41,235 --> 00:03:46,200
+entropy produced, Var(J)/⟨J⟩²
+≥ 2/Σ, and by the activity,
+
+54
+00:03:46,581 --> 00:03:49,672
+Var(J)/⟨J⟩² ≥ 1/A.
+
+55
+00:03:50,052 --> 00:03:54,097
+The first is tight near equilibrium
+and the second far from it.
+
+56
+00:03:54,477 --> 00:03:59,111
+For a computation, the same bounds limit
+the fluctuations of the time to finish.
+
+57
+00:04:00,217 --> 00:04:03,816
+To practice: compute the
+counter's mean, variance and
+
+58
+00:04:03,816 --> 00:04:07,212
+entropy, check the TUR,
+estimate the entropy for a
+
+59
+00:04:07,212 --> 00:04:11,151
+one-percent error and explain
+when the kinetic bound wins.

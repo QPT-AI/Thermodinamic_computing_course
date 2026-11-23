@@ -1,0 +1,57 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.1}{Modelos basados en energía y modelos gráficos}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} definir un EBM; leer una energía como suma de factores locales; grafos de factores,
+mantas de Markov e independencia condicional; grafos frente a hipergrafos.
+\textbf{Prerrequisitos:} 1.2 (Boltzmann), 0.3 (probabilidad condicional).
+
+\section{Modelos basados en energía}
+\begin{definicion}[ (EBM)]
+Dada una energía $E_\theta(x)$, el modelo es $p_\theta(x)=e^{-E_\theta(x)}/Z_\theta$, con $Z_\theta=\sum_xe^{-E_\theta(x)}$ (temperatura absorbida en $E$).
+\end{definicion}
+Es la distribución de Boltzmann leída al revés: cualquier energía define una distribución. Un TSU recibe los parámetros de $E$ y devuelve
+muestras \cite{extropic}; aprender es esculpir $E_\theta$ para que sus valles caigan sobre los datos.
+
+\section{Energías locales y factorización}
+Si $E(x)=\sum_aE_a(x_{\partial a})$, con cada factor $a$ sobre pocas variables $x_{\partial a}$, entonces $p(x)\propto\prod_ae^{-E_a(x_{\partial a})}$.
+El \emph{grafo de factores} es bipartito: variables (círculos) y factores (cuadrados). Si todos los factores son de a pares, basta un grafo
+ordinario; con factores de orden $\ge3$ el modelo es un \emph{hipergrafo}.
+\begin{resultado}[ (manta de Markov)]
+$p(x_i\mid x_{-i})=p(x_i\mid x_{\mathcal N(i)})\propto\exp\big(-\sum_{a\ni i}E_a\big)$: la condicional de una variable solo depende de los factores que la
+contienen, es decir, de sus vecinas $\mathcal N(i)$.
+\end{resultado}
+Esta localidad es la que permite el muestreo de Gibbs en paralelo (lección 4.3) y el hardware de conectividad local (Unidad 5).
+
+\section{Ejemplo: cadena de tres espines}
+$E=-J(s_1s_2+s_2s_3)$, $\beta J=1$. Enumerando las ocho configuraciones: $Z=2(2\cosh1)^2=19{,}05$;
+$P(\uparrow\uparrow\uparrow)=P(\downarrow\downarrow\downarrow)=e^2/Z=0{,}388$; $P(\uparrow\downarrow\uparrow)=e^{-2}/Z=0{,}0071$.
+\begin{ejemplo}
+$\langle s_1s_3\rangle=\tanh^2(\beta J)=0{,}580$ aunque $s_1$ y $s_3$ no interactúan. Condicionando en $s_2$, la energía se separa en un término
+de $s_1$ y otro de $s_3$: $\mathrm{Cov}(s_1,s_3\mid s_2)=0$.
+\end{ejemplo}
+
+\begin{intuicion}
+La correlación viaja por los caminos del grafo; la independencia condicional se lee como \emph{separación}: si fijar un conjunto de
+variables corta todos los caminos entre $A$ y $B$, entonces $A\perp B$ dado ese conjunto.
+\end{intuicion}
+
+\begin{aplicacion}
+Programas de TSU: grafos de factores de grado acotado (Z1: 16 acoplamientos por pbit). THRML (Unidad 11) trabaja con grafos de factores y Gibbs
+por bloques. Variables categóricas: modelos de Potts con condicionales softmax.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Sin arista no implica independencia. \quad Confundir grafo de interacción con grafo de correlación.
+\item Creer que $Z$ es fácil por ser local cada factor. \quad Olvidar variables auxiliares para factores de orden alto en hardware de pares.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[13]{katz} H. G. Katzgraber, Introduction to Monte Carlo methods, 2009.
+\bibitem[21]{extropic} Extropic, Thermodynamic Computing From Zero to One, 2025.
+\bibitem{koller} D. Koller y N. Friedman, \emph{Probabilistic Graphical Models}, MIT Press, 2009.
+\end{thebibliography}
+\end{document}

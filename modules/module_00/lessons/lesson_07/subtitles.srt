@@ -1,0 +1,412 @@
+1
+00:00:00,350 --> 00:00:02,044
+Lección 0.7.
+
+2
+00:00:02,424 --> 00:00:03,838
+Lo esencial de JAX.
+
+3
+00:00:04,950 --> 00:00:09,936
+Todos los laboratorios del curso se
+programan en JAX, y los simuladores de
+
+4
+00:00:09,936 --> 00:00:14,652
+hardware termodinámico, como THRML
+y Torx, están construidos sobre él.
+
+5
+00:00:15,032 --> 00:00:18,448
+JAX es NumPy con tres
+superpoderes: transformaciones de
+
+6
+00:00:18,448 --> 00:00:22,236
+funciones que vectorizan, compilan
+y derivan automáticamente.
+
+7
+00:00:22,616 --> 00:00:26,567
+Su estilo funcional encaja con
+la física: un paso de simulación
+
+8
+00:00:26,567 --> 00:00:30,455
+recibe un estado y devuelve el
+siguiente, sin efectos ocultos.
+
+9
+00:00:31,583 --> 00:00:34,266
+Una función pura es una
+caja que solo depende
+
+10
+00:00:34,266 --> 00:00:36,710
+de sus entradas y solo produce su salida.
+
+11
+00:00:37,090 --> 00:00:42,015
+No lee variables globales que cambian,
+no imprime, no modifica nada afuera.
+
+12
+00:00:42,395 --> 00:00:45,428
+Si la llamas dos veces con
+lo mismo, obtienes lo mismo.
+
+13
+00:00:45,808 --> 00:00:48,988
+Esa disciplina es lo que
+permite a JAX transformar tus
+
+14
+00:00:48,988 --> 00:00:52,344
+funciones con seguridad: puede
+rastrearlas, compilarlas y
+
+15
+00:00:52,344 --> 00:00:55,641
+derivarlas porque sabe
+exactamente qué entra y qué sale.
+
+16
+00:00:56,750 --> 00:00:57,858
+¿Y la aleatoriedad?
+
+17
+00:00:58,238 --> 00:01:01,224
+En NumPy, el generador
+guarda un estado oculto
+
+18
+00:01:01,224 --> 00:01:04,015
+que cambia en cada
+llamada: eso no es puro.
+
+19
+00:01:04,395 --> 00:01:07,191
+JAX hace explícito ese estado: una clave.
+
+20
+00:01:07,571 --> 00:01:10,359
+La misma clave produce
+siempre los mismos números.
+
+21
+00:01:10,739 --> 00:01:14,518
+Para obtener números nuevos, se
+divide la clave con split, que
+
+22
+00:01:14,518 --> 00:01:17,810
+genera claves hijas
+independientes, formando un árbol.
+
+23
+00:01:18,190 --> 00:01:21,275
+Cada rama del árbol alimenta
+una parte del programa.
+
+24
+00:01:21,655 --> 00:01:24,352
+Regla de oro: nunca reutilices una clave.
+
+25
+00:01:25,483 --> 00:01:30,103
+Escribe una función para una sola
+partícula, por ejemplo un paso de Langevin.
+
+26
+00:01:30,483 --> 00:01:33,588
+Con vmap, JAX la aplica a
+mil partículas a la vez,
+
+27
+00:01:33,588 --> 00:01:37,126
+agregando un eje de lote, sin
+que escribas un solo bucle.
+
+28
+00:01:37,506 --> 00:01:40,585
+El resultado es el mismo
+que llamar a la función mil
+
+29
+00:01:40,585 --> 00:01:43,782
+veces, pero se ejecuta como
+una operación vectorizada.
+
+30
+00:01:44,162 --> 00:01:49,877
+Se pueden anidar: vmap sobre partículas
+y, encima, vmap sobre temperaturas.
+
+31
+00:01:50,983 --> 00:01:55,671
+La primera vez que llamas a una función
+decorada con jit, JAX la ejecuta con
+
+32
+00:01:55,671 --> 00:01:59,680
+valores abstractos, registra cada
+operación y construye un grafo.
+
+33
+00:02:00,060 --> 00:02:04,854
+Ese grafo se entrega al compilador
+XLA, que fusiona operaciones
+
+34
+00:02:04,854 --> 00:02:09,115
+y genera código optimizado
+para la CPU, la GPU o la TPU.
+
+35
+00:02:09,495 --> 00:02:12,013
+Las llamadas siguientes
+con la misma forma de
+
+36
+00:02:12,013 --> 00:02:14,194
+entrada reutilizan el código compilado.
+
+37
+00:02:14,574 --> 00:02:19,593
+El costo es una compilación inicial; la
+ganancia, ejecuciones mucho más rápidas.
+
+38
+00:02:20,717 --> 00:02:24,497
+Las simulaciones son bucles:
+el estado de hoy produce el de
+
+39
+00:02:24,497 --> 00:02:27,766
+mañana. scan expresa ese
+bucle de forma compilable.
+
+40
+00:02:28,146 --> 00:02:31,731
+Recibe una función que toma
+un acarreo, el estado, y una
+
+41
+00:02:31,731 --> 00:02:35,508
+entrada por paso, y devuelve
+el nuevo acarreo y una salida.
+
+42
+00:02:35,888 --> 00:02:40,640
+Aquí el acarreo es la posición de una
+partícula y la entrada es una clave por
+
+43
+00:02:40,640 --> 00:02:44,838
+paso: es el método de Euler y
+Maruyama para un proceso de Ornstein y
+
+44
+00:02:44,838 --> 00:02:49,097
+Uhlenbeck. scan apila las salidas
+y devuelve la trayectoria completa.
+
+45
+00:02:50,217 --> 00:02:53,558
+Para una función de n
+entradas y m salidas, la
+
+46
+00:02:53,558 --> 00:02:56,754
+derivada es la matriz
+jacobiana, de m por n.
+
+47
+00:02:57,134 --> 00:02:58,536
+Casi nunca la formamos.
+
+48
+00:02:58,916 --> 00:03:04,160
+El producto jacobiano por vector, jvp,
+empuja una dirección de entrada hacia
+
+49
+00:03:04,160 --> 00:03:09,680
+adelante y da una combinación de columnas:
+es la diferenciación en modo directo.
+
+50
+00:03:10,060 --> 00:03:15,647
+El producto vector por jacobiano, vjp,
+tira de una dirección de salida hacia atrás
+
+51
+00:03:15,647 --> 00:03:20,486
+y da una combinación de filas: es el
+modo inverso, la retropropagación.
+
+52
+00:03:20,866 --> 00:03:25,152
+Para una pérdida escalar, el gradiente
+es un solo vjp, y por eso entrenar
+
+53
+00:03:25,152 --> 00:03:29,203
+redes con millones de parámetros
+cuesta casi lo mismo que evaluarlas.
+
+54
+00:03:30,317 --> 00:03:31,829
+Comprobemos con un ejemplo.
+
+55
+00:03:32,209 --> 00:03:36,028
+Sea f(x) = sin(x) x².
+
+56
+00:03:36,408 --> 00:03:41,426
+Su derivada es coseno de x por
+x², más dos x por seno de x.
+
+57
+00:03:41,806 --> 00:03:45,719
+En x = 1 vale coseno de uno
+más dos por seno de uno,
+
+58
+00:03:45,719 --> 00:03:49,482
+aproximadamente dos coma
+veintidós. jax punto grad
+
+59
+00:03:49,482 --> 00:03:53,923
+devuelve exactamente ese número,
+dos coma dos dos tres dos,
+
+60
+00:03:54,303 --> 00:03:57,165
+sin diferencias finitas ni
+errores de truncamiento.
+
+61
+00:03:58,283 --> 00:04:00,912
+En el laboratorio uno
+generarás un millón de
+
+62
+00:04:00,912 --> 00:04:04,078
+muestras de Bernoulli con
+vmap y medirás su entropía.
+
+63
+00:04:04,458 --> 00:04:08,999
+A partir del laboratorio tres simularás
+dinámicas estocásticas con scan y jit.
+
+64
+00:04:09,379 --> 00:04:13,174
+En los laboratorios diez y
+once usarás jvp y vjp para
+
+65
+00:04:13,174 --> 00:04:16,896
+multiplicar por matrices
+de curvatura sin formarlas.
+
+66
+00:04:17,276 --> 00:04:23,100
+Y en la unidad once trabajarás con
+THRML y Torx, que están escritas en JAX.
+
+67
+00:04:24,217 --> 00:04:26,514
+Estas piezas reaparecen en todo el curso:
+
+68
+00:04:26,894 --> 00:04:30,983
+Euler y Maruyama en la unidad dos,
+el muestreo de Gibbs cromático
+
+69
+00:04:30,983 --> 00:04:35,198
+como un vmap sobre nodos de un
+mismo color en la unidad cuatro, los
+
+70
+00:04:35,198 --> 00:04:38,785
+productos de Gauss y Newton
+por vector en la unidad ocho,
+
+71
+00:04:39,165 --> 00:04:44,314
+y la simulación de chips termodinámicos
+con THRML en la unidad once.
+
+72
+00:04:45,417 --> 00:04:49,692
+Errores clásicos: reutilizar una
+clave y obtener números repetidos.
+
+73
+00:04:50,072 --> 00:04:54,201
+Poner efectos secundarios dentro de
+jit, que solo ocurren al rastrear.
+
+74
+00:04:54,581 --> 00:04:57,982
+Usar un if de Python que depende
+de un valor del arreglo, en
+
+75
+00:04:57,982 --> 00:05:00,874
+lugar de las primitivas de
+control de flujo de JAX.
+
+76
+00:05:01,254 --> 00:05:04,017
+Y mezclar el generador
+de NumPy con el de JAX.
+
+77
+00:05:05,117 --> 00:05:10,574
+En resumen: en JAX las funciones
+son puras y la aleatoriedad viaja en
+
+78
+00:05:10,574 --> 00:05:15,636
+claves explícitas. vmap vectoriza,
+jit compila y scan itera. jvp
+
+79
+00:05:15,636 --> 00:05:20,224
+empuja derivadas hacia adelante,
+vjp las tira hacia atrás,
+
+80
+00:05:20,604 --> 00:05:24,567
+y el gradiente de una pérdida
+escalar es un solo vjp.
+
+81
+00:05:25,683 --> 00:05:29,992
+Para terminar la unidad cero: escribe
+una función que genere un millón
+
+82
+00:05:29,992 --> 00:05:33,747
+de normales de forma reproducible
+y calcule su media con jit.
+
+83
+00:05:34,127 --> 00:05:38,225
+Explica la diferencia entre gradiente
+y producto jacobiano por vector.
+
+84
+00:05:38,605 --> 00:05:40,970
+Predice la forma de la salida de un vmap.
+
+85
+00:05:41,350 --> 00:05:46,878
+Y cuenta cuántos jvp o vjp hacen falta
+para formar un jacobiano completo.

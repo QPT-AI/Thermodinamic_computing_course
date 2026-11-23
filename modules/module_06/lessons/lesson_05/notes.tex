@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{6.5}{Modelos de tiempo}
+
+\noindent\textbf{Unidad 6.}\quad\textbf{Objetivos:} construir un modelo de tiempo de extremo a extremo (carga DAC, dinámica analógica, lectura ADC); entender
+por qué la compilación $O(d^2)$ suele dominar cuando el núcleo analógico es rápido; amortizar la carga.
+\textbf{Prerrequisitos:} 5.8, 6.1, 6.4.
+
+\section{Tres etapas}
+(1) \textbf{Compilación}: los $d^2$ elementos de $A$ pasan por convertidores digital-analógico (DAC). (2) \textbf{Dinámica}: equilibrar y promediar,
+$t_0+\tau\propto d\,\tau_r$ para el sistema lineal. (3) \textbf{Lectura}: los $d$ valores de $x$ pasan por convertidores analógico-digital (ADC). Los métodos
+digitales no pagan (1): la matriz ya está en su memoria.
+
+\section{Constante \texorpdfstring{$RC$}{RC}}
+En un circuito, $\tau_r=RC$. Con $1\ \mu$s el núcleo es lento frente a la carga; con $10$ ns (típico de un circuito integrado pequeño \evE) es cien veces
+más rápido. Cuanto más rápido el núcleo analógico, más pesa la parte digital.
+
+\section{Modelo explícito \evE}
+\[T(d)=\frac{d^2}{B_{\text{DAC}}}+c\,d\,\tau_r+\frac{d}{B_{\text{ADC}}},\qquad B=10^9\ \text{valores/s},\ c=20\]
+($c$ de la escala de la simulación de la lección 6.1). Para $d=1000$:
+\begin{center}\begin{tabular}{lccc}\toprule
+& carga & dinámica & fracción de carga\\\midrule
+$RC=1\ \mu$s & 1,0 ms & 20 ms & 5\,\%\\
+$RC=10$ ns & 1,0 ms & 0,2 ms & 83\,\%\\\bottomrule\end{tabular}\end{center}
+Cruce carga = dinámica: $d^\ast=c\,\tau_rB$, es decir $2\times10^4$ ($1\ \mu$s) o $200$ ($10$ ns).
+
+\section{Amortización}
+Con $K$ lados derechos y la misma $A$: $T_K/K=d^2/(KB)+c\,d\,\tau_r+d/B$. Para $d=1000$, $RC=10$ ns: $K=1$: 1,20 ms (carga 83\,\%); $K=10$: 0,30 ms (33\,\%);
+$K=100$: 0,21 ms (5\,\%). En un método de Newton, donde $A$ cambia en cada paso, la compilación se paga siempre.
+
+\section{Lo que encontró el artículo}
+Aifer et al.\ incluyen todas las operaciones digitales, de conversión y analógicas y comparan con gradiente conjugado y Cholesky en GPU: con $d=100$ el método
+termodinámico pierde; con $d=1000$ y $5000$ es competitivo, sobre todo a tiempos cortos. Su modelo aún no incluye la imprecisión analógica.
+
+\begin{aplicacion}
+Reutilizar $A$ (procesos gaussianos, precondicionadores fijos); actualizaciones de bajo rango en vez de recargar $d^2$ elementos; bancos paralelos de DAC y memoria de
+acoplamientos en el chip. Laboratorio L9: añadir un modelo de tiempo y encontrar $d^\ast$.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Reportar solo el tiempo analógico. \quad Suponer que un núcleo más rápido siempre ayuda.
+\item Olvidar que la línea base digital no paga transferencia. \quad Recargar $A$ cuando solo cambió $b$.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\bibitem[25]{mel} D. Melanson et al., Thermodynamic computing system for AI applications, \emph{Nat. Commun.} 16, 3757 (2025).
+\bibitem[29]{asic} M. Aifer et al., Solving the compute crisis with physics-based ASICs, 2025.
+\end{thebibliography}
+\end{document}

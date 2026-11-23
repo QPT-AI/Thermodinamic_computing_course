@@ -1,0 +1,291 @@
+1
+00:00:00,350 --> 00:00:01,932
+Lesson 9.2.
+
+2
+00:00:02,312 --> 00:00:03,599
+Discrete diffusion.
+
+3
+00:00:04,717 --> 00:00:08,112
+Text is made of symbols,
+not real numbers, so
+
+4
+00:00:08,112 --> 00:00:11,206
+Gaussian diffusion does not fit directly.
+
+5
+00:00:11,586 --> 00:00:15,930
+Discrete diffusion replaces Gaussian
+noise with symbol corruption.
+
+6
+00:00:16,310 --> 00:00:19,980
+The most successful version is
+masked diffusion: tokens are
+
+7
+00:00:19,980 --> 00:00:23,339
+gradually hidden, and the
+model learns to reveal them.
+
+8
+00:00:23,719 --> 00:00:27,332
+It is the basis of diffusion
+language models and, as we will
+
+9
+00:00:27,332 --> 00:00:30,584
+see, it fits hardware that
+samples discrete variables.
+
+10
+00:00:31,717 --> 00:00:35,715
+At time t between zero and
+one, each token is replaced by
+
+11
+00:00:35,715 --> 00:00:39,083
+a mask symbol with
+probability t, independently.
+
+12
+00:00:39,463 --> 00:00:44,367
+The mask is an absorbing state:
+once hidden, the token stays hidden.
+
+13
+00:00:44,747 --> 00:00:48,138
+At t = 1 the sequence is fully masked.
+
+14
+00:00:48,518 --> 00:00:52,543
+The reverse process starts from all
+masks and reveals tokens, using a
+
+15
+00:00:52,543 --> 00:00:56,044
+model that predicts each hidden
+token given what is visible.
+
+16
+00:00:57,150 --> 00:01:02,081
+The masked diffusion language model,
+MDLM, trains with a lower bound
+
+17
+00:01:02,081 --> 00:01:06,360
+on the likelihood that turns
+out to be surprisingly simple:
+
+18
+00:01:06,740 --> 00:01:11,198
+a cross-entropy over the
+masked positions, weighted by a
+
+19
+00:01:11,198 --> 00:01:16,373
+time-dependent factor, which for
+a linear schedule is one over t.
+
+20
+00:01:16,753 --> 00:01:20,885
+It is like BERT training, but
+with all masking rates and with
+
+21
+00:01:20,885 --> 00:01:24,408
+a weight that turns the sum
+into a likelihood bound.
+
+22
+00:01:25,517 --> 00:01:30,367
+When sampling, revealing one token per
+step is exact if the model is perfect.
+
+23
+00:01:30,747 --> 00:01:33,366
+But it costs as many steps as tokens.
+
+24
+00:01:33,746 --> 00:01:36,978
+Revealing several at once
+is faster, but samples
+
+25
+00:01:36,978 --> 00:01:40,211
+them independently,
+ignoring their correlations.
+
+26
+00:01:40,591 --> 00:01:43,968
+We measure it with highly
+correlated binary strings of
+
+27
+00:01:43,968 --> 00:01:47,095
+eight symbols, where almost
+half the sequences are
+
+28
+00:01:47,095 --> 00:01:50,598
+constant, and a model that
+knows the exact conditionals.
+
+29
+00:01:51,717 --> 00:01:56,575
+With eight steps, one per token,
+the total variation distance to
+
+30
+00:01:56,575 --> 00:02:00,750
+the true distribution is only
+0.03, the sampling noise.
+
+31
+00:02:01,130 --> 00:02:03,193
+With four steps it rises to 0.2.
+
+32
+00:02:03,573 --> 00:02:05,667
+With two, to 0.46.
+
+33
+00:02:06,047 --> 00:02:09,817
+And with a single step,
+revealing everything at once, to
+
+34
+00:02:09,817 --> 00:02:13,723
+0.79: constant sequences, which
+are forty-eight percent of
+
+35
+00:02:13,723 --> 00:02:17,157
+the data, appear less than
+one percent of the time.
+
+36
+00:02:17,537 --> 00:02:20,948
+The error does not come from the
+model, but from parallel sampling.
+
+37
+00:02:22,050 --> 00:02:26,725
+That is why few-step samplers need
+tricks: choosing which tokens to reveal
+
+38
+00:02:26,725 --> 00:02:31,336
+based on confidence, or distilling a
+many-step model into a few-step one.
+
+39
+00:02:31,716 --> 00:02:36,062
+Probabilistic hardware offers another
+way out: instead of sampling a
+
+40
+00:02:36,062 --> 00:02:40,344
+step's tokens independently, it
+can sample their joint distribution
+
+41
+00:02:40,344 --> 00:02:44,178
+with an energy-based model that
+captures their correlations.
+
+42
+00:02:44,558 --> 00:02:48,303
+That is the idea of denoising
+thermodynamic models.
+
+43
+00:02:49,417 --> 00:02:53,746
+Discrete diffusion is used in
+non-autoregressive language models, which
+
+44
+00:02:53,746 --> 00:02:58,197
+generate in parallel and allow infilling
+or editing any part of the text.
+
+45
+00:02:58,577 --> 00:03:01,919
+In lab thirteen you will
+train a small MDLM and
+
+46
+00:03:01,919 --> 00:03:05,049
+measure quality against
+the number of steps.
+
+47
+00:03:06,150 --> 00:03:09,655
+Common mistakes: forgetting
+that the mask is absorbing.
+
+48
+00:03:10,035 --> 00:03:13,773
+Removing the time weight, so
+the loss is no longer a bound.
+
+49
+00:03:14,153 --> 00:03:18,029
+Revealing many correlated tokens
+at once and blaming the model.
+
+50
+00:03:18,409 --> 00:03:22,006
+And comparing step counts without
+matching model evaluations.
+
+51
+00:03:23,117 --> 00:03:27,092
+In summary: masked diffusion
+hides tokens forward and
+
+52
+00:03:27,092 --> 00:03:31,443
+reveals them backward, with a
+weighted cross-entropy loss.
+
+53
+00:03:31,823 --> 00:03:36,175
+Revealing one token per step
+is exact; revealing many at
+
+54
+00:03:36,175 --> 00:03:39,595
+once samples them
+independently and destroys
+
+55
+00:03:39,595 --> 00:03:44,181
+correlations, in our example
+from 0.03 to 0.79 in distance.
+
+56
+00:03:44,561 --> 00:03:48,681
+Sampling the joint is exactly what
+thermodynamic hardware can contribute.
+
+57
+00:03:49,783 --> 00:03:53,518
+To practice: give the
+probability of masking at time t.
+
+58
+00:03:53,898 --> 00:03:57,043
+Explain why revealing
+one per step is exact.
+
+59
+00:03:57,423 --> 00:04:01,739
+Analyze two perfectly correlated
+bits with a one-step sampler.
+
+60
+00:04:02,119 --> 00:04:04,515
+And name two ways to reduce the steps.

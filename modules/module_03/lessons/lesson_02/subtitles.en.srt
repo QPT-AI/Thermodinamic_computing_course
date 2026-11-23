@@ -1,0 +1,315 @@
+1
+00:00:00,350 --> 00:00:02,007
+Lesson 3.2.
+
+2
+00:00:02,387 --> 00:00:05,601
+Entropy production and the
+second law for trajectories.
+
+3
+00:00:06,717 --> 00:00:09,995
+The second law says total
+entropy does not decrease.
+
+4
+00:00:10,375 --> 00:00:13,391
+In the previous lesson we
+saw individual trajectories
+
+5
+00:00:13,391 --> 00:00:15,953
+with negative work,
+which seem to violate it.
+
+6
+00:00:16,333 --> 00:00:18,525
+By how much do they
+violate it, and how often?
+
+7
+00:00:18,905 --> 00:00:21,789
+The answer is one of the
+most beautiful laws of
+
+8
+00:00:21,789 --> 00:00:24,305
+modern physics: the fluctuation theorems.
+
+9
+00:00:24,685 --> 00:00:27,879
+They turn the inequality of
+the second law into an exact
+
+10
+00:00:27,879 --> 00:00:30,960
+equality about the distribution
+of entropy production.
+
+11
+00:00:32,083 --> 00:00:35,996
+Imagine filming a trajectory
+and playing it backward.
+
+12
+00:00:36,376 --> 00:00:40,645
+If the system is at equilibrium, the
+reversed movie is just as plausible.
+
+13
+00:00:41,025 --> 00:00:44,514
+If a force is pushing it,
+the reversed movie is less
+
+14
+00:00:44,514 --> 00:00:47,599
+likely: the particle
+climbs against the force.
+
+15
+00:00:47,979 --> 00:00:52,494
+Entropy production measures exactly
+that: the log of the ratio between
+
+16
+00:00:52,494 --> 00:00:56,557
+the probability of the trajectory
+and that of its time reverse.
+
+17
+00:00:56,937 --> 00:00:58,924
+It is a measure of irreversibility.
+
+18
+00:01:00,050 --> 00:01:05,228
+The total entropy production along a
+trajectory, in units of k_B, is the change
+
+19
+00:01:05,228 --> 00:01:09,620
+in system entropy plus the heat
+given to the bath divided by k_B T.
+
+20
+00:01:10,000 --> 00:01:15,514
+And it is exactly the log of the
+ratio of probabilities of the
+
+21
+00:01:15,514 --> 00:01:20,406
+forward trajectory and its
+reverse: Σ = ln P[x]/P̃[x̃].
+
+22
+00:01:20,786 --> 00:01:25,239
+In a steady state, its mean rate
+is written with the probability
+
+23
+00:01:25,239 --> 00:01:29,762
+current: the integral of J²/(D
+p), which is positive and vanishes
+
+24
+00:01:29,762 --> 00:01:33,450
+only if the current is zero,
+that is, at equilibrium.
+
+25
+00:01:34,550 --> 00:01:40,233
+An exact equality follows from that
+definition: the average of e^(−Σ) is one.
+
+26
+00:01:40,613 --> 00:01:43,709
+Always, for any protocol and any duration.
+
+27
+00:01:44,089 --> 00:01:47,868
+Applying Jensen's inequality,
+the average of Σ is greater
+
+28
+00:01:47,868 --> 00:01:51,514
+than or equal to zero: the
+second law is a consequence.
+
+29
+00:01:51,894 --> 00:01:55,630
+But the equality says more: for
+the average of the exponential
+
+30
+00:01:55,630 --> 00:01:58,884
+to be one, there must be
+trajectories with negative Σ.
+
+31
+00:01:59,264 --> 00:02:03,620
+Individual violations are not
+an accident: they are mandatory.
+
+32
+00:02:04,750 --> 00:02:10,984
+In a steady state there is an even stronger
+version: the probability of producing an
+
+33
+00:02:10,984 --> 00:02:16,475
+amount Σ of entropy, divided by that
+of producing minus Σ, is exactly e^Σ.
+
+34
+00:02:16,855 --> 00:02:21,220
+Let's check it with a particle on
+a ring pushed by a constant force.
+
+35
+00:02:21,600 --> 00:02:24,333
+The histogram of the
+entropy produced in an
+
+36
+00:02:24,333 --> 00:02:26,748
+interval is Gaussian and crosses zero.
+
+37
+00:02:27,128 --> 00:02:31,180
+Plotting the log of the ratio
+between the probability of Σ and
+
+38
+00:02:31,180 --> 00:02:34,970
+that of minus Σ, the points
+fall on the line of slope one.
+
+39
+00:02:35,350 --> 00:02:40,317
+Trajectories that destroy entropy
+exist, but they are exponentially rare.
+
+40
+00:02:41,450 --> 00:02:47,099
+With mobility one, k_B T one, force
+one half and a time window of two,
+
+41
+00:02:47,099 --> 00:02:52,103
+entropy production is Gaussian
+with mean 0.5 and variance one.
+
+42
+00:02:52,483 --> 00:02:58,116
+The probability that a trajectory destroys
+entropy is about thirty-one percent.
+
+43
+00:02:58,496 --> 00:03:02,948
+If we lengthen the window to twenty,
+the mean rises to five and that
+
+44
+00:03:02,948 --> 00:03:07,400
+probability falls to about six
+percent; at two hundred, to less than
+
+45
+00:03:07,400 --> 00:03:11,001
+one in a million: the second
+law emerges at long times.
+
+46
+00:03:12,117 --> 00:03:15,035
+Entropy production is
+the irreducible energy
+
+47
+00:03:15,035 --> 00:03:17,489
+cost of any irreversible computation.
+
+48
+00:03:17,869 --> 00:03:21,478
+It governs the precision of
+clocks and molecular motors, it
+
+49
+00:03:21,478 --> 00:03:24,966
+can be inferred from measured
+trajectories, and in a chip
+
+50
+00:03:24,966 --> 00:03:28,270
+driven out of equilibrium
+it is produced continuously.
+
+51
+00:03:29,383 --> 00:03:32,579
+Common mistakes: thinking
+a trajectory with negative
+
+52
+00:03:32,579 --> 00:03:36,081
+production violates the second
+law, when it is mandatory.
+
+53
+00:03:36,461 --> 00:03:39,338
+Forgetting the system
+entropy in transients.
+
+54
+00:03:39,718 --> 00:03:42,683
+Applying the detailed theorem
+outside its conditions.
+
+55
+00:03:43,063 --> 00:03:45,744
+And confusing entropy
+production with heat.
+
+56
+00:03:46,850 --> 00:03:51,110
+In summary: the entropy production
+of a trajectory is the log of the
+
+57
+00:03:51,110 --> 00:03:54,806
+ratio between its probability
+and that of its time reverse.
+
+58
+00:03:55,186 --> 00:03:58,371
+It satisfies the equality ⟨e^(−Σ)⟩ = 1, of
+
+59
+00:03:58,371 --> 00:04:01,253
+which the second law is a consequence.
+
+60
+00:04:01,633 --> 00:04:04,858
+In a steady state, the
+probability of destroying entropy
+
+61
+00:04:04,858 --> 00:04:07,796
+is exponentially smaller
+than that of producing it.
+
+62
+00:04:08,917 --> 00:04:12,673
+To practice: deduce the second
+law from the integral equality.
+
+63
+00:04:13,053 --> 00:04:17,689
+Show that a Gaussian production must
+have variance equal to twice the mean.
+
+64
+00:04:18,069 --> 00:04:20,328
+Compute an entropy production rate.
+
+65
+00:04:20,708 --> 00:04:23,247
+And evaluate a ratio from
+the detailed theorem.

@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.4}{K-FAC}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} aproximar la curvatura de cada capa por $A\otimes G$; aplicar la inversa con dos factores pequeños; promedios
+móviles y amortiguamiento; variantes expand y reduce.
+\textbf{Prerrequisitos:} 0.2 (producto de Kronecker), 8.2.
+
+\section{Factores de Kronecker}
+En una capa lineal $\nabla W=g\,a^\top$ ($a$: activación de entrada; $g$: gradiente de la salida). Ignorando la curvatura entre capas y suponiendo $a$ y $g$
+independientes:
+\[F_\ell=\mathbb E\big[(aa^\top)\otimes(gg^\top)\big]\approx A\otimes G,\qquad A=\mathbb E[aa^\top],\ G=\mathbb E[gg^\top].\]
+
+\section{Inversión barata}
+$(A\otimes G)^{-1}=A^{-1}\otimes G^{-1}$ y $(A\otimes G)^{-1}\mathrm{vec}(\nabla W)=\mathrm{vec}(G^{-1}\nabla W\,A^{-1})$. Costo $O(d_\text{in}^3+d_\text{out}^3)$ frente a
+$O((d_\text{in}d_\text{out})^3)$: una capa $1000\times1000$ pasa de una matriz $10^6\times10^6$ a dos de $10^3\times10^3$.
+
+\section{Calidad \evS}
+Capa softmax, 20 entradas, 10 clases, 500 ejemplos: $\|A\otimes G-F_\ell\|/\|F_\ell\|=21\,\%$, pero el coseno entre el gradiente natural de K-FAC y el exacto
+es $0{,}94$ (el del gradiente ordinario, $0{,}50$). Matriz aproximada, dirección casi correcta.
+
+\section{En la práctica}
+Promedios móviles exponenciales $A_k=\beta A_{k-1}+(1-\beta)\overline{aa^\top}$ (ídem $G$), inversión cada $T$ pasos, amortiguamiento repartido
+$(A+\sqrt\lambda I)\otimes(G+\sqrt\lambda I)$. Pesos compartidos (convoluciones, transformers; Eschenhagen et al.): \emph{expand} trata cada posición como un ejemplo
+más; \emph{reduce} suma activaciones y gradientes sobre las posiciones antes de formar los factores (más barato).
+
+\begin{aplicacion}
+Entrenamiento de segundo orden de CNN y transformers; aproximaciones de Laplace. El cuello de botella son las inversiones de los factores: K-FAC termodinámico (8.5).
+Laboratorio L11: K-FAC frente a Adam en una CNN pequeña.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Olvidar que ignora la curvatura entre capas. \quad Aplicar los factores en el orden equivocado.
+\item Amortiguar solo un factor. \quad Mezclar estadísticas expand y reduce.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{mg} J. Martens y R. Grosse, Optimizing neural networks with Kronecker-factored approximate curvature, \emph{ICML} (2015).
+\bibitem{esch} R. Eschenhagen et al., Kronecker-factored approximate curvature for modern neural network architectures, \emph{NeurIPS} (2023).
+\bibitem[41]{stso} K. Donatella et al., Scalable thermodynamic second-order optimization, 2025.
+\end{thebibliography}
+\end{document}

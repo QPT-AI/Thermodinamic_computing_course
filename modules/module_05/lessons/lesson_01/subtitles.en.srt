@@ -1,0 +1,296 @@
+1
+00:00:00,350 --> 00:00:02,035
+Lesson 5.1.
+
+2
+00:00:02,415 --> 00:00:06,450
+Why digital hardware is
+inefficient for probabilistic AI.
+
+3
+00:00:07,550 --> 00:00:11,466
+A GPU is an extraordinary
+machine for multiplying matrices.
+
+4
+00:00:11,846 --> 00:00:16,812
+But sampling from a probabilistic model
+is something else: many small updates,
+
+5
+00:00:16,812 --> 00:00:21,333
+each with its own random number, that
+read their neighbors from memory.
+
+6
+00:00:21,713 --> 00:00:26,945
+In this lesson we take apart the cost of
+one Gibbs update on digital hardware and
+
+7
+00:00:26,945 --> 00:00:31,531
+see why a noisy physical device can
+make it thousands of times cheaper.
+
+8
+00:00:32,650 --> 00:00:37,330
+Updating a spin with sixteen neighbors
+requires reading sixteen states
+
+9
+00:00:37,330 --> 00:00:41,943
+and sixteen couplings, summing the
+local field, evaluating a sigmoid,
+
+10
+00:00:41,943 --> 00:00:46,021
+generating a random number,
+comparing and writing the result.
+
+11
+00:00:46,401 --> 00:00:49,421
+The arithmetic is minimal:
+about thirty operations.
+
+12
+00:00:49,801 --> 00:00:54,171
+But every datum travels from
+memory, and in the table from lesson
+
+13
+00:00:54,171 --> 00:00:58,608
+0.1, reading a word from on-chip
+memory already costs more than an
+
+14
+00:00:58,608 --> 00:01:02,575
+addition, and from external
+memory, hundreds of times more.
+
+15
+00:01:03,683 --> 00:01:06,739
+In the roofline model,
+the Gibbs update performs
+
+16
+00:01:06,739 --> 00:01:09,539
+on the order of one
+operation per byte read.
+
+17
+00:01:09,919 --> 00:01:13,094
+It sits far to the left
+of the knee: memory-bound.
+
+18
+00:01:13,474 --> 00:01:16,612
+The GPU spends most of
+its time waiting for
+
+19
+00:01:16,612 --> 00:01:19,312
+data, with its arithmetic units idle.
+
+20
+00:01:19,692 --> 00:01:23,714
+And the sparse graph of an
+Ising model does not lend itself
+
+21
+00:01:23,714 --> 00:01:27,122
+to cache reuse like a dense
+matrix multiplication.
+
+22
+00:01:28,250 --> 00:01:31,364
+In addition, every update
+needs a random number.
+
+23
+00:01:31,744 --> 00:01:35,719
+A digital generator, like
+Philox or xorshift, manufactures
+
+24
+00:01:35,719 --> 00:01:40,311
+pseudorandom bits with several
+multiplications and shifts per word.
+
+25
+00:01:40,691 --> 00:01:43,149
+It is determinism
+disguised as chance, and it
+
+26
+00:01:43,149 --> 00:01:45,280
+is paid for with operations and energy.
+
+27
+00:01:45,660 --> 00:01:49,577
+A physical device, instead,
+already fluctuates: according to
+
+28
+00:01:49,577 --> 00:01:53,560
+the syllabus, an all-transistor
+generator based on shot noise
+
+29
+00:01:53,560 --> 00:01:56,759
+produces a random bit for
+hundreds of attojoules.
+
+30
+00:01:57,883 --> 00:02:01,227
+The third cost is
+invisible: noise margins.
+
+31
+00:02:01,607 --> 00:02:05,508
+Each digital bit is stored with
+barriers of tens of k_B T so
+
+32
+00:02:05,508 --> 00:02:09,214
+that thermal noise never flips
+it, as we saw in unit one.
+
+33
+00:02:09,594 --> 00:02:13,840
+For a sampler that is absurd: we
+spend energy removing noise and then
+
+34
+00:02:13,840 --> 00:02:17,963
+more energy manufacturing it again
+with the pseudorandom generator.
+
+35
+00:02:18,343 --> 00:02:23,040
+A pbit works with barriers on the order
+of k_B T and uses the noise directly.
+
+36
+00:02:24,150 --> 00:02:26,514
+Let's make an order-of-magnitude estimate.
+
+37
+00:02:26,894 --> 00:02:30,700
+If an update reads about twelve
+words from on-chip memory at
+
+38
+00:02:30,700 --> 00:02:34,570
+five picojoules each, plus a
+few picojoules of arithmetic and
+
+39
+00:02:34,570 --> 00:02:38,122
+randomness, it costs on the
+order of seventy picojoules.
+
+40
+00:02:38,502 --> 00:02:43,779
+The Z1 chip states under one watt for
+two hundred sixty-nine thousand pbits
+
+41
+00:02:43,779 --> 00:02:48,282
+at fifty megahertz: at most
+seventy-four femtojoules per update.
+
+42
+00:02:48,662 --> 00:02:50,867
+The difference is about
+a thousand times, and
+
+43
+00:02:50,867 --> 00:02:52,876
+that is without counting external memory.
+
+44
+00:02:53,983 --> 00:02:57,975
+The design lesson is clear:
+compute where the data lives,
+
+45
+00:02:58,355 --> 00:03:02,764
+storing the couplings next to each
+pbit; use physical noise instead of
+
+46
+00:03:02,764 --> 00:03:07,047
+pseudorandom generators; and read
+out results as little as possible,
+
+47
+00:03:07,427 --> 00:03:11,464
+because input, output and
+digital glue can dominate
+
+48
+00:03:11,464 --> 00:03:15,263
+the system budget, as we
+will see in lesson 5.8.
+
+49
+00:03:16,383 --> 00:03:20,477
+Frequent mistakes: comparing
+operations instead of bytes moved.
+
+50
+00:03:20,857 --> 00:03:25,373
+Comparing a chip's fabric energy
+with a GPU's system energy.
+
+51
+00:03:25,753 --> 00:03:28,505
+Ignoring the cost of the
+pseudorandom generator.
+
+52
+00:03:28,885 --> 00:03:32,609
+And treating order-of-magnitude
+estimates as if they were measurements.
+
+53
+00:03:33,717 --> 00:03:38,628
+In summary: on digital hardware, a
+Gibbs update pays for data movement,
+
+54
+00:03:38,628 --> 00:03:43,817
+randomness generation and noise margins,
+and the arithmetic is almost free.
+
+55
+00:03:44,197 --> 00:03:46,449
+Sampling is memory-bound.
+
+56
+00:03:46,829 --> 00:03:51,155
+A physical pbit, with its couplings
+next to it and noise as a resource,
+
+57
+00:03:51,155 --> 00:03:55,177
+can be on the order of a thousand
+times more efficient per update.
+
+58
+00:03:56,283 --> 00:04:00,520
+To practice: estimate the
+arithmetic intensity of an update.
+
+59
+00:04:00,900 --> 00:04:04,938
+Bound the Z1 energy per update
+and compare it with Landauer.
+
+60
+00:04:05,318 --> 00:04:07,658
+Explain why the GPU sits idle.
+
+61
+00:04:08,038 --> 00:04:10,864
+And list the three costs a pbit avoids.

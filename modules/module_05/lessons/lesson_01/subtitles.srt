@@ -1,0 +1,311 @@
+1
+00:00:00,350 --> 00:00:02,035
+Lección 5.1.
+
+2
+00:00:02,415 --> 00:00:06,450
+Por qué el hardware digital es
+ineficiente para la IA probabilística.
+
+3
+00:00:07,550 --> 00:00:11,466
+Una GPU es una máquina extraordinaria
+para multiplicar matrices.
+
+4
+00:00:11,846 --> 00:00:15,187
+Pero muestrear de un modelo
+probabilístico es otra cosa:
+
+5
+00:00:15,187 --> 00:00:18,469
+muchas actualizaciones
+pequeñas, cada una con su número
+
+6
+00:00:18,469 --> 00:00:21,333
+aleatorio, que leen a sus
+vecinos de la memoria.
+
+7
+00:00:21,713 --> 00:00:25,120
+En esta lección desarmamos el
+costo de una actualización de
+
+8
+00:00:25,120 --> 00:00:28,355
+Gibbs en hardware digital y
+vemos por qué un dispositivo
+
+9
+00:00:28,355 --> 00:00:31,531
+físico ruidoso puede hacerla
+miles de veces más barata.
+
+10
+00:00:32,650 --> 00:00:37,314
+Una actualización de un espín con
+dieciséis vecinos necesita leer dieciséis
+
+11
+00:00:37,314 --> 00:00:42,165
+estados y dieciséis acoplamientos, sumar
+el campo local, evaluar una sigmoide,
+
+12
+00:00:42,165 --> 00:00:46,021
+generar un número aleatorio,
+comparar y escribir el resultado.
+
+13
+00:00:46,401 --> 00:00:49,421
+La aritmética es mínima:
+unas treinta operaciones.
+
+14
+00:00:49,801 --> 00:00:54,313
+Pero cada dato viaja desde la memoria,
+y en la tabla de la lección cero
+
+15
+00:00:54,313 --> 00:00:58,825
+punto uno, leer una palabra de la
+memoria interna ya cuesta más que una
+
+16
+00:00:58,825 --> 00:01:02,575
+suma, y leerla de la memoria
+externa, cientos de veces más.
+
+17
+00:01:03,683 --> 00:01:06,787
+En el modelo roofline, la
+actualización de Gibbs hace
+
+18
+00:01:06,787 --> 00:01:09,539
+del orden de una operación
+por cada byte leído.
+
+19
+00:01:09,919 --> 00:01:13,094
+Está muy a la izquierda del
+codo: limitada por memoria.
+
+20
+00:01:13,474 --> 00:01:16,490
+La GPU pasa la mayor
+parte del tiempo esperando
+
+21
+00:01:16,490 --> 00:01:19,312
+datos, con sus unidades
+aritméticas ociosas.
+
+22
+00:01:19,692 --> 00:01:23,707
+Y el grafo disperso de un modelo
+de Ising no se presta a reutilizar
+
+23
+00:01:23,707 --> 00:01:27,122
+datos en caché como una
+multiplicación de matrices densa.
+
+24
+00:01:28,250 --> 00:01:31,364
+Además, cada actualización
+necesita un número aleatorio.
+
+25
+00:01:31,744 --> 00:01:35,480
+Un generador digital, como
+Philox o xorshift, fabrica bits
+
+26
+00:01:35,480 --> 00:01:40,311
+pseudoaleatorios con varias multiplicaciones
+y desplazamientos por palabra.
+
+27
+00:01:40,691 --> 00:01:45,280
+Es determinismo disfrazado de azar, y
+se paga con operaciones y con energía.
+
+28
+00:01:45,660 --> 00:01:49,638
+Un dispositivo físico, en cambio,
+ya fluctúa: según el pensum,
+
+29
+00:01:49,638 --> 00:01:53,487
+un generador de solo transistores
+basado en ruido de disparo
+
+30
+00:01:53,487 --> 00:01:56,759
+produce un bit aleatorio
+con cientos de attojulios.
+
+31
+00:01:57,883 --> 00:02:01,227
+El tercer costo es invisible:
+los márgenes de ruido.
+
+32
+00:02:01,607 --> 00:02:05,586
+Cada bit digital se guarda con
+barreras de decenas de k_B T para que
+
+33
+00:02:05,586 --> 00:02:09,214
+el ruido térmico nunca lo voltee,
+como vimos en la unidad uno.
+
+34
+00:02:09,594 --> 00:02:14,144
+Para un muestreador eso es absurdo: gastamos
+energía en eliminar el ruido y luego
+
+35
+00:02:14,144 --> 00:02:17,963
+más energía en fabricarlo de nuevo
+con el generador pseudoaleatorio.
+
+36
+00:02:18,343 --> 00:02:23,040
+Un pbit trabaja con barreras del orden
+de k_B T y usa el ruido directamente.
+
+37
+00:02:24,150 --> 00:02:26,514
+Hagamos una estimación
+de orden de magnitud.
+
+38
+00:02:26,894 --> 00:02:30,778
+Si una actualización lee unas
+doce palabras de memoria interna a
+
+39
+00:02:30,778 --> 00:02:34,784
+cinco picojulios cada una, más
+unos pocos picojulios de aritmética
+
+40
+00:02:34,784 --> 00:02:38,122
+y aleatoriedad, cuesta del
+orden de setenta picojulios.
+
+41
+00:02:38,502 --> 00:02:41,661
+El chip Z1 declara menos
+de un vatio para doscientos
+
+42
+00:02:41,661 --> 00:02:45,002
+sesenta y nueve mil pbits a
+cincuenta megahercios: como
+
+43
+00:02:45,002 --> 00:02:48,282
+máximo setenta y cuatro
+femtojulios por actualización.
+
+44
+00:02:48,662 --> 00:02:52,876
+La diferencia es de unas mil veces,
+y eso sin contar la memoria externa.
+
+45
+00:02:53,983 --> 00:02:57,975
+La lección para el diseño es clara:
+calcular donde viven los datos,
+
+46
+00:02:58,355 --> 00:03:02,943
+guardando los acoplamientos junto a
+cada pbit; usar el ruido físico en lugar
+
+47
+00:03:02,943 --> 00:03:07,047
+de generadores pseudoaleatorios; y
+leer resultados lo menos posible,
+
+48
+00:03:07,427 --> 00:03:11,288
+porque la entrada y salida y el
+pegamento digital pueden dominar el
+
+49
+00:03:11,288 --> 00:03:15,263
+presupuesto del sistema, como veremos
+en la lección cinco punto ocho.
+
+50
+00:03:16,383 --> 00:03:20,477
+Errores frecuentes: comparar
+operaciones en lugar de bytes movidos.
+
+51
+00:03:20,857 --> 00:03:25,373
+Comparar la energía del tejido de un chip
+con la energía de sistema de una GPU.
+
+52
+00:03:25,753 --> 00:03:28,505
+Ignorar el costo del
+generador pseudoaleatorio.
+
+53
+00:03:28,885 --> 00:03:32,609
+Y tratar estimaciones de orden de
+magnitud como si fueran mediciones.
+
+54
+00:03:33,717 --> 00:03:37,372
+En resumen: en hardware digital,
+una actualización de Gibbs
+
+55
+00:03:37,372 --> 00:03:40,719
+paga movimiento de datos,
+generación de aleatoriedad y
+
+56
+00:03:40,719 --> 00:03:43,817
+márgenes de ruido, y la
+aritmética es casi gratis.
+
+57
+00:03:44,197 --> 00:03:46,449
+El muestreo está limitado por memoria.
+
+58
+00:03:46,829 --> 00:03:51,216
+Un pbit físico, con los acoplamientos
+a su lado y el ruido como recurso,
+
+59
+00:03:51,216 --> 00:03:55,177
+puede ser del orden de mil veces
+más eficiente por actualización.
+
+60
+00:03:56,283 --> 00:04:00,520
+Para practicar: estima la intensidad
+aritmética de una actualización.
+
+61
+00:04:00,900 --> 00:04:04,938
+Acota la energía por actualización
+del Z1 y compárala con Landauer.
+
+62
+00:04:05,318 --> 00:04:07,658
+Explica por qué la GPU queda ociosa.
+
+63
+00:04:08,038 --> 00:04:10,864
+Y enumera los tres
+costos que un pbit evita.

@@ -1,0 +1,423 @@
+1
+00:00:00,350 --> 00:00:02,055
+Lesson 0.5.
+
+2
+00:00:02,435 --> 00:00:03,542
+Markov chains.
+
+3
+00:00:04,650 --> 00:00:08,193
+A Gibbs sampler, a pbit chip
+or a particle hopping between
+
+4
+00:00:08,193 --> 00:00:11,919
+wells have something in common:
+their next state depends only
+
+5
+00:00:11,919 --> 00:00:15,340
+on the current state, and on
+nothing else from the past.
+
+6
+00:00:15,720 --> 00:00:17,285
+That is a Markov chain.
+
+7
+00:00:17,664 --> 00:00:20,894
+Markov chains are the
+mathematical engine of sampling.
+
+8
+00:00:21,274 --> 00:00:24,958
+In this lesson we will see how
+a chain forgets its starting
+
+9
+00:00:24,958 --> 00:00:28,080
+point, which distribution
+it reaches and how fast.
+
+10
+00:00:29,183 --> 00:00:31,955
+Imagine a walker on a three-state graph.
+
+11
+00:00:32,335 --> 00:00:35,326
+At each step it rolls a loaded
+die that depends only on
+
+12
+00:00:35,326 --> 00:00:38,208
+the node it is at, and jumps
+according to the result.
+
+13
+00:00:38,588 --> 00:00:43,960
+The arrows show the transition probabilities:
+from state one, for example, it stays
+
+14
+00:00:43,960 --> 00:00:48,620
+with probability two thirds and moves
+to two with probability one third.
+
+15
+00:00:49,000 --> 00:00:53,110
+If we count how often it visits
+each state, the fractions
+
+16
+00:00:53,110 --> 00:00:56,787
+settle: three tenths, four
+tenths and three tenths.
+
+17
+00:00:57,167 --> 00:00:59,817
+That is the long-run
+behavior of the chain.
+
+18
+00:01:00,950 --> 00:01:03,500
+Instead of following
+a single walker, let's
+
+19
+00:01:03,500 --> 00:01:05,990
+follow the whole probability distribution.
+
+20
+00:01:06,370 --> 00:01:10,867
+It is a row vector p_n,
+and one step of the chain
+
+21
+00:01:10,867 --> 00:01:16,006
+multiplies it by the transition
+matrix: p_{n+1} = p_n P.
+
+22
+00:01:16,386 --> 00:01:19,636
+Let's start with all the
+probability in state one.
+
+23
+00:01:20,016 --> 00:01:24,104
+The bars change step by step and
+approach the stationary distribution.
+
+24
+00:01:24,484 --> 00:01:29,529
+If we start in state three, or in any
+mixture, we reach the same destination.
+
+25
+00:01:29,909 --> 00:01:31,791
+The chain forgets where it came from.
+
+26
+00:01:33,150 --> 00:01:35,821
+The limiting distribution does not change
+
+27
+00:01:35,821 --> 00:01:38,361
+when one more step is applied: π P = π.
+
+28
+00:01:38,741 --> 00:01:43,639
+It is a left eigenvector of the
+transition matrix, with eigenvalue one.
+
+29
+00:01:44,019 --> 00:01:48,444
+For an irreducible and aperiodic chain,
+that is, one that can go from any
+
+30
+00:01:48,444 --> 00:01:52,506
+state to any other and does not
+oscillate with a fixed period, that
+
+31
+00:01:52,506 --> 00:01:57,174
+distribution exists, is unique, and the
+chain converges to it from any start.
+
+32
+00:01:58,283 --> 00:02:01,808
+There is a stronger condition than
+
+33
+00:02:01,808 --> 00:02:07,199
+stationarity: detailed
+balance, π_i P_ij = π_j P_ji.
+
+34
+00:02:07,579 --> 00:02:11,347
+It means that, at equilibrium,
+the probability flow from
+
+35
+00:02:11,347 --> 00:02:14,644
+i to j equals the flow
+from j to i on every edge.
+
+36
+00:02:15,024 --> 00:02:18,481
+In our chain the flows
+cancel edge by edge.
+
+37
+00:02:18,861 --> 00:02:22,760
+Now look at a chain that rotates
+around a cycle: its stationary
+
+38
+00:02:22,760 --> 00:02:26,102
+distribution is uniform, but
+a net current circulates.
+
+39
+00:02:26,482 --> 00:02:29,316
+It is stationary, but it does
+not satisfy detailed balance.
+
+40
+00:02:29,696 --> 00:02:32,948
+Chains that satisfy detailed
+balance are called reversible,
+
+41
+00:02:32,948 --> 00:02:35,979
+and they describe systems in
+thermodynamic equilibrium.
+
+42
+00:02:36,359 --> 00:02:40,863
+If detailed balance holds,
+stationarity follows automatically.
+
+43
+00:02:41,983 --> 00:02:43,729
+How fast is the start forgotten?
+
+44
+00:02:44,109 --> 00:02:46,765
+The answer lies in the other eigenvalues.
+
+45
+00:02:47,145 --> 00:02:48,927
+The largest is always one.
+
+46
+00:02:49,307 --> 00:02:53,253
+The second largest in absolute
+value, λ₂, controls the
+
+47
+00:02:53,253 --> 00:02:57,053
+speed: the distance to
+stationarity decays as ∣λ₂∣ⁿ.
+
+48
+00:02:57,433 --> 00:03:00,687
+On a log scale, the
+distance falls in a straight
+
+49
+00:03:00,687 --> 00:03:03,398
+line, with slope equal to the log of λ₂.
+
+50
+00:03:03,778 --> 00:03:09,318
+The spectral gap is one minus λ₂, and
+the mixing time grows as its inverse.
+
+51
+00:03:09,698 --> 00:03:14,569
+Chains with a small gap take a long
+time to forget; in Ising models near
+
+52
+00:03:14,569 --> 00:03:19,033
+the critical temperature the gap
+closes and sampling becomes slow.
+
+53
+00:03:20,150 --> 00:03:21,847
+Let's check with our chain.
+
+54
+00:03:22,227 --> 00:03:26,227
+We solve π P = π with the
+sum equal to one, and get
+
+55
+00:03:26,227 --> 00:03:29,600
+three tenths, four
+tenths and three tenths.
+
+56
+00:03:29,980 --> 00:03:35,151
+Let's check detailed balance between states
+one and two: three tenths times one third
+
+57
+00:03:35,151 --> 00:03:39,531
+gives one tenth, and four tenths times
+one quarter also gives one tenth.
+
+58
+00:03:39,911 --> 00:03:44,349
+The eigenvalues of the matrix are
+one, two thirds and one sixth.
+
+59
+00:03:44,729 --> 00:03:48,413
+The spectral gap is one
+third, so each step shrinks
+
+60
+00:03:48,413 --> 00:03:51,953
+the distance to stationarity
+to about two thirds.
+
+61
+00:03:53,083 --> 00:03:56,499
+Markov chains show up
+everywhere in the course.
+
+62
+00:03:56,879 --> 00:03:59,713
+Gibbs and Metropolis are
+chains designed so that their
+
+63
+00:03:59,713 --> 00:04:02,547
+stationary distribution is
+the Boltzmann distribution.
+
+64
+00:04:02,927 --> 00:04:06,172
+A pbit chip is a physical
+Markov chain, and its
+
+65
+00:04:06,172 --> 00:04:09,486
+spectral gap decides how
+many sweeps are needed.
+
+66
+00:04:09,866 --> 00:04:13,775
+In lab one you will build chains
+with three and fifty states,
+
+67
+00:04:13,775 --> 00:04:17,362
+and measure convergence against
+the spectral prediction.
+
+68
+00:04:18,483 --> 00:04:21,087
+In the next lesson we will see that, on a
+
+69
+00:04:21,087 --> 00:04:23,753
+cycle, the eigenvectors are Fourier waves.
+
+70
+00:04:24,133 --> 00:04:27,892
+In unit one the stationary distribution
+will be the Boltzmann distribution.
+
+71
+00:04:28,272 --> 00:04:32,375
+The Fokker–Planck equation is the
+continuous version of what we saw today.
+
+72
+00:04:32,755 --> 00:04:37,553
+And in unit four we will measure in
+practice how correlated the samples are.
+
+73
+00:04:38,683 --> 00:04:42,574
+Watch the conventions: if the
+distribution is a row vector, it
+
+74
+00:04:42,574 --> 00:04:46,528
+multiplies from the left and the
+rows of the matrix sum to one.
+
+75
+00:04:46,908 --> 00:04:50,029
+Remember that stationary does
+not imply detailed balance.
+
+76
+00:04:50,409 --> 00:04:55,415
+A periodic chain can have a stationary
+distribution and still not converge.
+
+77
+00:04:55,795 --> 00:04:59,245
+And the speed is decided by
+the absolute value of the
+
+78
+00:04:59,245 --> 00:05:02,889
+second eigenvalue: one near
+minus one also slows mixing.
+
+79
+00:05:04,017 --> 00:05:09,115
+In summary: a Markov chain is
+described by its transition
+
+80
+00:05:09,115 --> 00:05:13,766
+matrix, and distributions
+evolve as p_{n+1} = p_n P.
+
+81
+00:05:14,146 --> 00:05:17,052
+The stationary distribution
+satisfies π P = π,
+
+82
+00:05:17,052 --> 00:05:19,769
+and detailed balance
+describes equilibrium.
+
+83
+00:05:20,149 --> 00:05:24,216
+The spectral gap sets how fast
+the chain forgets its start.
+
+84
+00:05:25,317 --> 00:05:29,887
+To practice: prove that detailed
+balance implies stationarity.
+
+85
+00:05:30,267 --> 00:05:34,698
+Find the stationary distribution of a
+two-state chain and its second eigenvalue.
+
+86
+00:05:35,078 --> 00:05:39,428
+Compute how many steps are needed to
+reach a distance of one millionth.
+
+87
+00:05:39,808 --> 00:05:42,078
+And build a chain with
+a uniform stationary
+
+88
+00:05:42,078 --> 00:05:44,401
+distribution that
+violates detailed balance.

@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{4.5}{El pbit como neurona estocástica}
+
+\noindent\textbf{Unidad 4.}\quad\textbf{Objetivos:} definir el pbit; implementarlo con $\mathrm{sgn}(\tanh(\beta u)-r)$; redes de pbits como Gibbs de Ising y como
+redes neuronales estocásticas.
+\textbf{Prerrequisitos:} 4.3 (Gibbs), 2.8 (procesos de saltos).
+
+\section{Definición}
+\begin{definicion}[ (pbit)]
+Un pbit recibe una entrada $u$ y emite $s\in\{-1,+1\}$ con $P(s=+1)=\sigma(2\beta u)$, de modo que $\mathbb E[s]=\tanh(\beta u)$.
+\end{definicion}
+Con $u=0$ es una moneda justa; con $\beta\to\infty$ es un bit digital con umbral $s=\mathrm{sgn}(u)$. En el tiempo, un pbit físico salta entre
+estados como un proceso de dos estados (lección 2.8) cuyas tasas fijan la probabilidad estacionaria $\sigma(2\beta u)$.
+
+\section{Regla de hardware}
+\begin{resultado}
+Si $r\sim U(-1,1)$, entonces $s=\mathrm{sgn}\big(\tanh(\beta u)-r\big)$ cumple $P(s=+1)=P(r<\tanh\beta u)=\frac{1+\tanh\beta u}{2}=\sigma(2\beta u)$.
+\end{resultado}
+\begin{ejemplo}
+$2\times10^5$ actualizaciones por entrada \evS:
+\begin{center}\begin{tabular}{lccccc}\toprule
+$u$ & $-1$ & $0$ & $0{,}5$ & $1{,}5$\\\midrule
+$\hat P(+1)$ & 0,120 & 0,502 & 0,732 & 0,953\\
+$\sigma(2u)$ & 0,119 & 0,500 & 0,731 & 0,953\\
+$\hat{\mathbb E}[s]$ / $\tanh u$ & $-0{,}760$ / $-0{,}762$ & 0,003 / 0 & 0,464 / 0,462 & 0,906 / 0,905\\\bottomrule\end{tabular}\end{center}
+\end{ejemplo}
+
+\section{Redes de pbits}
+Si la entrada de cada pbit es su campo local $u_i=\sum_jJ_{ij}s_j+h_i$ y los pbits se actualizan según un coloreo del grafo, la red ejecuta Gibbs
+cromático (lección 4.3) y su estacionaria es $e^{-\beta E}/Z$ con $E$ de Ising. Ejemplo: cadena de 3 pbits, $J=1$, $h=(0{,}3;0;-0{,}3)$, $\beta=1$:
+el histograma de $6\times10^4$ barridos reproduce las 8 probabilidades de Boltzmann.
+\begin{intuicion}
+Un pbit es una neurona: suma ponderada más sesgo, pasada por una sigmoide, pero con salida aleatoria. La red no \emph{calcula} la distribución:
+la \emph{habita}. Promediando, $\langle s_i\rangle=\tanh(\beta\langle u_i\rangle)$ aproximadamente: la neurona tanh determinista del campo medio (4.9).
+\end{intuicion}
+
+\begin{aplicacion}
+MTJ de barrera baja (fluctuaciones térmicas a GHz) y pbits CMOS (RNG + LUT de tanh + comparador) \cite{camsari,kaiser}; máquinas de Ising dispersas
+en FPGA; Extropic Z1: 269\,568 pbits, 16 acoplamientos cada uno (Unidad 5). Laboratorio L5.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $\sigma(\beta u)$ en lugar de $\sigma(2\beta u)$ para espines $\pm1$. \quad Actualizar vecinos a la vez.
+\item Confundir media $\tanh(\beta u)$ con probabilidad $\sigma(2\beta u)$. \quad RNG sesgado o correlacionado.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[17]{camsari} K. Y. Camsari, B. M. Sutton y S. Datta, p-bits for probabilistic spin logic, Appl. Phys. Rev. 6, 011305 (2019).
+\bibitem[18]{kaiser} J. Kaiser y S. Datta, Probabilistic computing with p-bits, Appl. Phys. Lett. 119, 150503 (2021).
+\bibitem[21]{extropic} Extropic, Thermodynamic Computing From Zero to One, 2025.
+\end{thebibliography}
+\end{document}

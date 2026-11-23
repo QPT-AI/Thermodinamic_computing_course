@@ -1,0 +1,159 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.5}{El principio de Landauer}
+
+\noindent\textbf{Unidad 1 --- Termodinámica e información.}\quad
+\textbf{Objetivos:} (i) explicar por qué borrar un bit tiene un costo mínimo $\kB T\ln 2$;
+(ii) derivar la cota con la segunda ley y con la energía libre; (iii) calcular su valor y compararlo
+con dispositivos reales; (iv) distinguir reversibilidad lógica y termodinámica.
+\textbf{Prerrequisitos:} lecciones 1.1 (energía libre), 1.3 (entropía de Shannon/Gibbs) y 1.4 (Szilard).
+
+\section{¿Por qué importa?}
+Toda la energía que consume un procesador termina como calor. La pregunta de Landauer (1961)
+\cite{landauer} es si existe un costo \emph{mínimo}, impuesto por las leyes de la física y no por la
+ingeniería, para procesar información. La respuesta es sutil: la mayor parte de las operaciones
+lógicas \emph{podrían} hacerse sin disipación mínima, pero hay una que no: \textbf{borrar}.
+
+\begin{intuicion}
+Una memoria de un bit es un sistema físico con dos regiones distinguibles del espacio de estados
+(«0» y «1»). Borrar significa llevarla a «0» \emph{sin importar} dónde estaba. Eso es fusionar dos
+regiones en una: el volumen de espacio de fases accesible se reduce a la mitad. Comprimir un
+sistema en contacto con un baño térmico cuesta trabajo, y ese trabajo se va al baño como calor.
+\end{intuicion}
+
+\section{El modelo de una partícula}
+Considere un gas de una sola partícula en una caja de volumen $V$ en contacto con un baño a
+temperatura $T$. Una pared divide la caja: izquierda $=0$, derecha $=1$. Para borrar, se retira la
+pared y se comprime isotérmica y cuasiestáticamente con un pistón hasta $V/2$. Con la ecuación de
+estado del gas ideal de una partícula, $pV=\kB T$, el trabajo realizado es
+\begin{equation}
+W = -\int_V^{V/2} p\,\dd V' = \kB T \int_{V/2}^{V}\frac{\dd V'}{V'} = \kB T\ln 2 .
+\end{equation}
+Como la energía interna de un gas ideal a $T$ constante no cambia, $Q=W=\kB T\ln 2$ sale al baño.
+
+\section{Derivación general}
+\subsection{Ruta 1: entropía y segunda ley}
+\begin{definicion}[ (entropía de Gibbs)]
+Para una distribución $p_i$ sobre los estados lógicos/físicos de la memoria,
+$S=-\kB\sum_i p_i\ln p_i$. Con $H$ la entropía de Shannon en bits, $S=\kB\ln 2\,H$.
+\end{definicion}
+Antes del borrado (bit desconocido) $p=(\tfrac12,\tfrac12)$ y $S_{\text{antes}}=\kB\ln2$. Después
+$p=(1,0)$ y $S_{\text{después}}=0$. La memoria pierde $\Delta S_{\text{mem}}=-\kB\ln2$. La segunda ley
+aplicada a memoria $+$ entorno exige $\Delta S_{\text{mem}}+\Delta S_{\text{ent}}\ge0$. Un baño a
+temperatura $T$ que recibe un calor $Q$ aumenta su entropía en $Q/T$. Por lo tanto
+\begin{resultado}[ (cota de Landauer)]
+\begin{equation}
+Q_{\text{dis}}\;\ge\;\kB T\ln 2\qquad\text{por bit borrado (bit inicialmente uniforme).}
+\end{equation}
+Para un bit con distribución inicial $p$ que se reinicia a un estado conocido:
+$Q_{\text{dis}}\ge \kB T\ln 2\; h(p)$, con $h(p)=-p\log_2p-(1-p)\log_2(1-p)$.
+\end{resultado}
+
+\subsection{Ruta 2: energía libre}
+Para un proceso isotérmico, la segunda ley se escribe $W\ge\Delta F$ con $F=U-TS$. En un pozo doble
+simétrico (los estados 0 y 1 tienen la misma energía) se cumple $\Delta U=0$, de modo que
+$\Delta F=-T\Delta S=\kB T\ln 2$. Por la primera ley, $Q = W-\Delta U = W\ge \kB T\ln2$. Ambas rutas
+coinciden. (La segunda ruta muestra además que, si los estados tuvieran energías distintas, parte del
+costo podría compensarse con $\Delta U$; lo que es universal es la parte entrópica.)
+
+\section{El borrado en un pozo doble (simulación)}
+Una memoria realista es una partícula sobreamortiguada en un potencial
+$V(x,t)=E_b\,[x^4-2s(t)x^2]+c(t)\,x$ (forma $ax^4-bx^2+cx$ del laboratorio L2) que obedece la dinámica de Langevin
+$\dot x=-\mu\,\partial_xV+\sqrt{2\mu\kB T}\,\xi(t)$. Con $s=1$, $c=0$ hay dos pozos en $x=\pm1$ separados
+por una barrera $E_b$. El protocolo de borrado es:
+\begin{enumerate}[nosep]
+\item bajar la barrera ($s:1\to0$): los dos estados se fusionan;
+\item inclinar ($c:0\to c_{\max}$): toda la probabilidad se desplaza a $x<0$;
+\item subir la barrera ($s:0\to1$) y quitar la inclinación ($c\to0$).
+\end{enumerate}
+El trabajo de una trayectoria se calcula con la definición de Sekimoto,
+$W=\int_0^\tau \partial_tV(x_t,t)\,\dd t$ (Unidad 3.1). En las animaciones de esta lección usamos
+$E_b=c_{\max}=8\,\kB T$, $\mu=1$, paso $\Delta t=10^{-3}$ y 4000 trayectorias por punto. Resultados
+\evS:
+\begin{center}
+\begin{tabular}{lccccccc}\toprule
+$\tau$ & 1 & 2 & 5 & 10 & 20 & 50 & 100\\\midrule
+$\langle W\rangle/\kB T$ & 4,30 & 2,61 & 1,49 & 1,12 & 0,90 & 0,78 & 0,73\\\bottomrule
+\end{tabular}
+\end{center}
+El trabajo medio se acerca a $\ln 2\approx0{,}693$ \emph{por arriba}, con un exceso que decae
+aproximadamente como $a/\tau$ ($a\approx4\,\kB T$ en estas unidades). Para $\tau$ muy grande aparece un
+efecto secundario: la barrera finita permite saltos térmicos de regreso (fallo de borrado), y la
+cota relevante pasa a ser $\kB T\ln2\,[1-h(p_{\text{fallo}})]$.
+
+\section{Ejemplo numérico}
+\begin{ejemplo}
+Con $\kB=1{,}380649\times10^{-23}$ J/K (valor exacto del SI) y $T=300$ K:
+$\kB T\ln2=1{,}380649\times10^{-23}\cdot300\cdot0{,}693147\approx\SI{2.871e-21}{J}\approx\SI{0.0179}{eV}$.
+A $T=4$ K la cota es 75 veces menor, $\approx\SI{3.83e-23}{J}$.
+El pensum cita para un chip tipo Z1 una energía por actualización de pbit $e_{\text{update}}\le
+\SI{7.4e-14}{J}$ \evP; el cociente es $7{,}4\times10^{-14}/2{,}87\times10^{-21}\approx2{,}6\times10^{7}$.
+\end{ejemplo}
+
+\section{Reversibilidad lógica y termodinámica}
+Una función lógica es \emph{reversible} si es inyectiva (de la salida se reconstruye la entrada).
+NOT es una biyección; AND envía $00,01,10\mapsto0$. Con entradas uniformes, la entropía de entrada es
+2 bits y la de salida es $h(1/4)\approx0{,}811$ bits: se pierden $\approx1{,}19$ bits, que cuestan al
+menos $1{,}19\,\kB T\ln2$ si esa información se descarta en el entorno.
+Bennett \cite{bennett} mostró que cualquier cómputo puede hacerse de forma lógicamente reversible:
+\emph{calcular} guardando la historia, \emph{copiar} el resultado y \emph{descalcular} para devolver los
+registros auxiliares a su estado inicial. El borrado inevitable se reduce a lo que se quiera
+desechar de verdad. La reversibilidad \emph{termodinámica} (disipación $\to0$) exige además
+operar cuasiestáticamente, es decir, lentamente.
+
+\section{Aplicaciones y contexto}
+\begin{aplicacion}
+\begin{itemize}[nosep]
+\item \textbf{Confiabilidad.} La tasa de error térmico de un bit con barrera $E_b$ escala como
+$e^{-E_b/\kB T}$; para errores de $10^{-17}$ se necesita $E_b\approx 39\,\kB T$. Los márgenes de ruido de
+la lógica digital ya sitúan cada operación muy por encima de $\kB T\ln2$.
+\item \textbf{Comunicación.} Cargar un cable de capacidad $C$ a voltaje $V$ disipa del orden de $CV^2$,
+independiente de Landauer (Unidad 0.1).
+\item \textbf{Cómputo termodinámico.} El objetivo no es alcanzar Landauer sino dejar de pagar por
+suprimir el ruido: usarlo como fuente de aleatoriedad para muestrear (Unidades 4--5).
+\item \textbf{Laboratorio L2.} Reproducir la tabla anterior, el histograma de $W$ y la curva
+$\langle W\rangle(\tau)$; reto: cerrar el ciclo información--trabajo con la máquina de Szilard.
+\end{itemize}
+\end{aplicacion}
+
+\section{Conexiones}
+El principio resuelve el demonio de Maxwell (lección 1.4): el demonio debe borrar su memoria y ese
+borrado paga lo ganado. En la Unidad 3 se formaliza el trabajo y el calor por trayectoria, se
+demuestra la igualdad de Jarzynski y se cuantifica el costo de borrar rápido (límites de velocidad,
+longitud termodinámica). La Unidad 3.7 trata el reinicio y la lectura sin errores, y la Unidad 5
+compara energías reales de pbits con esta cota.
+
+\begin{error}
+\begin{itemize}[nosep]
+\item \emph{«Toda operación cuesta $\kB T\ln2$».} Solo el borrado lógicamente irreversible tiene costo mínimo.
+\item \emph{«El costo se paga al medir».} En la formulación de Landauer--Bennett se paga al borrar la memoria.
+\item \emph{«Borrar cualquier bit cuesta $\kB T\ln2$».} El costo mínimo es $\kB T\ln2\cdot h(p)$; un bit conocido se reinicia gratis.
+\item \emph{«Landauer limita a los chips actuales».} Hoy dominan los márgenes de ruido y el movimiento de datos (factor $\sim10^{7}$).
+\item \emph{«La cota se alcanza con cualquier protocolo».} Solo en el límite cuasiestático; a $\tau$ finito hay exceso $\propto1/\tau$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+\begin{itemize}[nosep]
+\item Borrar un bit uniforme reduce la entropía de la memoria en $\kB\ln2$.
+\item La segunda ley obliga a disipar $Q\ge\kB T\ln2\approx\SI{2.87e-21}{J}$ a 300 K.
+\item Solo pagan las operaciones lógicamente irreversibles; Bennett muestra cómo evitarlas.
+\item El límite solo se alcanza con protocolos lentos.
+\end{itemize}
+
+\section{Preguntas de verificación}
+\begin{enumerate}[nosep]
+\item ¿Qué cambia en la cota si la memoria está a 77 K (nitrógeno líquido)?
+\item ¿Por qué el borrado de un bit conocido no necesita disipar calor?
+\item En el protocolo del pozo doble, ¿en qué paso se pierde la información?
+\end{enumerate}
+
+\begin{thebibliography}{9}\small
+\bibitem[8]{landauer} R. Landauer, Irreversibility and heat generation in the computing process, \emph{IBM J. Res. Dev.} 5, 183 (1961).
+\bibitem[9]{bennett} C. H. Bennett, Notes on Landauer's principle, reversible computation and Maxwell's demon, 2003. \url{https://arxiv.org/abs/physics/0210005}
+\bibitem[10]{wolpert} D. H. Wolpert, The stochastic thermodynamics of computation, \emph{J. Phys. A} 52, 193001 (2019).
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, Princeton University Press, 2021.
+\end{thebibliography}
+\noindent{\footnotesize Numeración [n] según la bibliografía del pensum (\texttt{references/bibliografia.md}).}
+\end{document}

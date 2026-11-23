@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{8.1}{Geometría de la información y gradiente natural}
+
+\noindent\textbf{Unidad 8.}\quad\textbf{Objetivos:} la información de Fisher como métrica local de la KL; el gradiente natural como descenso más empinado en
+el espacio de distribuciones; comparación con el descenso de gradiente.
+\textbf{Prerrequisitos:} 0.3, 6.1.
+
+\section{Fisher como métrica}
+Para $p_\theta$ y un paso $d$:
+\[\mathrm{KL}(p_{\theta+d}\|p_\theta)=\tfrac12d^\top Fd+O(\|d\|^3),\qquad F=\mathbb E\big[\nabla\log p\,\nabla\log p^\top\big].\]
+$F$ mide distancias entre modelos por sus predicciones, no por sus parámetros.
+
+\section{Gradiente natural}
+Minimizar $\ell(\theta+d)$ sujeto a $\frac12d^\top Fd=\epsilon$ (Lagrange) da $d\propto-F^{-1}\nabla\ell$:
+\[\tilde g=F^{-1}\nabla\ell,\qquad\theta_{k+1}=\theta_k-\eta F^{-1}\nabla\ell.\]
+Para pasos pequeños es invariante ante reparametrizaciones. Fisher empírico: $\bar F=JJ^\top$; Gauss--Newton generalizado: $G=J_fH_LJ_f^\top$ (8.2). Adam usa
+solo la diagonal del Fisher empírico.
+
+\section{Ejemplo gaussiano \evS}
+Pérdida poblacional de $\N(\mu,\sigma^2)$ con datos de media $m=2$ y desviación $s=0{,}1$:
+$\ell(\mu,\sigma)=\log\sigma+\frac{(\mu-m)^2+s^2}{2\sigma^2}$, $F=\mathrm{diag}(1/\sigma^2,\,2/\sigma^2)$, de modo que
+$F^{-1}\nabla\ell=(\sigma^2\partial_\mu\ell,\ \tfrac{\sigma^2}2\partial_\sigma\ell)$. Desde $(0,1)$ hasta $\ell-\ell^\ast<10^{-3}$: descenso de gradiente con la mejor tasa
+fija (barrido de 51 valores): 106 pasos ($\eta\approx0{,}032$); gradiente natural con $\eta=1$: 7 pasos. NGD corrige $\mu$ en un paso (el primer paso da $\mu=m$
+exactamente) y luego ajusta $\sigma$.
+
+\section{El costo}
+$F\in\R^{N\times N}$ con $N\sim10^6$--$10^9$: formarla cuesta $O(N^2)$ y resolver $O(N^3)$. Las lecciones 8.2--8.5 lo hacen asequible (CG, Woodbury, TNGD, K-FAC).
+
+\begin{aplicacion}
+Entrenamiento de redes neuronales; gradiente natural de políticas (TRPO) en aprendizaje por refuerzo; inferencia variacional con gradiente natural.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Confundir Fisher y hessiano. \quad Olvidar el amortiguamiento ($F$ singular si $b\ll N$).
+\item Esperar invariancia exacta con pasos finitos. \quad Creer que Adam es un método de gradiente natural.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[36]{amari} S.-I. Amari, Natural gradient works efficiently in learning, \emph{Neural Computation} 10, 251 (1998).
+\bibitem[37]{martens} J. Martens, New insights and perspectives on the natural gradient method, \emph{JMLR} 21 (2020).
+\bibitem[40]{tngd} K. Donatella et al., Thermodynamic natural gradient descent, 2024.
+\end{thebibliography}
+\end{document}

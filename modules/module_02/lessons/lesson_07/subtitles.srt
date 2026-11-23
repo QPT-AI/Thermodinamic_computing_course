@@ -1,0 +1,351 @@
+1
+00:00:00,350 --> 00:00:01,985
+Lección 2.7.
+
+2
+00:00:02,365 --> 00:00:03,556
+EDEs numéricas.
+
+3
+00:00:04,683 --> 00:00:08,855
+Casi ninguna ecuación diferencial
+estocástica se resuelve con papel y lápiz.
+
+4
+00:00:09,235 --> 00:00:13,041
+Para simular un pozo doble, un
+modelo de Ising continuo o un
+
+5
+00:00:13,041 --> 00:00:17,354
+solucionador lineal termodinámico
+necesitamos discretizar el tiempo.
+
+6
+00:00:17,734 --> 00:00:22,361
+Esta lección presenta el método más
+usado, el de Euler y Maruyama, y sus
+
+7
+00:00:22,361 --> 00:00:26,730
+dos riesgos: la inestabilidad, si
+el paso es grande, y el sesgo, que
+
+8
+00:00:26,730 --> 00:00:30,906
+contamina las estadísticas aunque
+la simulación parezca correcta.
+
+9
+00:00:32,017 --> 00:00:34,390
+La idea es la de Euler, más ruido.
+
+10
+00:00:34,770 --> 00:00:39,766
+En cada paso, avanzamos con la fuerza
+evaluada en el punto actual durante un
+
+11
+00:00:39,766 --> 00:00:44,696
+tiempo Δt, y sumamos un incremento de
+Wiener, una gaussiana de varianza Δt.
+
+12
+00:00:45,076 --> 00:00:49,083
+Fíjate en las escalas: el
+término determinista es del orden
+
+13
+00:00:49,083 --> 00:00:52,547
+de Δt, pero el ruido es
+del orden de la raíz de Δt.
+
+14
+00:00:52,927 --> 00:00:56,127
+Por eso, en pasos pequeños,
+el ruido domina cada paso
+
+15
+00:00:56,127 --> 00:00:59,751
+individual, mientras que la
+fuerza domina en tiempos largos.
+
+16
+00:01:00,883 --> 00:01:06,878
+Apliquemos el método a ẋ = −λ x,
+la parte determinista de un OU.
+
+17
+00:01:07,258 --> 00:01:10,855
+Cada paso multiplica x por 1 − λ Δt.
+
+18
+00:01:11,235 --> 00:01:14,607
+Si ese factor tiene valor
+absoluto menor que uno,
+
+19
+00:01:14,607 --> 00:01:17,496
+la simulación decae; si es mayor, explota.
+
+20
+00:01:17,876 --> 00:01:20,906
+La condición es Δt < 2/λ.
+
+21
+00:01:21,286 --> 00:01:24,878
+Con λ = 10, un paso de cero
+coma quince oscila pero
+
+22
+00:01:24,878 --> 00:01:28,047
+converge; uno de cero
+coma veintiuno explota.
+
+23
+00:01:28,427 --> 00:01:34,644
+En varias dimensiones manda el valor
+propio más grande: Δt < 2/λ_max.
+
+24
+00:01:35,024 --> 00:01:38,585
+Y como la relajación lenta
+tarda 1/λ_min, el número
+
+25
+00:01:38,585 --> 00:01:41,586
+de pasos crece como el
+número de condición.
+
+26
+00:01:42,717 --> 00:01:44,963
+Incluso cuando es estable, el método no
+
+27
+00:01:44,963 --> 00:01:47,613
+muestrea exactamente la
+distribución correcta.
+
+28
+00:01:47,993 --> 00:01:52,966
+Para el OU, la varianza estacionaria
+de la cadena discreta es
+
+29
+00:01:52,966 --> 00:01:57,288
+1/(β λ (1 − λ Δt/2)), un
+poco mayor que la verdadera.
+
+30
+00:01:57,668 --> 00:02:00,543
+La curva muestra el sesgo relativo en
+
+31
+00:02:00,543 --> 00:02:03,962
+función del paso: es
+aproximadamente λ Δt/2.
+
+32
+00:02:04,342 --> 00:02:08,810
+Con un paso igual a la mitad del límite
+de estabilidad, la varianza se duplica.
+
+33
+00:02:09,190 --> 00:02:13,301
+Para el OU existe una alternativa
+exacta: usar el factor
+
+34
+00:02:13,301 --> 00:02:17,193
+e^(−λ Δt) y el ruido con la
+varianza correspondiente.
+
+35
+00:02:18,317 --> 00:02:21,456
+¿Qué tan rápido mejora la
+simulación al reducir el paso?
+
+36
+00:02:21,836 --> 00:02:25,094
+Medimos el error fuerte, la
+distancia promedio entre la
+
+37
+00:02:25,094 --> 00:02:28,648
+trayectoria simulada y la exacta
+con el mismo ruido, para el
+
+38
+00:02:28,648 --> 00:02:32,144
+movimiento browniano geométrico,
+que tiene solución exacta.
+
+39
+00:02:32,523 --> 00:02:37,073
+En escala logarítmica, Euler y Maruyama
+baja con pendiente un medio: hay
+
+40
+00:02:37,073 --> 00:02:41,118
+que dividir el paso por cuatro
+para reducir el error a la mitad.
+
+41
+00:02:41,498 --> 00:02:45,508
+El método de Milstein,
+que añade un término de
+
+42
+00:02:45,508 --> 00:02:49,258
+Itô con (ΔW)² − Δt,
+baja con pendiente uno.
+
+43
+00:02:49,638 --> 00:02:53,088
+Para ruido aditivo, como
+en Langevin, ese término se
+
+44
+00:02:53,088 --> 00:02:56,472
+anula y Euler y Maruyama
+ya tiene orden fuerte uno.
+
+45
+00:02:57,583 --> 00:03:00,419
+En el laboratorio tres
+usarás matrices de Wishart.
+
+46
+00:03:00,799 --> 00:03:04,326
+Si el valor propio más grande
+es cuarenta, el paso debe ser
+
+47
+00:03:04,326 --> 00:03:07,674
+menor que dos sobre cuarenta,
+cero coma cero cinco; para
+
+48
+00:03:07,674 --> 00:03:10,842
+tener un sesgo de covarianza
+menor al uno por ciento,
+
+49
+00:03:11,222 --> 00:03:14,660
+λ Δt/2 debe ser menor que
+cero coma cero uno, es
+
+50
+00:03:14,660 --> 00:03:18,168
+decir, un paso de cero
+coma cero cero cero cinco.
+
+51
+00:03:18,548 --> 00:03:22,462
+Si el valor propio más pequeño
+es cero coma cuatro, relajar
+
+52
+00:03:22,462 --> 00:03:26,309
+requiere unas 5/λ_min, doce
+coma cinco unidades de tiempo:
+
+53
+00:03:26,309 --> 00:03:29,426
+veinticinco mil pasos
+solo para el transitorio.
+
+54
+00:03:30,550 --> 00:03:33,030
+En los laboratorios simularás todas estas
+
+55
+00:03:33,030 --> 00:03:36,176
+dinámicas con Euler y
+Maruyama dentro de scan y jit.
+
+56
+00:03:36,556 --> 00:03:39,875
+La regla práctica: un paso
+muy por debajo del límite de
+
+57
+00:03:39,875 --> 00:03:42,952
+estabilidad, y comprobar
+el sesgo variando el paso.
+
+58
+00:03:43,332 --> 00:03:46,092
+Para el OU, usa la discretización exacta.
+
+59
+00:03:46,472 --> 00:03:50,952
+Y recuerda una ventaja del hardware
+analógico: integra en tiempo continuo,
+
+60
+00:03:50,952 --> 00:03:54,888
+sin la restricción de Euler, aunque
+con su propio ancho de banda.
+
+61
+00:03:56,017 --> 00:04:00,409
+Errores frecuentes: escalar el ruido
+con el paso en lugar de su raíz.
+
+62
+00:04:00,789 --> 00:04:04,463
+Ignorar el límite de estabilidad
+en sistemas mal condicionados.
+
+63
+00:04:04,843 --> 00:04:08,033
+Confundir convergencia fuerte
+con convergencia débil.
+
+64
+00:04:08,413 --> 00:04:10,316
+Y reutilizar números aleatorios.
+
+65
+00:04:11,417 --> 00:04:12,250
+En resumen:
+
+66
+00:04:12,630 --> 00:04:18,667
+Euler y Maruyama avanza con la fuerza
+por Δt más un ruido de tamaño raíz de Δt.
+
+67
+00:04:19,047 --> 00:04:22,848
+Es estable si Δt <
+2/λ_max, tiene un sesgo de
+
+68
+00:04:22,848 --> 00:04:26,649
+orden λ Δt en las
+estadísticas estacionarias,
+
+69
+00:04:27,029 --> 00:04:29,798
+y converge fuertemente
+con orden un medio, o
+
+70
+00:04:29,798 --> 00:04:32,127
+uno con ruido aditivo o con Milstein.
+
+71
+00:04:33,250 --> 00:04:37,057
+Para practicar: calcula un paso
+máximo estable, la varianza
+
+72
+00:04:37,057 --> 00:04:41,316
+sesgada de un OU discretizado, la
+discretización exacta, y explica
+
+73
+00:04:41,316 --> 00:04:45,059
+por qué el término de Milstein
+se anula con ruido aditivo.

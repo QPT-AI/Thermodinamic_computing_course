@@ -1,0 +1,313 @@
+1
+00:00:00,350 --> 00:00:02,044
+Lección 4.9.
+
+2
+00:00:02,424 --> 00:00:03,799
+Teoría de campo medio.
+
+3
+00:00:04,917 --> 00:00:06,119
+Muestrear es caro.
+
+4
+00:00:06,499 --> 00:00:08,666
+¿Y si, en lugar de seguir cada espín
+
+5
+00:00:08,666 --> 00:00:11,315
+fluctuante, siguiéramos
+solo su valor medio?
+
+6
+00:00:11,695 --> 00:00:14,321
+Esa es la idea del campo
+medio: reemplazar las
+
+7
+00:00:14,321 --> 00:00:16,891
+fluctuaciones de los
+vecinos por su promedio.
+
+8
+00:00:17,271 --> 00:00:19,529
+El resultado es un sistema de ecuaciones
+
+9
+00:00:19,529 --> 00:00:22,635
+deterministas que cualquier
+procesador resuelve rápido.
+
+10
+00:00:23,015 --> 00:00:27,489
+Y su forma es exactamente la de una
+red neuronal con activación tangente.
+
+11
+00:00:28,617 --> 00:00:33,176
+Un pbit con entrada u_i
+tiene media tanh(βu_i).
+
+12
+00:00:33,556 --> 00:00:36,541
+Pero la entrada depende de
+los vecinos, que fluctúan.
+
+13
+00:00:36,921 --> 00:00:41,947
+El campo medio reemplaza cada
+vecino por su media, s_j → m_j,
+
+14
+00:00:42,327 --> 00:00:51,837
+y obtiene las ecuaciones autoconsistentes
+m_i = tanh(β(Σ_j J_ij m_j + h_i)).
+
+15
+00:00:52,217 --> 00:00:55,625
+Despreciamos las correlaciones
+entre vecinos: es exacto
+
+16
+00:00:55,625 --> 00:00:58,785
+cuando cada espín tiene
+muchísimos vecinos débiles.
+
+17
+00:00:59,917 --> 00:01:04,444
+En una red uniforme con z
+vecinos, todos los espines
+
+18
+00:01:04,444 --> 00:01:09,233
+tienen la misma media y la
+ecuación es m = tanh(βzJ m).
+
+19
+00:01:09,613 --> 00:01:14,323
+La solución es la intersección de la
+recta y = m con la curva tangente.
+
+20
+00:01:14,703 --> 00:01:18,165
+Si la pendiente en el
+origen, βzJ, es menor que
+
+21
+00:01:18,165 --> 00:01:21,185
+uno, la única solución es cero: desorden.
+
+22
+00:01:21,565 --> 00:01:25,968
+Si es mayor, aparecen dos soluciones
+simétricas: el sistema se magnetiza.
+
+23
+00:01:26,348 --> 00:01:29,541
+La transición ocurre en T_c = zJ.
+
+24
+00:01:30,650 --> 00:01:35,918
+Para la red cuadrada, con cuatro
+vecinos, el campo medio predice T_c = 4.
+
+25
+00:01:36,298 --> 00:01:39,373
+El valor exacto de Onsager
+es dos coma dos siete.
+
+26
+00:01:39,753 --> 00:01:42,156
+El campo medio sobreestima
+el orden, porque
+
+27
+00:01:42,156 --> 00:01:44,504
+ignora las fluctuaciones que lo destruyen.
+
+28
+00:01:44,884 --> 00:01:48,493
+A temperatura dos predice una
+magnetización de cero coma
+
+29
+00:01:48,493 --> 00:01:51,587
+nueve seis, frente a cero
+coma nueve uno exacto.
+
+30
+00:01:51,967 --> 00:01:55,099
+Y a temperatura tres predice
+cero coma siete ocho,
+
+31
+00:01:55,099 --> 00:01:58,232
+cuando en realidad el
+sistema ya está desordenado.
+
+32
+00:01:59,350 --> 00:02:05,907
+Resolvamos las ecuaciones por
+iteración: m ← tanh(β(J m + h)).
+
+33
+00:02:06,287 --> 00:02:09,620
+Cada iteración es una capa
+de una red neuronal: una
+
+34
+00:02:09,620 --> 00:02:12,431
+matriz, un sesgo y una
+activación tangente.
+
+35
+00:02:12,811 --> 00:02:16,477
+Con T = 2, partiendo de cero
+coma cinco, la iteración
+
+36
+00:02:16,477 --> 00:02:20,559
+converge a cero coma nueve
+cinco siete en unas cinco capas.
+
+37
+00:02:20,939 --> 00:02:25,224
+Así, una red de pbits que muestrea
+y una red neuronal determinista
+
+38
+00:02:25,224 --> 00:02:29,250
+son dos caras del mismo modelo:
+una fluctúa, la otra promedia.
+
+39
+00:02:30,350 --> 00:02:32,422
+Hay una justificación más profunda.
+
+40
+00:02:32,802 --> 00:02:36,786
+El campo medio busca, entre todas
+las distribuciones que factorizan
+
+41
+00:02:36,786 --> 00:02:41,008
+espín por espín, la que minimiza la
+energía libre variacional, o lo que
+
+42
+00:02:41,008 --> 00:02:44,636
+es igual, la divergencia KL con
+la distribución de Boltzmann.
+
+43
+00:02:45,016 --> 00:02:48,176
+Por la desigualdad de Gibbs
+y Bogoliubov, esa energía
+
+44
+00:02:48,176 --> 00:02:51,217
+libre es siempre una cota
+superior de la verdadera.
+
+45
+00:02:51,597 --> 00:02:55,601
+Es la misma idea de la inferencia
+variacional en aprendizaje automático.
+
+46
+00:02:56,717 --> 00:03:00,400
+El campo medio da una aproximación
+rápida de la fase del modelo
+
+47
+00:03:00,400 --> 00:03:03,849
+para entrenar máquinas de
+Boltzmann, y explica las unidades
+
+48
+00:03:03,849 --> 00:03:07,065
+tangente que construiremos
+con pbits en la unidad diez.
+
+49
+00:03:07,445 --> 00:03:11,095
+La propagación de creencias y
+las correcciones TAP lo refinan.
+
+50
+00:03:11,475 --> 00:03:14,216
+Es exacto con interacciones
+de alcance infinito y
+
+51
+00:03:14,216 --> 00:03:17,014
+pobre cerca de la transición
+en pocas dimensiones.
+
+52
+00:03:18,117 --> 00:03:20,663
+Errores comunes: confiar en la temperatura
+
+53
+00:03:20,663 --> 00:03:23,270
+crítica del campo medio
+en dos dimensiones.
+
+54
+00:03:23,650 --> 00:03:27,602
+Tomar la solución cero por debajo
+de la transición, que es inestable.
+
+55
+00:03:27,982 --> 00:03:29,985
+Olvidar que ignora las correlaciones.
+
+56
+00:03:30,365 --> 00:03:33,392
+E iterar sin amortiguamiento,
+lo que puede oscilar.
+
+57
+00:03:34,517 --> 00:03:39,595
+En resumen: el campo medio
+reemplaza a los vecinos por sus
+
+58
+00:03:39,595 --> 00:03:43,886
+medias y obtiene m_i =
+tanh(β(Σ J_ij m_j + h_i)).
+
+59
+00:03:44,266 --> 00:03:48,954
+Predice una transición en T_c
+= zJ, que sobreestima el orden.
+
+60
+00:03:49,334 --> 00:03:52,645
+Iterarlo es aplicar capas
+tangente: el puente entre
+
+61
+00:03:52,645 --> 00:03:56,021
+muestrear con pbits y
+calcular con redes neuronales.
+
+62
+00:03:57,150 --> 00:04:00,529
+Para practicar: resuelve la
+ecuación autoconsistente.
+
+63
+00:04:00,909 --> 00:04:03,566
+Deriva el comportamiento
+cerca de la transición.
+
+64
+00:04:03,946 --> 00:04:06,800
+Calcula la temperatura
+crítica de la red triangular.
+
+65
+00:04:07,180 --> 00:04:10,979
+Y explica por qué el campo medio
+es exacto con alcance infinito.

@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{11.5}{Agentes de investigación con modelos de lenguaje}
+
+\noindent\textbf{Unidad 11.}\quad\textbf{Objetivos:} GRPO; recompensas de ejecución y rúbrica con un modelo juez; cómo se aprenden las trampas; lectura crítica de
+Thermo-RSI.
+\textbf{Prerrequisitos:} 11.4.
+
+\section{GRPO}
+Shao et al.\ (2024, DeepSeekMath): para cada tarea se genera un grupo de $G$ intentos y $A_i=(r_i-\mathrm{media}(r))/\mathrm{desv}(r)$. Se refuerzan los intentos mejores
+que la media del grupo; no hace falta red de valor. Ejemplo: $r=(1;\,0{,}4;\,0;\,0{,}7)\Rightarrow A=(+1{,}28;\,-0{,}34;\,-1{,}42;\,+0{,}47)$.
+
+\section{Ejecución y juez \evP}
+Recompensa de Thermo-RSI: $r=0{,}7\,\text{exec}+0{,}3\,\text{rúbrica}$; exec determinista ($0{,}15$ corre $+\ 0{,}85$ reproduce la métrica de referencia); rúbrica
+calificada por Nemotron 3 Super 120B con criterios escritos de antemano. La ejecución pesa más por ser ``la señal más difícil de engañar''.
+
+\section{Cómo se aprenden las trampas \evS}
+GRPO de juguete sobre las cinco propuestas de 11.4 (política softmax, $G=8$, 300 pasos, 200 semillas; \texttt{datos/grpo\_juguete.py}). Probabilidad final:
+\begin{center}\small\begin{tabular}{lccccc}\toprule
+recompensa & paralelo (mal) & 3 barridos & correcta & error & trampa\\\midrule
+completa & 0{,}001 & 0{,}000 & 0{,}998 & 0{,}000 & 0{,}001\\
+solo ejecución & 0{,}328 & 0{,}001 & 0{,}318 & 0{,}001 & 0{,}351\\\bottomrule
+\end{tabular}\end{center}
+Sin rúbrica, dos tercios de la probabilidad van a un método incorrecto o a la trampa: el agente aprende lo que la recompensa premia.
+
+\section{Resultados de Thermo-RSI \evP}
+Neagoe, Verdon y Morton (Extropic con Prime Intellect, 1 de octubre de 2026): Qwen3.6-35B-A3B (3B activos), 100 pasos de GRPO ($\sim25$ h), $\sim50$ tareas que reproducen
+experimentos clásicos (máquinas de Boltzmann, vigilia--sueño). Recompensa en tareas no vistas: $0{,}127\to0{,}361$ ($\approx2{,}8\times$). Mismo conjunto, sin ajuste:
+GPT-5.5 $0{,}747$, Claude Opus 4.8 $0{,}464$, Qwen3.5 ajustado $0{,}356$, Qwen3-30B-Instruct $0{,}109$, GLM-5.2 $0{,}073$.
+
+\textbf{Lectura crítica.} Demostrado: mejora al reproducir experimentos conocidos. Objetivo declarado, no demostrado: descubrir algoritmos nuevos y coevolucionar con el
+hardware; las tareas aún no corren sobre el simulador de TSU. No se reportan observaciones de \emph{reward hacking}.
+
+\begin{aplicacion}
+GRPO sobre tareas verificables; recompensa dominada por la ejecución; juez con rúbrica fija; auditoría de ejecuciones. Laboratorio L30.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Premiar solo la métrica. \quad Juez sin criterios fijados de antemano.
+\item Dar por demostrada la automejora recursiva. \quad Comparar puntuaciones de conjuntos distintos.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{rsi} A. Neagoe, G. Verdon y S. Morton (Extropic, con Prime Intellect), First sparks of thermodynamic recursive intelligence, 1 de octubre de 2026.
+\bibitem{grpo} Z. Shao et al., DeepSeekMath, arXiv:2402.03300 (2024).
+\bibitem{judge} L. Zheng et al., Judging LLM-as-a-judge with MT-Bench and Chatbot Arena, \emph{NeurIPS} (2023).
+\end{thebibliography}
+\end{document}

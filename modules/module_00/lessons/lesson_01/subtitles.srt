@@ -1,0 +1,546 @@
+1
+00:00:00,350 --> 00:00:01,971
+Lección 0.1.
+
+2
+00:00:02,351 --> 00:00:04,035
+El muro energético de la IA.
+
+3
+00:00:05,150 --> 00:00:08,026
+La inteligencia artificial
+está chocando contra un
+
+4
+00:00:08,026 --> 00:00:11,018
+muro, y no es un muro de
+algoritmos sino de energía.
+
+5
+00:00:11,398 --> 00:00:14,076
+Hoy la capacidad de la red
+eléctrica es uno de los
+
+6
+00:00:14,076 --> 00:00:17,022
+principales obstáculos para
+construir centros de datos.
+
+7
+00:00:17,402 --> 00:00:20,828
+En esta primera lección
+responderemos una pregunta concreta:
+
+8
+00:00:21,208 --> 00:00:23,793
+¿a dónde va realmente
+la energía de una GPU?
+
+9
+00:00:24,173 --> 00:00:26,927
+La respuesta nos dirá por
+qué tiene sentido buscar
+
+10
+00:00:26,927 --> 00:00:29,351
+una forma de computar
+radicalmente distinta.
+
+11
+00:00:30,483 --> 00:00:34,907
+Piensa en una fábrica muy eficiente cuyo
+almacén está al otro lado de la ciudad.
+
+12
+00:00:35,287 --> 00:00:38,182
+Fabricar una pieza cuesta
+poco; lo caro es el camión
+
+13
+00:00:38,182 --> 00:00:40,910
+que trae la materia prima
+y se lleva el producto.
+
+14
+00:00:41,290 --> 00:00:43,802
+Un chip moderno funciona igual: el núcleo
+
+15
+00:00:43,802 --> 00:00:46,987
+aritmético es la fábrica y
+la memoria es el almacén.
+
+16
+00:00:47,367 --> 00:00:50,152
+Cada dato viaja por
+cables, y cada cable es un
+
+17
+00:00:50,152 --> 00:00:53,117
+pequeño capacitor que hay
+que cargar y descargar.
+
+18
+00:00:53,497 --> 00:00:55,887
+Cuanto más largo el
+cable, más carga hay que
+
+19
+00:00:55,887 --> 00:00:58,114
+mover y más energía se pierde como calor.
+
+20
+00:00:59,217 --> 00:01:02,337
+Veamos qué pasa cuando un
+cable cambia de cero a uno.
+
+21
+00:01:02,717 --> 00:01:05,541
+Una fuente de voltaje
+V empuja carga a través
+
+22
+00:01:05,541 --> 00:01:08,051
+de una resistencia hacia un capacitor C.
+
+23
+00:01:08,431 --> 00:01:13,079
+La curva verde muestra el voltaje del
+capacitor, que sube de forma exponencial.
+
+24
+00:01:13,459 --> 00:01:16,732
+La fuente entrega una
+energía igual a C V².
+
+25
+00:01:17,112 --> 00:01:19,897
+La mitad queda guardada
+en el capacitor, y la otra
+
+26
+00:01:19,897 --> 00:01:22,404
+mitad se disipa en la
+resistencia como calor.
+
+27
+00:01:22,784 --> 00:01:26,123
+Lo sorprendente es que esa
+mitad no depende del valor de la
+
+28
+00:01:26,123 --> 00:01:29,633
+resistencia: una resistencia
+pequeña da una corriente grande y
+
+29
+00:01:29,633 --> 00:01:33,199
+breve, una resistencia grande da
+una corriente pequeña y larga,
+
+30
+00:01:33,579 --> 00:01:36,413
+pero el área bajo la curva
+de potencia es la misma.
+
+31
+00:01:36,793 --> 00:01:40,614
+Cuando el cable vuelve a cero, la
+energía guardada también se disipa.
+
+32
+00:01:40,994 --> 00:01:43,498
+Cada ciclo completo cuesta C V².
+
+33
+00:01:44,617 --> 00:01:49,390
+Si un chip tiene una capacidad total
+conmutada C, funciona a voltaje V y a
+
+34
+00:01:49,390 --> 00:01:54,551
+frecuencia f, y en cada ciclo solo una
+fracción α de los nodos cambia de estado,
+
+35
+00:01:54,931 --> 00:01:59,243
+la potencia dinámica es P = α C V² f.
+
+36
+00:01:59,623 --> 00:02:01,868
+Cada factor tiene un significado físico.
+
+37
+00:02:02,248 --> 00:02:04,090
+La capacidad crece con el número de
+
+38
+00:02:04,090 --> 00:02:06,460
+transistores y con la
+longitud de los cables.
+
+39
+00:02:06,840 --> 00:02:11,330
+El voltaje entra al cuadrado, por eso
+bajarlo era la palanca más poderosa.
+
+40
+00:02:11,710 --> 00:02:15,480
+Y la frecuencia mide cuántas veces
+por segundo pagamos ese precio.
+
+41
+00:02:16,583 --> 00:02:19,953
+Durante décadas, la industria
+vivió del escalado de Dennard.
+
+42
+00:02:20,332 --> 00:02:25,879
+Si reducimos todas las dimensiones de un
+transistor por un factor k, su capacidad
+
+43
+00:02:25,879 --> 00:02:30,535
+baja por k, el voltaje baja por k
+y la frecuencia puede subir por k.
+
+44
+00:02:30,915 --> 00:02:34,542
+La potencia por transistor
+cae entonces por k².
+
+45
+00:02:34,922 --> 00:02:39,852
+Pero en el mismo espacio caben k²
+transistores más, así que la densidad de
+
+46
+00:02:39,852 --> 00:02:44,649
+potencia queda constante: chips más
+rápidos y densos sin calentarse más.
+
+47
+00:02:45,029 --> 00:02:48,460
+Hacia mediados de la década
+de dos mil, el voltaje dejó de
+
+48
+00:02:48,460 --> 00:02:51,771
+bajar, porque por debajo de
+cierto umbral las fugas y el
+
+49
+00:02:51,771 --> 00:02:54,669
+ruido térmico hacen poco
+confiable al transistor.
+
+50
+00:02:55,049 --> 00:02:58,634
+Con el voltaje fijo, la
+densidad de potencia empieza a
+
+51
+00:02:58,634 --> 00:03:01,688
+crecer como k², y las
+frecuencias se estancan.
+
+52
+00:03:02,817 --> 00:03:07,073
+Hagamos cuentas con valores típicos,
+como estimación de orden de magnitud.
+
+53
+00:03:07,453 --> 00:03:13,078
+Un cable en el chip tiene una capacidad
+del orden de 0,2 fF por micrómetro.
+
+54
+00:03:13,458 --> 00:03:17,557
+Un cable de un milímetro tiene
+entonces unos doscientos femtofaradios.
+
+55
+00:03:17,937 --> 00:03:21,793
+Con un voltaje de cero coma
+ocho voltios, una transición
+
+56
+00:03:21,793 --> 00:03:25,857
+disipa la mitad de C V², unos
+sesenta y cuatro femtojulios.
+
+57
+00:03:26,237 --> 00:03:28,345
+Una compuerta lógica local, con un
+
+58
+00:03:28,345 --> 00:03:31,383
+femtofaradio, cuesta unas
+doscientas veces menos.
+
+59
+00:03:31,763 --> 00:03:35,150
+Las mediciones clásicas en
+tecnología de cuarenta y cinco
+
+60
+00:03:35,150 --> 00:03:38,360
+nanómetros lo confirman: una
+suma de punto flotante de
+
+61
+00:03:38,360 --> 00:03:41,213
+treinta y dos bits cuesta
+menos de un picojulio,
+
+62
+00:03:41,593 --> 00:03:45,189
+pero leer esos treinta y dos
+bits de la memoria DRAM externa
+
+63
+00:03:45,189 --> 00:03:48,307
+cuesta del orden de seiscientos
+cuarenta picojulios.
+
+64
+00:03:48,688 --> 00:03:52,033
+Mover el dato cuesta cientos
+de veces más que operar con él.
+
+65
+00:03:53,150 --> 00:03:56,160
+En la arquitectura de von
+Neumann, la memoria y el
+
+66
+00:03:56,160 --> 00:03:59,350
+procesador están separados
+y se comunican por un bus.
+
+67
+00:03:59,730 --> 00:04:02,350
+El modelo roofline lo
+resume en una gráfica.
+
+68
+00:04:02,730 --> 00:04:05,958
+El eje horizontal es la
+intensidad aritmética: cuántas
+
+69
+00:04:05,958 --> 00:04:09,365
+operaciones hacemos por cada
+byte que traemos de memoria.
+
+70
+00:04:09,745 --> 00:04:12,885
+El rendimiento alcanzable es
+el mínimo entre el pico de
+
+71
+00:04:12,885 --> 00:04:16,254
+cómputo y el ancho de banda
+multiplicado por la intensidad.
+
+72
+00:04:16,634 --> 00:04:19,511
+A la izquierda del codo, el
+chip espera a la memoria.
+
+73
+00:04:19,891 --> 00:04:23,902
+La decodificación de un modelo de
+lenguaje con lote uno vive ahí:
+
+74
+00:04:23,902 --> 00:04:27,542
+cada peso se lee una vez para
+hacer apenas dos operaciones.
+
+75
+00:04:28,650 --> 00:04:30,345
+Volvamos a la pregunta inicial.
+
+76
+00:04:30,725 --> 00:04:35,084
+En una GPU, gran parte de la energía
+se va en mover datos entre los
+
+77
+00:04:35,084 --> 00:04:38,922
+registros, la memoria interna,
+la memoria externa y la red.
+
+78
+00:04:39,302 --> 00:04:42,337
+Otra parte se va en garantizar
+márgenes de voltaje para
+
+79
+00:04:42,337 --> 00:04:44,875
+que cada bit sea
+determinista frente al ruido.
+
+80
+00:04:45,255 --> 00:04:48,665
+Y cuando el algoritmo es
+probabilístico, como la difusión o
+
+81
+00:04:48,665 --> 00:04:52,018
+el muestreo de tokens, además
+gastamos energía en fabricar
+
+82
+00:04:52,018 --> 00:04:54,677
+aleatoriedad con generadores
+pseudoaleatorios.
+
+83
+00:04:55,057 --> 00:04:57,565
+En el reto del laboratorio uno medirás la
+
+84
+00:04:57,565 --> 00:05:00,439
+energía por muestra
+aleatoria de tu propia GPU.
+
+85
+00:05:01,550 --> 00:05:03,847
+Esta lección plantea la tesis del curso.
+
+86
+00:05:04,227 --> 00:05:08,062
+Si la aleatoriedad es tan cara de
+fabricar y el ruido tan caro de
+
+87
+00:05:08,062 --> 00:05:11,957
+suprimir, ¿por qué no usar
+directamente las fluctuaciones térmicas
+
+88
+00:05:11,957 --> 00:05:15,438
+para computar, y hacerlo
+localmente, donde están los datos?
+
+89
+00:05:15,818 --> 00:05:20,048
+En la unidad uno veremos el límite
+fundamental de energía por bit, y
+
+90
+00:05:20,048 --> 00:05:24,153
+en la unidad cinco aprenderemos a
+separar la energía del tejido de
+
+91
+00:05:24,153 --> 00:05:27,699
+cómputo, de la entrada y
+salida, y del pegamento digital.
+
+92
+00:05:28,817 --> 00:05:30,537
+Cuatro confusiones frecuentes.
+
+93
+00:05:30,917 --> 00:05:33,926
+La disipación por
+transición no depende de la
+
+94
+00:05:33,926 --> 00:05:36,668
+resistencia: siempre es la mitad de C V².
+
+95
+00:05:37,048 --> 00:05:39,255
+Contar operaciones no basta, porque con
+
+96
+00:05:39,255 --> 00:05:41,575
+frecuencia domina el movimiento de datos.
+
+97
+00:05:41,955 --> 00:05:46,094
+La ley de Moore y el escalado de
+Dennard no son lo mismo: la densidad
+
+98
+00:05:46,094 --> 00:05:50,053
+siguió creciendo, pero la potencia
+por área dejó de ser constante.
+
+99
+00:05:50,433 --> 00:05:54,080
+Y no confundas potencia con
+energía: la métrica justa es
+
+100
+00:05:54,080 --> 00:05:57,402
+la energía por tarea, por
+ejemplo julios por token.
+
+101
+00:05:58,517 --> 00:06:03,001
+En resumen: cada transición
+de un nodo cuesta C V²
+
+102
+00:06:03,001 --> 00:06:07,126
+por ciclo, y la potencia
+dinámica es α C V² f.
+
+103
+00:06:07,506 --> 00:06:10,634
+El fin del escalado de
+Dennard hizo que la potencia,
+
+104
+00:06:10,634 --> 00:06:13,342
+y no los transistores,
+sea el recurso escaso.
+
+105
+00:06:13,722 --> 00:06:17,298
+Mover datos cuesta cientos de
+veces más que operar con ellos, y
+
+106
+00:06:17,298 --> 00:06:20,363
+la memoria separada del
+cómputo limita el rendimiento.
+
+107
+00:06:20,743 --> 00:06:24,641
+Ese es el muro energético que el
+cómputo termodinámico intenta rodear.
+
+108
+00:06:25,750 --> 00:06:28,259
+Comprueba tu comprensión
+con cuatro preguntas.
+
+109
+00:06:28,639 --> 00:06:33,079
+Calcula el calor disipado al cargar un
+capacitor con dos resistencias distintas.
+
+110
+00:06:33,459 --> 00:06:36,917
+Aplica el escalado de Dennard
+con un factor uno coma cuatro.
+
+111
+00:06:37,297 --> 00:06:39,528
+Repite el cálculo con el voltaje fijo.
+
+112
+00:06:39,908 --> 00:06:42,830
+Y encuentra el codo del
+roofline para un chip de cien
+
+113
+00:06:42,830 --> 00:06:45,917
+teraflops con un terabyte por
+segundo de ancho de banda.

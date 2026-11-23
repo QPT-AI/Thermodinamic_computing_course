@@ -1,0 +1,286 @@
+1
+00:00:00,350 --> 00:00:01,943
+Lesson 7.2.
+
+2
+00:00:02,323 --> 00:00:03,566
+Shor's algorithm.
+
+3
+00:00:04,683 --> 00:00:09,156
+In nineteen ninety-four, Peter
+Shor showed that a quantum computer
+
+4
+00:00:09,156 --> 00:00:13,018
+finds the order in time
+polynomial in the number of bits.
+
+5
+00:00:13,398 --> 00:00:16,388
+It is the benchmark against
+which we will compare diffusion.
+
+6
+00:00:16,768 --> 00:00:21,048
+Today we walk through its four
+steps with a small example, N =
+
+7
+00:00:21,048 --> 00:00:25,052
+21, which we can simulate
+exactly on a classical computer.
+
+8
+00:00:26,183 --> 00:00:32,279
+First, a uniform superposition of
+all exponents x from zero to Q − 1 is
+
+9
+00:00:32,279 --> 00:00:37,516
+prepared, with Q a power of two
+larger than N²; here Q = 512.
+
+10
+00:00:37,896 --> 00:00:43,873
+Second, a reversible circuit computes
+a^x mod N in a second register.
+
+11
+00:00:44,253 --> 00:00:49,492
+With a = 2, the values repeat every
+six exponents: the order is six.
+
+12
+00:00:49,872 --> 00:00:53,162
+When the second register is
+measured, the first is left in a
+
+13
+00:00:53,162 --> 00:00:56,397
+superposition of exponents
+separated exactly by the period.
+
+14
+00:00:57,517 --> 00:01:02,486
+Third, the quantum Fourier transform
+turns that periodicity into peaks.
+
+15
+00:01:02,866 --> 00:01:06,696
+The amplitudes of outcomes that
+do not fit the period cancel
+
+16
+00:01:06,696 --> 00:01:09,953
+by interference, and those
+that fit are reinforced.
+
+17
+00:01:10,333 --> 00:01:14,880
+In the example, the probability
+concentrates near the
+
+18
+00:01:14,880 --> 00:01:19,599
+multiples of Q/r, about 85.3:
+at zero, eighty-five, one
+
+19
+00:01:19,599 --> 00:01:24,233
+hundred seventy-one, two
+hundred fifty-six, and so on.
+
+20
+00:01:25,350 --> 00:01:27,822
+Fourth, classical post-processing.
+
+21
+00:01:28,202 --> 00:01:32,263
+An outcome y satisfies y/Q ≈ k/r.
+
+22
+00:01:32,643 --> 00:01:35,461
+The continued-fraction
+algorithm finds the best
+
+23
+00:01:35,461 --> 00:01:37,920
+fraction with denominator smaller than N.
+
+24
+00:01:38,300 --> 00:01:45,516
+For y = 85, 85/512 is approximated
+by one sixth: the order is six.
+
+25
+00:01:45,896 --> 00:01:51,574
+But for y = 171 we get one third, and
+only obtain a divisor of the order.
+
+26
+00:01:51,954 --> 00:01:55,476
+In this example, a single
+run gives the order directly
+
+27
+00:01:55,476 --> 00:01:59,193
+with probability thirty-one
+percent; combining a few runs
+
+28
+00:01:59,193 --> 00:02:02,454
+with the least common
+multiple always recovers it.
+
+29
+00:02:03,583 --> 00:02:04,474
+How much does it cost?
+
+30
+00:02:04,854 --> 00:02:09,289
+Modular exponentiation dominates:
+with schoolbook arithmetic it is
+
+31
+00:02:09,289 --> 00:02:13,119
+on the order of n³ gates, with
+n the number of bits of N.
+
+32
+00:02:13,499 --> 00:02:16,331
+The Fourier transform costs n².
+
+33
+00:02:16,711 --> 00:02:18,804
+Everything is polynomial, against the
+
+34
+00:02:18,804 --> 00:02:21,801
+subexponential cost of the
+best classical algorithms.
+
+35
+00:02:22,181 --> 00:02:24,723
+The price is in the hardware: thousands of
+
+36
+00:02:24,723 --> 00:02:28,595
+error-corrected logical qubits,
+which do not yet exist at scale.
+
+37
+00:02:29,717 --> 00:02:32,465
+Let's keep the central idea
+for the rest of the unit.
+
+38
+00:02:32,845 --> 00:02:35,855
+Shor amplifies Fourier
+peaks by interference:
+
+39
+00:02:35,855 --> 00:02:38,465
+frequencies that do not fit cancel out.
+
+40
+00:02:38,845 --> 00:02:44,425
+Diffusion will do the opposite: it will
+damp all nonzero Fourier modes, and what
+
+41
+00:02:44,425 --> 00:02:49,169
+survives, the uniform distribution
+over the group, reveals its size.
+
+42
+00:02:49,549 --> 00:02:52,688
+Interference that amplifies
+versus dissipation that erases.
+
+43
+00:02:53,817 --> 00:02:58,643
+Shor threatens public-key cryptography
+and motivates post-quantum standards.
+
+44
+00:02:59,023 --> 00:03:02,983
+The same period-finding core
+solves discrete logarithms.
+
+45
+00:03:03,363 --> 00:03:08,978
+Experimental demonstrations so far factor
+tiny numbers with simplified circuits.
+
+46
+00:03:09,358 --> 00:03:13,638
+In lab ten you will simulate the
+distribution and the continued fractions.
+
+47
+00:03:14,750 --> 00:03:18,201
+Common mistakes: believing
+the quantum computer
+
+48
+00:03:18,201 --> 00:03:21,285
+tries all exponents and reads all answers.
+
+49
+00:03:21,665 --> 00:03:24,432
+Taking the denominator as the
+order without verifying it.
+
+50
+00:03:24,812 --> 00:03:27,672
+Forgetting that some
+outcomes give only a divisor.
+
+51
+00:03:28,052 --> 00:03:30,808
+And confusing logical
+qubits with physical qubits.
+
+52
+00:03:31,917 --> 00:03:35,678
+In summary: Shor prepares a
+superposition, computes modular
+
+53
+00:03:35,678 --> 00:03:40,078
+exponentiation, applies the Fourier
+transform to turn the period into
+
+54
+00:03:40,078 --> 00:03:44,350
+probability peaks, and recovers
+the order with continued fractions.
+
+55
+00:03:44,730 --> 00:03:47,396
+Its cost is polynomial
+in the number of bits.
+
+56
+00:03:47,776 --> 00:03:51,491
+It interferes to amplify;
+diffusion will dissipate to erase.
+
+57
+00:03:52,617 --> 00:03:57,074
+To practice: explain why
+Q must be at least N².
+
+58
+00:03:57,454 --> 00:03:59,980
+Expand the continued
+fraction of the example.
+
+59
+00:04:00,360 --> 00:04:02,683
+Combine two runs that give divisors.
+
+60
+00:04:03,063 --> 00:04:04,973
+And say which stage dominates the cost.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{8.1}{Geometría de la información y gradiente natural}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca $\mathrm{KL}\approx\frac12d^\top Fd$ de un desarrollo de segundo orden.
+\item (B) Calcule el Fisher de $\N(\mu,\sigma^2)$ en $(\mu,\sigma)$.
+\item (B) Deduzca $\tilde g=F^{-1}\nabla\ell$ con un multiplicador de Lagrange.
+\item (B) ¿Qué parte del Fisher usa Adam?
+\item (I) Calcule el Fisher de $\N(\mu,e^{2u})$ en $(\mu,u)$ y compruebe que el paso natural infinitesimal describe el mismo cambio de distribución que en $(\mu,\sigma)$.
+\item (I) En el ejemplo de la lección, demuestre que el primer paso natural con $\eta=1$ lleva $\mu$ exactamente a $m$.
+\item (A) Implemente GD y NGD para regresión logística en 2D y compare el número de pasos para una pérdida objetivo.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} La KL y su gradiente se anulan en $d=0$; el hessiano de la KL en $d=0$ es $F$.
+
+\textbf{E2.} $\partial_\mu\log p=(x-\mu)/\sigma^2$, $\partial_\sigma\log p=-1/\sigma+(x-\mu)^2/\sigma^3$: $F=\mathrm{diag}(1/\sigma^2,2/\sigma^2)$.
+
+\textbf{E3.} $\nabla\ell+\lambda Fd=0\Rightarrow d=-\lambda^{-1}F^{-1}\nabla\ell$.
+
+\textbf{E4.} La diagonal del Fisher empírico (segundo momento de los gradientes).
+
+\textbf{E5.} $F=\mathrm{diag}(e^{-2u},2)$; con $\sigma=e^u$, $d\sigma=\sigma\,du$ y el jacobiano transforma $F$ como un tensor métrico: el paso natural en $(\mu,u)$ es el mismo cambio de distribución.
+
+\textbf{E6.} $\mu_1=\mu_0-\sigma^2\cdot(\mu_0-m)/\sigma^2=m$.
+
+\textbf{E7.} NGD necesita muchos menos pasos cuando las características tienen escalas muy distintas.
+\end{solucion}
+\end{document}

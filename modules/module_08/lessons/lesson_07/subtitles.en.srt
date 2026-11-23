@@ -1,0 +1,282 @@
+1
+00:00:00,350 --> 00:00:02,184
+Lesson 8.7.
+
+2
+00:00:02,564 --> 00:00:04,529
+Hardware-aware training.
+
+3
+00:00:05,650 --> 00:00:11,553
+A model trained on a GPU at full precision
+knows nothing about the chip it will
+
+4
+00:00:11,553 --> 00:00:16,784
+run on: few-bit weights, noisy devices
+and fixed, sparse connectivity.
+
+5
+00:00:17,164 --> 00:00:19,442
+Taking it to hardware as is has a cost.
+
+6
+00:00:19,822 --> 00:00:22,997
+The alternative is to train
+knowing what the hardware is like.
+
+7
+00:00:23,377 --> 00:00:25,718
+Today we measure three
+techniques in a small
+
+8
+00:00:25,718 --> 00:00:27,953
+experiment, and how much they really help.
+
+9
+00:00:29,083 --> 00:00:32,933
+We use a perceptron with a hidden
+layer of thirty-two neurons
+
+10
+00:00:32,933 --> 00:00:36,341
+for a nonlinear classification
+task in ten dimensions.
+
+11
+00:00:36,721 --> 00:00:39,915
+The simulated hardware
+has four-bit weights and a
+
+12
+00:00:39,915 --> 00:00:42,717
+random multiplicative
+error in each device.
+
+13
+00:00:43,097 --> 00:00:46,864
+At full precision, the network is
+correct ninety-five percent of the time.
+
+14
+00:00:47,244 --> 00:00:50,869
+Taken to hardware as is,
+it drops to 90.4 with ten
+
+15
+00:00:50,869 --> 00:00:54,855
+percent noise, and to
+eighty-eight with twenty percent.
+
+16
+00:00:55,983 --> 00:01:00,349
+Quantization-aware training
+computes the loss with the weights
+
+17
+00:01:00,349 --> 00:01:04,996
+already quantized to four bits,
+but updates a floating-point copy.
+
+18
+00:01:05,376 --> 00:01:09,691
+Rounding has no useful derivative,
+so the straight-through estimator is
+
+19
+00:01:09,691 --> 00:01:13,579
+used: in the backward pass,
+rounding is treated as the identity.
+
+20
+00:01:13,959 --> 00:01:17,755
+That way, the network learns weights
+that work well after rounding.
+
+21
+00:01:18,883 --> 00:01:23,357
+Noise injection multiplies the
+weights by a random factor at every
+
+22
+00:01:23,357 --> 00:01:27,559
+training step, with the same
+magnitude as the device mismatch.
+
+23
+00:01:27,939 --> 00:01:32,011
+The network learns flat solutions,
+which do not depend on exact values.
+
+24
+00:01:32,391 --> 00:01:37,297
+In our experiment, combining
+quantization and noise, the accuracy
+
+25
+00:01:37,297 --> 00:01:41,749
+on hardware rises from 90.4 to
+90.5 with ten percent noise,
+
+26
+00:01:42,129 --> 00:01:45,526
+and from eighty-eight to
+eighty-nine with twenty percent.
+
+27
+00:01:45,906 --> 00:01:49,445
+Averaging three seeds, the
+improvement is real but small.
+
+28
+00:01:50,550 --> 00:01:53,186
+The chip has fixed, sparse connectivity,
+
+29
+00:01:53,186 --> 00:01:55,823
+like the degree-sixteen graph of the Z1.
+
+30
+00:01:56,203 --> 00:02:00,793
+Instead of training a dense network and
+pruning it afterwards, it is better to fix
+
+31
+00:02:00,793 --> 00:02:04,992
+the connection mask from the first step
+and train only the allowed weights.
+
+32
+00:02:05,372 --> 00:02:09,270
+With twenty-five percent of
+the connections, the fixed-mask
+
+33
+00:02:09,270 --> 00:02:13,037
+network is correct 92.5 percent
+of the time, against 91.9
+
+34
+00:02:13,037 --> 00:02:16,142
+for pruning a dense
+network without retraining.
+
+35
+00:02:17,250 --> 00:02:18,236
+What do we learn?
+
+36
+00:02:18,616 --> 00:02:22,971
+In this experiment, the biggest
+effect is the loss when moving to
+
+37
+00:02:22,971 --> 00:02:27,795
+hardware, five to seven points; aware
+training recovers only part of it.
+
+38
+00:02:28,175 --> 00:02:32,675
+That does not contradict published
+results with large models, where
+
+39
+00:02:32,675 --> 00:02:37,174
+four-bit quantization-aware training
+is standard, but it reminds us
+
+40
+00:02:37,174 --> 00:02:41,271
+that gains depend on the model,
+the task and the noise level.
+
+41
+00:02:41,651 --> 00:02:45,528
+One must always measure against the
+naive baseline and with several seeds.
+
+42
+00:02:46,650 --> 00:02:51,208
+The recipe: model the chip, train
+with a quantized forward pass
+
+43
+00:02:51,208 --> 00:02:55,548
+and with device noise, fix the
+sparsity mask from the start,
+
+44
+00:02:55,928 --> 00:02:59,491
+as in the Z1T-style transformers
+of unit ten, and report
+
+45
+00:02:59,491 --> 00:03:03,435
+hardware accuracy against naive
+deployment with several seeds.
+
+46
+00:03:04,550 --> 00:03:07,714
+Common mistakes: evaluating
+only in floating point.
+
+47
+00:03:08,094 --> 00:03:11,006
+Injecting noise very different
+from the real mismatch.
+
+48
+00:03:11,386 --> 00:03:14,449
+Pruning after training
+to fit the chip's graph.
+
+49
+00:03:14,829 --> 00:03:17,092
+And claiming improvements
+with a single seed.
+
+50
+00:03:18,217 --> 00:03:23,686
+In summary: training with the hardware
+in mind means quantizing in the forward
+
+51
+00:03:23,686 --> 00:03:28,455
+pass, injecting the device noise
+and fixing sparsity from the start.
+
+52
+00:03:28,835 --> 00:03:33,843
+In our experiment, hardware costs five
+to seven points and aware training
+
+53
+00:03:33,843 --> 00:03:38,165
+recovers up to one; the fixed
+mask gains a little over pruning.
+
+54
+00:03:38,545 --> 00:03:41,644
+Always measure against the
+baseline and with several seeds.
+
+55
+00:03:42,750 --> 00:03:45,520
+To practice: explain the
+straight-through estimator.
+
+56
+00:03:45,900 --> 00:03:49,400
+Explain why noise injection
+favors flat solutions.
+
+57
+00:03:49,780 --> 00:03:52,696
+Explain why to fix the
+mask from the start.
+
+58
+00:03:53,076 --> 00:03:56,228
+And design the evaluation
+of a hardware-aware method.

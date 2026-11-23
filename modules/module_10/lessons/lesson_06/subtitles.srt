@@ -1,0 +1,276 @@
+1
+00:00:00,350 --> 00:00:01,962
+Lección 10.6.
+
+2
+00:00:02,343 --> 00:00:05,679
+Unidades tanh-lineales en
+un grafo de grado dieciséis.
+
+3
+00:00:06,783 --> 00:00:10,873
+Ya tenemos las piezas: la tangente
+que calcula un pbit, las capas
+
+4
+00:00:10,873 --> 00:00:15,402
+dispersas de grado fijo y la codificación
+de números en grupos de pbits.
+
+5
+00:00:15,782 --> 00:00:19,130
+Hoy las juntamos en la
+unidad básica de un modelo de
+
+6
+00:00:19,130 --> 00:00:22,607
+lenguaje para un chip de
+pbits: la unidad tanh-lineal.
+
+7
+00:00:22,987 --> 00:00:25,839
+Y veremos cómo se acomoda
+en un grafo donde cada
+
+8
+00:00:25,839 --> 00:00:28,275
+pbit tiene exactamente dieciséis vecinos.
+
+9
+00:00:29,383 --> 00:00:35,680
+Una unidad tanh-lineal
+calcula tanh(Σ wⱼ xⱼ + b).
+
+10
+00:00:36,060 --> 00:00:38,867
+Es una neurona clásica
+con activación tangente.
+
+11
+00:00:39,247 --> 00:00:43,460
+En un pbit, el campo local es la
+suma ponderada de los estados de los
+
+12
+00:00:43,460 --> 00:00:47,550
+vecinos, y la salida media es
+exactamente la tangente de ese campo.
+
+13
+00:00:47,930 --> 00:00:52,198
+La unidad tanh-lineal es, por
+tanto, el pbit visto en promedio.
+
+14
+00:00:53,317 --> 00:00:54,180
+Ahora el grafo.
+
+15
+00:00:54,560 --> 00:00:56,613
+Cada pbit tiene dieciséis vecinos.
+
+16
+00:00:56,993 --> 00:01:01,131
+Si cada entrada se codifica con un
+grupo de cuatro pbits, una unidad
+
+17
+00:01:01,131 --> 00:01:05,270
+puede leer cuatro entradas: cuatro
+por cuatro, dieciséis conexiones.
+
+18
+00:01:05,650 --> 00:01:09,562
+Los cuatro pbits de una entrada
+comparten el mismo peso, así que su
+
+19
+00:01:09,562 --> 00:01:12,949
+suma actúa como un entero
+probabilístico de cinco niveles.
+
+20
+00:01:14,050 --> 00:01:15,125
+Hay una sutileza.
+
+21
+00:01:15,505 --> 00:01:18,260
+La salida media es la
+media de la tangente del
+
+22
+00:01:18,260 --> 00:01:21,015
+campo ruidoso, no la
+tangente del campo medio.
+
+23
+00:01:21,395 --> 00:01:25,375
+Como la tangente es curva, el ruido
+de las entradas produce un sesgo.
+
+24
+00:01:25,755 --> 00:01:30,643
+Lo medimos con cuatro mil unidades
+al azar: con un pbit por entrada, el
+
+25
+00:01:30,643 --> 00:01:35,394
+sesgo cuadrático medio es cero coma
+uno nueve siete; con cuatro, cero
+
+26
+00:01:35,394 --> 00:01:39,662
+coma cero ocho cinco; con
+dieciséis, cero coma cero tres seis.
+
+27
+00:01:40,783 --> 00:01:43,443
+Con grado fijo de dieciséis, más pbits por
+
+28
+00:01:43,443 --> 00:01:46,228
+entrada significa menos
+entradas por unidad.
+
+29
+00:01:46,608 --> 00:01:50,865
+Menos entradas obliga a más capas
+para mezclar toda la información:
+
+30
+00:01:50,865 --> 00:01:54,931
+para una dimensión de mil
+veinticuatro, con abanico de dieciséis
+
+31
+00:01:54,931 --> 00:01:58,615
+bastan dos capas y media; con
+abanico cuatro, cinco capas.
+
+32
+00:01:58,995 --> 00:02:03,931
+Cuatro por cuatro es un compromiso:
+sesgo moderado, profundidad razonable.
+
+33
+00:02:04,311 --> 00:02:08,130
+Además, el entrenamiento con ruido
+absorbe buena parte del sesgo.
+
+34
+00:02:09,250 --> 00:02:10,880
+Así entran los tokens al chip.
+
+35
+00:02:11,260 --> 00:02:14,586
+El vector de embedding de
+cada token, calculado de forma
+
+36
+00:02:14,586 --> 00:02:18,210
+digital, se escribe como sesgos
+sobre grupos de cuatro pbits.
+
+37
+00:02:18,590 --> 00:02:21,485
+A partir de ahí, capas
+tanh-lineales de abanico cuatro
+
+38
+00:02:21,485 --> 00:02:24,272
+proyectan y mezclan la
+información dentro del grafo.
+
+39
+00:02:24,652 --> 00:02:27,969
+La salida se lee promediando
+muestras, como en la lección
+
+40
+00:02:27,969 --> 00:02:31,576
+anterior, y vuelve a lo digital
+para la cabeza de vocabulario.
+
+41
+00:02:32,683 --> 00:02:36,090
+En la práctica: usa tangente
+en el MLP y DyT como
+
+42
+00:02:36,090 --> 00:02:40,121
+normalización, enmascara las
+proyecciones a abanico cuatro
+
+43
+00:02:40,121 --> 00:02:44,431
+con grupos de cuatro pbits, y
+entrena con pasadas muestreadas.
+
+44
+00:02:44,811 --> 00:02:49,506
+En el laboratorio veintinueve convertirás
+un modelo pequeño y medirás el precio.
+
+45
+00:02:50,617 --> 00:02:55,503
+Errores comunes: suponer que la media de
+la tangente es la tangente de la media.
+
+46
+00:02:55,883 --> 00:02:59,420
+Gastar las dieciséis conexiones
+en entradas de un solo pbit.
+
+47
+00:02:59,800 --> 00:03:02,852
+Olvidar que un abanico
+pequeño cuesta profundidad.
+
+48
+00:03:03,232 --> 00:03:07,113
+Y entrenar de forma determinista
+para desplegar de forma estocástica.
+
+49
+00:03:08,217 --> 00:03:12,378
+En resumen, la unidad tanh-lineal
+es el pbit visto en promedio.
+
+50
+00:03:12,758 --> 00:03:16,534
+En un grafo de grado dieciséis,
+cuatro entradas por cuatro pbits
+
+51
+00:03:16,534 --> 00:03:20,074
+equilibran el sesgo del ruido,
+que medimos en cero coma cero
+
+52
+00:03:20,074 --> 00:03:23,143
+ocho cinco, y la profundidad
+necesaria para mezclar.
+
+53
+00:03:23,523 --> 00:03:27,372
+Los embeddings entran como sesgos
+y la salida se lee promediando.
+
+54
+00:03:28,483 --> 00:03:33,282
+Para practicar: explica por qué un
+pbit implementa una unidad tanh-lineal.
+
+55
+00:03:33,662 --> 00:03:36,341
+Cuenta los niveles de
+la suma de cuatro pbits.
+
+56
+00:03:36,721 --> 00:03:40,606
+Calcula las capas para mezclar una
+dimensión de cuatro mil noventa y seis.
+
+57
+00:03:40,986 --> 00:03:42,810
+Y explica el origen del sesgo.

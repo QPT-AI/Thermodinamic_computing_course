@@ -1,0 +1,48 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{3.2}{Producción de entropía y la segunda ley para trayectorias}
+
+\noindent\textbf{Unidad 3.}\quad\textbf{Objetivos:} definir $\Sigma$; teorema de fluctuación integral y detallado; segunda ley como
+consecuencia. \textbf{Prerrequisitos:} 3.1, 2.3.
+
+\section{Producción de entropía por trayectoria}
+En unidades de $\kB$: $\Sigma=\Delta s-Q/(\kB T)$, con $\Delta s=-\ln p(x_t,t)+\ln p(x_0,0)$ y $Q$ el calor recibido. Para dinámicas de
+Langevin, $\Sigma=\ln\frac{\mathcal P[x(\cdot)]}{\tilde{\mathcal P}[\tilde x(\cdot)]}$: la irreversibilidad de la trayectoria respecto de su inversa
+temporal (con el protocolo invertido) \cite{seifert}. En estado estacionario, $\langle\dot\Sigma\rangle=\int\frac{J^2}{Dp}dx\ge0$, nula sii $J=0$.
+
+\section{Teoremas de fluctuación}
+\begin{resultado}[ (integral)]
+$\langle e^{-\Sigma}\rangle=1$ para cualquier protocolo y duración (con $p(x_0)$ la distribución inicial correcta). Por Jensen,
+$\langle\Sigma\rangle\ge0$: la segunda ley. Además, la igualdad obliga a que existan trayectorias con $\Sigma<0$.
+\end{resultado}
+\begin{resultado}[ (detallado, estado estacionario)]
+$P(\Sigma)/P(-\Sigma)=e^{\Sigma}$ (asintóticamente para tiempos largos; exacto en ejemplos como el siguiente).
+\end{resultado}
+\begin{proof}[Idea]
+$\langle e^{-\Sigma}\rangle=\int\mathcal P[x]\frac{\tilde{\mathcal P}[\tilde x]}{\mathcal P[x]}\mathcal Dx=\int\tilde{\mathcal P}[\tilde x]\mathcal D\tilde x=1$.
+\end{proof}
+
+\section{Ejemplo exacto: anillo con fuerza}
+Partícula sobreamortiguada en un anillo con fuerza constante $F$ ($\mu=\kB T=1$, sin potencial): la densidad estacionaria es uniforme,
+$\Delta s=0$ y $\Sigma=F\Delta\theta$ con $\Delta\theta\sim\N(Ft,2t)$, así $\Sigma\sim\N(F^2t,2F^2t)$ y $\ln\frac{P(\Sigma)}{P(-\Sigma)}=\Sigma$ exactamente
+(gaussiana con varianza $=2\,$media). Con $F=\frac12$, $t=2$: $\Sigma\sim\N(0{,}5;1)$, $P(\Sigma<0)=\Phi(-0{,}5)\approx0{,}31$. Con
+$2\times10^5$ trayectorias \evS: $\langle e^{-\Sigma}\rangle\approx1{,}000$, $P(\Sigma<0)\approx0{,}309$ y los puntos de $\ln[P(\Sigma)/P(-\Sigma)]$ sobre la
+recta de pendiente 1. Para $t=20$: $P(\Sigma<0)\approx0{,}057$; $t=200$: $\approx3\times10^{-7}$.
+
+\begin{aplicacion}
+Disipación de un cómputo $=\kB T\langle\Sigma\rangle$; precisión de relojes y motores (TUR, 3.6); inferencia de disipación desde datos.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $\Sigma<0$ individual es obligatorio, no una violación.
+\item No olvidar $\Delta s$ en transitorios. \quad $\Sigma$ es adimensional (en $\kB$); el calor tiene unidades de energía.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[11]{seifert} U. Seifert, Stochastic thermodynamics, fluctuation theorems and molecular machines, 2012.
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\end{thebibliography}
+\end{document}

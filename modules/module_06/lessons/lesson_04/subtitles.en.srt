@@ -1,0 +1,314 @@
+1
+00:00:00,350 --> 00:00:02,071
+Lesson 6.4.
+
+2
+00:00:02,451 --> 00:00:05,048
+Complexity of thermodynamic algorithms.
+
+3
+00:00:06,150 --> 00:00:09,198
+What does it mean for an
+analog algorithm to be faster?
+
+4
+00:00:09,578 --> 00:00:12,004
+A digital computer counts operations.
+
+5
+00:00:12,385 --> 00:00:17,016
+A thermodynamic device does not
+perform operations: it evolves in time.
+
+6
+00:00:17,396 --> 00:00:20,956
+To compare, we must fix rules:
+measure time in units of the
+
+7
+00:00:20,956 --> 00:00:25,059
+relaxation time and accept that the
+hardware grows with the problem.
+
+8
+00:00:25,439 --> 00:00:27,983
+Today we see where the
+complexities in Aifer's
+
+9
+00:00:27,983 --> 00:00:30,583
+table come from and what
+limitations they hide.
+
+10
+00:00:31,683 --> 00:00:32,699
+Three assumptions.
+
+11
+00:00:33,079 --> 00:00:36,710
+First, the device has
+d oscillators and up to
+
+12
+00:00:36,710 --> 00:00:39,857
+d² couplings, all evolving in parallel.
+
+13
+00:00:40,237 --> 00:00:47,450
+Second, the physical timescale is
+τ_r = γ/‖A‖, set by the fastest mode.
+
+14
+00:00:47,830 --> 00:00:52,203
+Third, the complexity counts the total
+time in units of τ_r, not including
+
+15
+00:00:52,203 --> 00:00:55,985
+the loading of the matrix, which
+we will see in the next lesson.
+
+16
+00:00:56,365 --> 00:00:59,349
+With these rules, the analysis
+of analog complexity is
+
+17
+00:00:59,349 --> 00:01:02,057
+subtle, and the authors
+themselves warn about it.
+
+18
+00:01:03,183 --> 00:01:07,797
+Each eigenmode of A relaxes at its own
+rate, proportional to its eigenvalue.
+
+19
+00:01:08,177 --> 00:01:13,605
+The fastest mode sets the timescale, but
+the slowest decides when we are done.
+
+20
+00:01:13,985 --> 00:01:17,116
+The ratio between them is
+the condition number κ.
+
+21
+00:01:17,496 --> 00:01:22,672
+That is why equilibration in the overdamped
+regime takes on the order of κ τ_r:
+
+22
+00:01:22,672 --> 00:01:27,127
+an ill-conditioned matrix is a
+physical system with very slow modes.
+
+23
+00:01:28,250 --> 00:01:29,360
+Inertia helps.
+
+24
+00:01:29,740 --> 00:01:34,399
+In the underdamped regime, with
+mass and a damping tuned to the slow
+
+25
+00:01:34,399 --> 00:01:38,579
+mode, relaxation scales as the
+square root of κ instead of κ.
+
+26
+00:01:38,959 --> 00:01:43,210
+We simulate it with the matrix
+from lesson 6.1, normalized.
+
+27
+00:01:43,590 --> 00:01:48,331
+With κ equal to thirty-four, reaching
+an error of one thousandth takes
+
+28
+00:01:48,331 --> 00:01:52,531
+two hundred seven units overdamped
+and forty-nine underdamped.
+
+29
+00:01:52,911 --> 00:01:57,509
+With κ ten times larger, two thousand
+three hundred seventy against one hundred
+
+30
+00:01:57,509 --> 00:02:02,049
+seventy-two: the first grew eleven times
+and the second only three and a half.
+
+31
+00:02:02,429 --> 00:02:06,343
+It is the same acceleration as the
+heavy-ball method in optimization.
+
+32
+00:02:07,450 --> 00:02:08,863
+Now the full table.
+
+33
+00:02:09,243 --> 00:02:15,706
+For linear systems, the overdamped
+method scales as d κ² ε⁻²,
+
+34
+00:02:16,086 --> 00:02:24,849
+and the underdamped as d κ^(3/2) ε⁻²,
+against d² √κ for conjugate gradient.
+
+35
+00:02:25,229 --> 00:02:27,884
+The gain is linear in
+d, but it is paid for
+
+36
+00:02:27,884 --> 00:02:30,601
+with worse dependence
+on κ and on precision.
+
+37
+00:02:30,981 --> 00:02:34,499
+In their simulations, Aifer
+and colleagues find a practical
+
+38
+00:02:34,499 --> 00:02:38,017
+advantage for dimensions of a
+thousand or five thousand and
+
+39
+00:02:38,017 --> 00:02:41,058
+modest precision, not for
+high-precision solutions.
+
+40
+00:02:42,183 --> 00:02:45,104
+A temptation: if we multiply b by a large
+
+41
+00:02:45,104 --> 00:02:48,595
+constant, the time formula
+drops with its square.
+
+42
+00:02:48,975 --> 00:02:52,105
+But initializing the
+system costs an energy
+
+43
+00:02:52,105 --> 00:02:56,400
+proportional to bᵀ A⁻¹ b, which
+rises with the same square.
+
+44
+00:02:56,780 --> 00:03:01,612
+What stays bounded is
+the product: energy times
+
+45
+00:03:01,612 --> 00:03:06,237
+time is at least 2κ² d
+β⁻¹ τ_r / (ε²(1 − P)).
+
+46
+00:03:06,617 --> 00:03:10,506
+One can go faster by spending
+more energy, but not for free: it
+
+47
+00:03:10,506 --> 00:03:13,962
+is an energy–time relation
+specific to these algorithms.
+
+48
+00:03:15,083 --> 00:03:19,707
+Faced with any complexity claim, ask in
+which units time is measured, how the
+
+49
+00:03:19,707 --> 00:03:24,211
+hardware grows with the dimension, what
+condition number and precision your
+
+50
+00:03:24,211 --> 00:03:27,994
+real problem has, and whether
+loading and readout are included.
+
+51
+00:03:29,117 --> 00:03:31,830
+Common mistakes:
+comparing relaxation units
+
+52
+00:03:31,830 --> 00:03:34,291
+with operations without a timing model.
+
+53
+00:03:34,671 --> 00:03:38,073
+Forgetting that the hardware grows
+as the square of the dimension.
+
+54
+00:03:38,453 --> 00:03:41,213
+Ignoring the condition
+and precision factors.
+
+55
+00:03:41,593 --> 00:03:44,744
+And scaling the vector to speed
+up without counting the energy.
+
+56
+00:03:45,850 --> 00:03:49,117
+In summary: analog complexity
+is measured in relaxation
+
+57
+00:03:49,117 --> 00:03:51,969
+times with hardware that
+grows with the problem.
+
+58
+00:03:52,349 --> 00:03:56,310
+The condition number appears
+because slow modes take κ
+
+59
+00:03:56,310 --> 00:03:59,904
+times longer, or only √κ
+with well-tuned inertia.
+
+60
+00:04:00,284 --> 00:04:03,945
+The gain is linear in the
+dimension, in exchange for worse
+
+61
+00:04:03,945 --> 00:04:07,606
+dependence on precision, and
+energy times time is bounded.
+
+62
+00:04:08,717 --> 00:04:12,579
+To practice: compute the
+relaxation time of the slow mode.
+
+63
+00:04:12,959 --> 00:04:15,011
+Find the optimal damping.
+
+64
+00:04:15,391 --> 00:04:19,924
+Find the dimension beyond which the
+thermodynamic method wins in the example.
+
+65
+00:04:20,304 --> 00:04:24,187
+And explain why scaling the vector
+does not make it infinitely fast.

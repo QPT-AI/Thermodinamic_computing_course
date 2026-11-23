@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.6}{No idealidades analógicas}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Demuestre que el redondeo estocástico es insesgado: $\mathbb E[q(x)]=x$.
+\item (B) ¿Por qué la KL crece como $\sigma^2$ para desajustes pequeños?
+\item (B) ¿Cuántos bits de acoplamiento para KL $<10^{-2}$ en el ejemplo?
+\item (B) ¿Cómo cambia el ruido de disparo la $\beta$ efectiva de un pbit?
+\item (I) Varianza de un redondeo estocástico de $x$ con paso $\Delta$ y fracción $f=\{x/\Delta\}$.
+\item (I) Con varianza de redondeo $v$ por acoplamiento, ¿cómo escala el error al promediar $K$ redondeos?
+\item (A) Reproduzca las tablas de KL de los apuntes y añada desajuste en $J$ además de en $h$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\mathbb E[q]=\lfloor x/\Delta\rfloor\Delta+\Delta f=x$.
+
+\textbf{E2.} KL es mínima (cero) en $\delta h=0$ con gradiente nulo: el primer término es cuadrático (información de Fisher $\beta^2\mathrm{Cov}(s)$).
+
+\textbf{E3.} 6 bits (KL $=0{,}002$); con 4 bits es $0{,}07$.
+
+\textbf{E4.} Añade varianza al campo efectivo: la curva se aplana, equivalente a $\beta_{\text{ef}}<\beta$.
+
+\textbf{E5.} $\Delta^2f(1-f)\le\Delta^2/4$.
+
+\textbf{E6.} Desviación $\propto\sqrt{v/K}$.
+
+\textbf{E7.} La KL por desajuste de $J$ también crece cuadráticamente, con un prefactor dado por la covarianza de los productos $s_is_j$.
+\end{solucion}
+\end{document}

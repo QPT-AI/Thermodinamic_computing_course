@@ -1,0 +1,44 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{1.7}{Arco histórico}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Calcule la eficiencia de Carnot entre 600 K y 300 K, y entre un chip a 360 K y el ambiente a 300 K.
+\item ¿Qué fórmula está grabada en la tumba de Boltzmann? Explique cada símbolo.
+\item ¿Qué aportó Bennett a la resolución del demonio de Maxwell?
+\item Escriba la igualdad de Jarzynski y deduzca $\langle W\rangle\ge\Delta F$.
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Ordene cronológicamente y asocie: (a) $p=e^{-\beta E}/Z$; (b) $Q\ge\kB T\ln2$; (c) $H=-\sum p\log p$; (d) $\Delta W_{ij}\propto\langle s_is_j\rangle_{\text{d}}-\langle s_is_j\rangle_{\text{m}}$; (e) $\eta=1-T_f/T_c$.
+\item Explique en un párrafo por qué una red de Hopfield es un modelo de Ising.
+\item Con la igualdad de Crooks, muestre que $P_F(W)=P_R(-W)$ en $W=\Delta F$.
+\end{enumerate}
+
+\section{Ejercicio avanzado}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Escriba un ensayo de una página: «¿Por qué el hardware termodinámico podría revivir las máquinas de Boltzmann?». Use la conferencia Nobel de Hinton y [21] como fuentes, distinguiendo afirmaciones [M], [P] y [E].
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $0{,}5$; $1-300/360\approx0{,}167$: el calor de un chip a 360 K solo podría convertirse en trabajo con eficiencia máxima del 16,7\,\%.
+
+\textbf{B2.} $S=k\log W$: $S$ entropía, $k$ constante de Boltzmann, $W$ número de microestados compatibles.
+
+\textbf{B3.} Mostró que medir puede ser reversible y que el costo inevitable está en borrar la memoria del demonio (Landauer).
+
+\textbf{B4.} $\langle e^{-\beta W}\rangle=e^{-\beta\Delta F}$; Jensen: $e^{-\beta\langle W\rangle}\le\langle e^{-\beta W}\rangle$, luego $\langle W\rangle\ge\Delta F$.
+
+\textbf{I1.} (e) Carnot 1824; (a) Gibbs 1902; (c) Shannon 1948; (b) Landauer 1961; (d) Ackley--Hinton--Sejnowski 1985.
+
+\textbf{I2.} Neuronas binarias $s_i=\pm1$, pesos simétricos $W_{ij}=J_{ij}$ y umbrales $h_i$ definen $E(s)=-\frac12\sum W_{ij}s_is_j-\sum h_is_i$, que es la energía de Ising; la dinámica asíncrona determinista desciende en $E$ ($T=0$).
+
+\textbf{I3.} $\frac{P_F(W)}{P_R(-W)}=e^{\beta(W-\Delta F)}=1$ en $W=\Delta F$: las distribuciones directa e inversa (reflejada) se cruzan ahí (base de estimadores de $\Delta F$, lección 3.3).
+
+\textbf{A1.} (Abierta.) Puntos esperados: el aprendizaje exige muestrear el modelo (fase negativa), caro en GPU; un TSU muestrea nativamente; etiquetar cifras del fabricante como [P].
+\end{solucion}
+\end{document}

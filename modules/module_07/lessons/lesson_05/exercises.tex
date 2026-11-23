@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.5}{Identidades de sumas trigonométricas}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Verifique a mano la identidad del ciclo para $r=3$, $\ell=2$.
+\item (B) ¿Por qué un paso perezoso $\pm1$ equivale a dos medios pasos $\pm\frac12$ independientes?
+\item (B) ¿Qué denominador puede tener el lado combinatorio de la caminata diádica?
+\item (B) ¿Qué lado muestra inmediatamente el límite $1/r$?
+\item (I) Use la identidad del ciclo con $r\to\infty$ para obtener $\Pr(B=\ell)$, $B\sim\mathrm{Bin}(2\ell,\frac12)$, como una integral de $\cos^{2\ell}$.
+\item (I) Demuestre que la ley de $E_\ell$ es simétrica y que $\Pr(E_\ell=0)\ge2^{-\ell}$.
+\item (A) Programe ambos lados con fracciones exactas para $r=33$, $\ell=1,\dots,15$ y compruebe la igualdad exacta (no solo en coma flotante) del lado combinatorio con $\frac1r\sum_k\lambda_k^\ell$ evaluado simbólicamente.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Izquierda: $\frac13\big(1+\cos^4\frac\pi3+\cos^4\frac{2\pi}3\big)=\frac13\big(1+\frac1{16}+\frac1{16}\big)=\frac38$. Derecha: $\frac1{16}\big[\binom42\big]=\frac6{16}=\frac38$
+(los términos $j=\pm1$ dan $\binom4{5}=\binom4{-1}=0$).
+
+\textbf{E2.} $(\pm\frac12)+(\pm\frac12)\in\{-1,0,0,+1\}$ con probabilidades $\frac14,\frac12,\frac14$: la ley del paso perezoso.
+
+\textbf{E3.} Un divisor de $(4(M+1))^\ell$ (para $M=9$: $40^\ell$).
+
+\textbf{E4.} La espectral: el término $k=0$ vale $1/r$ y los demás decaen.
+
+\textbf{E5.} $\binom{2\ell}\ell4^{-\ell}=\frac1\pi\int_0^\pi\cos^{2\ell}\theta\,d\theta$ (suma de Riemann del lado izquierdo).
+
+\textbf{E6.} Simetría: $\xi\mapsto-\xi$ preserva la ley. Quedarse quieto los $\ell$ pasos tiene probabilidad $2^{-\ell}$.
+
+\textbf{E7.} Coinciden exactamente; el lado espectral es un número algebraico que resulta racional.
+\end{solucion}
+\end{document}

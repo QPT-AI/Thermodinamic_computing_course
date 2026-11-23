@@ -1,0 +1,62 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{2.4}{El proceso de Ornstein--Uhlenbeck}
+
+\noindent\textbf{Unidad 2.}\quad\textbf{Objetivos:} resolver el OU multivariado; derivar $x_\infty\sim\N(A^{-1}b,\beta^{-1}A^{-1})$ por
+Lyapunov; entender el principio del solucionador lineal termodinámico. \textbf{Prerrequisitos:} 0.4, 2.2, 2.3.
+
+\section{Definición}
+\begin{equation}dx=-(Ax-b)\,dt+\sqrt{2\beta^{-1}}\,dW,\qquad A\in\R^{d\times d}\ \text{SPD}.\end{equation}
+Es Langevin sobreamortiguada ($\mu=1$, $\kB T=\beta^{-1}$) en el potencial $E(x)=\frac12x^\top Ax-b^\top x$. Es el único
+proceso de difusión estacionario, gaussiano y markoviano (teorema de Doob) \cite{gardiner}.
+
+\section{Solución exacta}
+\begin{equation}x(t)=e^{-At}x_0+(I-e^{-At})A^{-1}b+\int_0^te^{-A(t-s)}\sqrt{2\beta^{-1}}\,dW(s).\end{equation}
+Por tanto $x(t)$ es gaussiano con media $\mu(t)=A^{-1}b+e^{-At}(x_0-A^{-1}b)$ y covarianza $\Sigma(t)$ que cumple la
+\textbf{ecuación de Lyapunov}
+\begin{equation}\dot\Sigma=-A\Sigma-\Sigma A^\top+2\beta^{-1}I .\end{equation}
+\begin{proof}[Derivación con Itô]
+Para $\delta x=x-\mu$: $d(\delta x\,\delta x^\top)=\delta x\,d\delta x^\top+d\delta x\,\delta x^\top+d\delta x\,d\delta x^\top$, con
+$d\delta x=-A\delta x\,dt+\sqrt{2\beta^{-1}}dW$ y $dW\,dW^\top=I\,dt$. Tomando esperanza: $\dot\Sigma=-A\Sigma-\Sigma A^\top+2\beta^{-1}I$.
+\end{proof}
+\begin{resultado}[ (estado estacionario)]
+Para $A$ simétrica: $A\Sigma+\Sigma A=2\beta^{-1}I\Rightarrow\Sigma_\infty=\beta^{-1}A^{-1}$; así $x_\infty\sim\N(A^{-1}b,\beta^{-1}A^{-1})$.
+Con $\Sigma(0)=0$: $\Sigma(t)=\beta^{-1}A^{-1}(I-e^{-2At})$.
+\end{resultado}
+En 1D, $dx=-a(x-m)dt+\sqrt{2/\beta}\,dW$: varianza estacionaria $1/(\beta a)$ y autocorrelación $\propto e^{-a|\tau|}$.
+
+\section{Resolver $Ax=b$ e invertir $A$}
+Por ergodicidad, los promedios temporales de una trayectoria convergen a los del estado estacionario:
+\[\frac1T\int_{t_0}^{t_0+T}x\,dt\to A^{-1}b,\qquad\frac1T\int(x-\bar x)(x-\bar x)^\top dt\to\beta^{-1}A^{-1}.\]
+El error estadístico decae como $1/\sqrt T$, con un prefactor que crece con el tiempo de correlación $\sim1/\lambda_{\min}$
+(lección 2.6). Es el principio del álgebra lineal termodinámica \cite{tla} y del laboratorio L3.
+
+\begin{ejemplo}
+$A=\begin{pmatrix}3&1\\1&2\end{pmatrix}$, $b=(1,1)^\top$: $A^{-1}=\frac15\begin{pmatrix}2&-1\\-1&3\end{pmatrix}$, $A^{-1}b=(0{,}2;0{,}4)$,
+$\Sigma_\infty(\beta=1)=\begin{pmatrix}0{,}4&-0{,}2\\-0{,}2&0{,}6\end{pmatrix}$. Una simulación de Euler--Maruyama \evS{} con
+$\Delta t=10^{-2}$ y $T=2000$ da medias con errores de $\sim0{,}01$--$0{,}03$ y covarianzas con un sesgo de discretización de
+$\sim3\,\%$ (que disminuye con $\Delta t$).
+\end{ejemplo}
+
+\begin{aplicacion}
+Unidad 6 (álgebra lineal termodinámica), Unidad 8 (TNGD: OU con $G+\lambda I$), Unidad 5.4 (osciladores RC/LC acoplados),
+Unidad 9 (proceso directo de difusión).
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item $A$ debe tener espectro positivo; si no, no hay estacionaria.
+\item $\Sigma_\infty=\beta^{-1}A^{-1}$ (no $A^{-2}$, no $\beta A^{-1}$).
+\item Descartar el transitorio (burn-in) y no tratar muestras consecutivas como independientes.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+OU = Langevin cuadrática; solución exacta; Lyapunov; $\N(A^{-1}b,\beta^{-1}A^{-1})$; promedios temporales resuelven el problema lineal.
+
+\begin{thebibliography}{9}\small
+\bibitem[1]{gardiner} C. W. Gardiner, \emph{Handbook of Stochastic Methods}.
+\bibitem[30]{tla} M. Aifer et al., Thermodynamic linear algebra, \emph{npj Unconv. Comput.} 1, 13 (2024).
+\end{thebibliography}
+\end{document}

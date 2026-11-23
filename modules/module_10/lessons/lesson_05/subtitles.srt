@@ -1,0 +1,281 @@
+1
+00:00:00,350 --> 00:00:02,011
+Lección 10.5.
+
+2
+00:00:02,391 --> 00:00:04,235
+Codificar números en pbits.
+
+3
+00:00:05,350 --> 00:00:08,623
+Un chip digital guarda números
+con un ancho fijo de bits.
+
+4
+00:00:09,003 --> 00:00:12,407
+Un chip de pbits solo produce
+unos y ceros aleatorios.
+
+5
+00:00:12,787 --> 00:00:17,117
+¿Cómo representa entonces una activación
+de valor cero coma treinta y siete?
+
+6
+00:00:17,497 --> 00:00:20,212
+La idea es usar la
+probabilidad: el número es la
+
+7
+00:00:20,212 --> 00:00:22,474
+frecuencia con la que aparecen los unos.
+
+8
+00:00:22,854 --> 00:00:27,076
+Hoy vemos cuántos bits efectivos
+se obtienen así y cuánto cuestan.
+
+9
+00:00:28,183 --> 00:00:31,095
+Un entero probabilístico
+es una variable aleatoria
+
+10
+00:00:31,095 --> 00:00:33,598
+entera cuya media es
+el valor que queremos.
+
+11
+00:00:33,978 --> 00:00:37,998
+El caso más simple es un pbit
+con probabilidad x de valer uno.
+
+12
+00:00:38,378 --> 00:00:44,434
+Con un grupo de n pbits, la suma toma
+valores de cero a n y su media es n x.
+
+13
+00:00:44,814 --> 00:00:48,371
+En el temario, esta familia
+de codificaciones aparece como
+
+14
+00:00:48,371 --> 00:00:51,928
+dy4p; aquí estudiamos el
+principio general, que no depende
+
+15
+00:00:51,928 --> 00:00:54,810
+de los detalles de una
+implementación concreta.
+
+16
+00:00:55,917 --> 00:00:59,827
+Definimos los bits efectivos
+comparando el error cuadrático
+
+17
+00:00:59,827 --> 00:01:03,869
+medio con el de un cuantizador
+uniforme: un error de un medio
+
+18
+00:01:03,869 --> 00:01:07,713
+elevado a b, dividido por raíz
+de doce, equivale a b bits.
+
+19
+00:01:08,093 --> 00:01:13,139
+Si una muestra da b₁ bits efectivos,
+promediar S muestras divide el ruido por
+
+20
+00:01:13,139 --> 00:01:17,464
+raíz de S, y eso suma un medio de
+logaritmo en base dos de S bits.
+
+21
+00:01:18,583 --> 00:01:21,393
+Lo verificamos con veinte
+mil valores al azar,
+
+22
+00:01:21,393 --> 00:01:24,875
+codificados con redondeo
+estocástico a dieciséis niveles.
+
+23
+00:01:25,255 --> 00:01:29,074
+Una muestra da tres coma cuatro
+dos bits efectivos; cuatro
+
+24
+00:01:29,074 --> 00:01:33,157
+muestras, cuatro coma cuatro
+uno; dieciséis, cinco coma cuatro
+
+25
+00:01:33,157 --> 00:01:36,844
+uno; doscientas cincuenta y
+seis, siete coma cuatro uno.
+
+26
+00:01:37,224 --> 00:01:42,070
+Cada factor cuatro en muestras suma
+exactamente un bit, tal como predice la ley.
+
+27
+00:01:43,183 --> 00:01:46,500
+Con un grupo de n pbits
+binarios pasa lo mismo: lo
+
+28
+00:01:46,500 --> 00:01:49,286
+que cuenta es el total de muestras, n · S.
+
+29
+00:01:49,666 --> 00:01:52,903
+Un solo pbit con una muestra
+da menos de cero bits
+
+30
+00:01:52,903 --> 00:01:56,139
+efectivos; con dieciséis
+muestras, uno coma cinco.
+
+31
+00:01:56,519 --> 00:02:00,130
+Dieciséis pbits con dieciséis
+muestras dan tres coma cinco.
+
+32
+00:02:00,510 --> 00:02:05,139
+Se puede gastar en espacio, con más
+pbits, o en tiempo, con más muestras.
+
+33
+00:02:06,250 --> 00:02:09,214
+Esto permite precisión
+a demanda: cada capa, o
+
+34
+00:02:09,214 --> 00:02:12,178
+cada token, puede pedir
+los bits que necesita.
+
+35
+00:02:12,558 --> 00:02:14,053
+Pero el costo crece rápido.
+
+36
+00:02:14,433 --> 00:02:18,283
+Cada bit adicional exige cuatro
+veces más muestras, así que la
+
+37
+00:02:18,283 --> 00:02:21,512
+energía crece como cuatro
+elevado al número de bits.
+
+38
+00:02:21,892 --> 00:02:24,923
+Con pocos bits, la
+codificación probabilística es
+
+39
+00:02:24,923 --> 00:02:28,016
+barata; con muchos, un
+multiplicador digital gana.
+
+40
+00:02:28,396 --> 00:02:31,021
+Por eso los modelos para
+TSU se entrenan para
+
+41
+00:02:31,021 --> 00:02:33,296
+funcionar con muy pocos bits efectivos.
+
+42
+00:02:34,417 --> 00:02:38,143
+En la práctica: codifica las
+activaciones como frecuencias de
+
+43
+00:02:38,143 --> 00:02:42,175
+pbits, reparte las muestras por
+capa según cuánto dañe el error, y
+
+44
+00:02:42,175 --> 00:02:45,597
+entrena con el ruido incluido
+para necesitar menos bits.
+
+45
+00:02:45,977 --> 00:02:49,918
+En el laboratorio veintinueve medirás
+la exactitud frente a las muestras.
+
+46
+00:02:51,050 --> 00:02:54,934
+Errores comunes: contar niveles
+como si fueran bits efectivos.
+
+47
+00:02:55,314 --> 00:03:00,035
+Esperar ganancias lineales, cuando un
+bit más cuesta cuatro veces más muestras.
+
+48
+00:03:00,415 --> 00:03:04,210
+Ignorar las correlaciones entre
+muestras, que reducen la ganancia.
+
+49
+00:03:04,590 --> 00:03:07,617
+Y reportar bits sin decir
+cómo se define el error.
+
+50
+00:03:08,750 --> 00:03:13,041
+En resumen, un número se codifica
+como la media de muestras de pbits.
+
+51
+00:03:13,421 --> 00:03:17,590
+Los bits efectivos siguen
+la ley b₁ + ½ log₂ S, que
+
+52
+00:03:17,590 --> 00:03:21,759
+verificamos: cuatro veces
+más muestras, un bit más.
+
+53
+00:03:22,139 --> 00:03:25,012
+La precisión se puede
+pedir a demanda, pero su
+
+54
+00:03:25,012 --> 00:03:27,635
+costo crece exponencialmente con los bits.
+
+55
+00:03:28,750 --> 00:03:32,398
+Para practicar: calcula las
+muestras para ganar tres bits.
+
+56
+00:03:32,778 --> 00:03:35,880
+Calcula la varianza de la
+media de un grupo de pbits.
+
+57
+00:03:36,260 --> 00:03:39,047
+Explica por qué pbits y
+muestras se intercambian.
+
+58
+00:03:39,427 --> 00:03:41,790
+Y di cuándo gana un multiplicador digital.

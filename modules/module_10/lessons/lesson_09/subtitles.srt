@@ -1,0 +1,338 @@
+1
+00:00:00,350 --> 00:00:02,130
+Lección 10.9.
+
+2
+00:00:02,510 --> 00:00:06,886
+Caso de estudio: un modelo de
+lenguaje AFT de principio a fin.
+
+3
+00:00:08,017 --> 00:00:12,110
+Cerramos la unidad con un caso de
+estudio real, de principio a fin.
+
+4
+00:00:12,490 --> 00:00:16,088
+Entrenamos un modelo de lenguaje
+pequeño, de unos ciento trece
+
+5
+00:00:16,088 --> 00:00:19,803
+mil parámetros, sobre el propio
+texto de las narraciones de este
+
+6
+00:00:19,803 --> 00:00:22,937
+curso: trescientos cuarenta
+mil caracteres en español.
+
+7
+00:00:23,317 --> 00:00:27,297
+Usamos todas las piezas de la unidad
+y medimos cuatro variantes con
+
+8
+00:00:27,297 --> 00:00:30,980
+los mismos datos, la misma semilla
+y el mismo número de pasos.
+
+9
+00:00:32,083 --> 00:00:34,919
+El modelo tiene dos bloques
+de dimensión sesenta y
+
+10
+00:00:34,919 --> 00:00:37,867
+cuatro, con contexto de
+sesenta y cuatro caracteres.
+
+11
+00:00:38,247 --> 00:00:42,372
+La mezcla es AFT causal con
+sesgos locales aprendidos en
+
+12
+00:00:42,372 --> 00:00:45,907
+una ventana de cuatro
+posiciones, como AFT-conv.
+
+13
+00:00:46,287 --> 00:00:50,550
+La normalización es DyT
+y el MLP usa tangente.
+
+14
+00:00:50,930 --> 00:00:54,458
+Para la difusión enmascarada,
+la mezcla es bidireccional: el
+
+15
+00:00:54,458 --> 00:00:57,808
+promedio de una pasada hacia
+adelante y otra hacia atrás.
+
+16
+00:00:58,917 --> 00:01:00,320
+Una lección del proceso.
+
+17
+00:01:00,700 --> 00:01:03,291
+En la primera versión,
+el modelo de difusión no
+
+18
+00:01:03,291 --> 00:01:06,268
+aprendía nada más allá de
+la frecuencia de cada letra.
+
+19
+00:01:06,648 --> 00:01:11,473
+La causa: una posición enmascarada solo
+recibe información de sus vecinas, y con
+
+20
+00:01:11,473 --> 00:01:15,937
+mezcla global esa información se diluye
+entre sesenta y cuatro posiciones.
+
+21
+00:01:16,317 --> 00:01:20,290
+El gradiente de los sesgos locales
+era demasiado ruidoso para crecer.
+
+22
+00:01:20,670 --> 00:01:25,028
+Inicializar esos sesgos con preferencia
+por las vecinas cercanas lo resolvió.
+
+23
+00:01:25,408 --> 00:01:27,050
+La inicialización importa.
+
+24
+00:01:28,150 --> 00:01:30,773
+Los resultados, en bits por carácter sobre
+
+25
+00:01:30,773 --> 00:01:33,333
+texto de validación, tras tres mil pasos.
+
+26
+00:01:33,713 --> 00:01:36,799
+Autoregresivo con Adam:
+uno coma nueve ocho.
+
+27
+00:01:37,179 --> 00:01:40,944
+Con gradiente natural, resuelto
+con gradiente conjugado: uno
+
+28
+00:01:40,944 --> 00:01:44,583
+coma nueve cuatro, y a los
+quinientos pasos la ventaja era
+
+29
+00:01:44,583 --> 00:01:47,532
+mayor, dos coma dos frente
+a dos coma tres dos.
+
+30
+00:01:47,912 --> 00:01:50,611
+Con máscaras dispersas
+de grado cuatro: dos
+
+31
+00:01:50,611 --> 00:01:53,373
+coma tres dos, el
+impuesto de la dispersión.
+
+32
+00:01:53,753 --> 00:01:56,685
+Y la difusión enmascarada
+da una cota de tres
+
+33
+00:01:56,685 --> 00:01:59,682
+coma uno ocho: a esta
+escala, claramente peor.
+
+34
+00:02:00,783 --> 00:02:05,036
+El gradiente natural gana por paso,
+pero en la GPU tardó cincuenta y dos
+
+35
+00:02:05,036 --> 00:02:09,112
+segundos frente a nueve y medio de
+Adam, porque cada paso resuelve un
+
+36
+00:02:09,112 --> 00:02:12,597
+sistema lineal con diez
+iteraciones de gradiente conjugado.
+
+37
+00:02:12,977 --> 00:02:16,591
+Esa resolución es justo lo
+que TNGD delega en un circuito
+
+38
+00:02:16,591 --> 00:02:20,141
+termodinámico, como vimos en
+la lección ocho punto tres.
+
+39
+00:02:20,521 --> 00:02:23,561
+Si la resolución analógica
+fuera rápida y barata, el
+
+40
+00:02:23,561 --> 00:02:26,250
+gradiente natural ganaría
+también por segundo.
+
+41
+00:02:27,383 --> 00:02:28,769
+Registramos la energía.
+
+42
+00:02:29,149 --> 00:02:32,080
+El modelo denso cuesta
+unas doscientas siete mil
+
+43
+00:02:32,080 --> 00:02:35,194
+operaciones por token; con
+utilización del diez por
+
+44
+00:02:35,194 --> 00:02:38,857
+ciento y cero coma uno siete
+siete picojulios por operación,
+
+45
+00:02:39,237 --> 00:02:43,669
+unos trescientos sesenta y seis
+nanojulios en la GPU, una estimación.
+
+46
+00:02:44,049 --> 00:02:48,446
+El modelo de grado cuatro usa veintiuna
+veces menos pesos en las proyecciones.
+
+47
+00:02:48,826 --> 00:02:52,844
+Su registro de mapeo: cuatro
+mil seiscientos ocho pbits,
+
+48
+00:02:52,844 --> 00:02:56,861
+grado dieciséis, ocho capas
+de muestreo secuenciales; la
+
+49
+00:02:56,861 --> 00:03:01,022
+mezcla AFT, el embedding y la
+cabeza quedan en lo digital.
+
+50
+00:03:02,150 --> 00:03:04,902
+El código está en la carpeta
+de datos de la lección.
+
+51
+00:03:05,282 --> 00:03:10,505
+Puedes cambiar el optimizador, incluido
+un simulador de TNGD, y registrar en cada
+
+52
+00:03:10,505 --> 00:03:15,148
+ejecución bits por carácter, tiempo,
+operaciones y el registro de mapeo.
+
+53
+00:03:15,528 --> 00:03:18,440
+En los laboratorios
+veintiocho y veintinueve lo
+
+54
+00:03:18,440 --> 00:03:21,476
+extenderás con capas
+muestreadas y entradas dy4p.
+
+55
+00:03:22,583 --> 00:03:26,106
+Errores comunes: comparar la
+verosimilitud autoregresiva
+
+56
+00:03:26,106 --> 00:03:29,503
+con una cota de difusión
+como si ambas fueran exactas.
+
+57
+00:03:29,883 --> 00:03:33,534
+Juzgar el gradiente natural solo
+por su tiempo en hardware digital.
+
+58
+00:03:33,914 --> 00:03:36,906
+Cambiar semillas, datos
+o pasos entre variantes.
+
+59
+00:03:37,286 --> 00:03:39,924
+Y reportar energía sin
+utilización ni alcance.
+
+60
+00:03:41,050 --> 00:03:45,328
+En resumen, un modelo AFT pequeño
+con DyT y tangente aprende el
+
+61
+00:03:45,328 --> 00:03:49,403
+texto del curso hasta uno coma
+nueve ocho bits por carácter.
+
+62
+00:03:49,783 --> 00:03:55,153
+El gradiente natural gana por paso, y
+TNGD podría hacerlo ganar por segundo.
+
+63
+00:03:55,533 --> 00:03:58,728
+La dispersión de grado cuatro
+cuesta un tercio de bit, y
+
+64
+00:03:58,728 --> 00:04:01,580
+la difusión enmascarada
+queda atrás a esta escala.
+
+65
+00:04:01,960 --> 00:04:05,977
+Todo queda registrado: calidad,
+tiempo, operaciones y mapeo.
+
+66
+00:04:07,083 --> 00:04:11,522
+Para practicar: explica por qué la primera
+difusión solo aprendió frecuencias.
+
+67
+00:04:11,902 --> 00:04:15,427
+Calcula la razón de pesos entre
+el modelo denso y el disperso.
+
+68
+00:04:15,807 --> 00:04:18,501
+Di qué haría ganar al
+gradiente natural en tiempo.
+
+69
+00:04:18,881 --> 00:04:21,874
+Y explica por qué la cifra
+de difusión es una cota.

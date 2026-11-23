@@ -1,0 +1,320 @@
+1
+00:00:00,350 --> 00:00:01,990
+Lección 3.4.
+
+2
+00:00:02,370 --> 00:00:04,506
+Límites termodinámicos de velocidad.
+
+3
+00:00:05,617 --> 00:00:08,649
+Un computador debe transformar
+una distribución de
+
+4
+00:00:08,649 --> 00:00:11,925
+probabilidad en otra: del
+estado inicial al resultado.
+
+5
+00:00:12,305 --> 00:00:16,995
+La pregunta del curso es si puede hacerlo
+rápido y a la vez con poca disipación.
+
+6
+00:00:17,375 --> 00:00:21,913
+Los límites termodinámicos de velocidad
+responden con precisión: el producto
+
+7
+00:00:21,913 --> 00:00:26,570
+del tiempo por la entropía producida
+está acotado por debajo por una distancia
+
+8
+00:00:26,570 --> 00:00:30,452
+geométrica entre las distribuciones,
+la distancia de Wasserstein.
+
+9
+00:00:31,583 --> 00:00:34,977
+Imagina que hay que trasladar
+un montón de arena de un lugar a
+
+10
+00:00:34,977 --> 00:00:37,878
+otro, con una pala que se
+mueve en un fluido viscoso.
+
+11
+00:00:38,258 --> 00:00:42,476
+El costo de mover la arena con fricción
+crece con la velocidad al cuadrado.
+
+12
+00:00:42,856 --> 00:00:45,534
+Si tenemos mucho tiempo, vamos despacio y
+
+13
+00:00:45,534 --> 00:00:48,604
+gastamos poco; si tenemos
+poco, gastamos mucho.
+
+14
+00:00:48,984 --> 00:00:52,177
+Y hay una forma óptima de
+repartir el trabajo: mover
+
+15
+00:00:52,177 --> 00:00:55,185
+cada grano en línea recta,
+a velocidad constante.
+
+16
+00:00:55,565 --> 00:01:00,472
+La distancia mínima total, medida con
+cuadrados, es la distancia de Wasserstein.
+
+17
+00:01:01,583 --> 00:01:09,350
+El resultado, para dinámicas
+sobreamortiguadas, es: τ ≥ W₂² / (μ k_B T Σ).
+
+18
+00:01:09,730 --> 00:01:14,440
+Aquí W₂ es la distancia de Wasserstein
+entre la distribución inicial
+
+19
+00:01:14,440 --> 00:01:18,526
+y la final, μ la movilidad y
+Σ la entropía total producida.
+
+20
+00:01:18,906 --> 00:01:24,713
+Leído al revés: Σ ≥ W₂²/(μ k_B T τ).
+
+21
+00:01:25,093 --> 00:01:28,659
+Para recorrer una distancia
+fija en un tiempo menor, hay que
+
+22
+00:01:28,659 --> 00:01:31,986
+pagar más entropía, inversamente
+proporcional al tiempo.
+
+23
+00:01:32,366 --> 00:01:34,424
+La curva muestra la región prohibida.
+
+24
+00:01:35,550 --> 00:01:38,409
+La distancia de Wasserstein
+es el costo mínimo de
+
+25
+00:01:38,409 --> 00:01:41,618
+transportar una distribución
+a otra, con costo igual al
+
+26
+00:01:41,618 --> 00:01:45,002
+cuadrado de la distancia
+recorrida por cada grano de masa.
+
+27
+00:01:45,382 --> 00:01:49,512
+Para gaussianas tiene forma cerrada:
+el cuadrado de la diferencia de
+
+28
+00:01:49,512 --> 00:01:53,460
+medias más un término de las
+covarianzas, la fórmula de Gelbrich.
+
+29
+00:01:53,840 --> 00:01:56,496
+En una dimensión, es la
+diferencia de medias al
+
+30
+00:01:56,496 --> 00:01:59,604
+cuadrado más la diferencia
+de desviaciones al cuadrado.
+
+31
+00:01:59,984 --> 00:02:02,970
+Para distribuciones
+cualesquiera, esa misma fórmula
+
+32
+00:02:02,970 --> 00:02:05,663
+con medias y covarianzas
+es una cota inferior.
+
+33
+00:02:06,783 --> 00:02:14,592
+Definimos la eficiencia como η = W₂²
+/ (μ τ k_B T Σ), que nunca supera uno.
+
+34
+00:02:14,972 --> 00:02:18,701
+Comparemos dos protocolos que
+trasladan una partícula en una trampa.
+
+35
+00:02:19,081 --> 00:02:23,646
+Arrastrar la trampa a velocidad constante:
+la partícula arranca con retraso y
+
+36
+00:02:23,646 --> 00:02:27,558
+su media se acelera; la eficiencia
+es de cero coma ochenta y ocho.
+
+37
+00:02:27,938 --> 00:02:32,590
+El protocolo óptimo hace que la media
+de la distribución avance a velocidad
+
+38
+00:02:32,590 --> 00:02:36,869
+constante desde el primer instante:
+la eficiencia es exactamente uno.
+
+39
+00:02:37,249 --> 00:02:39,862
+La lección es general: el protocolo óptimo
+
+40
+00:02:39,862 --> 00:02:42,536
+recorre la geodésica
+a velocidad constante.
+
+41
+00:02:43,650 --> 00:02:47,742
+Con rigidez uno, movilidad uno
+y k_B T uno, arrastramos la
+
+42
+00:02:47,742 --> 00:02:51,623
+trampa a velocidad uno durante
+tres unidades de tiempo.
+
+43
+00:02:52,003 --> 00:02:56,312
+La media de la partícula
+avanza dos coma cero cinco y la
+
+44
+00:02:56,312 --> 00:03:00,621
+varianza no cambia, así que
+W₂² es cuatro coma dos cero.
+
+45
+00:03:01,001 --> 00:03:03,567
+La entropía producida es la integral de la
+
+46
+00:03:03,567 --> 00:03:06,195
+velocidad media al
+cuadrado, uno coma seis.
+
+47
+00:03:06,575 --> 00:03:10,420
+El límite exige al menos cuatro
+coma dos entre tres, uno coma
+
+48
+00:03:10,420 --> 00:03:13,697
+cuarenta; la eficiencia es
+cero coma ochenta y ocho.
+
+49
+00:03:14,077 --> 00:03:17,000
+Si quisiéramos hacer el
+mismo transporte en la mitad
+
+50
+00:03:17,000 --> 00:03:19,530
+del tiempo, la entropía
+mínima se duplicaría.
+
+51
+00:03:20,650 --> 00:03:25,700
+Para el cómputo esto es central: transformar
+una distribución en otra en un tiempo
+
+52
+00:03:25,700 --> 00:03:29,949
+dado tiene un costo mínimo en
+disipación, y borrar rápido cuesta más.
+
+53
+00:03:30,329 --> 00:03:33,885
+La geometría de Wasserstein nos
+dice cuál es el mejor protocolo.
+
+54
+00:03:34,265 --> 00:03:38,241
+En el laboratorio cuatro calcularás
+la eficiencia de un proceso gaussiano.
+
+55
+00:03:39,350 --> 00:03:43,962
+Errores frecuentes: confundir la
+distancia de Wasserstein con el trabajo,
+
+56
+00:03:43,962 --> 00:03:48,194
+olvidar la entropía del sistema,
+aplicar la cota sobreamortiguada a
+
+57
+00:03:48,194 --> 00:03:52,553
+sistemas con inercia, y creer que
+la eficiencia ideal no tiene costo.
+
+58
+00:03:53,683 --> 00:03:57,521
+En resumen: transformar
+distribuciones cuesta
+
+59
+00:03:57,521 --> 00:04:00,847
+entropía, al menos W₂² sobre μ k_B T τ.
+
+60
+00:04:01,227 --> 00:04:03,811
+Rápido y eficiente a la vez es imposible.
+
+61
+00:04:04,191 --> 00:04:07,040
+La distancia de Wasserstein
+mide cuánto hay que
+
+62
+00:04:07,040 --> 00:04:10,556
+transportar, la fórmula de
+Gelbrich la da para gaussianas,
+
+63
+00:04:10,556 --> 00:04:13,890
+y el protocolo óptimo transporta
+a velocidad constante.
+
+64
+00:04:15,017 --> 00:04:18,627
+Para practicar: calcula una
+distancia de Wasserstein entre
+
+65
+00:04:18,627 --> 00:04:22,300
+gaussianas, la entropía mínima
+de un traslado, demuestra la
+
+66
+00:04:22,300 --> 00:04:26,346
+desigualdad con Cauchy y Schwarz,
+y describe el protocolo óptimo.

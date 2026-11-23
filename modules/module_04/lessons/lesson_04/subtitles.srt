@@ -1,0 +1,315 @@
+1
+00:00:00,350 --> 00:00:02,082
+Lección 4.4.
+
+2
+00:00:02,462 --> 00:00:04,093
+Diagnósticos de muestreo.
+
+3
+00:00:05,217 --> 00:00:08,319
+Un muestreador correcto
+puede ser inútil si es lento.
+
+4
+00:00:08,699 --> 00:00:12,599
+La cadena tiene la distribución
+estacionaria correcta, pero ¿cuándo
+
+5
+00:00:12,599 --> 00:00:16,441
+llegó a ella, y cuántas muestras
+realmente independientes nos dio?
+
+6
+00:00:16,821 --> 00:00:20,921
+En esta lección aprendemos a
+diagnosticar una corrida y dos trucos
+
+7
+00:00:20,921 --> 00:00:24,774
+clásicos para acelerarla: el
+recocido y el tempering paralelo.
+
+8
+00:00:25,883 --> 00:00:28,407
+Toda cadena empieza en
+un estado arbitrario.
+
+9
+00:00:28,787 --> 00:00:31,443
+Las primeras muestras
+recuerdan ese inicio y no
+
+10
+00:00:31,443 --> 00:00:33,760
+representan la distribución estacionaria.
+
+11
+00:00:34,140 --> 00:00:37,374
+A esa fase se le llama
+calentamiento, y se descarta.
+
+12
+00:00:37,754 --> 00:00:41,530
+Un diagnóstico práctico es lanzar
+varias cadenas desde inicios
+
+13
+00:00:41,530 --> 00:00:45,915
+distintos: cuando sus promedios se
+superponen, el calentamiento terminó.
+
+14
+00:00:47,017 --> 00:00:51,337
+Después del calentamiento, las muestras
+consecutivas siguen correlacionadas.
+
+15
+00:00:51,717 --> 00:00:55,244
+Como en la lección dos punto
+seis, el tiempo de autocorrelación
+
+16
+00:00:55,244 --> 00:00:58,883
+integrado dice cada cuántos barridos
+obtenemos una muestra nueva.
+
+17
+00:00:59,263 --> 00:01:03,766
+El tamaño efectivo de muestra es el número
+de barridos dividido por ese tiempo.
+
+18
+00:01:04,146 --> 00:01:08,084
+En una red de dieciséis por dieciséis
+a temperatura tres coma cinco,
+
+19
+00:01:08,084 --> 00:01:11,848
+el tiempo es de unos ocho barridos,
+y treinta y ocho mil barridos
+
+20
+00:01:11,848 --> 00:01:15,150
+valen como cuatro mil quinientas
+muestras independientes.
+
+21
+00:01:16,250 --> 00:01:18,682
+Ahora acerquémonos a
+la temperatura crítica.
+
+22
+00:01:19,062 --> 00:01:21,999
+A dos coma ocho, el tiempo
+de autocorrelación de la
+
+23
+00:01:21,999 --> 00:01:24,879
+magnetización sube a unos
+treinta y tres barridos.
+
+24
+00:01:25,259 --> 00:01:29,528
+En dos coma dos siete se dispara a
+más de dos mil, y los mismos treinta y
+
+25
+00:01:29,528 --> 00:01:33,388
+ocho mil barridos valen apenas
+diecisiete muestras independientes.
+
+26
+00:01:33,768 --> 00:01:37,120
+Es la desaceleración crítica:
+los dominios grandes tardan
+
+27
+00:01:37,120 --> 00:01:40,120
+mucho en reorganizarse con
+actualizaciones locales.
+
+28
+00:01:40,500 --> 00:01:44,778
+Cerca de una transición de fase, el
+muestreo local se vuelve muy caro.
+
+29
+00:01:45,883 --> 00:01:48,025
+Si lo que buscamos es el mínimo de la
+
+30
+00:01:48,025 --> 00:01:50,513
+energía, podemos
+aprovechar la temperatura.
+
+31
+00:01:50,893 --> 00:01:54,411
+El recocido simulado empieza
+caliente, donde la cadena
+
+32
+00:01:54,411 --> 00:01:58,125
+explora libremente, y enfría
+poco a poco hasta casi cero,
+
+33
+00:01:58,125 --> 00:02:01,382
+donde la distribución se
+concentra en los mínimos.
+
+34
+00:02:01,762 --> 00:02:05,842
+En un vidrio de espín de dieciséis
+por dieciséis, un enfriamiento de
+
+35
+00:02:05,842 --> 00:02:09,922
+diez barridos termina en una energía
+de menos uno coma dos cinco por
+
+36
+00:02:09,922 --> 00:02:13,701
+espín; con diez mil barridos
+llega a menos uno coma tres siete.
+
+37
+00:02:14,081 --> 00:02:18,447
+Enfriar más despacio da mejores
+mínimos, con rendimientos decrecientes.
+
+38
+00:02:19,550 --> 00:02:22,067
+El tempering paralelo
+corre varias réplicas a
+
+39
+00:02:22,067 --> 00:02:24,249
+temperaturas distintas al mismo tiempo.
+
+40
+00:02:24,629 --> 00:02:30,397
+De vez en cuando propone intercambiar
+las configuraciones de dos réplicas
+
+41
+00:02:30,397 --> 00:02:35,928
+vecinas, y acepta con probabilidad
+min(1, e^((β_i − β_j)(E_i − E_j))).
+
+42
+00:02:36,308 --> 00:02:39,780
+Así, una configuración atrapada
+en la réplica fría puede
+
+43
+00:02:39,780 --> 00:02:42,756
+subir a la caliente,
+cruzar la barrera y volver.
+
+44
+00:02:43,136 --> 00:02:48,544
+Con β cero coma cinco y cero coma seis,
+y una diferencia de energía de veinte,
+
+45
+00:02:48,544 --> 00:02:53,398
+el intercambio se acepta con
+probabilidad e^(−2), un trece por ciento.
+
+46
+00:02:54,517 --> 00:02:57,996
+En la práctica, siempre reporta
+el tiempo de autocorrelación
+
+47
+00:02:57,996 --> 00:03:01,011
+y el tamaño efectivo, no
+solo el número de barridos.
+
+48
+00:03:01,391 --> 00:03:04,406
+La energía de un chip por
+muestra independiente es la
+
+49
+00:03:04,406 --> 00:03:07,138
+energía por barrido
+multiplicada por ese tiempo.
+
+50
+00:03:07,518 --> 00:03:10,886
+Y en optimización con hardware
+de pbits, el calendario de
+
+51
+00:03:10,886 --> 00:03:14,314
+recocido debe ir despacio cerca
+de la temperatura crítica.
+
+52
+00:03:15,417 --> 00:03:18,516
+Errores frecuentes: medir
+la autocorrelación en un
+
+53
+00:03:18,516 --> 00:03:21,739
+observable rápido mientras
+uno lento no ha mezclado.
+
+54
+00:03:22,119 --> 00:03:26,113
+Corridas tan cortas que subestiman
+el propio tiempo de autocorrelación.
+
+55
+00:03:26,493 --> 00:03:28,120
+Enfriar demasiado rápido.
+
+56
+00:03:28,500 --> 00:03:32,558
+Y elegir temperaturas tan separadas
+que los intercambios nunca se aceptan.
+
+57
+00:03:33,683 --> 00:03:37,050
+En resumen: descarta el
+calentamiento, mide el tiempo de
+
+58
+00:03:37,050 --> 00:03:40,417
+autocorrelación y reporta el
+tamaño efectivo de muestra.
+
+59
+00:03:40,797 --> 00:03:44,957
+Cerca de la temperatura crítica, el
+muestreo local se vuelve muy lento.
+
+60
+00:03:45,337 --> 00:03:48,847
+El recocido simulado usa la
+temperatura para optimizar, y
+
+61
+00:03:48,847 --> 00:03:51,926
+el tempering paralelo la
+usa para cruzar barreras.
+
+62
+00:03:53,050 --> 00:03:56,370
+Para practicar: calcula un
+tamaño efectivo de muestra.
+
+63
+00:03:56,750 --> 00:03:58,701
+Explica la desaceleración crítica.
+
+64
+00:03:59,081 --> 00:04:01,178
+Deriva la aceptación del intercambio.
+
+65
+00:04:01,558 --> 00:04:03,706
+Y diseña una escalera de temperaturas.

@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{5.8}{Contabilidad energética en sistemas heterogéneos}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Energía del tejido del Z1 con $K=10^4$ barridos por muestra (cota de 74 fJ).
+\item (B) ¿Con cuántos barridos se igualan tejido y E/S en el modelo de la lección?
+\item (B) Pegamento con $m=100$ MAC por sesgo en int8 y en fp32.
+\item (B) Etiquete: «74 fJ por actualización».
+\item (I) Si solo se leen 1000 bits de salida por muestra (resumen) y los sesgos no cambian entre muestras, ¿qué fracción es tejido con $K=1000$?
+\item (I) Una GPU genera una muestra equivalente con 2 mJ \evE. ¿Cuál es la razón de energía con pegamento fp32 y con int8? ¿Qué falta para que la comparación sea justa?
+\item (A) Programe el modelo de costo y haga un mapa de la fracción de tejido en función de $K$ y $m$.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $269\,568\times10^4\times74\,\text{fJ}\approx200$ \textmu J.
+
+\textbf{E2.} $K^\ast\approx9\times10\,\text{pJ}/74\,\text{fJ}\approx1200$.
+
+\textbf{E3.} int8: $269\,568\times100\times0{,}23\,\text{pJ}\approx6{,}2$ \textmu J; fp32: $\approx124$ \textmu J.
+
+\textbf{E4.} Cota derivada de especificaciones (potencia máxima y frecuencia): es un estimado/proyección \evP, no una medición.
+
+\textbf{E5.} E/S $=1000\times10\,\text{pJ}=10$ nJ, pegamento casi nulo: tejido $\approx20/(20+0{,}01)\approx99{,}95\,\%$ (si no se recalculan sesgos).
+
+\textbf{E6.} $2\,\text{mJ}/168\,\mu\text{J}\approx12$; $2\,\text{mJ}/50\,\mu\text{J}\approx40$. Falta igualar la calidad de las muestras y la tarea, y que ambas cifras tengan la misma etiqueta de evidencia.
+
+\textbf{E7.} La fracción de tejido crece con $K$ y cae con $m$; la frontera $E_{\text{tejido}}=E_{\text{E/S}}+E_{\text{peg}}$ es $K=(b\,e_{\text{bit}}+m\,e_{\text{MAC}})/e_{\text{act}}$.
+\end{solucion}
+\end{document}

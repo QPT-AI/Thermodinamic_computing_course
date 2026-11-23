@@ -1,0 +1,275 @@
+1
+00:00:00,350 --> 00:00:02,089
+Lesson 9.5.
+
+2
+00:00:02,469 --> 00:00:05,812
+Efficiency analysis: Route A vs Route B.
+
+3
+00:00:06,917 --> 00:00:10,523
+If we want to generate with thermodynamic
+hardware, there are two paths.
+
+4
+00:00:10,903 --> 00:00:15,743
+Route A takes an existing neural
+diffusion model, such as a diffusion
+
+5
+00:00:15,743 --> 00:00:21,005
+transformer or a masked language model,
+and ports it to a system with TSUs.
+
+6
+00:00:21,385 --> 00:00:24,238
+Route B designs a native
+model from scratch,
+
+7
+00:00:24,238 --> 00:00:26,962
+such as a DTM, that lives in the hardware.
+
+8
+00:00:27,342 --> 00:00:28,971
+Today we compare them with numbers.
+
+9
+00:00:30,083 --> 00:00:34,021
+The advantage of route A is that
+it reuses models that already work.
+
+10
+00:00:34,401 --> 00:00:38,002
+The problem is that a
+transformer is mostly matrix
+
+11
+00:00:38,002 --> 00:00:42,755
+multiplications, and a TSU does
+not multiply matrices: it samples.
+
+12
+00:00:43,135 --> 00:00:47,277
+The deterministic parts stay
+in digital logic, an FPGA or
+
+13
+00:00:47,277 --> 00:00:50,983
+an accelerator, and the
+TSU only does the sampling.
+
+14
+00:00:51,363 --> 00:00:56,938
+In the figure Extropic reports for its
+Z1T model, of two hundred ninety-four
+
+15
+00:00:56,938 --> 00:01:02,879
+nanojoules per token, two hundred eighty-six
+are FPGA work: ninety-seven percent.
+
+16
+00:01:03,983 --> 00:01:05,851
+Amdahl's law sets the limit.
+
+17
+00:01:06,231 --> 00:01:10,364
+If ninety-seven percent of the
+energy is digital glue, making the
+
+18
+00:01:10,364 --> 00:01:14,687
+thermodynamic part free improves
+the total by at most three percent.
+
+19
+00:01:15,067 --> 00:01:18,751
+To approach thousand-fold
+gains one must attack the glue:
+
+20
+00:01:18,751 --> 00:01:22,500
+move more functions onto the
+probabilistic chip, lower the
+
+21
+00:01:22,500 --> 00:01:25,796
+digital precision or change
+the model architecture.
+
+22
+00:01:26,917 --> 00:01:31,528
+Route B reverses the logic: the
+whole model is designed as a chain of
+
+23
+00:01:31,528 --> 00:01:35,605
+conditional energy models that
+the hardware samples directly.
+
+24
+00:01:35,985 --> 00:01:40,342
+There is almost no glue: in the
+DTM of lesson 9.3, the energy
+
+25
+00:01:40,342 --> 00:01:44,342
+is that of the cells, about
+twenty nanojoules per image.
+
+26
+00:01:44,722 --> 00:01:49,483
+The price is expressivity: these
+models are more limited, and large
+
+27
+00:01:49,483 --> 00:01:54,245
+datasets need hybrids with a neural
+network, which reintroduce part
+
+28
+00:01:54,245 --> 00:01:58,012
+of the glue, though with a
+network ten times smaller.
+
+29
+00:01:59,117 --> 00:02:00,063
+Let's compare them.
+
+30
+00:02:00,443 --> 00:02:04,087
+Route A has mature models
+and known quality, but
+
+31
+00:02:04,087 --> 00:02:07,656
+its energy gain is limited
+by the digital glue.
+
+32
+00:02:08,036 --> 00:02:13,313
+Route B has a potential energy advantage
+of orders of magnitude, but with
+
+33
+00:02:13,313 --> 00:02:17,867
+young models, small benchmarks
+and estimates, not measurements.
+
+34
+00:02:18,247 --> 00:02:20,943
+Neither is better at
+everything: it depends on
+
+35
+00:02:20,943 --> 00:02:23,522
+whether the bottleneck
+is quality or energy.
+
+36
+00:02:24,650 --> 00:02:26,029
+A checklist for deciding.
+
+37
+00:02:26,409 --> 00:02:30,530
+First, measure the digital-glue
+fraction of route A: if it
+
+38
+00:02:30,530 --> 00:02:34,936
+exceeds ninety percent, the
+maximum gain is ten times or less.
+
+39
+00:02:35,316 --> 00:02:40,130
+Second, ask whether a native model of
+sufficient quality exists for your task.
+
+40
+00:02:40,510 --> 00:02:44,549
+Third, count all the energy,
+including input and output.
+
+41
+00:02:44,929 --> 00:02:49,818
+And fourth, label each figure as measured,
+simulated, projected or estimated.
+
+42
+00:02:50,950 --> 00:02:54,874
+This analysis helps plan products,
+steer research toward native
+
+43
+00:02:54,874 --> 00:02:58,798
+models of sufficient quality and
+decide which functions to move
+
+44
+00:02:58,798 --> 00:03:01,975
+onto the chip, as we will
+see in unit ten with Z1T.
+
+45
+00:03:02,355 --> 00:03:06,389
+In project eight you will build a
+heterogeneous inference planner.
+
+46
+00:03:07,517 --> 00:03:11,784
+Common mistakes: quoting the
+TSU's energy as the system's.
+
+47
+00:03:12,164 --> 00:03:16,203
+Comparing a native model with a
+GPU one at different qualities.
+
+48
+00:03:16,583 --> 00:03:19,302
+Assuming hybrids have no digital cost.
+
+49
+00:03:19,682 --> 00:03:21,851
+And treating projections as measurements.
+
+50
+00:03:22,983 --> 00:03:27,361
+In summary: route A ports mature
+models but is limited by the
+
+51
+00:03:27,361 --> 00:03:32,026
+digital glue, which in Z1T is
+ninety-seven percent of the energy.
+
+52
+00:03:32,406 --> 00:03:37,296
+Route B, native, promises orders of
+magnitude with models that are still young.
+
+53
+00:03:37,676 --> 00:03:41,660
+Amdahl's law and complete
+accounting decide in each case.
+
+54
+00:03:42,783 --> 00:03:46,815
+To practice: compute
+the FPGA share in Z1T.
+
+55
+00:03:47,195 --> 00:03:50,448
+Compute the maximum gain
+if the TSU were free.
+
+56
+00:03:50,828 --> 00:03:53,442
+Say what must change to
+approach a thousand times.
+
+57
+00:03:53,822 --> 00:03:56,359
+And explain when you would
+still choose route A.

@@ -1,0 +1,291 @@
+1
+00:00:00,350 --> 00:00:02,059
+Lesson 7.5.
+
+2
+00:00:02,439 --> 00:00:04,688
+Trigonometric sum identities.
+
+3
+00:00:05,817 --> 00:00:09,664
+When the same quantity can be
+computed in two different ways,
+
+4
+00:00:09,664 --> 00:00:13,133
+equating the two answers
+produces an identity for free.
+
+5
+00:00:13,513 --> 00:00:17,704
+The probability that the walk
+returns to the identity is one of
+
+6
+00:00:17,704 --> 00:00:21,496
+those quantities: one can
+count paths or sum eigenvalues.
+
+7
+00:00:21,876 --> 00:00:24,972
+Today we obtain
+trigonometric sum identities
+
+8
+00:00:24,972 --> 00:00:27,646
+this way, some classical and some new.
+
+9
+00:00:28,750 --> 00:00:32,455
+In exponent coordinates,
+each step adds zero with
+
+10
+00:00:32,455 --> 00:00:36,689
+probability one half, or ±
+2^t with a small probability.
+
+11
+00:00:37,069 --> 00:00:42,243
+After ℓ steps we have a total
+exponent E, any integer, not reduced.
+
+12
+00:00:42,623 --> 00:00:47,154
+The walk is at the identity
+exactly when E is a multiple of r.
+
+13
+00:00:47,534 --> 00:00:51,000
+So the return probability
+is the sum of the
+
+14
+00:00:51,000 --> 00:00:54,627
+probabilities of E = j
+r over all integers j.
+
+15
+00:00:55,007 --> 00:00:59,275
+The remarkable part: the distribution
+of E does not depend on r; the order
+
+16
+00:00:59,275 --> 00:01:03,140
+only appears at the end, when asking
+which exponents are multiples.
+
+17
+00:01:04,250 --> 00:01:08,260
+The other form is the one
+from lesson 7.3: the return
+
+18
+00:01:08,260 --> 00:01:12,725
+probability is the average of
+λ_k^ℓ over the r frequencies.
+
+19
+00:01:13,105 --> 00:01:18,107
+The heat kernel is unique: both
+expressions describe the same probability.
+
+20
+00:01:18,487 --> 00:01:21,546
+Therefore, the
+combinatorial sum equals the
+
+21
+00:01:21,546 --> 00:01:24,178
+spectral sum for every r and every ℓ.
+
+22
+00:01:25,283 --> 00:01:29,644
+Let's see it in the simplest
+case: the cycle with ± 1 jumps.
+
+23
+00:01:30,024 --> 00:01:33,696
+Its eigenvalue is cos²(πk/r).
+
+24
+00:01:34,076 --> 00:01:37,855
+And a lazy step is equivalent
+to two half steps of
+
+25
+00:01:37,855 --> 00:01:41,180
+± ½, so the displacement
+follows a binomial.
+
+26
+00:01:41,560 --> 00:01:49,208
+The identity that comes out is (1/r) Σ
+cos^(2ℓ)(πk/r) = 4^(−ℓ) Σ C(2ℓ, ℓ + j r).
+
+27
+00:01:49,588 --> 00:01:57,091
+With r = 5 and ℓ = 3, both sides
+equal twenty over sixty-four: 0.3125.
+
+28
+00:01:58,217 --> 00:02:01,519
+With the dyadic generators we obtain a new
+
+29
+00:02:01,519 --> 00:02:04,665
+lacunary identity: the average of λ_k^ℓ,
+
+30
+00:02:05,045 --> 00:02:10,162
+where each λ_k is an average of
+cosines of 2πk2^t/r, equals the
+
+31
+00:02:10,162 --> 00:02:14,873
+probability that a sum of
+dyadic jumps is a multiple of r.
+
+32
+00:02:15,253 --> 00:02:19,769
+For r = 33 and ten steps, the
+combinatorial side, computed as an exact
+
+33
+00:02:19,769 --> 00:02:24,608
+fraction with seven thousand seven
+hundred thirty-seven possible exponents,
+
+34
+00:02:24,988 --> 00:02:28,647
+equals 0.035836548, and the spectral side
+
+35
+00:02:28,647 --> 00:02:32,218
+agrees to the last digit of the machine.
+
+36
+00:02:33,350 --> 00:02:34,302
+What are they for?
+
+37
+00:02:34,682 --> 00:02:37,985
+First, as proof: the
+combinatorial form shows that the
+
+38
+00:02:37,985 --> 00:02:41,410
+value is a rational number
+with a known denominator, and
+
+39
+00:02:41,410 --> 00:02:44,530
+the spectral form, that it
+converges to one over r.
+
+40
+00:02:44,910 --> 00:02:49,173
+Second, as a check: any
+simulation or diffusion hardware
+
+41
+00:02:49,173 --> 00:02:53,055
+must reproduce these values
+exactly in small cases.
+
+42
+00:02:53,435 --> 00:02:58,060
+Third, as a tool: lacunary sums
+are hard to bound directly,
+
+43
+00:02:58,060 --> 00:03:02,214
+and the walk interpretation
+gives estimates for free.
+
+44
+00:03:03,317 --> 00:03:06,817
+Use them as unit tests for
+diffusion simulators and
+
+45
+00:03:06,817 --> 00:03:10,111
+prototypes, recognize in
+them classical binomial
+
+46
+00:03:10,111 --> 00:03:14,709
+multisection identities, and bound
+lacunary sums with mixing times.
+
+47
+00:03:15,089 --> 00:03:18,278
+In lab ten you will verify both forms.
+
+48
+00:03:19,383 --> 00:03:23,048
+Common mistakes: reducing the
+exponent modulo r at every
+
+49
+00:03:23,048 --> 00:03:26,581
+step, which requires knowing
+the order from the start.
+
+50
+00:03:26,961 --> 00:03:28,517
+Forgetting the lazy weight.
+
+51
+00:03:28,897 --> 00:03:31,829
+Mixing the eigenvalues of P and W.
+
+52
+00:03:32,209 --> 00:03:36,794
+And checking only in floating point,
+when exact fractions are better.
+
+53
+00:03:37,917 --> 00:03:42,404
+In summary: the return probability
+is computed by counting jump sums
+
+54
+00:03:42,404 --> 00:03:46,495
+that are multiples of r or by
+averaging powers of eigenvalues.
+
+55
+00:03:46,875 --> 00:03:50,669
+Since the heat kernel is unique,
+both agree, and that gives
+
+56
+00:03:50,669 --> 00:03:54,335
+exact trigonometric identities,
+from the classical one of
+
+57
+00:03:54,335 --> 00:03:57,486
+cosines and binomials to
+the dyadic lacunary one.
+
+58
+00:03:58,617 --> 00:04:03,152
+To practice: verify the cycle
+identity by hand in a small case.
+
+59
+00:04:03,532 --> 00:04:07,337
+Explain the equivalence of the
+lazy step with two half steps.
+
+60
+00:04:07,717 --> 00:04:10,204
+Find the denominator of
+the combinatorial side.
+
+61
+00:04:10,584 --> 00:04:13,227
+And say which side shows
+the limit immediately.

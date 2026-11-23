@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.2}{p-bits: MTJ y CMOS}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} pbit físico con una unión túnel magnética de barrera baja; pbit digital (RNG + LUT + comparador);
+p-computadores y máquinas de Ising dispersas.
+\textbf{Prerrequisitos:} 4.5 (pbit), 3.7 (retención de Arrhenius).
+
+\section{La unión túnel magnética estocástica}
+Dos capas ferromagnéticas separadas por un aislante: resistencia baja si las magnetizaciones son paralelas, alta si son antiparalelas. La capa libre
+tiene una barrera $\Delta$ entre ambas orientaciones y salta con el tiempo medio de Néel--Arrhenius
+\begin{equation}
+\tau=\tau_0\,e^{\Delta/\kB T},\qquad\tau_0\sim1\ \text{ns}.
+\end{equation}
+\begin{center}\begin{tabular}{lccccc}\toprule
+$\Delta/\kB T$ & 1 & 5 & 10 & 20 & 40\\\midrule
+$\tau$ & 2,7 ns & 0,15 $\mu$s & 22 $\mu$s & 0,49 s & $\approx7{,}5$ años\\\bottomrule\end{tabular}\end{center}
+Con $\Delta\approx40\,\kB T$ es una memoria; con $\Delta\sim\kB T$ el ruido térmico la voltea en nanosegundos: un pbit. Una corriente o voltaje que inclina el
+pozo doble ajusta la fracción de tiempo en cada estado según una sigmoide; en el circuito típico 1T/1MTJ + inversor la entrada es el voltaje de compuerta
+\cite{camsari}.
+\begin{intuicion}
+El mismo dispositivo es memoria o generador aleatorio según la altura de la barrera. El pbit aprovecha lo que la memoria combate.
+\end{intuicion}
+
+\section{pbits digitales}
+$s=\mathrm{sgn}(\mathrm{LUT}_{\tanh}(u)-r)$ con $r$ de un PRNG (p.~ej. LFSR): la regla de la lección 4.5 en lógica estándar. No ahorra la energía de la
+aleatoriedad, pero se construye hoy en FPGA con $\sim10^5$ pbits y conectividad arbitraria: es la plataforma de desarrollo de los p-computadores.
+
+\section{p-computadores y máquinas de Ising dispersas}
+Muchos pbits conectados según un grafo y actualizados con Gibbs cromático (lección 4.3). Con grado bajo, pocos colores: en cada fase de reloj se actualizan
+todos los pbits de un color. Las máquinas de Ising dispersas en FPGA alcanzan miles de millones de volteos por segundo \cite{aadit}.
+
+\begin{aplicacion}
+Optimización, muestreo y lógica invertible (lección 4.10). Retos: variabilidad entre dispositivos y calibración del sesgo de cada pbit. Laboratorio L8:
+circuitos de pbits simulados, curva de transferencia y tiempo de correlación.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Usar una MTJ de memoria ($\Delta\approx40\,\kB T$) como pbit. \quad Ignorar la variabilidad: cada pbit necesita calibración.
+\item Actualizar vecinos en la misma fase. \quad Contar volteos/s sin verificar la distribución muestreada.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[17]{camsari} K. Y. Camsari, B. M. Sutton y S. Datta, p-bits for probabilistic spin logic, Appl. Phys. Rev. 6, 011305 (2019).
+\bibitem[18]{kaiser} J. Kaiser y S. Datta, Probabilistic computing with p-bits, Appl. Phys. Lett. 119, 150503 (2021).
+\bibitem[19]{aadit} N. A. Aadit et al., Massively parallel probabilistic computing with sparse Ising machines, Nat. Electron. 5, 460 (2022).
+\end{thebibliography}
+\end{document}

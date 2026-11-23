@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.3}{Normalización DyT}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} la tangente dinámica (DyT) como reemplazo de la normalización de capa; su correspondencia exacta con la salida media de
+un pbit; el error de promediar muestras.
+\textbf{Prerrequisitos:} 4.5, 10.1.
+
+\section{De LayerNorm a DyT}
+$\mathrm{LN}(x)=\gamma\odot(x-\mu(x))/\sigma(x)+\beta$ exige dos reducciones globales por token. Zhu et al.\ (2025):
+\[\mathrm{DyT}(x)=\gamma\odot\tanh(\alpha x)+\beta,\]
+con $\alpha$ escalar aprendido. Motivación: en transformers entrenados, la relación entrada--salida de LN tiene forma de S. Reportan calidad comparable en visión y lenguaje.
+
+\section{El pbit calcula tanh}
+Un pbit con entrada $u$ da $+1$ con probabilidad $\sigma(2\beta u)$: $\mathbb E[m]=2\sigma(2\beta u)-1=\tanh(\beta u)$ y $\mathrm{Var}(m)=1-\tanh^2(\beta u)$. Con $\beta=\alpha$, un pbit es,
+en promedio, una unidad DyT: la normalización se vuelve física del dispositivo.
+
+\section{Error de promediar \evS}
+$\mathrm{rms}=\sqrt{(1-\tanh^2(\beta u))/S}$. Con $\beta=1{,}5$ y $u\in[-2,2]$: $0{,}54$ ($S=1$), $0{,}27$ (4), $0{,}14$ (16), $0{,}07$ (64), $0{,}034$ (256). Si la capa siguiente
+suma muchas entradas estocásticas, el ruido se promedia en esa suma; a menudo bastan pocas muestras si el entrenamiento incluye el ruido (8.7, 10.5).
+
+\section{Costo}
+\begin{center}\small\begin{tabular}{lll}\toprule
+& LayerNorm & DyT\\\midrule
+reducciones sobre $d$ & 2 & 0\\
+por componente & resta, división, producto, suma & producto, tanh, suma\\
+comunicación & todos con todos en $d$ & ninguna\\
+en un TSU & pegamento digital & el propio pbit\\\bottomrule\end{tabular}\end{center}
+
+\begin{aplicacion}
+Reemplazar LN por DyT; mapear a pbits con $\beta=\alpha$; entrenar con el ruido de muestreo. Laboratorio L29.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Creer que DyT normaliza (solo acota). \quad Confundir $\sigma(2\beta u)$ con $\sigma(\beta u)$.
+\item Promediar pocas muestras sin incluir el ruido en el entrenamiento. \quad Olvidar la sensibilidad de $\alpha$ al inicio.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{dyt} J. Zhu et al., Transformers without normalization, \emph{CVPR} (2025).
+\bibitem{ln} J. L. Ba, J. R. Kiros y G. E. Hinton, Layer normalization, arXiv:1607.06450 (2016).
+\bibitem{z1t} Extropic (G. Verdon et al.), Z1T: Sparse transformer-like models for probabilistic hardware, 2026.
+\end{thebibliography}
+\end{document}

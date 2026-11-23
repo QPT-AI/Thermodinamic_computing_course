@@ -1,0 +1,380 @@
+1
+00:00:00,350 --> 00:00:01,956
+Lesson 0.6.
+
+2
+00:00:02,336 --> 00:00:05,193
+Fourier analysis on finite abelian groups.
+
+3
+00:00:06,317 --> 00:00:08,994
+Shor's algorithm and the thermodynamic
+
+4
+00:00:08,994 --> 00:00:13,221
+order-finding-by-diffusion
+algorithm, which we study in unit
+
+5
+00:00:13,221 --> 00:00:18,223
+seven, share one language: Fourier
+analysis over the integers modulo r.
+
+6
+00:00:18,603 --> 00:00:22,448
+Shor amplifies Fourier peaks
+with quantum interference;
+
+7
+00:00:22,448 --> 00:00:25,664
+diffusion damps every
+Fourier mode except one.
+
+8
+00:00:26,044 --> 00:00:29,056
+To understand both we
+need the characters of a
+
+9
+00:00:29,056 --> 00:00:32,397
+finite group and their key
+property, orthogonality.
+
+10
+00:00:33,517 --> 00:00:36,884
+The integers modulo r
+are the arithmetic of an
+
+11
+00:00:36,884 --> 00:00:40,033
+r-hour clock: after r
+minus one comes zero.
+
+12
+00:00:40,413 --> 00:00:44,471
+Let's place those r positions on the
+unit circle of the complex plane.
+
+13
+00:00:44,851 --> 00:00:49,168
+We choose a frequency k:
+position x is sent to the point
+
+14
+00:00:49,168 --> 00:00:52,791
+k times x steps of r
+further around the circle.
+
+15
+00:00:53,171 --> 00:00:56,396
+With frequency one, we
+go around once as we
+
+16
+00:00:56,396 --> 00:00:59,847
+traverse the clock; with
+frequency two, twice.
+
+17
+00:01:00,227 --> 00:01:02,812
+Each frequency is a wave
+living on the clock.
+
+18
+00:01:03,917 --> 00:01:09,665
+That wave is a character:
+χ_k(x) = e^(2πikx/r).
+
+19
+00:01:10,045 --> 00:01:13,627
+Its essential property
+is that it turns sums
+
+20
+00:01:13,627 --> 00:01:17,046
+into products: χ_k(x + y) = χ_k(x) χ_k(y).
+
+21
+00:01:17,426 --> 00:01:21,060
+Adding on the clock is equivalent to
+composing rotations on the circle.
+
+22
+00:01:21,440 --> 00:01:24,527
+There are exactly r
+distinct characters, one for
+
+23
+00:01:24,527 --> 00:01:27,100
+each frequency from zero to r minus one.
+
+24
+00:01:27,480 --> 00:01:30,941
+The zero-frequency character
+is constant and equal to one.
+
+25
+00:01:32,050 --> 00:01:34,477
+Now let's add up all the
+values of a character.
+
+26
+00:01:34,857 --> 00:01:36,730
+Each value is a unit vector.
+
+27
+00:01:37,110 --> 00:01:40,232
+If we place them head to tail, they form a
+
+28
+00:01:40,232 --> 00:01:43,576
+regular polygon that
+closes: the sum is zero.
+
+29
+00:01:43,956 --> 00:01:47,512
+Only when the frequency
+is a multiple of r do all
+
+30
+00:01:47,512 --> 00:01:50,995
+vectors point the same
+way and the sum equals r.
+
+31
+00:01:51,375 --> 00:01:55,244
+Orthogonality follows: the
+inner product of two different
+
+32
+00:01:55,244 --> 00:01:59,385
+characters is zero, and that of
+a character with itself is r.
+
+33
+00:02:00,517 --> 00:02:03,718
+Since the characters are
+r orthogonal vectors in
+
+34
+00:02:03,718 --> 00:02:06,519
+an r-dimensional space, they form a basis.
+
+35
+00:02:06,899 --> 00:02:10,757
+Any function on the clock can be
+written as a combination of waves.
+
+36
+00:02:11,137 --> 00:02:19,877
+The coefficients are the discrete Fourier
+transform, f̂(k) = Σ f(x) χ̄_k(x),
+
+37
+00:02:20,257 --> 00:02:22,600
+and the function is
+recovered by adding the
+
+38
+00:02:22,600 --> 00:02:24,944
+waves with those weights
+and dividing by r.
+
+39
+00:02:25,324 --> 00:02:29,341
+The animation builds the bar function
+by adding one wave at a time.
+
+40
+00:02:30,617 --> 00:02:33,352
+Why does this matter for
+thermodynamic computing?
+
+41
+00:02:33,732 --> 00:02:36,881
+A random walk on the
+cycle is a convolution,
+
+42
+00:02:36,881 --> 00:02:39,959
+and characters diagonalize
+any convolution.
+
+43
+00:02:40,339 --> 00:02:45,992
+For the lazy walk, which stays with
+probability one half and moves to each
+
+44
+00:02:45,992 --> 00:02:51,645
+neighbor with one quarter, the eigenvalue
+of mode k is ½ (1 + cos(2πk/r)).
+
+45
+00:02:52,025 --> 00:02:56,990
+Watch the probability of a walker starting
+at zero: it spreads around the ring.
+
+46
+00:02:57,370 --> 00:03:00,467
+In the Fourier representation,
+each mode decays by
+
+47
+00:03:00,467 --> 00:03:03,441
+its own factor, and only
+the zero mode survives.
+
+48
+00:03:03,821 --> 00:03:08,734
+This distribution is the discrete heat
+kernel, and its value at the origin, the
+
+49
+00:03:08,734 --> 00:03:12,964
+return probability, is the average
+of the powers of the eigenvalues.
+
+50
+00:03:14,083 --> 00:03:20,307
+Let's compute a small transform with r =
+4 and the function one, two, zero, one.
+
+51
+00:03:20,687 --> 00:03:26,013
+The characters of four take the
+values one, i, minus one and minus i.
+
+52
+00:03:26,393 --> 00:03:29,798
+The zero-frequency
+coefficient is the sum, four.
+
+53
+00:03:30,178 --> 00:03:32,565
+The frequency-one
+coefficient is one minus i.
+
+54
+00:03:32,945 --> 00:03:37,377
+The frequency-two one is minus two, and
+the frequency-three one, one plus i.
+
+55
+00:03:37,757 --> 00:03:42,792
+Let's check Parseval's identity: the sum
+of squares of the function is six, and
+
+56
+00:03:42,792 --> 00:03:47,252
+that of the transform is twenty-four,
+which divided by four gives six.
+
+57
+00:03:48,383 --> 00:03:50,832
+In unit seven we will use all of this.
+
+58
+00:03:51,212 --> 00:03:53,772
+Shor uses a quantum Fourier transform to
+
+59
+00:03:53,772 --> 00:03:56,332
+reveal the period of a modular function.
+
+60
+00:03:56,712 --> 00:04:02,363
+The diffusion algorithm obtains the same
+period from the return probability of a
+
+61
+00:04:02,363 --> 00:04:07,589
+random walk, which is exactly an average
+of powers of Fourier eigenvalues.
+
+62
+00:04:08,717 --> 00:04:12,178
+Every finite abelian group is
+a product of cyclic groups, and
+
+63
+00:04:12,178 --> 00:04:15,186
+its characters are products
+of the ones we saw today.
+
+64
+00:04:15,566 --> 00:04:20,823
+In unit seven we will apply this machinery
+to Cayley graphs, and in the diffusion
+
+65
+00:04:20,823 --> 00:04:25,822
+models of unit nine we will see that
+diffusion erases high frequencies first.
+
+66
+00:04:26,950 --> 00:04:30,449
+Frequent mistakes: forgetting
+the conjugate in the inner
+
+67
+00:04:30,449 --> 00:04:33,948
+product, forgetting the
+one-over-r factor in the inverse
+
+68
+00:04:33,948 --> 00:04:37,009
+transform, and confusing
+frequency with position.
+
+69
+00:04:37,389 --> 00:04:41,464
+Remember too that the sum
+of the roots of unity equals
+
+70
+00:04:41,464 --> 00:04:45,086
+r whenever r divides k,
+not only when k is zero.
+
+71
+00:04:46,217 --> 00:04:49,522
+In summary: the characters
+of the integers modulo
+
+72
+00:04:49,522 --> 00:04:52,288
+r are waves that turn sums into products.
+
+73
+00:04:52,668 --> 00:04:56,029
+They are orthogonal because
+the roots of unity sum to zero.
+
+74
+00:04:56,409 --> 00:05:01,034
+They form a basis, the Fourier
+transform, and they diagonalize random
+
+75
+00:05:01,034 --> 00:05:05,124
+walks on the cycle, whose modes
+decay with their eigenvalues.
+
+76
+00:05:06,250 --> 00:05:10,960
+To practice: compute the sum of
+the roots of unity for any k.
+
+77
+00:05:11,340 --> 00:05:13,448
+Check the homomorphism property.
+
+78
+00:05:13,828 --> 00:05:16,807
+Compute two four-point Fourier transforms.
+
+79
+00:05:17,187 --> 00:05:22,692
+And find the eigenvalues and the gap of
+the lazy walk on an eight-state cycle.

@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{1.4}{El demonio de Maxwell y la máquina de Szilard}
+
+\noindent\textbf{Unidad 1.}\quad\textbf{Objetivos:} plantear la paradoja; calcular el trabajo de Szilard; explicar la
+resolución de Bennett. \textbf{Prerrequisitos:} 1.1 y 1.3.
+
+\section{La paradoja (Maxwell, 1867)}
+Un «demonio» abre una puerta entre dos cámaras solo para dejar pasar moléculas rápidas de izquierda a derecha y lentas
+de derecha a izquierda. Sin trabajo aparente crea una diferencia de temperatura, que podría accionar una máquina
+térmica: un móvil perpetuo de segunda especie. La animación es una simulación de billar 2D \evS{} con esa regla de
+puerta: $\langle v^2\rangle$ crece a la derecha y decrece a la izquierda.
+
+\section{La máquina de Szilard (1929)}
+Una molécula en una caja de volumen $V$ en contacto con un baño a $T$:
+\begin{enumerate}[nosep]
+\item Insertar una pared en el medio (sin trabajo, idealmente).
+\item Medir el lado de la molécula: 1 bit en la memoria del demonio.
+\item Usar la pared como pistón del lado correcto; expansión isotérmica lenta de $V/2$ a $V$.
+\item Retirar el pistón: la molécula ocupa toda la caja; el ciclo puede repetirse.
+\end{enumerate}
+Con $pV=\kB T$:
+\begin{equation}W_{\text{ext}}=\int_{V/2}^{V}\frac{\kB T}{V'}\dd V'=\kB T\ln2,\qquad\Delta U=0\Rightarrow Q_{\text{baño}\to\text{gas}}=W_{\text{ext}}.\end{equation}
+Un bit de información se convierte en $\kB T\ln2$ de trabajo extraído del baño.
+
+\section{Resolución: Landauer y Bennett}
+Durante décadas (Szilard, Brillouin) se atribuyó el costo a la \emph{medición}. Bennett (1982) mostró que medir puede
+hacerse de forma lógicamente y termodinámicamente reversible (una copia sobre un registro en estado conocido). El costo
+inevitable aparece al \emph{reiniciar} la memoria del demonio para repetir el ciclo: por Landauer (lección 1.5),
+$W_{\text{borrado}}\ge\kB T\ln2$. Balance por ciclo: $W_{\text{neto}}\le\kB T\ln2-\kB T\ln2=0$ \cite{bennett}.
+
+\begin{center}
+\begin{tabular}{lcccc}\toprule
+Paso & gas & memoria & baño & total\\\midrule
+medir & $-1$ & $+1$ & $0$ & $0$\\
+expandir & $+1$ & $0$ & $-1$ & $0$\\
+borrar & $0$ & $-1$ & $\ge+1$ & $\ge0$\\\midrule
+ciclo & $0$ & $0$ & $\ge0$ & $\ge0$\\\bottomrule
+\end{tabular}
+\\[0.3em]{\small Cambios de entropía en unidades de $\kB\ln2$. En «medir», la incertidumbre del gas se convierte en
+correlación con la memoria (información mutua).}
+\end{center}
+
+\section{Medición imperfecta}
+Si la medición $M$ acierta con probabilidad $1-\epsilon$, el trabajo máximo extraíble por ciclo es
+\begin{equation}W_{\max}=\kB T\,I(X;M)=\kB T\ln2\,[1-h(\epsilon)].\end{equation}
+\begin{ejemplo}
+$T=300$ K, $\epsilon=0{,}1$: $I=1-0{,}469=0{,}531$ bits, $W_{\max}\approx0{,}531\cdot2{,}87\times10^{-21}\approx1{,}5\times10^{-21}$ J.
+Con $\epsilon=0{,}2$: $I=0{,}278$ bits, $W_{\max}\approx8{,}0\times10^{-22}$ J.
+\end{ejemplo}
+
+\begin{aplicacion}
+Motores de información experimentales (coloides con retroalimentación, electrones individuales). Para el cómputo:
+medir y controlar puede ser barato; reiniciar memorias no. Laboratorio L2 (reto): simular una máquina de Szilard y cerrar el ciclo.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item El costo inevitable está en borrar, no en medir.
+\item El demonio no viola la segunda ley si se incluye su memoria.
+\item La expansión debe ser cuasiestática para extraer $\kB T\ln2$.
+\item Con medición ruidosa, $W_{\max}=\kB T\,I(X;M)$.
+\end{itemize}
+\end{error}
+
+\section{Resumen}
+Información $\to$ trabajo ($\kB T\ln2$ por bit); borrar la memoria cuesta lo mismo; la información es un recurso termodinámico.
+
+\begin{thebibliography}{9}\small
+\bibitem[9]{bennett} C. H. Bennett, Notes on Landauer's principle, reversible computation and Maxwell's demon, 2003. \url{https://arxiv.org/abs/physics/0210005}
+\bibitem[10]{wolpert} D. H. Wolpert, The stochastic thermodynamics of computation, 2019.
+\bibitem[2]{peliti} L. Peliti y S. Pigolotti, \emph{Stochastic Thermodynamics: An Introduction}, 2021.
+\end{thebibliography}
+\end{document}

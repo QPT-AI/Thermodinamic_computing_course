@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{7.6}{Realización física con redes RC}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Deduzca la lectura de equilibrio $C_e/\sum_xC_x$ con conservación de carga.
+\item (B) ¿Cuántos bits para distinguir órdenes hasta $B=10^6$?
+\item (B) Tolerancia de desajuste para $r=1000$.
+\item (B) ¿Por qué hace falta una dirección por residuo?
+\item (I) Con la cota $e^{-2gt/C_0}$, ¿qué tiempo garantiza error $\le1/(8B^2)$? Evalúelo para $B=10^6$.
+\item (I) Si el desajuste es uniforme ($\varepsilon_x=\varepsilon$ para todo $x$), ¿qué ocurre con la lectura?
+\item (A) Simule la red de $N=299$ residuos con desajuste $\sigma$ y ruido $k_BT/C$, y encuentre la región $(\sigma,J)$ donde la tasa de acierto supera el 99\,\%.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\sum_xC_xV_x$ se conserva y los voltajes tienden a un valor común $V_\infty$: $V_\infty\sum C=C_eV_0$.
+
+\textbf{E2.} $2\log_2(10^6)\approx39{,}9$, unos 40 bits más bits de guarda.
+
+\textbf{E3.} $|\bar\varepsilon-\varepsilon_e|<1/2000=0{,}05\,\%$.
+
+\textbf{E4.} Un ciclo de longitud $r$ presupone $r$; con $N$ direcciones la carga se queda en la órbita de tamaño desconocido.
+
+\textbf{E5.} $t\ge\frac{C_0}{2g}\ln(8B^2)$; para $B=10^6$: $\approx\frac{C_0}{2g}\cdot29{,}7\approx14{,}9\,C_0/g$.
+
+\textbf{E6.} Se cancela: $(1+\varepsilon)/(1+\varepsilon)=1$; la lectura es exactamente $r$.
+
+\textbf{E7.} Hace falta $\sigma\lesssim1/(2r)$ \emph{y} $J$ suficiente para que el ruido rms quede por debajo de $1/(8r^2)$.
+\end{solucion}
+\end{document}

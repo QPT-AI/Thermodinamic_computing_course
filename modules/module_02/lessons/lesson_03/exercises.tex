@@ -1,0 +1,53 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{2.3}{La ecuación de Fokker--Planck}
+
+\section{Ejercicios básicos}
+\begin{enumerate}[label=\textbf{B\arabic*.}]
+\item Escriba Fokker--Planck para $dx=-\kappa\mu x\,dt+\sqrt{2D}\,dW$.
+\item Muestre que $p\propto e^{-V/\kB T}$ anula la corriente si $D=\mu\kB T$.
+\item Para el OU, calcule media y varianza en $t=2\tau$ con $x_0=2$, $\kappa=1$, $\kB T=0{,}25$.
+\item ¿Por qué una fuerza constante en un anillo produce un NESS y no un equilibrio?
+\end{enumerate}
+
+\section{Ejercicios intermedios}
+\begin{enumerate}[label=\textbf{I\arabic*.}]
+\item Verifique por sustitución directa que la gaussiana de la lección resuelve Fokker--Planck para el OU.
+\item Muestre que $\frac{d}{dt}\int p\,dx=0$ con fronteras reflectantes ($J=0$ en los bordes).
+\item Para difusión libre ($f=0$) desde $x_0$, escriba $p(x,t)$ y compárela con el proceso de Wiener (lección 2.1).
+\end{enumerate}
+
+\section{Ejercicios avanzados}
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+\item Muestre que la energía libre $\mathcal F[p]=\int pV+\kB T\int p\ln p$ decrece: $\frac{d\mathcal F}{dt}=-\int\frac{J^2}{\mu p}\,dx\le0$.
+\item Para el anillo con $U=0$ y fuerza $F$ constante, calcule $p_{\text{est}}$ y $J$. Muestre que la potencia disipada es $F\cdot2\pi J$.
+\end{enumerate}
+
+\section{Soluciones}
+\begin{solucion}
+\textbf{B1.} $\partial_tp=\partial_x(\kappa\mu xp)+D\partial_x^2p$.
+
+\textbf{B2.} $\partial_xp=-\frac{V'}{\kB T}p$; $J=-\mu V'p+D\frac{V'}{\kB T}p=V'p\,(\frac{D}{\kB T}-\mu)=0$.
+
+\textbf{B3.} $\langle x\rangle=2e^{-2}\approx0{,}27$; $\sigma^2=0{,}25(1-e^{-4})\approx0{,}245$.
+
+\textbf{B4.} $F$ no es el gradiente de un potencial periódico: no existe $V$ con $p\propto e^{-V}$ y $J=0$ compatible con la periodicidad; el estado estacionario mantiene circulación.
+
+\textbf{I1.} Con $m(t)$, $s(t)$: $\dot m=-\mu\kappa m$, $\dot s=-2\mu\kappa s+2D$; la gaussiana con esos momentos satisface la ecuación (sustitución término a término).
+
+\textbf{I2.} $\frac{d}{dt}\int p=-\int\partial_xJ=-[J]_{a}^{b}=0$.
+
+\textbf{I3.} $p=\N(x_0,2Dt)$; con $D=\frac12$, $x$ tiene la ley de $x_0+W(t)$.
+
+\textbf{A1.} $\frac{d\mathcal F}{dt}=\int(V+\kB T\ln p+\kB T)\partial_tp=-\int(V+\kB T\ln p)\partial_xJ=\int\partial_x(V+\kB T\ln p)J$; como $J=-\mu p\,\partial_x(V+\kB T\ln p)$, queda $-\int J^2/(\mu p)\le0$.
+
+\textbf{A2.} $p=\frac1{2\pi}$ (uniforme), $J=\mu F\cdot\frac1{2\pi}$; potencia $=\langle F\dot\theta\rangle=F\mu F=F\cdot2\pi J$.
+\end{solucion}
+
+\section{Ejercicios adicionales (sin solución)}
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+\item Implemente un solucionador de volúmenes finitos para Fokker--Planck y compárelo con un histograma de Langevin.
+\item Calcule numéricamente $\lambda_1$ del operador de Fokker--Planck del pozo doble y compárelo con dos veces la tasa de Kramers.
+\end{enumerate}
+\end{document}

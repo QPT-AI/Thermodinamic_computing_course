@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.2}{Atención libre y atención lineal}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba la salida de AFT en la posición $t$.
+\item (B) Deduzca la forma recurrente de AFT-simple causal.
+\item (B) Tamaño del estado de decode: atención frente a AFT-simple con contexto $T$.
+\item (B) ¿Qué puede hacer la atención que AFT-simple no?
+\item (I) Muestre cómo restar un máximo móvil $m_t$ en la recurrencia sin cambiar $Y_t$.
+\item (I) ¿Cuántos vecinos por posición usa AFT-conv con ventana $s$? ¿Cabe en un grafo de grado 16?
+\item (A) Entrene AFT-simple y AFT-conv en un corpus de caracteres y compare perplejidad con un transformer de igual tamaño.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $Y_t=\sigma(Q_t)\odot\sum_{t'}e^{K_{t'}+w_{t,t'}}V_{t'}/\sum_{t'}e^{K_{t'}+w_{t,t'}}$.
+
+\textbf{E2.} Con $w=0$ y suma sobre $t'\le t$: $n_t$ y $d_t$ se actualizan sumando el término de $t$.
+
+\textbf{E3.} Atención: $2n_{\text{capas}}dT$ números; AFT-simple: $2n_{\text{capas}}d$, independiente de $T$.
+
+\textbf{E4.} Asignar pesos que dependen de la consulta a posiciones concretas (recuperación selectiva, copia).
+
+\textbf{E5.} Con $m_t=\max(m_{t-1},K_t)$, se reescalan $n$ y $d$ por $e^{m_{t-1}-m_t}$ y se suma $e^{K_t-m_t}$; el cociente no cambia.
+
+\textbf{E6.} $s$ vecinos hacia atrás; con $s\le16$ cabe en un grafo de grado 16.
+
+\textbf{E7.} La atención suele dar mejor perplejidad a igual tamaño; AFT-conv reduce la brecha.
+\end{solucion}
+\end{document}

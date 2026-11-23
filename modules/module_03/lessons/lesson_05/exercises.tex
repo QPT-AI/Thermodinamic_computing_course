@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{3.5}{Diseño de protocolos y aceleración de reloj}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) (Pensum C.4) ¿Qué cantidades cambian y cuáles no con la aceleración de reloj?
+\item (B) Demuestre el cambio de variable $s=\lambda t$ en la ecuación escalada.
+\item (B) Trabajo de una carga súbita $\kappa:1\to4$ desde equilibrio ($\kB T=1$).
+\item (B) Con $\lambda=3$: ¿calor, potencia, $\Sigma$, $\eta$?
+\item (I) Muestre que escalar solo $V\to\lambda V$ sin cambiar el ruido produce la distribución estacionaria a temperatura $T/\lambda$.
+\item (I) Simule la rampa $\kappa:1\to4$ y ajuste $a$ en $W_{\text{dis}}\approx a/\tau$ para $\tau\ge2$.
+\item (A) Para la rampa lineal de una trampa armónica, derive la ecuación de la varianza $\dot v=-2\kappa(t)v+2$ y calcule $\langle W\rangle(\tau)$ numéricamente.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} Calor y energías $\times\lambda$, duración $\div\lambda$, potencia $\times\lambda^2$; $\Sigma$, $\eta$ y las trayectorias (en tiempo reescalado) no cambian.
+
+\textbf{E2.} $dt=ds/\lambda$ y $dW(t)\overset{d}{=}\lambda^{-1/2}d\tilde W(s)$: $-\mu\lambda V'ds/\lambda+\sqrt{2\mu\lambda\kB T}\lambda^{-1/2}d\tilde W$.
+
+\textbf{E3.} $\frac12(4-1)\cdot1=1{,}5$.
+
+\textbf{E4.} Calor ×3, potencia ×9, $\Sigma$ y $\eta$ iguales.
+
+\textbf{E5.} $p\propto e^{-\lambda V/\kB T}=e^{-V/(\kB T/\lambda)}$.
+
+\textbf{E6.} Con los datos de la lección, $W_{\text{dis}}(2)=0{,}14$, $(4)=0{,}077$, $(8)=0{,}041$: $a\approx0{,}3$.
+
+\textbf{E7.} $d\langle x^2\rangle/dt=-2\kappa\langle x^2\rangle+2$ (Itô, $\mu=\kB T=1$) y $\langle W\rangle=\int_0^\tau\frac12\dot\kappa\,v\,dt$; integrando numéricamente se reproducen los valores de la tabla.
+\end{solucion}
+\end{document}

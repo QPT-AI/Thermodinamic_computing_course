@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{9.1}{Modelos de difusión}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Escriba la marginal $x_t\mid x_0$ del proceso OU.
+\item (B) Demuestre $\nabla\log p_t(x_t\mid x_0)=-\varepsilon/\sigma_t$.
+\item (B) Escriba la EDE inversa y la EDO de flujo para $f=-x$, $g=\sqrt2$.
+\item (B) ¿Por qué una malla uniforme desperdicia pasos?
+\item (I) Para datos $\N(m,s^2)$, calcule el score exacto de $p_t$ y verifique que la EDO lleva $\N(0,1)$ a $\N(m,s^2)$.
+\item (I) ¿Cuántas evaluaciones de red cuesta muestrear con 50 pasos de EDE frente a un muestreador de 4 pasos destilado?
+\item (A) Implemente el ejemplo de la lección con una malla geométrica en $t$ y compare $W_1$ con la uniforme.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $\N(e^{-t}x_0,\,1-e^{-2t})$.
+
+\textbf{E2.} $\nabla\log\N(x_t;e^{-t}x_0,\sigma_t^2)=-(x_t-e^{-t}x_0)/\sigma_t^2=-\varepsilon/\sigma_t$.
+
+\textbf{E3.} $dx=[-x-2\nabla\log p_t]dt+\sqrt2\,d\bar W$; $\dot x=-x-\nabla\log p_t$.
+
+\textbf{E4.} El score cambia rápido cerca de $t=0$ y casi nada para $t$ grande: se gastan pasos donde no hacen falta.
+
+\textbf{E5.} $p_t=\N(e^{-t}m,\,e^{-2t}s^2+1-e^{-2t})$, score $-(x-e^{-t}m)/v_t$; la EDO es lineal y transporta exactamente media y varianza.
+
+\textbf{E6.} 50 frente a 4: más de 12 veces menos cómputo.
+
+\textbf{E7.} La malla geométrica concentra pasos cerca de $t=0$: con la EDO, $W_1$ baja de $0{,}54$ a $0{,}25$ (10 pasos), de $0{,}28$ a $0{,}13$ (20) y de $0{,}11$ a $0{,}055$ (50).
+\end{solucion}
+\end{document}

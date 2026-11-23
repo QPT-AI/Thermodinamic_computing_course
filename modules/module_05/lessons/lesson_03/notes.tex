@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{5.3}{Los TSU de Extropic}
+
+\noindent\textbf{Unidad 5.}\quad\textbf{Objetivos:} la unidad de muestreo termodinámico y sus primitivas; X0, XTR-0 y Z1; el bucle anfitrión y la calibración.
+\textbf{Prerrequisitos:} 4.3, 4.5, 5.2.
+
+\section{La TSU y sus primitivas}
+Una TSU ejecuta Gibbs cromático en hardware sobre un grafo fijo de variables aleatorias: su programa es una energía y su salida, muestras \cite{e1}.
+\begin{itemize}[nosep]
+\item \textbf{pbit}: binaria, $P(+1)=\sigma(2\beta u)$.
+\item \textbf{pdit}: categórica de $K$ valores, $p(x_i=k\mid\cdot)\propto e^{\beta u_{ik}}$ (softmax).
+\item \textbf{pmode}: continua gaussiana, $x_i\mid\cdot\sim\N(\mu_i,\sigma_i^2)$.
+\item \textbf{pmog}: mezcla de gaussianas.
+\end{itemize}
+Con ellas se construyen modelos discretos, continuos e híbridos, siempre con condicionales locales.
+
+\section{X0 y XTR-0}
+Chips de validación con muestreadores CMOS subumbral, donde el ruido de los transistores es grande y útil. Cada pbit se calibra (optimización bayesiana;
+error de probabilidad $\approx5\,\%$, según el pensum). Bucle anfitrión: CPU (define el problema) $\to$ FPGA (traduce, lee) $\to$ chip (muestrea).
+
+\section{Z1}
+269\,568 pbits, 16 acoplamientos por pbit, $>50$ MHz, $<1$ W; tarjetas M.2 y PCIe y clústeres hacia $10^9$ pbits \cite{e2}.
+\begin{ejemplo}
+$R=269\,568\times50\ \text{MHz}\approx1{,}35\times10^{13}$ actualizaciones/s; $e\le1\ \text{W}/R\approx7{,}4\times10^{-14}$ J. Frente a
+$\kB T\ln2=2{,}87\times10^{-21}$ J: $\approx2{,}6\times10^7$ veces más; frente a $\sim70$ pJ digitales \evE: $\approx10^3$ veces menos. Con $K$ colores, un
+barrido completo toma $K/(50\ \text{MHz})$.
+\end{ejemplo}
+
+\section{Programar una TSU}
+(1) Escribir $E$ sobre el grafo fijo; (2) cargar $J,h$ en los registros; (3) fijar la temperatura efectiva; (4) Gibbs cromático; (5) fijar evidencia
+(opcional); (6) leer muestras cada $k$ barridos ($k\gtrsim\tau_{\text{int}}$). Si el modelo no cabe en grado 16, hay que embeberlo (lección 5.7).
+
+\begin{aplicacion}
+THRML (Unidad 11) simula programas de TSU en GPU; modelos de eliminación de ruido (Unidad 9); Z1T (Unidad 10). Laboratorio L8.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Leer $7{,}4\times10^{-14}$ J como medición: es una cota. \quad Suponer conectividad arbitraria (grado fijo 16).
+\item Ignorar el error de calibración. \quad Comparar sin contar E/S ni anfitrión (lección 5.8).
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem[21]{e1} Extropic, Thermodynamic Computing From Zero to One, 2025.
+\bibitem[22]{e2} Extropic, From One to One Billion: Torx, Thermalizers, and Z1, 2026.
+\end{thebibliography}
+\end{document}

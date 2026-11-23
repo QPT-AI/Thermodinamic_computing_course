@@ -1,0 +1,296 @@
+1
+00:00:00,350 --> 00:00:02,028
+Lesson 4.8.
+
+2
+00:00:02,408 --> 00:00:05,584
+RBMs and contrastive divergence.
+
+3
+00:00:06,717 --> 00:00:10,285
+The general Boltzmann machine
+is hard to train: every step
+
+4
+00:00:10,285 --> 00:00:13,977
+requires equilibrium samples
+from a fully connected network.
+
+5
+00:00:14,357 --> 00:00:18,877
+In 2002, Hinton proposed two
+simplifications that made it practical.
+
+6
+00:00:19,257 --> 00:00:22,339
+Restrict the architecture, and
+don't wait for equilibrium.
+
+7
+00:00:22,719 --> 00:00:27,586
+The result, the restricted Boltzmann
+machine trained with contrastive
+
+8
+00:00:27,586 --> 00:00:32,101
+divergence, drove the revival of
+deep learning in the mid-2000s.
+
+9
+00:00:33,217 --> 00:00:36,928
+An RBM has a visible layer
+and a hidden layer, with
+
+10
+00:00:36,928 --> 00:00:40,859
+connections only between
+layers, never within a layer.
+
+11
+00:00:41,239 --> 00:00:47,051
+The energy is E = −vᵀWh − bᵀv − cᵀh.
+
+12
+00:00:47,431 --> 00:00:50,352
+Since the graph is bipartite,
+given the visible units the
+
+13
+00:00:50,352 --> 00:00:53,325
+hidden ones are independent
+of each other, and vice versa.
+
+14
+00:00:53,705 --> 00:01:08,032
+Each conditional is a product of
+sigmoids: p(h_j = 1 | v) = σ(c_j + vᵀW_j).
+
+15
+00:01:08,412 --> 00:01:12,376
+It is a two-colored graph:
+block Gibbs is perfect here.
+
+16
+00:01:13,483 --> 00:01:18,483
+The exact rule is still data
+correlations minus model correlations.
+
+17
+00:01:18,863 --> 00:01:22,254
+The idea of contrastive
+divergence is to approximate the
+
+18
+00:01:22,254 --> 00:01:25,766
+model term by starting the
+Gibbs chain at a data point and
+
+19
+00:01:25,766 --> 00:01:29,156
+taking only k steps, instead
+of waiting for equilibrium.
+
+20
+00:01:29,536 --> 00:01:34,452
+With k equal to one: data, hidden,
+reconstruction, hidden again.
+
+21
+00:01:34,833 --> 00:01:38,991
+The gradient is biased, but it has
+low variance and is very cheap.
+
+22
+00:01:39,371 --> 00:01:42,546
+In the persistent variant,
+the chain is not restarted at
+
+23
+00:01:42,546 --> 00:01:45,381
+the data: it keeps running
+between learning steps.
+
+24
+00:01:46,483 --> 00:01:50,433
+Let's train an RBM with nine
+visible and twelve hidden units on
+
+25
+00:01:50,433 --> 00:01:53,818
+the fourteen three-by-three
+bars-and-stripes patterns.
+
+26
+00:01:54,198 --> 00:01:57,855
+With nine visible units we can
+compute the exact log-likelihood.
+
+27
+00:01:58,235 --> 00:02:04,419
+The optimum, spreading probability equally
+over the fourteen patterns, is −2.64.
+
+28
+00:02:04,799 --> 00:02:12,190
+After six thousand steps, CD-1
+reaches −3.15 and CD-10, −2.83.
+
+29
+00:02:12,570 --> 00:02:16,070
+More Gibbs steps reduce the
+bias and give a better model.
+
+30
+00:02:17,183 --> 00:02:22,428
+RBMs can be stacked: the hidden units of
+one are the visible units of the next.
+
+31
+00:02:22,808 --> 00:02:26,920
+Training layer by layer gives
+a deep belief network, which
+
+32
+00:02:26,920 --> 00:02:30,535
+in 2006 showed that deep
+networks could be trained.
+
+33
+00:02:30,915 --> 00:02:34,877
+The wake–sleep algorithm and
+Helmholtz machines are close
+
+34
+00:02:34,877 --> 00:02:38,838
+relatives: a recognition
+network that infers causes and a
+
+35
+00:02:38,838 --> 00:02:42,591
+generative network that
+dreams data, trained in turns.
+
+36
+00:02:43,717 --> 00:02:45,725
+One CD-1 step with numbers.
+
+37
+00:02:46,105 --> 00:02:51,201
+Suppose a weight with
+data correlation ⟨v_i h_j⟩
+
+38
+00:02:51,201 --> 00:02:55,766
+= 0.62 and, after one
+reconstruction, 0.41.
+
+39
+00:02:56,146 --> 00:03:00,863
+With learning rate 0.3, the
+weight increases by 0.063.
+
+40
+00:03:01,243 --> 00:03:05,929
+On pbit hardware, each block
+Gibbs step is a single parallel
+
+41
+00:03:05,929 --> 00:03:10,694
+update of one layer: one CD-1
+step is four half clock phases.
+
+42
+00:03:11,817 --> 00:03:15,228
+RBMs are ideal for pbit
+hardware, because their
+
+43
+00:03:15,228 --> 00:03:18,277
+bipartite graph is updated layer by layer.
+
+44
+00:03:18,657 --> 00:03:21,501
+They have been used to learn features, in
+
+45
+00:03:21,501 --> 00:03:25,109
+recommender systems and to
+represent quantum states.
+
+46
+00:03:25,489 --> 00:03:28,116
+In lab six you will compare CD and its
+
+47
+00:03:28,116 --> 00:03:31,574
+persistent version using
+the exact log-likelihood.
+
+48
+00:03:32,683 --> 00:03:36,400
+Common mistakes: believing
+CD follows the true gradient.
+
+49
+00:03:36,780 --> 00:03:41,765
+Using large rates with persistent CD,
+because the chains cannot keep up with
+
+50
+00:03:41,765 --> 00:03:46,028
+the model and training diverges;
+we saw it in our own experiment.
+
+51
+00:03:46,408 --> 00:03:50,730
+Sampling the hidden units in the positive
+phase instead of using probabilities.
+
+52
+00:03:51,110 --> 00:03:54,765
+And monitoring the reconstruction
+error instead of the likelihood.
+
+53
+00:03:55,883 --> 00:04:00,105
+In summary: the RBM restricts
+the connections to a bipartite
+
+54
+00:04:00,105 --> 00:04:03,763
+graph, and its conditionals
+factorize into sigmoids.
+
+55
+00:04:04,143 --> 00:04:08,378
+Contrastive divergence
+approximates the model phase with
+
+56
+00:04:08,378 --> 00:04:11,932
+k Gibbs steps from the
+data: biased, but cheap.
+
+57
+00:04:12,312 --> 00:04:16,187
+Stacking RBMs gave the first
+trainable deep networks.
+
+58
+00:04:17,317 --> 00:04:20,573
+To practice: derive
+the hidden conditional.
+
+59
+00:04:20,953 --> 00:04:23,172
+Write the free energy
+of the visible units.
+
+60
+00:04:23,552 --> 00:04:25,130
+Explain the bias of CD.
+
+61
+00:04:25,510 --> 00:04:29,848
+And count the states needed for the
+partition function with nine visible units.

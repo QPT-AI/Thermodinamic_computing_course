@@ -1,0 +1,31 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Ejercicios --- Lección}{10.1}{Repaso de transformers}
+\section{Ejercicios}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+\item (B) Parámetros por bloque con $d=2048$.
+\item (B) Caché KV por token con 24 capas, $d=2048$, 16 bits.
+\item (B) MFU máximo del decode con lote 32 y cresta de 295 FLOP/byte.
+\item (B) ¿Por qué el prefill está limitado por cómputo?
+\item (I) ¿Con qué contexto $L$ iguala la atención ($4Ld$) a las matrices ($24d^2$) por bloque?
+\item (I) Con pesos en 4 bits, ¿cómo cambia la intensidad del decode y el MFU máximo con lote 1?
+\item (A) Perfile un modelo pequeño en su GPU y compare el MFU medido con la cota del techo.
+\end{enumerate}
+\section{Soluciones}
+\begin{solucion}
+\textbf{E1.} $12\cdot2048^2\approx5{,}0\times10^7$.
+
+\textbf{E2.} $2\cdot24\cdot2048\cdot2=196\,608$ bytes $\approx0{,}2$ MB.
+
+\textbf{E3.} $32/295\approx10{,}8\,\%$.
+
+\textbf{E4.} Cada peso leído se usa para $L$ posiciones: $I\approx L\gg I^\ast$.
+
+\textbf{E5.} $4Ld=24d^2\Rightarrow L=6d$ (para $d=4096$, $L\approx24\,600$).
+
+\textbf{E6.} Medio byte por parámetro: $I\approx4B$; con $B=1$, $\approx1{,}4\,\%$ de MFU máximo.
+
+\textbf{E7.} El MFU medido queda por debajo de la cota.
+\end{solucion}
+\end{document}

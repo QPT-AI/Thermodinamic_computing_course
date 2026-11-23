@@ -1,0 +1,50 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{curso}
+\begin{document}
+\portada{Lección}{10.9}{Caso de estudio: un modelo de lenguaje AFT de principio a fin}
+
+\noindent\textbf{Unidad 10.}\quad\textbf{Objetivos:} construir y entrenar en JAX un modelo AFT-conv pequeño (autoregresivo y difusión enmascarada); comparar Adam con
+gradiente natural (sustituto digital de TNGD); medir el impuesto de la dispersión; registrar energía y mapeo a TSU.
+\textbf{Prerrequisitos:} 8.3, 9.2, 10.1--10.8.
+
+\section{Montaje}
+Código: \texttt{datos/caso\_estudio.py}; resultados: \texttt{datos/resultados.json} (RTX 2070 SUPER). Corpus: las narraciones de este curso, $\approx340$k caracteres, 71
+símbolos, 10\,\% final para validación. Modelo: 2 bloques, $D=64$, $T=64$, $\approx113$k parámetros; mezcla AFT causal con sesgos locales aprendidos (ventana 4, estilo
+AFT-conv), DyT, MLP con tanh. Difusión enmascarada (MDLM, esquema lineal, peso $1/t$): mezcla bidireccional $\tfrac12$(adelante $+$ atrás). Lote 32, Adam con
+$\eta=3\cdot10^{-3}$; NGD con matriz de Gauss--Newton, $\lambda=10^{-3}$, 10 iteraciones de CG, paso 0{,}5.
+
+\section{Depuración}
+La primera difusión se quedó en $4{,}20$ bits/carácter, la entropía de las letras: la posición enmascarada solo ve a sus vecinas, diluidas entre 64 posiciones, y el gradiente
+de los sesgos locales era demasiado ruidoso. Inicializar los sesgos favoreciendo las vecinas cercanas lo resolvió.
+
+\section{Resultados \evS}
+\begin{center}\small\begin{tabular}{lcccc}\toprule
+bits/carácter (validación) & AR Adam & AR NGD & AR $k=4$ & MDLM (cota)\\\midrule
+500 pasos & 2{,}32 & 2{,}20 & 2{,}58 & 3{,}62\\ 3000 pasos & 1{,}98 & 1{,}94 & 2{,}32 & 3{,}18\\
+tiempo GPU (3000) & 9{,}5 s & 52 s & 8{,}2 s & 9{,}5 s\\\bottomrule
+\end{tabular}\end{center}
+NGD gana por paso pero es $\sim5\times$ más lento en digital: cada paso resuelve $(G+\lambda I)\delta=\nabla L$; TNGD delega esa resolución en un circuito (8.3). Las máscaras
+$k=4$ reducen los pesos de proyección de 98\,304 a 4608 ($\div21$) y cuestan $\approx0{,}34$ bits. La cifra MDLM es una cota superior (ELBO); a esta escala la difusión queda
+claramente detrás.
+
+\section{Registro de energía y mapeo}
+Modelo denso: $2{,}07\times10^5$ FLOP/token; con $0{,}177$ pJ/FLOP y MFU 10\,\%, $\approx366$ nJ/token en GPU \evE. Registro de mapeo ($k=4$): 1152 valores $\times$ 4 pbits
+$=4608$ pbits, grado 16, 8 capas de muestreo secuenciales (q/k/v, o, w1, w2 por bloque); en lo digital quedan la mezcla AFT, el embedding y la cabeza.
+
+\begin{aplicacion}
+Base para los laboratorios L28--L29: capas muestreadas, entradas dy4p, simulador de TNGD.
+\end{aplicacion}
+
+\begin{error}
+\begin{itemize}[nosep]
+\item Comparar NLL autoregresiva con una ELBO como si ambas fueran exactas. \quad Juzgar NGD solo por tiempo digital.
+\item Cambiar semillas, datos o pasos entre variantes. \quad Reportar energía sin MFU ni alcance.
+\end{itemize}
+\end{error}
+
+\begin{thebibliography}{9}\small
+\bibitem{aft} S. Zhai et al., An attention free transformer, arXiv:2105.14103 (2021).
+\bibitem{tngd} K. Donatella et al., Thermodynamic natural gradient descent, arXiv:2405.13817 (2024).
+\bibitem{mdlm} S. Sahoo et al., Simple and effective masked diffusion language models, \emph{NeurIPS} (2024).
+\end{thebibliography}
+\end{document}
